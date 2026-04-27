@@ -29,14 +29,14 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Amare's Big Planet — Sing, Learn & Play with Amare!" },
+      { name: "description", content: "Welcome to Amare's Big Planet! Songs, stories, and silly fun for little explorers. Join Amare and friends on a colorful adventure around the world." },
+      { name: "author", content: "Amare's Big Planet" },
+      { property: "og:title", content: "Amare's Big Planet — Sing, Learn & Play" },
+      { property: "og:description", content: "Songs, stories, and silly fun for little explorers. Join Amare and friends!" },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:site", content: "@AmaresBigPlanet" },
     ],
     links: [
       {
