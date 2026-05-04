@@ -53,13 +53,13 @@ function Index() {
       {/* NAV */}
       <header className="sticky top-0 z-50 backdrop-blur-md bg-background/80 border-b-4 border-[var(--primary)]/20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 py-3 flex items-center justify-between">
-          <a href="#" className="flex items-center gap-2 group">
+          <a href="#" className="flex items-center gap-3 group">
             <img
-              src={planetMascot}
+              src={amaresLogo}
               alt="Amare's Big Planet logo"
-              width={48}
-              height={48}
-              className="h-12 w-12 group-hover:animate-wiggle"
+              width={56}
+              height={56}
+              className="h-14 w-14 rounded-xl object-cover bg-[#0a0d4a] group-hover:animate-wiggle"
             />
             <span className="font-display text-xl sm:text-2xl font-extrabold text-[var(--primary)] leading-none">
               Amare's
