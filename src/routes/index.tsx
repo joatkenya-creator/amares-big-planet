@@ -295,10 +295,10 @@ function Index() {
           </div>
           <div className="relative">
             <img
-              src={planetMascot}
-              alt="Pip the Planet mascot"
+              src={amaresLogo}
+              alt="Amare's Big Planet logo"
               loading="lazy"
-              className="w-full max-w-sm mx-auto animate-float-slow"
+              className="w-full max-w-sm mx-auto rounded-3xl animate-float-slow"
             />
           </div>
         </div>
