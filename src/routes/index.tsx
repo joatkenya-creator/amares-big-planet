@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import heroImg from "@/assets/amare-hero.jpg";
+import amaresLogo from "@/assets/amares-logo.jpeg";
 import planetMascot from "@/assets/planet-mascot.png";
 import sunMascot from "@/assets/sun-mascot.png";
 import rainbowMascot from "@/assets/rainbow-mascot.png";
