@@ -63,12 +63,11 @@ function Index() {
               height={56}
               className="h-14 w-14 rounded-xl object-cover bg-[#0a0d4a] group-hover:animate-wiggle"
             />
-            <span className="font-display text-xl sm:text-2xl font-extrabold text-[var(--primary)] leading-none">
-              Amare's
-              <span className="block text-[var(--bubblegum)] text-sm sm:text-base">
-                BIG PLANET
-              </span>
-            </span>
+            <img
+              src={amaresTitle}
+              alt="Amare's Big Planet"
+              className="h-10 sm:h-12 w-auto object-contain"
+            />
           </a>
           <nav className="hidden md:flex items-center gap-1">
             {navLinks.map((l) => (
