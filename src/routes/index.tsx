@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import heroImg from "@/assets/amare-hero.jpg";
 import amaresLogo from "@/assets/amares-logo.jpeg";
-import heroVideo from "@/assets/hero-bg.mp4";
+
 import planetMascot from "@/assets/planet-mascot.png";
 import sunMascot from "@/assets/sun-mascot.png";
 import rainbowMascot from "@/assets/rainbow-mascot.png";
@@ -90,18 +90,7 @@ function Index() {
       </header>
 
       {/* HERO */}
-      <section className="relative bg-hero pt-10 pb-24 sm:pt-16 sm:pb-32 overflow-hidden">
-        {/* background video */}
-        <video
-          src={heroVideo}
-          autoPlay
-          loop
-          muted
-          playsInline
-          aria-hidden
-          className="absolute inset-0 w-full h-full object-cover z-0"
-        />
-        <div className="absolute inset-0 bg-background/40 backdrop-blur-[2px] z-0" />
+      <section className="relative bg-hero pt-10 pb-24 sm:pt-16 sm:pb-32">
         {/* floating decor */}
         <img
           src={sunMascot}
