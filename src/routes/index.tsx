@@ -118,11 +118,26 @@ function Index() {
             <span className="block text-2xl sm:text-3xl font-bold text-[var(--primary)] mb-4 uppercase tracking-[0.3em]">
               Welcome to
             </span>
-            <img
-              src={amaresTitle}
-              alt="Amare's Big Planet"
-              className="mx-auto w-full max-w-[280px] sm:max-w-md md:max-w-2xl drop-shadow-[0_8px_0_rgba(10,31,138,0.25)]"
-            />
+            <span
+              className="block font-display font-extrabold uppercase text-5xl sm:text-7xl md:text-8xl tracking-tight bg-gradient-to-b from-[#ffd86b] via-[#ff9a3c] to-[#ff5a1f] bg-clip-text text-transparent"
+              style={{
+                WebkitTextStroke: "3px #0a1f8a",
+                paintOrder: "stroke fill",
+                filter: "drop-shadow(0 6px 0 rgba(10,31,138,0.35)) drop-shadow(0 10px 20px rgba(0,0,0,0.15))",
+              }}
+            >
+              Amaré's
+            </span>
+            <span
+              className="mt-3 block font-display font-extrabold uppercase text-3xl sm:text-5xl md:text-6xl tracking-wide bg-gradient-to-b from-white to-[#cfd8ff] bg-clip-text text-transparent"
+              style={{
+                WebkitTextStroke: "2.5px #0a1f8a",
+                paintOrder: "stroke fill",
+                filter: "drop-shadow(0 5px 0 rgba(10,31,138,0.35))",
+              }}
+            >
+              Big Planet
+            </span>
           </h1>
           <p className="mt-6 max-w-2xl mx-auto text-lg sm:text-xl text-muted-foreground font-medium">
             Sing along, dance silly, and learn something new every day. A magical
