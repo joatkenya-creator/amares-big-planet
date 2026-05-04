@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import heroImg from "@/assets/amare-hero.jpg";
 import amaresLogo from "@/assets/amares-logo.jpeg";
+import amaresTitle from "@/assets/amares-title.png";
 
 import planetMascot from "@/assets/planet-mascot.png";
 import sunMascot from "@/assets/sun-mascot.png";
@@ -117,14 +118,11 @@ function Index() {
             <span className="block text-2xl sm:text-3xl font-bold text-[var(--primary)] mb-4 uppercase tracking-[0.3em]">
               Welcome to
             </span>
-            <span className="inline-block bg-[#0a0d4a] px-6 sm:px-10 py-6 sm:py-8 rounded-3xl shadow-pop">
-              <span className="block text-6xl sm:text-8xl md:text-9xl font-black bg-gradient-to-b from-[#ffd76a] via-[#ff9b2a] to-[#e8530a] bg-clip-text text-transparent [-webkit-text-stroke:3px_#0a1f8a] [paint-order:stroke_fill]">
-                AMARE'S
-              </span>
-              <span className="block text-3xl sm:text-5xl md:text-6xl font-black text-white [-webkit-text-stroke:2px_#0a1f8a] [paint-order:stroke_fill] mt-2 tracking-wider">
-                BIG PLANET
-              </span>
-            </span>
+            <img
+              src={amaresTitle}
+              alt="Amare's Big Planet"
+              className="mx-auto w-full max-w-[280px] sm:max-w-md md:max-w-2xl drop-shadow-[0_8px_0_rgba(10,31,138,0.25)]"
+            />
           </h1>
           <p className="mt-6 max-w-2xl mx-auto text-lg sm:text-xl text-muted-foreground font-medium">
             Sing along, dance silly, and learn something new every day. A magical
