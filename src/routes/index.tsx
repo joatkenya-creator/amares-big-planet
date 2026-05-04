@@ -112,13 +112,16 @@ function Index() {
           <span className="inline-block bg-white rounded-full px-5 py-2 font-bold text-[var(--primary)] shadow-soft mb-6">
             🎵 New songs every week!
           </span>
-          <h1 className="font-display text-5xl sm:text-7xl md:text-8xl font-extrabold leading-[0.95] text-foreground">
-            Welcome to{" "}
-            <span className="block mt-2">
-              <span className="text-[var(--bubblegum)]">Amare's</span>{" "}
-              <span className="text-[var(--primary)]">Big</span>{" "}
-              <span className="text-[var(--accent-foreground)] bg-[var(--sunshine)] px-3 rounded-2xl inline-block -rotate-2">
-                Planet!
+          <h1 className="font-display font-extrabold leading-[0.9] tracking-tight">
+            <span className="block text-2xl sm:text-3xl font-bold text-[var(--primary)] mb-4 uppercase tracking-[0.3em]">
+              Welcome to
+            </span>
+            <span className="inline-block bg-[#0a0d4a] px-6 sm:px-10 py-6 sm:py-8 rounded-3xl shadow-pop">
+              <span className="block text-6xl sm:text-8xl md:text-9xl font-black bg-gradient-to-b from-[#ffd76a] via-[#ff9b2a] to-[#e8530a] bg-clip-text text-transparent [-webkit-text-stroke:3px_#0a1f8a] [paint-order:stroke_fill]">
+                AMARE'S
+              </span>
+              <span className="block text-3xl sm:text-5xl md:text-6xl font-black text-white [-webkit-text-stroke:2px_#0a1f8a] [paint-order:stroke_fill] mt-2 tracking-wider">
+                BIG PLANET
               </span>
             </span>
           </h1>
