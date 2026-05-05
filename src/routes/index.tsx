@@ -90,7 +90,7 @@ function Index() {
       </header>
 
       {/* HERO */}
-      <section className="relative bg-hero pt-10 pb-24 sm:pt-16 sm:pb-32 overflow-hidden">
+      <section className="relative bg-black pt-10 pb-24 sm:pt-16 sm:pb-32 overflow-hidden">
         {/* YouTube video background */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <iframe
@@ -99,14 +99,14 @@ function Index() {
             allow="autoplay; encrypted-media"
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.78vh] min-w-[177.78vh] h-[56.25vw] min-h-[56.25vw] border-0 scale-150"
           />
-          <div className="absolute inset-0 bg-black/70" />
+          <div className="absolute inset-0 bg-black/50" />
         </div>
         {/* floating decor */}
         <img
           src={sunMascot}
           alt=""
           aria-hidden
-          className="absolute top-10 right-6 w-20 sm:w-32 animate-float-slow"
+          className="absolute top-10 left-6 w-20 sm:w-32 animate-float-slow z-10"
         />
         <img
           src={rainbowMascot}
@@ -124,13 +124,13 @@ function Index() {
             🎵 New songs every week!
           </span>
           <h1 className="font-display font-extrabold leading-[0.9] tracking-tight">
-            <span className="block text-2xl sm:text-3xl font-bold text-[var(--primary)] mb-4 uppercase tracking-[0.3em]">
+            <span className="block text-2xl sm:text-3xl font-bold text-white mb-4 uppercase tracking-[0.3em]" style={{ textShadow: "0 2px 8px rgba(0,0,0,0.6)" }}>
               Welcome to
             </span>
             <img
               src={amaresTitle}
               alt="Amaré's Big Planet"
-              className="mx-auto w-full max-w-[460px] sm:max-w-2xl md:max-w-4xl"
+              className="mx-auto w-full max-w-[260px] sm:max-w-md md:max-w-lg"
             />
           </h1>
           <p className="mt-6 max-w-2xl mx-auto text-lg sm:text-xl text-muted-foreground font-medium">
