@@ -90,7 +90,17 @@ function Index() {
       </header>
 
       {/* HERO */}
-      <section className="relative bg-hero pt-10 pb-24 sm:pt-16 sm:pb-32">
+      <section className="relative bg-hero pt-10 pb-24 sm:pt-16 sm:pb-32 overflow-hidden">
+        {/* YouTube video background */}
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+          <iframe
+            src="https://www.youtube.com/embed/bRm-MR5inI4?autoplay=1&mute=1&loop=1&playlist=bRm-MR5inI4&controls=0&showinfo=0&modestbranding=1&playsinline=1&rel=0&iv_load_policy=3"
+            title="Background video"
+            allow="autoplay; encrypted-media"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.78vh] min-w-full h-[56.25vw] min-h-full border-0"
+          />
+          <div className="absolute inset-0 bg-black/40" />
+        </div>
         {/* floating decor */}
         <img
           src={sunMascot}
