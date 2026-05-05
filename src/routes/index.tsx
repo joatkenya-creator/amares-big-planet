@@ -133,7 +133,7 @@ function Index() {
               className="mx-auto w-full max-w-[200px] sm:max-w-sm md:max-w-md"
             />
           </h1>
-          <p className="mt-6 max-w-2xl mx-auto text-lg sm:text-xl text-muted-foreground font-medium">
+          <p className="mt-6 max-w-2xl mx-auto text-lg sm:text-xl text-white font-medium" style={{ textShadow: "0 2px 8px rgba(0,0,0,0.8)" }}>
             Sing along, dance silly, and learn something new every day. A magical
             world made for little explorers and the grown-ups who love them.
           </p>
