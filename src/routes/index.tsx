@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import heroImg from "@/assets/amare-hero.jpg";
 import amaresLogo from "@/assets/amares-logo.jpeg";
 import amaresTitle from "@/assets/amares-title.png";
+import parentsSectionImg from "@/assets/parents-section.png";
 
 import planetMascot from "@/assets/planet-mascot.png";
 import sunMascot from "@/assets/sun-mascot.png";
