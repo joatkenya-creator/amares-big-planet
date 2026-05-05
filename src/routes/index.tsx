@@ -155,13 +155,15 @@ function Index() {
 
           <div className="mt-12 sm:mt-16 relative max-w-4xl mx-auto">
             <div className="absolute -inset-4 bg-rainbow rounded-[2.5rem] blur-2xl opacity-40" />
-            <img
-              src={heroImg}
-              alt="Amare exploring a giant smiling planet with friendly animal friends"
-              width={1920}
-              height={1080}
-              className="relative w-full rounded-[2rem] shadow-pop border-8 border-white"
-            />
+            <div className="relative w-full aspect-video rounded-[2rem] overflow-hidden shadow-pop border-8 border-white">
+              <iframe
+                src="https://www.youtube.com/embed/bRm-MR5inI4?rel=0&modestbranding=1"
+                title="A to P Compilation - Learn ABC Fun"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="absolute inset-0 w-full h-full border-0"
+              />
+            </div>
           </div>
         </div>
       </section>
