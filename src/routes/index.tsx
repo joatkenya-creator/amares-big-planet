@@ -308,8 +308,8 @@ function Index() {
           </div>
           <div className="relative">
             <img
-              src={amaresLogo}
-              alt="Amare's Big Planet logo"
+              src={parentsSectionImg}
+              alt="Amare's Big Planet scene"
               loading="lazy"
               className="w-full max-w-sm mx-auto rounded-3xl animate-float-slow"
             />
