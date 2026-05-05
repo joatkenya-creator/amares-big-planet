@@ -90,7 +90,7 @@ function Index() {
       </header>
 
       {/* HERO */}
-      <section className="relative bg-black pt-10 pb-24 sm:pt-16 sm:pb-32 overflow-hidden">
+      <section className="relative bg-black pt-20 pb-24 sm:pt-28 sm:pb-32 overflow-hidden">
         {/* YouTube video background */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <iframe
@@ -130,7 +130,7 @@ function Index() {
             <img
               src={amaresTitle}
               alt="Amaré's Big Planet"
-              className="mx-auto w-full max-w-[260px] sm:max-w-md md:max-w-lg"
+              className="mx-auto w-full max-w-[200px] sm:max-w-sm md:max-w-md"
             />
           </h1>
           <p className="mt-6 max-w-2xl mx-auto text-lg sm:text-xl text-muted-foreground font-medium">
