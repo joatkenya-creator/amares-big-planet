@@ -278,7 +278,7 @@ function Index() {
 
       {/* PARENTS */}
       <section id="parents" className="py-20 bg-[var(--sunshine)]/30">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 grid md:grid-cols-2 gap-10 items-center">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6">
           <div>
             <p className="font-bold text-[var(--bubblegum)] uppercase tracking-widest mb-3">
               For Parents
@@ -305,14 +305,6 @@ function Index() {
                 </li>
               ))}
             </ul>
-          </div>
-          <div className="relative">
-            <img
-              src={parentsSectionImg}
-              alt="Amare's Big Planet scene"
-              loading="lazy"
-              className="w-full max-w-sm mx-auto rounded-3xl animate-float-slow"
-            />
           </div>
         </div>
       </section>
