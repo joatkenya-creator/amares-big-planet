@@ -99,7 +99,7 @@ function Index() {
             allow="autoplay; encrypted-media"
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.78vh] min-w-[177.78vh] h-[56.25vw] min-h-[56.25vw] border-0 scale-150"
           />
-          <div className="absolute inset-0 bg-black/40" />
+          <div className="absolute inset-0 bg-black/70" />
         </div>
         {/* floating decor */}
         <img
