@@ -130,7 +130,7 @@ function Index() {
             <img
               src={amaresTitle}
               alt="Amaré's Big Planet"
-              className="mx-auto w-full max-w-[280px] sm:max-w-md md:max-w-2xl"
+              className="mx-auto w-full max-w-[460px] sm:max-w-2xl md:max-w-4xl"
             />
           </h1>
           <p className="mt-6 max-w-2xl mx-auto text-lg sm:text-xl text-muted-foreground font-medium">
