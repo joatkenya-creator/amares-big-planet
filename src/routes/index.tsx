@@ -68,6 +68,7 @@ function Index() {
               src={amaresTitle}
               alt="Amare's Big Planet"
               className="h-10 sm:h-12 w-auto object-contain"
+              style={{ filter: "drop-shadow(0 1px 1px rgba(0,0,0,0.2))" }}
             />
           </a>
           <nav className="hidden md:flex items-center gap-1">
@@ -91,17 +92,18 @@ function Index() {
       </header>
 
       {/* HERO */}
-      <section className="relative bg-black pt-20 pb-24 sm:pt-28 sm:pb-32 overflow-hidden">
+      <section className="relative bg-black pb-24 sm:pb-32 overflow-hidden min-h-[80vh]">
         {/* YouTube video background */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <iframe
             src="https://www.youtube.com/embed/bRm-MR5inI4?autoplay=1&mute=1&loop=1&playlist=bRm-MR5inI4&controls=0&showinfo=0&modestbranding=1&playsinline=1&rel=0&iv_load_policy=3"
             title="Background video"
             allow="autoplay; encrypted-media"
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.78vh] min-w-[177.78vh] h-[56.25vw] min-h-[56.25vw] border-0 scale-150"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-full w-full min-w-[177.78vh] min-h-[56.25vw] border-0 scale-[2]"
           />
           <div className="absolute inset-0 bg-black/50" />
         </div>
+        <div className="pt-20 sm:pt-28" />
         {/* floating decor */}
         <img
           src={sunMascot}
