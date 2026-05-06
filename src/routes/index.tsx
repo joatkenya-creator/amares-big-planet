@@ -3,7 +3,7 @@ import heroImg from "@/assets/amare-hero.jpg";
 import amaresLogo from "@/assets/amares-logo.jpeg";
 import amaresTitle from "@/assets/amares-title.png";
 import parentsSectionImg from "@/assets/parents-section.png";
-import spaceTrain from "@/assets/space-train.png";
+
 
 import planetMascot from "@/assets/planet-mascot.png";
 import sunMascot from "@/assets/sun-mascot.png";
@@ -44,11 +44,8 @@ const shows = [
 ];
 
 const characters = [
-  { name: "Amare", img: heroImg, desc: "Curious. Kind. Always ready to sing!" },
-  { name: "Pip the Planet", img: planetMascot, desc: "A whole world of giggles." },
-  { name: "Sunny", img: sunMascot, desc: "Brightens every morning song." },
-  { name: "Bow", img: rainbowMascot, desc: "Loves colors and rainy days." },
-  { name: "Melody", img: musicMascot, desc: "Hums a tune for every feeling." },
+  { name: "Xavier", img: "https://res.cloudinary.com/dee2vqvzl/image/upload/v1778073832/1775135225431_1_zxvc1e.png", desc: "Brave, energetic & loyal. Super agility & martial arts." },
+  { name: "Dee", img: "https://res.cloudinary.com/dee2vqvzl/image/upload/v1778073916/1776066659252_Character_in_T_202604011430_1_1_ut0asi.jpg", desc: "Funny, smart & creative. Engineer & inventor." },
 ];
 
 function Index() {
@@ -86,15 +83,20 @@ function Index() {
 
       {/* HERO */}
       <section className="relative bg-black pb-24 sm:pb-32 overflow-hidden min-h-[80vh]">
-        {/* YouTube video background */}
-        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-          <iframe
-            src="https://www.youtube.com/embed/bRm-MR5inI4?autoplay=1&mute=1&loop=1&playlist=bRm-MR5inI4&controls=0&showinfo=0&modestbranding=1&playsinline=1&rel=0&iv_load_policy=3"
-            title="Background video"
-            allow="autoplay; encrypted-media"
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-full w-full min-w-[177.78vh] min-h-[56.25vw] border-0 scale-[2]"
-          />
-          <div className="absolute inset-0 bg-black/50" />
+        {/* Video background */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+        
+          
+        <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-full min-h-full object-cover"
+          >
+            <source src="https://res.cloudinary.com/dee2vqvzl/video/upload/Screen_Recording_2026-05-04_134108_egyfjr.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-black/40" />
         </div>
         <div className="pt-20 sm:pt-28" />
         {/* floating decor */}
@@ -117,7 +119,7 @@ function Index() {
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 text-center">
           <span className="inline-block bg-white rounded-full px-5 py-2 font-bold text-[var(--primary)] shadow-soft mb-6">
-            🎵 New songs every week!
+          🎵 New songs every week!
           </span>
           <h1 className="font-display font-extrabold leading-[0.9] tracking-tight">
             <span className="block text-2xl sm:text-3xl font-bold text-white mb-4 uppercase tracking-[0.3em]" style={{ textShadow: "0 2px 8px rgba(0,0,0,0.6)" }}>
@@ -149,13 +151,6 @@ function Index() {
             </a>
           </div>
 
-          <div className="mt-12 sm:mt-16 relative w-full">
-            <img
-              src={spaceTrain}
-              alt="Amare's space train soaring through the cosmos"
-              className="w-full h-[200px] sm:h-[260px] md:h-[300px] object-cover rounded-[2rem] shadow-pop border-8 border-white"
-            />
-          </div>
         </div>
       </section>
 
@@ -174,7 +169,7 @@ function Index() {
               <span className="text-[var(--primary)]">tiny attention spans.</span>
             </h2>
           </div>
-          <div className="grid sm:grid-cols-2 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
             {shows.map((s, i) => (
               <article
                 key={s.title}
@@ -205,7 +200,7 @@ function Index() {
               Friends from <span className="text-[var(--bubblegum)]">every corner</span> of the planet.
             </h2>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
             {characters.map((c, i) => (
               <div
                 key={c.name}
