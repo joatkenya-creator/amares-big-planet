@@ -131,7 +131,7 @@ function Index() {
             <img
               src={amaresTitle}
               alt="Amaré's Big Planet"
-              className="mx-auto w-full max-w-[200px] sm:max-w-sm md:max-w-md"
+              className="mx-auto w-full max-w-md sm:max-w-2xl md:max-w-3xl lg:max-w-4xl drop-shadow-2xl"
             />
           </h1>
           <p className="mt-6 max-w-2xl mx-auto text-lg sm:text-xl text-white font-medium" style={{ textShadow: "0 2px 8px rgba(0,0,0,0.8)" }}>
