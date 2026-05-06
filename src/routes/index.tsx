@@ -58,15 +58,10 @@ function Index() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 py-3 flex items-center justify-between">
           <a href="#" className="flex items-center gap-3 group">
             <img
-              src={amaresLogo}
+              src={amaresTitle}
               alt="Amare's Big Planet logo"
-              width={56}
-              height={56}
-              className="h-14 w-14 rounded-xl object-cover bg-[#0a0d4a] group-hover:animate-wiggle"
+              className="h-12 sm:h-14 w-auto group-hover:animate-wiggle"
             />
-            <span className="font-display text-xl sm:text-2xl font-extrabold text-foreground">
-              Amare&apos;s Big Planet
-            </span>
           </a>
           <nav className="hidden md:flex items-center gap-1">
             {navLinks.map((l) => (
