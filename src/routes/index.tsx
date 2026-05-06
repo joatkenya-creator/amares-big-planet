@@ -3,6 +3,7 @@ import heroImg from "@/assets/amare-hero.jpg";
 import amaresLogo from "@/assets/amares-logo.jpeg";
 import amaresTitle from "@/assets/amares-title.png";
 import parentsSectionImg from "@/assets/parents-section.png";
+import spaceTrain from "@/assets/space-train.png";
 
 import planetMascot from "@/assets/planet-mascot.png";
 import sunMascot from "@/assets/sun-mascot.png";
@@ -148,17 +149,12 @@ function Index() {
             </a>
           </div>
 
-          <div className="mt-12 sm:mt-16 relative max-w-4xl mx-auto">
-            <div className="absolute -inset-4 bg-rainbow rounded-[2.5rem] blur-2xl opacity-40" />
-            <div className="relative w-full aspect-video rounded-[2rem] overflow-hidden shadow-pop border-8 border-white">
-              <iframe
-                src="https://www.youtube.com/embed/bRm-MR5inI4?rel=0&modestbranding=1"
-                title="A to P Compilation - Learn ABC Fun"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="absolute inset-0 w-full h-full border-0"
-              />
-            </div>
+          <div className="mt-12 sm:mt-16 relative w-full">
+            <img
+              src={spaceTrain}
+              alt="Amare's space train soaring through the cosmos"
+              className="w-full h-[200px] sm:h-[260px] md:h-[300px] object-cover rounded-[2rem] shadow-pop border-8 border-white"
+            />
           </div>
         </div>
       </section>
