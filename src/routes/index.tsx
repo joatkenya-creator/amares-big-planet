@@ -110,13 +110,20 @@ function Index() {
 
       {/* HERO */}
       <section className="relative bg-black pb-24 sm:pb-32 overflow-hidden min-h-[80vh]">
-        {/* YouTube video background */}
-        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        {/* Video background */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
           <iframe
-            src="https://www.youtube.com/embed/bRm-MR5inI4?autoplay=1&mute=1&loop=1&playlist=bRm-MR5inI4&controls=0&showinfo=0&modestbranding=1&playsinline=1&rel=0&iv_load_policy=3"
+            src="https://www.youtube.com/embed/bRm-MR5inI4?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&playlist=bRm-MR5inI4"
             title="Background video"
             allow="autoplay; encrypted-media"
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-full w-full min-w-[177.78vh] min-h-[56.25vw] border-0 scale-[2]"
+            className="absolute top-1/2 left-1/2 pointer-events-none border-0"
+            style={{
+              transform: "translate(-50%, -50%)",
+              width: "177.78vh",
+              height: "100vh",
+              minWidth: "100%",
+              minHeight: "100%",
+            }}
           />
           <div className="absolute inset-0 bg-black/50" />
         </div>
@@ -141,7 +148,7 @@ function Index() {
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 text-center">
           <span className="inline-block bg-white rounded-full px-5 py-2 font-bold text-[var(--primary)] shadow-soft mb-6">
-            🎵 New songs every week!
+          🎵 New songs every week!
           </span>
           <h1 className="font-display font-extrabold leading-[0.9] tracking-tight">
             <span className="block text-2xl sm:text-3xl font-bold text-white mb-4 uppercase tracking-[0.3em]" style={{ textShadow: "0 4px 16px rgba(0,0,0,0.9), 0 2px 4px rgba(0,0,0,0.7)" }}>
@@ -193,7 +200,7 @@ function Index() {
               <span className="text-[var(--primary)]">Have Fun!</span>
             </h2>
           </div>
-          <div className="grid sm:grid-cols-2 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
             {shows.map((s, i) => (
               <article
                 key={s.title}
@@ -216,7 +223,7 @@ function Index() {
         <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-[var(--grape)] opacity-20 blur-3xl" />
         <div className="absolute -bottom-20 -right-20 w-80 h-80 rounded-full bg-[var(--bubblegum)] opacity-20 blur-3xl" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
-          <div className="text-center mb-14">
+          <div className="text-center" style={{ marginBottom: "28px" }}>
             <p className="font-bold text-[var(--bubblegum)] uppercase tracking-widest mb-3">
               Our Music
             </p>
@@ -224,27 +231,59 @@ function Index() {
               Sing Along with Amare! 🎵
             </h2>
           </div>
-          <div className="grid sm:grid-cols-3 gap-6">
-            {["eyEmlXfgIoA", "Ga_sef8vcIA", "8jCfqeT6iNc"].map((id) => (
-              <div key={id} className="aspect-video rounded-3xl overflow-hidden shadow-pop">
-                <iframe
-                  src={`https://www.youtube.com/embed/${id}`}
-                  title="Amare's Big Planet music video"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  className="w-full h-full border-0"
-                />
+          <div className="grid sm:grid-cols-3" style={{ gap: "16px" }}>
+            {[
+              { id: "eyEmlXfgIoA", title: "ABC Song A to P", desc: "Learn the alphabet with Amaré and friends!" },
+              { id: "Ga_sef8vcIA", title: "Ocean Animals Adventure", desc: "Discover amazing creatures under the sea!" },
+              { id: "8jCfqeT6iNc", title: "BLAST OFF! Solar System Song", desc: "Explore all the planets in our solar system!" },
+            ].map((video) => (
+              <div
+                key={video.id}
+                className="overflow-hidden cursor-pointer"
+                style={{
+                  borderRadius: "16px",
+                  border: "1px solid rgba(0, 191, 179, 0.3)",
+                  background: "#fff",
+                  transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-4px) scale(1.02)"; e.currentTarget.style.boxShadow = "0 12px 28px rgba(0,0,0,0.12)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.transform = ""; e.currentTarget.style.boxShadow = ""; }}
+              >
+                <div className="aspect-video overflow-hidden">
+                  <iframe
+                    src={`https://www.youtube.com/embed/${video.id}`}
+                    title={video.title}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="w-full h-full border-0"
+                  />
+                </div>
+                <div style={{ padding: "10px 12px" }}>
+                  <h3 style={{ fontSize: "13px", fontWeight: 700, color: "#1a1a2e", margin: 0 }}>{video.title}</h3>
+                  <p style={{ fontSize: "11px", color: "#888", fontWeight: 400, margin: "4px 0 0" }}>{video.desc}</p>
+                </div>
               </div>
             ))}
           </div>
-          <div className="mt-10 text-center">
+          <div className="text-center" style={{ marginTop: "20px" }}>
             <a
               href="https://www.youtube.com/@amaresbigplanet"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block rounded-full bg-[var(--grape)] text-[var(--grape-foreground)] px-8 py-4 text-lg font-extrabold shadow-bounce hover:translate-y-1 hover:shadow-none transition-all"
+              className="inline-flex items-center gap-2 text-white font-bold"
+              style={{
+                background: "#FF0000",
+                borderRadius: "24px",
+                padding: "12px 28px",
+                fontSize: "15px",
+                fontWeight: 700,
+                transition: "all 0.3s ease",
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = "#cc0000"; e.currentTarget.style.transform = "scale(1.03)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = "#FF0000"; e.currentTarget.style.transform = "scale(1)"; }}
             >
-              🎵 More Songs on YouTube
+              <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+              More Songs on YouTube
             </a>
           </div>
         </div>
@@ -309,7 +348,20 @@ function Index() {
                 Amare's newsletter for parents.
               </p>
               <div className="mt-8 max-w-3xl mx-auto">
-                <p className="font-bold text-lg mb-3">🔴 LIVE NOW - Lofi Study Music for Kids</p>
+                <p className="font-bold text-lg mb-3 flex items-center justify-center gap-2">
+                  <span
+                    className="inline-block w-3 h-3 rounded-full bg-[#FF3B3B]"
+                    style={{ animation: "pulse-dot 1.5s ease-in-out infinite" }}
+                  />
+                  LIVE NOW - Lofi Study Music for Kids
+                </p>
+                <style>{`
+                  @keyframes pulse-dot {
+                    0% { transform: scale(1); opacity: 1; }
+                    50% { transform: scale(1.5); opacity: 0.5; }
+                    100% { transform: scale(1); opacity: 1; }
+                  }
+                `}</style>
                 <div className="aspect-video rounded-2xl overflow-hidden shadow-pop">
                   <iframe
                     src="https://www.youtube.com/embed/9ryVeXuqv-M"
@@ -318,6 +370,20 @@ function Index() {
                     allowFullScreen
                     className="w-full h-full border-0"
                   />
+                </div>
+                <div className="mt-5 text-center">
+                  <a
+                    href="https://www.youtube.com/@amaresbigplanet?sub_confirmation=1"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full bg-[#FF0000] text-white font-bold px-7 py-3"
+                    style={{ fontSize: "16px", transition: "all 0.3s ease" }}
+                    onMouseEnter={(e) => { e.currentTarget.style.background = "#CC0000"; e.currentTarget.style.transform = "scale(1.03)"; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = "#FF0000"; e.currentTarget.style.transform = "scale(1)"; }}
+                  >
+                    <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    Subscribe on YouTube
+                  </a>
                 </div>
               </div>
               <div className="mt-8 flex flex-wrap justify-center gap-3">
@@ -337,7 +403,7 @@ function Index() {
       </section>
 
       {/* PARENTS */}
-      <section id="parents" className="py-20 bg-[var(--sunshine)]/30">
+      <section id="parents" className="py-20" style={{ background: "linear-gradient(135deg, #fdf6e0, #fce4b8, #fde8d0)" }}>
         <div className="mx-auto max-w-5xl px-4 sm:px-6">
           <div className="flex flex-col md:flex-row items-center gap-10">
             <div className="flex-1">
@@ -354,19 +420,24 @@ function Index() {
                 confidence while learning and having fun through space adventures on
                 the Galaxy Train.
               </p>
-              <ul className="mt-6 space-y-3">
+              <ul className="mt-6 space-y-2">
                 {[
-                  "Numbers, counting, colors & shapes",
-                  "Nursery rhymes & original songs",
-                  "Planet facts & space exploration",
-                  "Fun animations that build confidence",
-                  "New educational videos every week",
+                  { icon: "🚀", text: "Numbers, counting, colors & shapes" },
+                  { icon: "🎵", text: "Nursery rhymes & original songs" },
+                  { icon: "🪐", text: "Planet facts & space exploration" },
+                  { icon: "🧩", text: "Fun animations that build confidence" },
+                  { icon: "📺", text: "New educational videos every week" },
+                  { icon: "🛡️", text: "Safe, ad-free content for kids" },
                 ].map((item) => (
-                  <li key={item} className="flex items-center gap-3 font-semibold">
-                    <span className="w-6 h-6 rounded-full bg-[var(--leaf)] text-white flex items-center justify-center text-sm">
-                      ✓
-                    </span>
-                    {item}
+                  <li
+                    key={item.text}
+                    className="flex items-center gap-3 px-3 py-2 rounded-lg transition-colors"
+                    style={{ fontSize: "14px", fontWeight: 500, color: "#1a1a2e" }}
+                    onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.4)"; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}
+                  >
+                    <span className="text-lg">{item.icon}</span>
+                    {item.text}
                   </li>
                 ))}
               </ul>
@@ -375,18 +446,59 @@ function Index() {
                   href="https://www.youtube.com/@amaresbigplanet"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block rounded-full bg-red-600 text-white px-8 py-4 text-lg font-extrabold shadow-bounce hover:translate-y-1 hover:shadow-none transition-all"
+                  className="inline-block rounded-full text-white px-7 py-3 text-base font-bold"
+                  style={{ background: "#e02020", transition: "all 0.3s ease" }}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = "#cc0000"; e.currentTarget.style.transform = "scale(1.03)"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = "#e02020"; e.currentTarget.style.transform = "scale(1)"; }}
                 >
-                  👉 Subscribe for Free
+                  👉 Join the Parent Newsletter
                 </a>
+                <p style={{ fontSize: "12px", color: "#888", marginTop: "8px" }}>
+                  No spam — just updates on new episodes and songs.
+                </p>
               </div>
             </div>
-            <div className="flex-shrink-0 w-64 sm:w-80 aspect-square rounded-full bg-[var(--sunshine)]/30 overflow-hidden flex items-center justify-center">
-              <img
-                src="https://res.cloudinary.com/dee2vqvzl/image/upload/v1778073832/1775135225431_1_zxvc1e.png"
-                alt="Amare character"
-                className="w-full h-full object-contain mix-blend-multiply drop-shadow-2xl"
-              />
+            <div className="flex-shrink-0 flex flex-col items-center gap-4">
+              <div
+                className="rounded-full overflow-hidden flex items-center justify-center"
+                style={{
+                  width: "180px",
+                  height: "180px",
+                  background: "linear-gradient(135deg, #fde68a, #fbbf24)",
+                  border: "3px solid rgba(255,255,255,0.6)",
+                }}
+              >
+                <img
+                  src="https://res.cloudinary.com/dee2vqvzl/image/upload/v1778073832/1775135225431_1_zxvc1e.png"
+                  alt="Amare character"
+                  className="w-full h-full object-contain drop-shadow-2xl"
+                />
+              </div>
+              <div
+                className="text-center"
+                style={{
+                  background: "rgba(255,255,255,0.7)",
+                  borderRadius: "12px",
+                  padding: "14px 16px",
+                  maxWidth: "200px",
+                  border: "0.5px solid rgba(0,0,0,0.08)",
+                }}
+              >
+                <p style={{ fontSize: "13px", fontStyle: "italic", color: "#555", margin: 0 }}>
+                  "My kids love Amaré! They learn new words and sing along every morning."
+                </p>
+                <p style={{ fontSize: "12px", fontWeight: 500, color: "#888", marginTop: "6px", marginBottom: 0 }}>
+                  — Sarah M., parent of two
+                </p>
+              </div>
+              <div className="flex gap-2">
+                <span className="rounded-xl text-white font-bold" style={{ fontSize: "11px", padding: "4px 10px", background: "#00BFB3" }}>
+                  Ages 3-13
+                </span>
+                <span className="rounded-xl text-white font-bold" style={{ fontSize: "11px", padding: "4px 10px", background: "#7c3aed" }}>
+                  Kid Safe
+                </span>
+              </div>
             </div>
           </div>
         </div>
