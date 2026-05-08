@@ -1,4 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState, useEffect, useRef } from "react";
 import amaresLogo from "@/assets/amares-logo.jpeg";
 import amaresTitle from "@/assets/amares-title.png";
 import parentsSectionImg from "@/assets/parents-section.png";
@@ -18,25 +19,25 @@ const shows = [
     title: "Galaxy Train Adventures",
     desc: "Join Amare and the Gear Crew on the Galaxy Train exploring planets across space!",
     color: "bg-[var(--sky)] text-[var(--sky-foreground)]",
-    emoji: "🚂",
+    emoji: "\u{1F682}",
   },
   {
     title: "Numbers & Counting",
     desc: "Learn numbers and counting through fun animations and catchy songs!",
-    color: "bg-[var(--bubblegum)] text-[var(--bubblegum-foreground)]",
-    emoji: "🔢",
+    color: "bg-[#FBBF24] text-[var(--bubblegum-foreground)]",
+    emoji: "\u{1F522}",
   },
   {
     title: "Nursery Rhymes & Songs",
     desc: "Sing along to classic nursery rhymes and original songs with Amare!",
     color: "bg-[var(--grape)] text-[var(--grape-foreground)]",
-    emoji: "🎵",
+    emoji: "\u{1F3B5}",
   },
   {
     title: "Colors, Shapes & Space",
     desc: "Discover colors, shapes, planet facts and space exploration!",
     color: "bg-[var(--leaf)] text-[var(--leaf-foreground)]",
-    emoji: "🪐",
+    emoji: "\u{1FA90}",
   },
 ];
 
@@ -68,45 +69,635 @@ const characters = [
   },
 ];
 
+const SEARCH_DATA = [
+  { title: "Galaxy Train Adventures", category: "Shows", emoji: "\u{1F682}", anchor: "#shows" },
+  { title: "Ocean Animals ABC", category: "Shows", emoji: "\u{1F419}", anchor: "#shows" },
+  { title: "BLAST OFF! Solar System", category: "Shows", emoji: "\u{1F680}", anchor: "#shows" },
+  { title: "ABC Song A to P", category: "Music", emoji: "\u{1F3B5}", anchor: "#music" },
+  { title: "Numbers & Counting Song", category: "Music", emoji: "\u{1F522}", anchor: "#music" },
+  { title: "Nursery Rhymes Collection", category: "Music", emoji: "\u{1F3B6}", anchor: "#music" },
+  { title: "Amare", category: "Characters", emoji: "\u{2B50}", anchor: "#characters" },
+  { title: "Xavier", category: "Characters", emoji: "\u{1F4AA}", anchor: "#characters" },
+  { title: "Dee", category: "Characters", emoji: "\u{1F9E9}", anchor: "#characters" },
+  { title: "Neebah", category: "Characters", emoji: "\u{1F4A1}", anchor: "#characters" },
+  { title: "Trinity", category: "Characters", emoji: "\u{1F49C}", anchor: "#characters" },
+];
+
 function Index() {
+  const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
+  const searchRef = useRef<HTMLDivElement>(null);
+  const mobileSearchRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const mobileSearchInputRef = useRef<HTMLInputElement>(null);
+
+  const searchResults = searchQuery.trim().length > 0
+    ? SEARCH_DATA.filter((item) =>
+        item.title.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : [];
+
+  const groupedResults = searchResults.reduce<Record<string, typeof SEARCH_DATA>>((acc, item) => {
+    if (!acc[item.category]) acc[item.category] = [];
+    acc[item.category].push(item);
+    return acc;
+  }, {});
+
+  function closeSearch() {
+    setSearchOpen(false);
+    setMobileSearchOpen(false);
+    setSearchQuery("");
+  }
+
+  function handleSearchSelect(anchor: string) {
+    closeSearch();
+    const el = document.querySelector(anchor);
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  }
+
+  // Close search on outside click
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      const target = e.target as Node;
+      const inDesktop = searchRef.current?.contains(target);
+      const inMobile = mobileSearchRef.current?.contains(target);
+      if (!inDesktop && !inMobile) closeSearch();
+    }
+    if (searchOpen || mobileSearchOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [searchOpen, mobileSearchOpen]);
+
+  // Close search on Escape
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") closeSearch();
+    }
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  // Auto-focus input when search opens
+  useEffect(() => {
+    if (searchOpen) searchInputRef.current?.focus();
+  }, [searchOpen]);
+  useEffect(() => {
+    if (mobileSearchOpen) mobileSearchInputRef.current?.focus();
+  }, [mobileSearchOpen]);
+
+  useEffect(() => {
+    function handleScroll() {
+      setScrolled(window.scrollY > 0);
+
+      const sections = navLinks.map((l) => l.toLowerCase());
+      let current = "";
+      for (const id of sections) {
+        const el = document.getElementById(id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= 120) current = id;
+        }
+      }
+      setActiveSection(current);
+    }
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [menuOpen]);
+
   return (
     <div className="min-h-screen overflow-hidden bg-background">
+      {/* Nav link hover styles + responsive */}
+      <style>{`
+        /* Desktop nav links */
+        .nav-link {
+          position: relative;
+          padding: 8px 16px;
+          border-radius: 9999px;
+          font-weight: 600;
+          color: var(--foreground);
+          text-decoration: none;
+          transition: color 0.3s ease;
+        }
+        .nav-link::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 0;
+          height: 2px;
+          background: #2a2a6e;
+          transition: width 0.3s ease;
+          border-radius: 1px;
+        }
+        .nav-link:hover { color: #2a2a6e; }
+        .nav-link:hover::after { width: 60%; }
+        .nav-link.active { color: #2a2a6e; font-weight: 700; }
+        .nav-link.active::after { width: 60%; }
+
+        .nav-link-donate {
+          position: relative;
+          padding: 8px 16px;
+          border-radius: 9999px;
+          font-weight: 600;
+          font-size: 15px;
+          color: #3B82F6;
+          text-decoration: none;
+          transition: color 0.3s ease;
+        }
+        .nav-link-donate::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 0;
+          height: 2px;
+          background: #3B82F6;
+          transition: width 0.3s ease;
+          border-radius: 1px;
+        }
+        .nav-link-donate:hover::after { width: 60%; }
+
+        /* Hamburger lines */
+        .hamburger-line {
+          display: block;
+          width: 24px;
+          height: 3px;
+          background: #2a2a6e;
+          border-radius: 2px;
+          transition: all 0.3s ease;
+        }
+        .hamburger-open .hamburger-line:nth-child(1) {
+          transform: translateY(8px) rotate(45deg);
+        }
+        .hamburger-open .hamburger-line:nth-child(2) {
+          opacity: 0;
+        }
+        .hamburger-open .hamburger-line:nth-child(3) {
+          transform: translateY(-8px) rotate(-45deg);
+        }
+
+        /* Mobile menu drawer */
+        .mobile-menu-drawer {
+          transform: translateY(-100%);
+          transition: transform 0.3s ease;
+        }
+        .mobile-menu-drawer.open {
+          transform: translateY(0);
+        }
+
+        /* Mobile menu link */
+        .mobile-nav-link {
+          display: block;
+          padding: 16px 24px;
+          font-size: 18px;
+          font-weight: 600;
+          color: #1a1a2e;
+          text-decoration: none;
+          border-bottom: 1px solid rgba(0,0,0,0.08);
+          transition: background 0.2s ease;
+        }
+        .mobile-nav-link:hover {
+          background: rgba(42,42,110,0.04);
+        }
+        .mobile-nav-link.active {
+          font-weight: 700;
+          border-left: 3px solid #2a2a6e;
+          background: rgba(42,42,110,0.05);
+        }
+
+        /* Tablet: tighter nav */
+        @media (min-width: 769px) and (max-width: 1024px) {
+          .nav-link { padding: 8px 10px; font-size: 13px; }
+          .nav-link-donate { padding: 8px 10px; font-size: 13px; }
+          .navbar-logo-img { height: 40px !important; }
+          .navbar-avatar { width: 40px !important; height: 40px !important; }
+          .navbar-watch-btn { padding: 8px 16px !important; font-size: 13px !important; }
+        }
+
+        /* Search */
+        .search-icon-btn {
+          background: none;
+          border: none;
+          cursor: pointer;
+          padding: 6px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #2a2a6e;
+          transition: all 0.2s ease;
+          border-radius: 50%;
+        }
+        .search-icon-btn:hover {
+          color: #3B82F6;
+          transform: scale(1.1);
+        }
+        .search-input-desktop {
+          width: 0;
+          opacity: 0;
+          padding: 0;
+          border: none;
+          transition: all 0.3s ease;
+          font-size: 14px;
+          color: #1a1a2e;
+          outline: none;
+          background: white;
+        }
+        .search-input-desktop.open {
+          width: 220px;
+          opacity: 1;
+          padding: 8px 16px;
+          border: 1.5px solid #2a2a6e;
+          border-radius: 24px;
+        }
+        .search-input-desktop.open:focus {
+          border-color: #3B82F6;
+          box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+        }
+        .search-dropdown {
+          position: absolute;
+          top: 100%;
+          right: 0;
+          margin-top: 8px;
+          width: 300px;
+          max-height: 320px;
+          overflow-y: auto;
+          background: white;
+          border: 1px solid rgba(0,0,0,0.1);
+          border-radius: 12px;
+          box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+          z-index: 1002;
+        }
+        .search-category-header {
+          font-size: 11px;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          color: #888;
+          padding: 10px 16px 4px;
+          font-weight: 600;
+        }
+        .search-result-item {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          padding: 10px 16px;
+          cursor: pointer;
+          transition: background 0.15s ease;
+          text-decoration: none;
+        }
+        .search-result-item:hover {
+          background: #f5f5f5;
+        }
+        .search-result-emoji {
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          background: #f0f6ff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 16px;
+          flex-shrink: 0;
+        }
+        .search-result-title {
+          font-size: 14px;
+          font-weight: 600;
+          color: #1a1a2e;
+        }
+        .search-result-subtitle {
+          font-size: 12px;
+          color: #888;
+        }
+        .search-no-results {
+          padding: 24px 16px;
+          text-align: center;
+          color: #888;
+          font-size: 14px;
+        }
+
+        /* Mobile search bar */
+        .mobile-search-bar {
+          overflow: hidden;
+          max-height: 0;
+          opacity: 0;
+          transition: all 0.3s ease;
+          background: #dff0f5;
+          border-bottom: 1px solid rgba(0,0,0,0.08);
+        }
+        .mobile-search-bar.open {
+          max-height: 70px;
+          opacity: 1;
+          padding: 10px 16px;
+        }
+        .mobile-search-input {
+          width: 100%;
+          padding: 10px 40px 10px 16px;
+          border: 1.5px solid #2a2a6e;
+          border-radius: 24px;
+          font-size: 14px;
+          color: #1a1a2e;
+          outline: none;
+          background: white;
+          box-sizing: border-box;
+        }
+        .mobile-search-input:focus {
+          border-color: #3B82F6;
+          box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+        }
+        @media (max-width: 768px) {
+          .search-dropdown {
+            width: calc(100vw - 32px);
+            left: 16px;
+            right: 16px;
+            position: fixed;
+            top: auto;
+          }
+        }
+      `}</style>
+
       {/* NAV */}
-      <header className="sticky top-0 z-50 backdrop-blur-md bg-background/80 border-b-4 border-[var(--primary)]/20">
+      <header
+        className="sticky top-0 z-[1000] backdrop-blur-md bg-background/80 border-b-4 border-[var(--primary)]/20"
+        style={{
+          boxShadow: scrolled ? "0 2px 12px rgba(0,0,0,0.1)" : "none",
+          transition: "box-shadow 0.3s ease",
+        }}
+      >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 py-3 flex items-center justify-between">
           <a href="#" className="flex items-center gap-2.5 group">
             <img
               src={amaresLogo}
               alt="Amare character"
-              className="w-12 h-12 rounded-full object-cover border-2 border-[#2a2a6e]"
+              className="w-12 h-12 max-[768px]:w-9 max-[768px]:h-9 rounded-full object-cover border-2 border-[#2a2a6e] navbar-avatar"
             />
             <img
               src={amaresTitle}
               alt="Amare's Big Planet logo"
-              className="h-12 sm:h-14 w-auto group-hover:animate-wiggle"
+              className="h-12 sm:h-14 max-[768px]:h-10 w-auto group-hover:animate-wiggle navbar-logo-img"
             />
           </a>
+
+          {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-1">
             {navLinks.map((l) => (
               <a
                 key={l}
                 href={`#${l.toLowerCase()}`}
-                className="px-4 py-2 rounded-full font-semibold text-foreground hover:bg-[var(--sunshine)] hover:text-[var(--sunshine-foreground)] transition-colors"
+                className={`nav-link${activeSection === l.toLowerCase() ? " active" : ""}`}
               >
                 {l}
               </a>
             ))}
+            <Link
+              to="/donate"
+              className="nav-link-donate"
+            >
+              Donate {"\u{1F499}"}
+            </Link>
           </nav>
-          <a
-            href="https://www.youtube.com/@amaresbigplanet"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-full bg-red-600 text-white px-5 py-2.5 font-bold shadow-bounce hover:translate-y-1 hover:shadow-none transition-all"
-          >
-            ▶ Watch
-          </a>
+
+          <div className="flex items-center gap-3">
+            {/* Desktop search */}
+            <div ref={searchRef} className="hidden md:flex items-center gap-2" style={{ position: "relative" }}>
+              <input
+                ref={searchInputRef}
+                className={`search-input-desktop${searchOpen ? " open" : ""}`}
+                placeholder="Search songs, shows, characters..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && searchResults.length > 0) {
+                    handleSearchSelect(searchResults[0].anchor);
+                  }
+                }}
+              />
+              <button
+                className="search-icon-btn"
+                onClick={() => {
+                  if (searchOpen) { closeSearch(); } else { setSearchOpen(true); }
+                }}
+                aria-label="Search"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="11" cy="11" r="8" />
+                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
+              </button>
+              {/* Desktop dropdown */}
+              {searchOpen && searchQuery.trim().length > 0 && (
+                <div className="search-dropdown">
+                  {searchResults.length > 0 ? (
+                    Object.entries(groupedResults).map(([category, items]) => (
+                      <div key={category}>
+                        <div className="search-category-header">{category}</div>
+                        {items.map((item) => (
+                          <div
+                            key={item.title}
+                            className="search-result-item"
+                            onClick={() => handleSearchSelect(item.anchor)}
+                          >
+                            <div className="search-result-emoji">{item.emoji}</div>
+                            <div>
+                              <div className="search-result-title">{item.title}</div>
+                              <div className="search-result-subtitle">{item.category}</div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ))
+                  ) : (
+                    <div className="search-no-results">
+                      <div style={{ fontSize: "24px", marginBottom: "8px" }}>{"\u{1F50D}"}</div>
+                      No results found for "{searchQuery}"
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Watch button — hidden on mobile, shown in drawer instead */}
+            <a
+              href="https://www.youtube.com/@amaresbigplanet"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden md:inline-flex rounded-full bg-red-600 text-white px-5 py-2.5 font-bold shadow-bounce hover:translate-y-1 hover:shadow-none transition-all navbar-watch-btn"
+            >
+              ▶ Watch
+            </a>
+
+            {/* Mobile: search icon + hamburger */}
+            <div className="md:hidden flex items-center gap-1">
+              <button
+                className="search-icon-btn"
+                onClick={() => { setMobileSearchOpen(!mobileSearchOpen); setMenuOpen(false); }}
+                aria-label="Search"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="11" cy="11" r="8" />
+                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
+              </button>
+              <button
+                className="flex flex-col items-center justify-center gap-[5px] p-2"
+                onClick={() => { setMenuOpen(!menuOpen); setMobileSearchOpen(false); setSearchQuery(""); }}
+                aria-label="Toggle menu"
+                style={{ background: "none", border: "none", cursor: "pointer" }}
+              >
+                <div className={menuOpen ? "hamburger-open" : ""} style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
+                  <span className="hamburger-line" />
+                  <span className="hamburger-line" />
+                  <span className="hamburger-line" />
+                </div>
+              </button>
+            </div>
+          </div>
         </div>
       </header>
+
+      {/* Mobile search bar — slides below navbar */}
+      <div
+        ref={mobileSearchRef}
+        className={`mobile-search-bar md:hidden${mobileSearchOpen ? " open" : ""}`}
+        style={{ position: "sticky", top: "68px", zIndex: 1000 }}
+      >
+        <div style={{ position: "relative" }}>
+          <input
+            ref={mobileSearchInputRef}
+            className="mobile-search-input"
+            placeholder="Search songs, shows, characters..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && searchResults.length > 0) {
+                handleSearchSelect(searchResults[0].anchor);
+              }
+            }}
+          />
+          <button
+            onClick={closeSearch}
+            style={{
+              position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)",
+              background: "none", border: "none", cursor: "pointer", fontSize: "18px", color: "#888",
+              padding: "4px", lineHeight: 1,
+            }}
+            aria-label="Close search"
+          >
+            {"\u2715"}
+          </button>
+        </div>
+        {/* Mobile dropdown */}
+        {mobileSearchOpen && searchQuery.trim().length > 0 && (
+          <div style={{
+            position: "absolute", left: "16px", right: "16px", top: "100%", marginTop: "4px",
+            maxHeight: "320px", overflowY: "auto", background: "white",
+            border: "1px solid rgba(0,0,0,0.1)", borderRadius: "12px",
+            boxShadow: "0 8px 24px rgba(0,0,0,0.12)", zIndex: 1002,
+          }}>
+            {searchResults.length > 0 ? (
+              Object.entries(groupedResults).map(([category, items]) => (
+                <div key={category}>
+                  <div className="search-category-header">{category}</div>
+                  {items.map((item) => (
+                    <div
+                      key={item.title}
+                      className="search-result-item"
+                      onClick={() => handleSearchSelect(item.anchor)}
+                    >
+                      <div className="search-result-emoji">{item.emoji}</div>
+                      <div>
+                        <div className="search-result-title">{item.title}</div>
+                        <div className="search-result-subtitle">{item.category}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ))
+            ) : (
+              <div className="search-no-results">
+                <div style={{ fontSize: "24px", marginBottom: "8px" }}>{"\u{1F50D}"}</div>
+                No results found for "{searchQuery}"
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* Mobile menu overlay */}
+      {menuOpen && (
+        <div
+          onClick={() => setMenuOpen(false)}
+          style={{
+            position: "fixed", inset: 0, zIndex: 999,
+            background: "rgba(0,0,0,0.3)",
+            transition: "opacity 0.3s ease",
+          }}
+        />
+      )}
+
+      {/* Mobile menu drawer */}
+      <div
+        className={`mobile-menu-drawer${menuOpen ? " open" : ""}`}
+        style={{
+          position: "fixed", top: 0, left: 0, right: 0,
+          zIndex: 1001, paddingTop: "68px",
+          background: "#dff0f5",
+          maxHeight: "100vh", overflowY: "auto",
+        }}
+      >
+        <nav className="md:hidden">
+          {navLinks.map((l) => (
+            <a
+              key={l}
+              href={`#${l.toLowerCase()}`}
+              className={`mobile-nav-link${activeSection === l.toLowerCase() ? " active" : ""}`}
+              onClick={() => setMenuOpen(false)}
+            >
+              {l}
+            </a>
+          ))}
+          <Link
+            to="/donate"
+            className="mobile-nav-link"
+            style={{ color: "#3B82F6" }}
+            onClick={() => setMenuOpen(false)}
+          >
+            Donate {"\u{1F499}"}
+          </Link>
+          <div style={{ padding: "16px 24px" }}>
+            <a
+              href="https://www.youtube.com/@amaresbigplanet"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "block", width: "100%", textAlign: "center",
+                background: "#e02020", color: "white", fontWeight: 700,
+                fontSize: "16px", padding: "14px", borderRadius: "12px",
+                textDecoration: "none",
+              }}
+              onClick={() => setMenuOpen(false)}
+            >
+              ▶ Watch on YouTube
+            </a>
+          </div>
+        </nav>
+      </div>
 
       {/* HERO */}
       <section className="relative bg-black pb-24 sm:pb-32 overflow-hidden min-h-[80vh]">
@@ -192,12 +783,12 @@ function Index() {
       <section id="shows" className="py-20 sm:py-28 bg-background">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="text-center mb-14">
-            <p className="font-bold text-[var(--bubblegum)] uppercase tracking-widest mb-3">
+            <p className="font-bold text-[#3B82F6] uppercase tracking-widest mb-3">
               What Kids Learn
             </p>
             <h2 className="font-display text-4xl sm:text-6xl font-extrabold text-foreground">
               Learn, Explore & <br className="sm:hidden" />
-              <span className="text-[var(--primary)]">Have Fun!</span>
+              <span className="text-[#FBBF24]">Have Fun!</span>
             </h2>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
@@ -224,7 +815,7 @@ function Index() {
         <div className="absolute -bottom-20 -right-20 w-80 h-80 rounded-full bg-[var(--bubblegum)] opacity-20 blur-3xl" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
           <div className="text-center" style={{ marginBottom: "28px" }}>
-            <p className="font-bold text-[var(--bubblegum)] uppercase tracking-widest mb-3">
+            <p className="font-bold text-[#3B82F6] uppercase tracking-widest mb-3">
               Our Music
             </p>
             <h2 className="font-display text-4xl sm:text-6xl font-extrabold text-foreground">
@@ -299,15 +890,36 @@ function Index() {
               Meet the gang
             </p>
             <h2 className="font-display text-4xl sm:text-6xl font-extrabold text-foreground">
-              Friends from <span className="text-[var(--bubblegum)]">every corner</span> of the planet.
+              Friends from <span className="text-[#E24B4A]">every corner</span> of the planet.
             </h2>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-6 max-w-5xl mx-auto">
             {characters.map((c, i) => (
               <div
                 key={c.name}
-                className="bg-white rounded-3xl p-5 shadow-soft hover:shadow-pop hover:-translate-y-2 transition-all text-center"
-                style={{ transform: `rotate(${(i % 3) - 1}deg)` }}
+                className="bg-white rounded-3xl p-5 shadow-soft text-center cursor-pointer group"
+                style={{
+                  transform: `rotate(${(i % 3) - 1}deg)`,
+                  transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                }}
+                onMouseEnter={(e) => {
+                  const card = e.currentTarget;
+                  card.style.transform = `rotate(${(i % 3) - 1}deg) translateY(-6px)`;
+                  card.style.boxShadow = "0 12px 28px rgba(0,0,0,0.12)";
+                  const img = card.querySelector("img");
+                  if (img) img.style.transform = "scale(1.05)";
+                  const h3 = card.querySelector("h3");
+                  if (h3) h3.style.fontSize = "15px";
+                }}
+                onMouseLeave={(e) => {
+                  const card = e.currentTarget;
+                  card.style.transform = `rotate(${(i % 3) - 1}deg)`;
+                  card.style.boxShadow = "";
+                  const img = card.querySelector("img");
+                  if (img) img.style.transform = "scale(1)";
+                  const h3 = card.querySelector("h3");
+                  if (h3) h3.style.fontSize = "14px";
+                }}
               >
                 <div className="aspect-square rounded-2xl bg-[var(--muted)] flex items-center justify-center overflow-hidden mb-3">
                   <img
@@ -315,9 +927,13 @@ function Index() {
                     alt={`${c.name} character`}
                     loading="lazy"
                     className="w-full h-full object-cover"
+                    style={{ transition: "transform 0.3s ease" }}
                   />
                 </div>
-                <h3 className="font-display text-xl font-extrabold text-[var(--primary)]">
+                <h3
+                  className="font-display text-xl font-extrabold text-[var(--primary)]"
+                  style={{ fontSize: "14px", transition: "font-size 0.3s ease" }}
+                >
                   {c.name}
                 </h3>
                 <p className="text-xs sm:text-sm text-muted-foreground font-medium mt-1">
@@ -325,6 +941,24 @@ function Index() {
                 </p>
               </div>
             ))}
+          </div>
+          <div className="text-center" style={{ marginTop: "24px" }}>
+            <a
+              href="#characters"
+              className="inline-flex items-center gap-2 text-white font-semibold"
+              style={{
+                background: "#1a1a2e",
+                borderRadius: "24px",
+                padding: "12px 24px",
+                fontSize: "14px",
+                transition: "all 0.3s ease",
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.transform = "scale(1.03)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; }}
+            >
+              <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+              Meet Them All
+            </a>
           </div>
         </div>
       </section>
@@ -341,7 +975,7 @@ function Index() {
                 className="absolute -top-6 -right-6 w-32 sm:w-44 animate-wiggle"
               />
               <h2 className="font-display text-4xl sm:text-6xl font-extrabold text-foreground">
-                Ready to <span className="text-[var(--bubblegum)]">sing along?</span>
+                Ready to <span className="text-[#3B82F6]">sing along?</span>
               </h2>
               <p className="mt-4 text-lg text-muted-foreground font-medium max-w-2xl mx-auto">
                 Watch new episodes on YouTube, stream songs everywhere, and join
@@ -412,7 +1046,7 @@ function Index() {
               </p>
               <h2 className="font-display text-4xl sm:text-5xl font-extrabold text-foreground">
                 Made for Little Explorers. <br />
-                <span className="text-[var(--primary)]">Trusted by Parents.</span>
+                <span className="text-[#22C55E]">Trusted by Parents.</span>
               </h2>
               <p className="mt-4 text-lg text-muted-foreground font-medium">
                 Every video on Amare's Big Planet is designed to be simple, engaging,
@@ -422,12 +1056,12 @@ function Index() {
               </p>
               <ul className="mt-6 space-y-2">
                 {[
-                  { icon: "🚀", text: "Numbers, counting, colors & shapes" },
-                  { icon: "🎵", text: "Nursery rhymes & original songs" },
-                  { icon: "🪐", text: "Planet facts & space exploration" },
-                  { icon: "🧩", text: "Fun animations that build confidence" },
-                  { icon: "📺", text: "New educational videos every week" },
-                  { icon: "🛡️", text: "Safe, ad-free content for kids" },
+                  { icon: "\u{1F680}", text: "Numbers, counting, colors & shapes" },
+                  { icon: "\u{1F3B5}", text: "Nursery rhymes & original songs" },
+                  { icon: "\u{1FA90}", text: "Planet facts & space exploration" },
+                  { icon: "\u{1F9E9}", text: "Fun animations that build confidence" },
+                  { icon: "\u{1F4FA}", text: "New educational videos every week" },
+                  { icon: "\u{1F6E1}\u{FE0F}", text: "Safe, ad-free content for kids" },
                 ].map((item) => (
                   <li
                     key={item.text}
