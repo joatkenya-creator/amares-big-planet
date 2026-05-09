@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import amaresLogo from "@/assets/amares-logo.jpeg";
 import amaresTitle from "@/assets/amares-title.png";
 
@@ -44,6 +44,15 @@ const SUPPORTERS = [
   { name: "Amina K.", initials: "AK", color: "#E24B4A", tier: "Silver", comment: "Educational AND fun!" },
 ];
 
+const DONATE_NAV_LINKS = [
+  { label: "About", href: "/#about" },
+  { label: "Programs", href: "/#programs" },
+  { label: "Impact", href: "/#impact" },
+  { label: "Stories", href: "/#stories" },
+  { label: "Donate", href: "/donate" },
+  { label: "Contact", href: "/#contact" },
+];
+
 function DonatePage() {
   const [mode, setMode] = useState<"once" | "recurring">("once");
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -54,6 +63,9 @@ function DonatePage() {
   const [comment, setComment] = useState("");
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [navCurrency, setNavCurrency] = useState<"USD" | "KSh">("USD");
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   // Single source of truth: always read from customAmount
   const inputValue = parseFloat(customAmount) || 0;
@@ -140,41 +152,175 @@ function DonatePage() {
   return (
     <div style={{ minHeight: "100vh", fontFamily: "sans-serif", display: "flex", flexDirection: "column" }}>
       {/* NAVBAR */}
-      <header style={{
-        background: "rgba(255,255,255,0.95)", backdropFilter: "blur(8px)",
-        borderBottom: "3px solid #2a2a6e", position: "sticky", top: 0, zIndex: 50,
-      }}>
+      <nav
+        role="navigation"
+        aria-label="Donation page navigation"
+        style={{
+          background: "rgba(255,255,255,0.97)",
+          backdropFilter: "blur(10px)",
+          boxShadow: "0 2px 12px rgba(13, 27, 62, 0.08)",
+          position: "sticky",
+          top: 0,
+          zIndex: 50,
+        }}
+      >
         <div style={{
-          maxWidth: "1280px", margin: "0 auto", padding: "12px 24px",
+          maxWidth: "1280px", margin: "0 auto", padding: "10px 24px",
           display: "flex", alignItems: "center", justifyContent: "space-between",
         }}>
-          <Link to="/" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
-            <img src={amaresLogo} alt="Amare character" style={{ width: "44px", height: "44px", borderRadius: "50%", objectFit: "cover", border: "2px solid #2a2a6e" }} />
-            <img src={amaresTitle} alt="Amare's Big Planet logo" style={{ height: "44px", width: "auto" }} />
+          {/* Logo — links home */}
+          <Link to="/" aria-label="Go to homepage" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none", flexShrink: 0 }}>
+            <img src={amaresLogo} alt="" style={{ width: "48px", height: "48px", borderRadius: "50%", objectFit: "cover", border: "2px solid #0d1b3e" }} />
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <img src={amaresTitle} alt="Amare's Big Planet" className="donate-nav-title" style={{ height: "40px", width: "auto" }} />
+            </div>
           </Link>
-          <Link
-            to="/"
-            style={{
+
+          {/* Center nav links — desktop only */}
+          <div className="donate-nav-links" style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+            {DONATE_NAV_LINKS.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                className={`donate-nav-link${link.label === "Donate" ? " donate-nav-link--active" : ""}`}
+                aria-current={link.label === "Donate" ? "page" : undefined}
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+
+          {/* Right side actions */}
+          <div style={{ display: "flex", alignItems: "center", gap: "12px", flexShrink: 0 }}>
+            {/* Currency switcher */}
+            <div className="donate-nav-currency" style={{
+              display: "flex", borderRadius: "20px", overflow: "hidden",
+              border: "1.5px solid #e0e0e0", fontSize: "12px", fontWeight: 600,
+            }}>
+              <button
+                onClick={() => { setNavCurrency("USD"); setCurrency("USD"); }}
+                aria-label="Switch to US Dollars"
+                style={{
+                  padding: "5px 10px", border: "none", cursor: "pointer",
+                  background: navCurrency === "USD" ? "#0d1b3e" : "white",
+                  color: navCurrency === "USD" ? "white" : "#0d1b3e",
+                  transition: "all 0.2s",
+                }}
+              >USD</button>
+              <button
+                onClick={() => { setNavCurrency("KSh"); setCurrency("KES"); }}
+                aria-label="Switch to Kenyan Shillings"
+                style={{
+                  padding: "5px 10px", border: "none", cursor: "pointer",
+                  background: navCurrency === "KSh" ? "#0d1b3e" : "white",
+                  color: navCurrency === "KSh" ? "white" : "#0d1b3e",
+                  transition: "all 0.2s",
+                }}
+              >KSh</button>
+            </div>
+
+            {/* Secure trust pill — desktop only */}
+            <div className="donate-nav-trust" style={{
               display: "flex", alignItems: "center", gap: "6px",
-              color: "#1a1a2e", fontSize: "14px", fontWeight: 600, textDecoration: "none",
-              padding: "8px 16px", borderRadius: "24px", border: "1.5px solid #e0e0e0",
-              transition: "all 0.2s",
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = "#f5f5f5"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}
-          >
-            <span style={{ fontSize: "18px" }}>{"\u2190"}</span> Back to Home
-          </Link>
+              background: "#f0fdf4", border: "1px solid #bbf7d0",
+              borderRadius: "20px", padding: "5px 12px", fontSize: "12px",
+              fontWeight: 600, color: "#166534",
+            }}>
+              <span className="donate-secure-dot" style={{
+                width: "8px", height: "8px", borderRadius: "50%",
+                background: "#22c55e", display: "inline-block",
+              }} />
+              Secure
+            </div>
+
+            {/* Donate CTA button */}
+            <a
+              href="#donate-form"
+              className="donate-nav-cta"
+              aria-label="Donate now"
+              style={{
+                display: "inline-flex", alignItems: "center", gap: "6px",
+                background: "#e0001b", color: "white", fontSize: "14px",
+                fontWeight: 700, padding: "9px 20px", borderRadius: "24px",
+                textDecoration: "none", transition: "all 0.2s", flexShrink: 0,
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = "#b80015"; e.currentTarget.style.transform = "translateY(-1px)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = "#e0001b"; e.currentTarget.style.transform = "translateY(0)"; }}
+            >
+              Donate
+            </a>
+
+            {/* Hamburger — mobile only */}
+            <button
+              className="donate-nav-hamburger"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileMenuOpen}
+              style={{
+                display: "none", background: "none", border: "none",
+                cursor: "pointer", padding: "6px", flexDirection: "column",
+                gap: "4px", justifyContent: "center",
+              }}
+            >
+              <span style={{
+                display: "block", width: "22px", height: "2px", background: "#0d1b3e",
+                borderRadius: "2px", transition: "all 0.3s",
+                transform: mobileMenuOpen ? "rotate(45deg) translateY(6px)" : "none",
+              }} />
+              <span style={{
+                display: "block", width: "22px", height: "2px", background: "#0d1b3e",
+                borderRadius: "2px", transition: "all 0.3s",
+                opacity: mobileMenuOpen ? 0 : 1,
+              }} />
+              <span style={{
+                display: "block", width: "22px", height: "2px", background: "#0d1b3e",
+                borderRadius: "2px", transition: "all 0.3s",
+                transform: mobileMenuOpen ? "rotate(-45deg) translateY(-6px)" : "none",
+              }} />
+            </button>
+          </div>
         </div>
-      </header>
+
+        {/* Mobile dropdown menu */}
+        <div
+          ref={mobileMenuRef}
+          className="donate-mobile-menu"
+          style={{
+            maxHeight: mobileMenuOpen ? "400px" : "0",
+            overflow: "hidden",
+            transition: "max-height 0.3s ease",
+            borderTop: mobileMenuOpen ? "1px solid #e5e7eb" : "none",
+          }}
+        >
+          <div style={{ padding: "8px 24px 16px" }}>
+            {DONATE_NAV_LINKS.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                style={{
+                  display: "block", padding: "12px 0",
+                  fontSize: "15px", fontWeight: link.label === "Donate" ? 700 : 500,
+                  color: link.label === "Donate" ? "#e85d04" : "#0d1b3e",
+                  textDecoration: "none",
+                  borderBottom: "1px solid #f3f4f6",
+                }}
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      </nav>
 
       {/* MAIN CONTENT — Split Screen */}
       <div style={{ flex: 1, display: "flex", minHeight: "calc(100vh - 71px)" }}>
 
-        {/* LEFT SIDE — Video Background */}
-        <div style={{
+        {/* LEFT SIDE — Hero */}
+        <div className="donate-hero" style={{
           flex: 1, position: "relative", overflow: "hidden",
-          display: "flex", alignItems: "flex-end", padding: "48px 40px",
+          display: "flex", flexDirection: "column", justifyContent: "center",
+          padding: "60px 48px 40px",
         }}>
           {/* YouTube Background */}
           <div style={{
@@ -193,34 +339,128 @@ function DonatePage() {
             />
           </div>
 
-          {/* Dark Overlay */}
+          {/* Horizontal gradient overlay */}
           <div style={{
             position: "absolute", inset: 0, zIndex: 1,
-            background: "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.3) 100%)",
+            background: "linear-gradient(to right, rgba(13,27,62,0.95) 0%, rgba(13,27,62,0.7) 45%, rgba(13,27,62,0.2) 100%)",
+          }} />
+          {/* Vertical gradient overlay */}
+          <div style={{
+            position: "absolute", inset: 0, zIndex: 2,
+            background: "linear-gradient(to bottom, rgba(13,27,62,0.4) 0%, transparent 30%, rgba(13,27,62,0.6) 100%)",
           }} />
 
-          {/* Left Content */}
-          <div style={{ position: "relative", zIndex: 2, maxWidth: "480px" }}>
-            <h1 style={{ fontSize: "28px", fontWeight: 900, color: "white", lineHeight: 1.3, marginBottom: "16px" }}>
-              Unlock a world of learning —{" "}
-              <span style={{ color: "#3B82F6" }}>for every child</span>
+          {/* Floating live donation toast */}
+          <div className="donate-hero-toast" style={{
+            position: "absolute", top: "24px", right: "24px", zIndex: 4,
+            display: "flex", alignItems: "center", gap: "10px",
+            background: "rgba(255,255,255,0.95)", backdropFilter: "blur(8px)",
+            borderRadius: "28px", padding: "8px 16px 8px 8px",
+            boxShadow: "0 4px 16px rgba(0,0,0,0.12)",
+          }}>
+            <div style={{
+              width: "32px", height: "32px", borderRadius: "50%",
+              background: "linear-gradient(135deg, #e85d04, #ff8c42)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              color: "white", fontSize: "12px", fontWeight: 700, flexShrink: 0,
+            }}>CW</div>
+            <div>
+              <div style={{ fontSize: "12px", fontWeight: 600, color: "#0d1b3e" }}>
+                Catherine W. just donated $50{" "}
+                <span style={{ color: "#22c55e", fontSize: "8px" }}>{"\u25CF"}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Hero content */}
+          <div style={{ position: "relative", zIndex: 3, maxWidth: "560px" }}>
+            {/* Social proof pill */}
+            <div style={{
+              display: "inline-flex", alignItems: "center", gap: "8px",
+              background: "rgba(255,255,255,0.12)", backdropFilter: "blur(4px)",
+              border: "1px solid rgba(255,255,255,0.2)",
+              borderRadius: "20px", padding: "6px 14px", marginBottom: "24px",
+              fontSize: "13px", color: "white", fontWeight: 500,
+            }}>
+              <span style={{ color: "#ffd166", letterSpacing: "1px" }}>{"\u2605\u2605\u2605\u2605\u2605"}</span>
+              Trusted by 12,000+ families worldwide
+            </div>
+
+            {/* Headline */}
+            <h1 className="donate-hero-headline" style={{
+              fontSize: "56px", fontWeight: 800, lineHeight: 1.1,
+              letterSpacing: "-1px", marginBottom: "20px",
+            }}>
+              <span style={{ color: "white" }}>Every child deserves</span>
+              <br />
+              <span style={{ color: "#ffd166" }}>a chance to dream big.</span>
             </h1>
-            <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.85)", maxWidth: "400px", lineHeight: 1.6, marginBottom: "28px" }}>
-              Every donation helps Amar&eacute;'s Big Planet create free, inclusive educational content for kids aged 3-13. Your support brings songs, stories, and adventures to children around the world.
+
+            {/* Subheadline */}
+            <p style={{
+              fontSize: "19px", color: "rgba(255,255,255,0.92)",
+              maxWidth: "560px", lineHeight: 1.6, marginBottom: "32px",
+            }}>
+              Your $55 sends one child on 30 learning adventures — songs, stories, and lessons crafted for kids aged 3&ndash;13, in 50 countries, 100% free.
             </p>
-            <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
+
+            {/* Dual CTAs */}
+            <div style={{ display: "flex", gap: "14px", flexWrap: "wrap", marginBottom: "40px" }}>
+              <a
+                href="#donate-form"
+                className="donate-hero-cta-primary"
+                style={{
+                  display: "inline-flex", alignItems: "center", gap: "8px",
+                  background: "#e85d04", color: "white", fontSize: "16px",
+                  fontWeight: 700, padding: "16px 32px", borderRadius: "30px",
+                  textDecoration: "none", transition: "all 0.2s",
+                  boxShadow: "0 6px 20px rgba(232,93,4,0.5)",
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = "#ff8c42"; e.currentTarget.style.transform = "translateY(-2px)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = "#e85d04"; e.currentTarget.style.transform = "translateY(0)"; }}
+              >
+                {"\u2764"} Donate Now {"\u2192"}
+              </a>
+              <a
+                href={`https://www.youtube.com/watch?v=${youtubeVideoId}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="donate-hero-cta-secondary"
+                style={{
+                  display: "inline-flex", alignItems: "center", gap: "8px",
+                  background: "rgba(255,255,255,0.1)", backdropFilter: "blur(4px)",
+                  border: "1px solid rgba(255,255,255,0.3)",
+                  color: "white", fontSize: "16px", fontWeight: 600,
+                  padding: "16px 28px", borderRadius: "30px",
+                  textDecoration: "none", transition: "all 0.2s",
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.2)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.1)"; }}
+              >
+                {"\u25B6"} Watch Our Story
+              </a>
+            </div>
+
+            {/* Stats strip */}
+            <div className="donate-hero-stats" style={{
+              display: "flex", gap: "36px", flexWrap: "wrap",
+              borderTop: "1px solid rgba(255,255,255,0.2)",
+              paddingTop: "28px",
+            }}>
               {[
-                { number: "50K+", label: "Kids reached" },
-                { number: "85+", label: "Episodes" },
-                { number: "127", label: "Sponsors" },
+                { number: "12,400+", label: "Children reached" },
+                { number: "50", label: "Countries" },
+                { number: "100%", label: "Free forever" },
+                { number: "4.9\u2605", label: "Parent rating" },
               ].map((stat) => (
                 <div key={stat.label}>
-                  <div style={{ fontSize: "20px", fontWeight: 700, color: "white" }}>{stat.number}</div>
-                  <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.7)" }}>{stat.label}</div>
+                  <div className="donate-hero-stat-number" style={{ fontSize: "32px", fontWeight: 700, color: "#ffd166", lineHeight: 1.2 }}>{stat.number}</div>
+                  <div style={{ fontSize: "12px", color: "white", textTransform: "uppercase", letterSpacing: "1.5px", marginTop: "4px" }}>{stat.label}</div>
                 </div>
               ))}
             </div>
           </div>
+
         </div>
 
         {/* RIGHT SIDE — Donation Card */}
@@ -456,8 +696,92 @@ function DonatePage() {
         </div>
       </div>
 
-      {/* Responsive: stack on mobile */}
+      {/* Responsive + navbar styles */}
       <style>{`
+        /* Nav link base */
+        .donate-nav-link {
+          padding: 8px 14px;
+          font-size: 14px;
+          font-weight: 500;
+          color: #0d1b3e;
+          text-decoration: none;
+          position: relative;
+          transition: color 0.2s;
+          border-radius: 8px;
+        }
+        .donate-nav-link:hover {
+          color: #1a3a6e;
+          background: rgba(13, 27, 62, 0.04);
+        }
+        .donate-nav-link:focus-visible {
+          outline: 2px solid #e85d04;
+          outline-offset: 2px;
+          border-radius: 6px;
+        }
+        .donate-nav-link::after {
+          content: "";
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 0;
+          height: 2.5px;
+          background: #e85d04;
+          border-radius: 2px;
+          transition: width 0.2s;
+        }
+        .donate-nav-link:hover::after {
+          width: 50%;
+        }
+        .donate-nav-link--active {
+          color: #e85d04 !important;
+          font-weight: 700;
+        }
+        .donate-nav-link--active::after {
+          width: 60% !important;
+          background: #e85d04;
+        }
+
+        /* Secure dot pulse */
+        @keyframes securePulse {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50% { opacity: 0.6; transform: scale(1.4); }
+        }
+        .donate-secure-dot {
+          animation: securePulse 2s ease-in-out infinite;
+        }
+
+        /* Hero toast animations — only for users who allow motion */
+        @keyframes heroToastSlideIn {
+          from { opacity: 0; transform: translateX(40px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes heroToastFloat {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-6px); }
+        }
+        @media (prefers-reduced-motion: no-preference) {
+          .donate-hero-toast {
+            animation: heroToastSlideIn 0.5s ease-out, heroToastFloat 3s ease-in-out 0.5s infinite;
+          }
+        }
+
+        /* Hero CTA focus states */
+        .donate-hero-cta-primary:focus-visible,
+        .donate-hero-cta-secondary:focus-visible {
+          outline: 2px solid #ffd166;
+          outline-offset: 3px;
+        }
+
+        /* Focus states for buttons */
+        .donate-nav-cta:focus-visible,
+        .donate-nav-hamburger:focus-visible,
+        .donate-nav-currency button:focus-visible {
+          outline: 2px solid #e85d04;
+          outline-offset: 2px;
+        }
+
+        /* Layout responsive */
         @media (max-width: 768px) {
           div[style*="min-height: calc(100vh - 71px)"] {
             flex-direction: column !important;
@@ -465,6 +789,54 @@ function DonatePage() {
           div[style*="width: 400px"] {
             width: 100% !important;
             flex-shrink: unset !important;
+          }
+        }
+
+        /* Hero responsive — under 900px */
+        @media (max-width: 900px) {
+          .donate-hero {
+            padding: 40px 24px 60px !important;
+          }
+          .donate-hero-headline {
+            font-size: 36px !important;
+          }
+          .donate-hero-stats {
+            gap: 24px !important;
+          }
+          .donate-hero-stat-number {
+            font-size: 24px !important;
+          }
+          .donate-hero-toast {
+            top: 12px !important;
+            right: 12px !important;
+          }
+          .donate-hero-cta-secondary {
+            display: none !important;
+          }
+        }
+
+        /* Navbar responsive — under 900px */
+        @media (max-width: 900px) {
+          .donate-nav-links {
+            display: none !important;
+          }
+          .donate-nav-trust {
+            display: none !important;
+          }
+          .donate-nav-hamburger {
+            display: flex !important;
+          }
+          .donate-nav-title {
+            height: 32px !important;
+          }
+          .donate-nav-currency {
+            display: none !important;
+          }
+        }
+
+        @media (min-width: 901px) {
+          .donate-mobile-menu {
+            display: none !important;
           }
         }
       `}</style>
