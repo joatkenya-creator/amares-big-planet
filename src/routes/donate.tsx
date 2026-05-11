@@ -16,18 +16,22 @@ export const Route = createFileRoute("/donate")({
   }),
 });
 
-const EXCHANGE_RATES: Record<string, number> = {
-  USD: 1, KES: 129, GBP: 0.79, EUR: 0.92, NGN: 1550, ZAR: 18.5, GHS: 15.2,
+const FALLBACK_RATES: Record<string, number> = {
+  USD: 1, GBP: 0.79, EUR: 0.92, CAD: 1.36,
+  AUD: 1.53, KES: 129, NGN: 1550, ZAR: 18.5, GHS: 15.2,
 };
 
-const CURRENCY_FLAGS: Record<string, string> = {
-  USD: "\u{1F1FA}\u{1F1F8}", KES: "\u{1F1F0}\u{1F1EA}", GBP: "\u{1F1EC}\u{1F1E7}",
-  EUR: "\u{1F1EA}\u{1F1FA}", NGN: "\u{1F1F3}\u{1F1EC}", ZAR: "\u{1F1FF}\u{1F1E6}", GHS: "\u{1F1EC}\u{1F1ED}",
-};
-
-const CURRENCY_SYMBOLS: Record<string, string> = {
-  USD: "$", KES: "KSh", GBP: "\u00A3", EUR: "\u20AC", NGN: "\u20A6", ZAR: "R", GHS: "GH\u20B5",
-};
+const CURRENCY_META = [
+  { code: "USD", flag: "🇺🇸", label: "US Dollar", symbol: "$" },
+  { code: "GBP", flag: "🇬🇧", label: "British Pound", symbol: "£" },
+  { code: "EUR", flag: "🇪🇺", label: "Euro", symbol: "€" },
+  { code: "CAD", flag: "🇨🇦", label: "Canadian Dollar", symbol: "C$" },
+  { code: "AUD", flag: "🇦🇺", label: "Australian Dollar", symbol: "A$" },
+  { code: "KES", flag: "🇰🇪", label: "Kenyan Shilling", symbol: "KSh" },
+  { code: "NGN", flag: "🇳🇬", label: "Nigerian Naira", symbol: "₦" },
+  { code: "ZAR", flag: "🇿🇦", label: "South African Rand", symbol: "R" },
+  { code: "GHS", flag: "🇬🇭", label: "Ghanaian Cedi", symbol: "GH₵" },
+];
 
 const ONE_TIME_AMOUNTS = [55, 75, 100, 150];
 
@@ -57,36 +61,65 @@ function DonatePage() {
   const [mode, setMode] = useState<"once" | "recurring">("once");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [customAmount, setCustomAmount] = useState("0");
-  const [currency, setCurrency] = useState("USD");
   const [dedicate, setDedicate] = useState(false);
   const [showComment, setShowComment] = useState(false);
   const [comment, setComment] = useState("");
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [navCurrency, setNavCurrency] = useState<"USD" | "KSh">("USD");
+  const [currencyCode, setCurrencyCode] = useState("USD");
+  const [rates, setRates] = useState<Record<string, number>>(FALLBACK_RATES);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const fetchRates = async () => {
+      try {
+        const API_KEY = import.meta.env.VITE_EXCHANGE_RATE_API_KEY;
+        const response = await fetch(
+          `https://v6.exchangerate-api.com/v6/${API_KEY}/latest/USD`
+        );
+        const data = await response.json();
+        if (data.result === 'success') {
+          setRates(data.conversion_rates);
+        }
+      } catch (error) {
+        setRates(FALLBACK_RATES);
+      }
+    };
+    fetchRates();
+  }, []);
+
+  const meta = CURRENCY_META.find((c) => c.code === currencyCode) ?? CURRENCY_META[0];
+  const currency = { ...meta, rate: rates[currencyCode] ?? 1 };
 
   // Single source of truth: always read from customAmount
   const inputValue = parseFloat(customAmount) || 0;
 
-  // Convert the input value (in selected currency) to USD
-  const amountInUSD = inputValue / EXCHANGE_RATES[currency];
+  const formatNumber = (n: number) =>
+    n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
-  // Conversion text: always derived from the input field value
+  const isCustom = selectedIndex === -1;
+
   const conversionText = (() => {
-    if (inputValue <= 0) return `\u2248 KSh0.00`;
-    const kesAmt = amountInUSD * EXCHANGE_RATES.KES;
-    if (currency === "USD") {
-      return `\u2248 KSh${kesAmt.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    if (inputValue === 0) return "";
+    const kesRate = rates.KES ?? 129;
+    if (!isCustom) {
+      // Tier selected — amount is always USD
+      const kshAmount = inputValue * kesRate;
+      return `≈ KSh ${formatNumber(kshAmount)}`;
     }
-    return `\u2248 $${amountInUSD.toFixed(2)} USD \u00B7 KSh${kesAmt.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    // Custom amount — in selected currency
+    const usdAmount = inputValue / currency.rate;
+    const kshAmount = usdAmount * kesRate;
+    if (currency.code === "USD") return `≈ KSh ${formatNumber(kshAmount)}`;
+    if (currency.code === "KES") return `≈ $${formatNumber(usdAmount)} USD`;
+    return `≈ $${formatNumber(usdAmount)} USD · KSh ${formatNumber(kshAmount)}`;
   })();
 
   const buttonText = (() => {
-    const sym = CURRENCY_SYMBOLS[currency];
     const suffix = mode === "recurring" ? "/month" : "";
-    return `\u{1F499} Donate ${sym}${inputValue.toFixed(2)}${suffix}`;
+    const sym = isCustom ? currency.symbol : "$";
+    return `\u{1F499} Donate ${sym}${formatNumber(inputValue)}${suffix}`;
   })();
 
   // Reset to 0 when mode changes
@@ -98,9 +131,8 @@ function DonatePage() {
   // When a tier is selected, write the converted amount into the input
   function selectTier(i: number) {
     setSelectedIndex(i);
-    const usdAmt = mode === "once" ? ONE_TIME_AMOUNTS[i] : RECURRING_TIERS[i].amount;
-    const converted = usdAmt * EXCHANGE_RATES[currency];
-    setCustomAmount(converted % 1 === 0 ? String(converted) : converted.toFixed(2));
+    const amt = mode === "once" ? ONE_TIME_AMOUNTS[i] : RECURRING_TIERS[i].amount;
+    setCustomAmount(String(amt));
   }
 
   function handleDonate() {
@@ -113,9 +145,7 @@ function DonatePage() {
   }
 
   function initiatePaystack() {
-    const paystackCurrency = ["NGN", "GHS", "ZAR", "KES", "USD"].includes(currency) ? currency : "USD";
-    const amountInCurrency = amountInUSD * EXCHANGE_RATES[paystackCurrency];
-    const amountInSmallestUnit = Math.round(amountInCurrency * 100);
+    const amountInSmallestUnit = Math.round(inputValue * 100);
 
     const ref = `ABP-${Date.now()}-${Math.random().toString(36).substring(2, 8)}`;
 
@@ -129,7 +159,7 @@ function DonatePage() {
       key: "pk_test_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
       email: email,
       amount: amountInSmallestUnit,
-      currency: paystackCurrency,
+      currency: isCustom ? currencyCode : "USD",
       ref: ref,
       metadata: {
         custom_fields: [
@@ -147,7 +177,7 @@ function DonatePage() {
     handler.openIframe();
   }
 
-  const youtubeVideoId = "bRm-MR5inI4";
+  const youtubeVideoId = "gGeTgljHdA4";
 
   return (
     <div style={{ minHeight: "100vh", fontFamily: "sans-serif", display: "flex", flexDirection: "column" }}>
@@ -192,33 +222,6 @@ function DonatePage() {
 
           {/* Right side actions */}
           <div style={{ display: "flex", alignItems: "center", gap: "12px", flexShrink: 0 }}>
-            {/* Currency switcher */}
-            <div className="donate-nav-currency" style={{
-              display: "flex", borderRadius: "20px", overflow: "hidden",
-              border: "1.5px solid #e0e0e0", fontSize: "12px", fontWeight: 600,
-            }}>
-              <button
-                onClick={() => { setNavCurrency("USD"); setCurrency("USD"); }}
-                aria-label="Switch to US Dollars"
-                style={{
-                  padding: "5px 10px", border: "none", cursor: "pointer",
-                  background: navCurrency === "USD" ? "#0d1b3e" : "white",
-                  color: navCurrency === "USD" ? "white" : "#0d1b3e",
-                  transition: "all 0.2s",
-                }}
-              >USD</button>
-              <button
-                onClick={() => { setNavCurrency("KSh"); setCurrency("KES"); }}
-                aria-label="Switch to Kenyan Shillings"
-                style={{
-                  padding: "5px 10px", border: "none", cursor: "pointer",
-                  background: navCurrency === "KSh" ? "#0d1b3e" : "white",
-                  color: navCurrency === "KSh" ? "white" : "#0d1b3e",
-                  transition: "all 0.2s",
-                }}
-              >KSh</button>
-            </div>
-
             {/* Secure trust pill — desktop only */}
             <div className="donate-nav-trust" style={{
               display: "flex", alignItems: "center", gap: "6px",
@@ -314,41 +317,43 @@ function DonatePage() {
       </nav>
 
       {/* MAIN CONTENT — Split Screen */}
-      <div style={{ flex: 1, display: "flex", minHeight: "calc(100vh - 71px)" }}>
+      <div style={{ flex: 1, display: "flex", minHeight: "calc(100vh - 71px)", position: "relative", overflow: "hidden" }}>
+
+        {/* Video Background — Full Width */}
+        <div style={{
+          position: "absolute", top: "-60px", left: "-60px",
+          right: "-60px", bottom: "-60px",
+          zIndex: 0, overflow: "hidden",
+        }}>
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            style={{
+              position: "absolute", top: "-60px", left: "-60px",
+              width: "calc(100% + 120px)", height: "calc(100% + 120px)",
+              objectFit: "cover", pointerEvents: "none", zIndex: 0,
+            }}
+          >
+            <source src="/videos/donation-bg.mp4" type="video/mp4" />
+          </video>
+        </div>
+
+        {/* Dark overlay */}
+        <div style={{
+          position: "absolute", top: 0, left: 0,
+          width: "100%", height: "100%",
+          background: "linear-gradient(to right, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.1) 100%)",
+          zIndex: 1,
+        }} />
 
         {/* LEFT SIDE — Hero */}
         <div className="donate-hero" style={{
-          flex: 1, position: "relative", overflow: "hidden",
+          flex: 1, position: "relative",
           display: "flex", flexDirection: "column", justifyContent: "center",
-          padding: "60px 48px 40px",
+          padding: "60px 48px 40px", zIndex: 2,
         }}>
-          {/* YouTube Background */}
-          <div style={{
-            position: "absolute", inset: "-60px 0", pointerEvents: "none", zIndex: 0, overflow: "hidden",
-          }}>
-            <iframe
-              src={`https://www.youtube.com/embed/${youtubeVideoId}?autoplay=1&mute=1&loop=1&playlist=${youtubeVideoId}&controls=0&showinfo=0&modestbranding=1&rel=0&playsinline=1`}
-              style={{
-                position: "absolute", top: "50%", left: "50%",
-                width: "300%", height: "300%",
-                transform: "translate(-50%, -50%)", border: "none",
-              }}
-              allow="autoplay; encrypted-media"
-              allowFullScreen
-              title="Background video"
-            />
-          </div>
-
-          {/* Horizontal gradient overlay */}
-          <div style={{
-            position: "absolute", inset: 0, zIndex: 1,
-            background: "linear-gradient(to right, rgba(13,27,62,0.95) 0%, rgba(13,27,62,0.7) 45%, rgba(13,27,62,0.2) 100%)",
-          }} />
-          {/* Vertical gradient overlay */}
-          <div style={{
-            position: "absolute", inset: 0, zIndex: 2,
-            background: "linear-gradient(to bottom, rgba(13,27,62,0.4) 0%, transparent 30%, rgba(13,27,62,0.6) 100%)",
-          }} />
 
           {/* Floating live donation toast */}
           <div className="donate-hero-toast" style={{
@@ -391,9 +396,9 @@ function DonatePage() {
               fontSize: "56px", fontWeight: 800, lineHeight: 1.1,
               letterSpacing: "-1px", marginBottom: "20px",
             }}>
-              <span style={{ color: "white" }}>Every child deserves</span>
+              <span style={{ color: "white" }}>Free learning adventures for</span>
               <br />
-              <span style={{ color: "#ffd166" }}>a chance to dream big.</span>
+              <span style={{ color: "#ffd166" }}>every kid, everywhere.</span>
             </h1>
 
             {/* Subheadline */}
@@ -401,7 +406,7 @@ function DonatePage() {
               fontSize: "19px", color: "rgba(255,255,255,0.92)",
               maxWidth: "560px", lineHeight: 1.6, marginBottom: "32px",
             }}>
-              Your $55 sends one child on 30 learning adventures — songs, stories, and lessons crafted for kids aged 3&ndash;13, in 50 countries, 100% free.
+              Your donation brings free songs, stories, and learning adventures to kids aged 3&ndash;13 across 50 countries. Every dollar helps Amar&eacute; and the Gear Crew reach more little explorers.
             </p>
 
             {/* Dual CTAs */}
@@ -422,7 +427,7 @@ function DonatePage() {
                 {"\u2764"} Donate Now {"\u2192"}
               </a>
               <a
-                href={`https://www.youtube.com/watch?v=${youtubeVideoId}`}
+                href="https://www.youtube.com/@AmaresBigPlanet"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="donate-hero-cta-secondary"
@@ -437,7 +442,7 @@ function DonatePage() {
                 onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.2)"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.1)"; }}
               >
-                {"\u25B6"} Watch Our Story
+                {"\u25B6"} See Our Impact
               </a>
             </div>
 
@@ -450,7 +455,7 @@ function DonatePage() {
               {[
                 { number: "12,400+", label: "Children reached" },
                 { number: "50", label: "Countries" },
-                { number: "100%", label: "Free forever" },
+                { number: "100%", label: "Goes to kids" },
                 { number: "4.9\u2605", label: "Parent rating" },
               ].map((stat) => (
                 <div key={stat.label}>
@@ -465,9 +470,11 @@ function DonatePage() {
 
         {/* RIGHT SIDE — Donation Card */}
         <div style={{
-          width: "400px", flexShrink: 0, background: "#fafafa",
+          width: "400px", flexShrink: 0, background: "rgba(255,255,255,0.95)",
+          backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)",
           overflowY: "auto", padding: "32px", paddingTop: "64px",
           display: "flex", flexDirection: "column", justifyContent: "center",
+          position: "relative", zIndex: 2,
         }}>
           {/* Heading */}
           <h2 style={{ textAlign: "center", fontSize: "16px", fontWeight: 700, color: "#1a1a2e", marginBottom: "16px" }}>
@@ -498,8 +505,7 @@ function DonatePage() {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", marginBottom: "16px" }}>
             {mode === "once"
               ? ONE_TIME_AMOUNTS.map((amt, i) => {
-                  const tierConverted = amt * EXCHANGE_RATES[currency];
-                  const isActive = selectedIndex === i && inputValue === tierConverted;
+                  const isActive = selectedIndex === i && inputValue === amt;
                   return (
                     <button
                       key={amt}
@@ -516,8 +522,7 @@ function DonatePage() {
                   );
                 })
               : RECURRING_TIERS.map((tier, i) => {
-                  const tierConverted = tier.amount * EXCHANGE_RATES[currency];
-                  const isActive = selectedIndex === i && inputValue === tierConverted;
+                  const isActive = selectedIndex === i && inputValue === tier.amount;
                   return (
                     <button
                       key={tier.name}
@@ -537,14 +542,14 @@ function DonatePage() {
                 })}
           </div>
 
-          {/* Custom Amount */}
+          {/* Custom Amount with Currency Dropdown */}
           <div style={{
-            border: "1.5px solid #e0e0e0", borderRadius: "10px", padding: "10px", marginBottom: "12px",
+            border: "1.5px solid #e0e0e0", borderRadius: "10px", padding: "10px", marginBottom: "4px",
             transition: "border-color 0.2s", background: "white",
           }}>
             <div style={{ fontSize: "11px", color: "#888", marginBottom: "6px" }}>Or enter custom amount</div>
             <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-              <span style={{ fontSize: "15px", color: "#1a1a2e", fontWeight: 600 }}>{CURRENCY_SYMBOLS[currency]}</span>
+              <span style={{ fontSize: "15px", color: "#1a1a2e", fontWeight: 600 }}>{currency.symbol}</span>
               <input
                 type="number"
                 min="0"
@@ -568,24 +573,34 @@ function DonatePage() {
                 }}
               />
               <select
-                value={currency}
-                onChange={(e) => setCurrency(e.target.value)}
+                value={currencyCode}
+                onChange={(e) => {
+                  setCurrencyCode(e.target.value);
+                  setSelectedIndex(-1);
+                }}
                 style={{
-                  border: "1px solid #e0e0e0", borderRadius: "6px", padding: "4px 6px",
-                  fontSize: "12px", background: "white", cursor: "pointer", outline: "none",
+                  padding: "4px 6px", borderRadius: "6px",
+                  border: "1px solid #e0e0e0", fontSize: "13px", fontWeight: 600,
+                  color: "#1a1a2e", background: "#f5f5f5", outline: "none",
+                  cursor: "pointer", flexShrink: 0,
                 }}
               >
-                {Object.keys(EXCHANGE_RATES).map((cur) => (
-                  <option key={cur} value={cur}>
-                    {CURRENCY_FLAGS[cur]} {cur}
+                {CURRENCY_META.map((c) => (
+                  <option key={c.code} value={c.code}>
+                    {c.flag} {c.code}
                   </option>
                 ))}
               </select>
             </div>
-            {conversionText && (
-              <div style={{ fontSize: "11px", color: "#3B82F6", marginTop: "6px" }}>{conversionText}</div>
-            )}
           </div>
+
+          {/* Conversion Display */}
+          {conversionText && (
+            <div style={{ fontSize: "11px", color: "#3B82F6", marginBottom: "12px", paddingLeft: "2px" }}>
+              {conversionText}
+            </div>
+          )}
+          {!conversionText && <div style={{ marginBottom: "12px" }} />}
 
           {/* Email */}
           <div style={{ marginBottom: "12px" }}>
@@ -775,8 +790,7 @@ function DonatePage() {
 
         /* Focus states for buttons */
         .donate-nav-cta:focus-visible,
-        .donate-nav-hamburger:focus-visible,
-        .donate-nav-currency button:focus-visible {
+        .donate-nav-hamburger:focus-visible {
           outline: 2px solid #e85d04;
           outline-offset: 2px;
         }
@@ -828,9 +842,6 @@ function DonatePage() {
           }
           .donate-nav-title {
             height: 32px !important;
-          }
-          .donate-nav-currency {
-            display: none !important;
           }
         }
 

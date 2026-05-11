@@ -703,19 +703,24 @@ function Index() {
       <section className="relative bg-black pb-24 sm:pb-32 overflow-hidden min-h-[80vh]">
         {/* Video background */}
         <div className="absolute inset-0 z-0 overflow-hidden">
-          <iframe
-            src="https://www.youtube.com/embed/bRm-MR5inI4?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&playlist=bRm-MR5inI4"
-            title="Background video"
-            allow="autoplay; encrypted-media"
-            className="absolute top-1/2 left-1/2 pointer-events-none border-0"
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
             style={{
-              transform: "translate(-50%, -50%)",
-              width: "177.78vh",
-              height: "100vh",
-              minWidth: "100%",
-              minHeight: "100%",
+              position: 'absolute',
+              top: '0',
+              left: '0',
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              pointerEvents: 'none',
+              zIndex: 0,
             }}
-          />
+          >
+            <source src="/videos/donation-bg.mp4" type="video/mp4" />
+          </video>
           <div className="absolute inset-0 bg-black/50" />
         </div>
         <div className="pt-20 sm:pt-28" />
