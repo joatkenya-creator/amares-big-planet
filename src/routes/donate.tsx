@@ -317,42 +317,39 @@ function DonatePage() {
       </nav>
 
       {/* MAIN CONTENT — Split Screen */}
-      <div style={{ flex: 1, display: "flex", minHeight: "calc(100vh - 71px)", position: "relative", overflow: "hidden" }}>
+      <div style={{ flex: 1, position: "relative", overflow: "hidden", minHeight: "calc(100vh - 71px)" }}>
 
-        {/* Video Background — Full Width */}
-        <div style={{
-          position: "absolute", top: "-60px", left: "-60px",
-          right: "-60px", bottom: "-60px",
-          zIndex: 0, overflow: "hidden",
-        }}>
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            style={{
-              position: "absolute", top: "-60px", left: "-60px",
-              width: "calc(100% + 120px)", height: "calc(100% + 120px)",
-              objectFit: "cover", pointerEvents: "none", zIndex: 0,
-            }}
-          >
-            <source src="/videos/donation-bg.mp4" type="video/mp4" />
-          </video>
-        </div>
+        {/* Video Background — Full Width (direct child of page wrapper) */}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          style={{
+            position: "absolute", top: 0, left: 0,
+            width: "100%", height: "100%",
+            objectFit: "cover", pointerEvents: "none", zIndex: 0,
+          }}
+        >
+          <source src="/videos/donation-bg.mp4" type="video/mp4" />
+        </video>
 
-        {/* Dark overlay */}
+        {/* Dark overlay — full width */}
         <div style={{
           position: "absolute", top: 0, left: 0,
           width: "100%", height: "100%",
-          background: "linear-gradient(to right, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.1) 100%)",
+          background: "linear-gradient(to right, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.15) 100%)",
           zIndex: 1,
         }} />
+
+        {/* Content layer — flex row above video + overlay */}
+        <div className="donate-content-row" style={{ position: "relative", zIndex: 2, display: "flex", minHeight: "calc(100vh - 71px)" }}>
 
         {/* LEFT SIDE — Hero */}
         <div className="donate-hero" style={{
           flex: 1, position: "relative",
           display: "flex", flexDirection: "column", justifyContent: "center",
-          padding: "60px 48px 40px", zIndex: 2,
+          padding: "60px 48px 40px",
         }}>
 
           {/* Floating live donation toast */}
@@ -411,8 +408,19 @@ function DonatePage() {
 
             {/* Dual CTAs */}
             <div style={{ display: "flex", gap: "14px", flexWrap: "wrap", marginBottom: "40px" }}>
-              <a
-                href="#donate-form"
+              <button
+                onClick={() => {
+                  const card = document.getElementById('donation-card');
+                  if (card) {
+                    const navbarHeight = 70;
+                    const cardTop = card.getBoundingClientRect().top + window.scrollY - navbarHeight;
+                    window.scrollTo({ top: cardTop, behavior: 'smooth' });
+                    card.classList.add('donate-card-highlight');
+                    card.addEventListener('animationend', () => {
+                      card.classList.remove('donate-card-highlight');
+                    }, { once: true });
+                  }
+                }}
                 className="donate-hero-cta-primary"
                 style={{
                   display: "inline-flex", alignItems: "center", gap: "8px",
@@ -420,12 +428,13 @@ function DonatePage() {
                   fontWeight: 700, padding: "16px 32px", borderRadius: "30px",
                   textDecoration: "none", transition: "all 0.2s",
                   boxShadow: "0 6px 20px rgba(232,93,4,0.5)",
+                  border: "none", cursor: "pointer",
                 }}
                 onMouseEnter={(e) => { e.currentTarget.style.background = "#ff8c42"; e.currentTarget.style.transform = "translateY(-2px)"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = "#e85d04"; e.currentTarget.style.transform = "translateY(0)"; }}
               >
                 {"\u2764"} Donate Now {"\u2192"}
-              </a>
+              </button>
               <a
                 href="https://www.youtube.com/@AmaresBigPlanet"
                 target="_blank"
@@ -468,13 +477,18 @@ function DonatePage() {
 
         </div>
 
-        {/* RIGHT SIDE — Donation Card */}
-        <div style={{
-          width: "400px", flexShrink: 0, background: "rgba(255,255,255,0.95)",
-          backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)",
-          overflowY: "auto", padding: "32px", paddingTop: "64px",
+        {/* RIGHT SIDE — Donation Card with frosted glass */}
+        <div className="donate-card-wrapper" style={{
+          width: "420px", flexShrink: 0, padding: "20px",
+          display: "flex", alignItems: "center",
+        }}>
+        <div id="donation-card" style={{
+          width: "100%", background: "rgba(255,255,255,0.88)",
+          backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)",
+          borderRadius: "16px", border: "1px solid rgba(255,255,255,0.3)",
+          overflowY: "auto", padding: "32px",
           display: "flex", flexDirection: "column", justifyContent: "center",
-          position: "relative", zIndex: 2,
+          position: "relative",
         }}>
           {/* Heading */}
           <h2 style={{ textAlign: "center", fontSize: "16px", fontWeight: 700, color: "#1a1a2e", marginBottom: "16px" }}>
@@ -709,10 +723,22 @@ function DonatePage() {
             </div>
           </div>
         </div>
+        </div>
+        </div>
       </div>
 
       {/* Responsive + navbar styles */}
       <style>{`
+        /* Donation card highlight animation */
+        @keyframes donateCardHighlight {
+          0% { box-shadow: 0 0 0 0 rgba(224,32,32,0.4); }
+          50% { box-shadow: 0 0 0 12px rgba(224,32,32,0); }
+          100% { box-shadow: 0 0 0 0 rgba(224,32,32,0); }
+        }
+        .donate-card-highlight {
+          animation: donateCardHighlight 0.6s ease;
+        }
+
         /* Nav link base */
         .donate-nav-link {
           padding: 8px 14px;
@@ -797,10 +823,10 @@ function DonatePage() {
 
         /* Layout responsive */
         @media (max-width: 768px) {
-          div[style*="min-height: calc(100vh - 71px)"] {
+          .donate-content-row {
             flex-direction: column !important;
           }
-          div[style*="width: 400px"] {
+          .donate-card-wrapper {
             width: 100% !important;
             flex-shrink: unset !important;
           }
