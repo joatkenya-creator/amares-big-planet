@@ -36,10 +36,10 @@ const CURRENCY_META = [
 const ONE_TIME_AMOUNTS = [55, 75, 100, 150];
 
 const RECURRING_TIERS = [
-  { name: "Bronze", amount: 10, perk: "Shout-out on social" },
-  { name: "Silver", amount: 25, perk: "Name in credits" },
-  { name: "Gold", amount: 50, perk: "Exclusive updates" },
-  { name: "Platinum", amount: 100, perk: "Logo on website" },
+  { name: "Bronze", amount: 100, perk: "Name in video credits" },
+  { name: "Silver", amount: 250, perk: "Early access + credits" },
+  { name: "Gold", amount: 500, perk: "Your child in a song" },
+  { name: "Platinum", amount: 1000, perk: "Custom character cameo" },
 ];
 
 const SUPPORTERS = [
@@ -69,7 +69,16 @@ function DonatePage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currencyCode, setCurrencyCode] = useState("USD");
   const [rates, setRates] = useState<Record<string, number>>(FALLBACK_RATES);
+  const [scrolled, setScrolled] = useState(false);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleScroll() {
+      setScrolled(window.scrollY > 0);
+    }
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     const fetchRates = async () => {
@@ -188,10 +197,11 @@ function DonatePage() {
         style={{
           background: "rgba(255,255,255,0.97)",
           backdropFilter: "blur(10px)",
-          boxShadow: "0 2px 12px rgba(13, 27, 62, 0.08)",
+          boxShadow: scrolled ? "0 2px 12px rgba(0,0,0,0.1)" : "none",
+          transition: "box-shadow 0.3s ease",
           position: "sticky",
           top: 0,
-          zIndex: 50,
+          zIndex: 1000,
         }}
       >
         <div style={{
@@ -229,10 +239,10 @@ function DonatePage() {
               borderRadius: "20px", padding: "5px 12px", fontSize: "12px",
               fontWeight: 600, color: "#166534",
             }}>
-              <span className="donate-secure-dot" style={{
-                width: "8px", height: "8px", borderRadius: "50%",
-                background: "#22c55e", display: "inline-block",
-              }} />
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22C55E" strokeWidth="2" strokeLinecap="round" style={{ flexShrink: 0 }}>
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0110 0v4"/>
+              </svg>
               Secure
             </div>
 
@@ -403,7 +413,7 @@ function DonatePage() {
               fontSize: "19px", color: "rgba(255,255,255,0.92)",
               maxWidth: "560px", lineHeight: 1.6, marginBottom: "32px",
             }}>
-              Your donation brings free songs, stories, and learning adventures to kids aged 3&ndash;13 across 50 countries. Every dollar helps Amar&eacute; and the Gear Crew reach more little explorers.
+              Your donation brings free songs, stories, and learning adventures to kids aged 3&ndash;13 around the world. Every dollar helps Amar&eacute; and the Gear Crew reach more little explorers.
             </p>
 
             {/* Dual CTAs */}

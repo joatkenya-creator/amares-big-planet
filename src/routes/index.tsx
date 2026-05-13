@@ -5,7 +5,6 @@ import amaresTitle from "@/assets/amares-title.png";
 import parentsSectionImg from "@/assets/parents-section.png";
 import planetMascot from "@/assets/planet-mascot.png";
 import sunMascot from "@/assets/sun-mascot.png";
-import rainbowMascot from "@/assets/rainbow-mascot.png";
 import musicMascot from "@/assets/music-mascot.png";
 
 export const Route = createFileRoute("/")({
@@ -63,9 +62,15 @@ const characters = [
     desc: "Logical, focused & fast thinker.",
   },
   {
-    name: "Trinity",
+    name: "Liz",
     img: "https://res.cloudinary.com/dee2vqvzl/image/upload/v1778137804/1776066524117_1_mgfdwz.png",
     desc: "Smart, calm & nurturing.",
+  },
+  {
+    name: "Bruce",
+    img: "https://res.cloudinary.com/dee2vqvzl/image/upload/v1778576697/1775649748215_2_crfvcf.png",
+    desc: "Logical, analytical & strategic thinker.",
+    color: "#3B82F6",
   },
 ];
 
@@ -80,7 +85,8 @@ const SEARCH_DATA = [
   { title: "Xavier", category: "Characters", emoji: "\u{1F4AA}", anchor: "#characters" },
   { title: "Dee", category: "Characters", emoji: "\u{1F9E9}", anchor: "#characters" },
   { title: "Neebah", category: "Characters", emoji: "\u{1F4A1}", anchor: "#characters" },
-  { title: "Trinity", category: "Characters", emoji: "\u{1F49C}", anchor: "#characters" },
+  { title: "Liz", category: "Characters", emoji: "\u{1F49C}", anchor: "#characters" },
+  { title: "Bruce", category: "Characters", emoji: "\u{1F9E0}", anchor: "#characters" },
 ];
 
 function Index() {
@@ -179,6 +185,7 @@ function Index() {
     }
     return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
+
 
   return (
     <div className="min-h-screen overflow-hidden bg-background">
@@ -429,6 +436,10 @@ function Index() {
             position: fixed;
             top: auto;
           }
+        }
+        @keyframes pulse-dot {
+          0%, 100% { transform: scale(1); opacity: 1; }
+          50% { transform: scale(1.3); opacity: 0.5; }
         }
       `}</style>
 
@@ -732,11 +743,11 @@ function Index() {
           className="absolute top-10 left-6 w-20 sm:w-32 animate-float-slow z-10"
         />
         <img
-          src={rainbowMascot}
+          src="https://res.cloudinary.com/dee2vqvzl/image/upload/v1778586253/train_nxikdm.png"
           alt=""
           aria-hidden
-          className="absolute bottom-10 left-4 w-24 sm:w-40 animate-float-slow"
-          style={{ animationDelay: "1s" }}
+          className="absolute bottom-10 left-4"
+          style={{ width: 150, opacity: 0.9, animation: "float 3s ease-in-out infinite" }}
         />
         <div className="absolute top-1/3 left-10 w-6 h-6 rounded-full bg-[var(--bubblegum)] animate-bounce-soft" />
         <div className="absolute top-20 left-1/3 w-4 h-4 rounded-full bg-[var(--sunshine)] animate-bounce-soft" style={{ animationDelay: "0.6s" }} />
@@ -778,6 +789,60 @@ function Index() {
             </a>
           </div>
 
+        </div>
+
+        {/* Donation Strip */}
+        <div style={{
+          background: "linear-gradient(90deg, #1a1a2e, #2a2a5e)",
+          padding: "14px 24px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 16,
+          flexWrap: "wrap",
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          width: "100%",
+          zIndex: 10,
+        }}>
+          <span style={{
+            width: 8, height: 8, borderRadius: "50%", background: "#e02020",
+            display: "inline-block", flexShrink: 0,
+            animation: "pulse-dot 2s infinite",
+          }} />
+          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.9)", fontWeight: 500, margin: 0 }}>
+            💙 <strong style={{ color: "#fff" }}>Help Amaré reach more kids!</strong> Your donation brings free adventures to children all over the world.
+          </p>
+          <Link to="/donate" style={{
+            background: "#e02020", color: "white", borderRadius: 16,
+            padding: "6px 16px", fontSize: 12, fontWeight: 600,
+            textDecoration: "none", whiteSpace: "nowrap", flexShrink: 0,
+            transition: "background 0.2s, transform 0.2s",
+          }}
+            onMouseEnter={e => { e.currentTarget.style.background = "#c01010"; e.currentTarget.style.transform = "scale(1.05)"; }}
+            onMouseLeave={e => { e.currentTarget.style.background = "#e02020"; e.currentTarget.style.transform = "scale(1)"; }}
+          >
+            Donate Now →
+          </Link>
+          <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
+            <div style={{ display: "flex" }}>
+              {[
+                { initials: "CW", bg: "#3B82F6" },
+                { initials: "KK", bg: "#22C55E" },
+                { initials: "AK", bg: "#E24B4A" },
+              ].map((a, i) => (
+                <span key={a.initials} style={{
+                  width: 20, height: 20, borderRadius: "50%", background: a.bg,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: 8, fontWeight: 700, color: "#fff",
+                  border: "2px solid #1a1a2e",
+                  marginLeft: i > 0 ? -6 : 0,
+                }}>{a.initials}</span>
+              ))}
+            </div>
+            <span style={{ fontSize: 11, color: "rgba(255,255,255,0.6)" }}>127 donated</span>
+          </div>
         </div>
       </section>
 
@@ -898,7 +963,7 @@ function Index() {
               Friends from <span className="text-[#E24B4A]">every corner</span> of the planet.
             </h2>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-6 max-w-5xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 max-w-6xl mx-auto">
             {characters.map((c, i) => (
               <div
                 key={c.name}
@@ -936,8 +1001,8 @@ function Index() {
                   />
                 </div>
                 <h3
-                  className="font-display text-xl font-extrabold text-[var(--primary)]"
-                  style={{ fontSize: "14px", transition: "font-size 0.3s ease" }}
+                  className={`font-display text-xl font-extrabold ${c.color ? "" : "text-[var(--primary)]"}`}
+                  style={{ fontSize: "14px", transition: "font-size 0.3s ease", ...(c.color ? { color: c.color } : {}) }}
                 >
                   {c.name}
                 </h3>
@@ -1188,6 +1253,7 @@ function Index() {
           </div>
         </div>
       </footer>
+
     </div>
   );
 }
