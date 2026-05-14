@@ -96,6 +96,8 @@ function Index() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
+  const [donationPopupVisible, setDonationPopupVisible] = useState(false);
+  const [donationPopupClosing, setDonationPopupClosing] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
   const mobileSearchRef = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -186,6 +188,21 @@ function Index() {
     return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
 
+  // Donation popup: show after 3s, once per session
+  useEffect(() => {
+    if (sessionStorage.getItem("donationPopupClosed")) return;
+    const timer = setTimeout(() => setDonationPopupVisible(true), 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  function closeDonationPopup() {
+    setDonationPopupClosing(true);
+    setTimeout(() => {
+      setDonationPopupVisible(false);
+      setDonationPopupClosing(false);
+      sessionStorage.setItem("donationPopupClosed", "1");
+    }, 400);
+  }
 
   return (
     <div className="min-h-screen overflow-hidden bg-background">
@@ -1253,6 +1270,98 @@ function Index() {
           </div>
         </div>
       </footer>
+
+      {/* Donation Popup Banner */}
+      {donationPopupVisible && (
+        <>
+          <style>{`
+            @keyframes donateSlideIn {
+              from { transform: translateX(120%); opacity: 0; }
+              to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes donateSlideOut {
+              from { transform: translateX(0); opacity: 1; }
+              to { transform: translateX(120%); opacity: 0; }
+            }
+          `}</style>
+          <div style={{
+            position: "fixed",
+            bottom: 24,
+            right: 24,
+            zIndex: 999,
+            background: "rgba(255,255,255,0.97)",
+            backdropFilter: "blur(12px)",
+            borderRadius: 14,
+            padding: "16px 20px",
+            boxShadow: "0 4px 24px rgba(0,0,0,0.15)",
+            maxWidth: 300,
+            borderLeft: "4px solid #e02020",
+            animation: donationPopupClosing
+              ? "donateSlideOut 0.4s ease forwards"
+              : "donateSlideIn 0.5s ease forwards",
+          }}>
+            <button
+              onClick={closeDonationPopup}
+              aria-label="Close donation popup"
+              style={{
+                position: "absolute",
+                top: 8,
+                right: 10,
+                background: "none",
+                border: "none",
+                fontSize: 18,
+                cursor: "pointer",
+                color: "#999",
+                lineHeight: 1,
+              }}
+            >
+              ✕
+            </button>
+            <p style={{ fontWeight: 700, fontSize: 15, margin: "0 0 6px", color: "#1a1a2e" }}>
+              💙 Help Amaré reach more kids!
+            </p>
+            <p style={{ fontSize: 13, color: "#555", margin: "0 0 12px", lineHeight: 1.4 }}>
+              Your donation brings free learning adventures to children all over the world.
+            </p>
+            <Link
+              to="/donate"
+              style={{
+                display: "inline-block",
+                background: "#e02020",
+                color: "white",
+                borderRadius: 20,
+                padding: "8px 18px",
+                fontSize: 13,
+                fontWeight: 700,
+                textDecoration: "none",
+                transition: "background 0.2s, transform 0.2s",
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = "#c01010"; e.currentTarget.style.transform = "scale(1.05)"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "#e02020"; e.currentTarget.style.transform = "scale(1)"; }}
+            >
+              Donate Now →
+            </Link>
+            <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 10 }}>
+              <div style={{ display: "flex" }}>
+                {[
+                  { initials: "CW", bg: "#3B82F6" },
+                  { initials: "KK", bg: "#22C55E" },
+                  { initials: "AK", bg: "#E24B4A" },
+                ].map((a, i) => (
+                  <span key={a.initials} style={{
+                    width: 22, height: 22, borderRadius: "50%", background: a.bg,
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    fontSize: 8, fontWeight: 700, color: "#fff",
+                    border: "2px solid #fff",
+                    marginLeft: i > 0 ? -6 : 0,
+                  }}>{a.initials}</span>
+                ))}
+              </div>
+              <span style={{ fontSize: 11, color: "#888" }}>127 people donated this month</span>
+            </div>
+          </div>
+        </>
+      )}
 
     </div>
   );
