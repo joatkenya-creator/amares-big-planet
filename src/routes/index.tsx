@@ -918,7 +918,7 @@ function Index() {
           </div>
           <div className="grid sm:grid-cols-3" style={{ gap: "16px" }}>
             {[
-              { id: "uk4R-SFmbrM", title: "ABC Song A to P", desc: "Learn the alphabet with Amaré and friends!" },
+              { id: "_ctNtUXel6Q", title: "ABC Song A to P", desc: "Learn the alphabet with Amaré and friends!" },
               { id: "Ga_sef8vcIA", title: "Ocean Animals Adventure", desc: "Discover amazing creatures under the sea!" },
               { id: "8jCfqeT6iNc", title: "BLAST OFF! Solar System Song", desc: "Explore all the planets in our solar system!" },
             ].map((video) => (
