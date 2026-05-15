@@ -520,7 +520,7 @@ function DonatePage() {
                   color: mode === m ? "white" : "#555",
                 }}
               >
-                {m === "once" ? "Give once" : "Recurring \u{1F499}"}
+                {m === "once" ? "Give once" : "Monthly \u{1F499}"}
               </button>
             ))}
           </div>
