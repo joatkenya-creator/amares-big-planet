@@ -84,7 +84,7 @@ const SEARCH_DATA = [
   { title: "Galaxy Train Adventures", category: "Shows", emoji: "\u{1F682}", anchor: "#shows" },
   { title: "Ocean Animals ABC", category: "Shows", emoji: "\u{1F419}", anchor: "#shows" },
   { title: "BLAST OFF! Solar System", category: "Shows", emoji: "\u{1F680}", anchor: "#shows" },
-  { title: "ABC Song A to P", category: "Music", emoji: "\u{1F3B5}", anchor: "#music" },
+  { title: "Learning ABCs I to L", category: "Music", emoji: "\u{1F3B5}", anchor: "#music" },
   { title: "Numbers & Counting Song", category: "Music", emoji: "\u{1F522}", anchor: "#music" },
   { title: "Nursery Rhymes Collection", category: "Music", emoji: "\u{1F3B6}", anchor: "#music" },
   { title: "Amare", category: "Characters", emoji: "\u{2B50}", anchor: "#characters" },
@@ -918,7 +918,7 @@ function Index() {
           </div>
           <div className="grid sm:grid-cols-3" style={{ gap: "16px" }}>
             {[
-              { id: "_ctNtUXel6Q", title: "ABC Song A to P", desc: "Learn the alphabet with Amaré and friends!" },
+              { id: "_ctNtUXel6Q", title: "Learning ABCs I to L", desc: "Learn the alphabet with Amaré and friends!" },
               { id: "Ga_sef8vcIA", title: "Ocean Animals Adventure", desc: "Discover amazing creatures under the sea!" },
               { id: "8jCfqeT6iNc", title: "BLAST OFF! Solar System Song", desc: "Explore all the planets in our solar system!" },
             ].map((video) => (
