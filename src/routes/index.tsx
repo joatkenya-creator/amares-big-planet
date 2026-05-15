@@ -789,7 +789,7 @@ function Index() {
             world made for little explorers and the grown-ups who love them.
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <div className="mt-8 pb-24 sm:pb-0 flex flex-wrap items-center justify-center gap-4">
             <a
               href="https://www.youtube.com/@amaresbigplanet"
               target="_blank"
