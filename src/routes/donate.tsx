@@ -46,6 +46,11 @@ const SUPPORTERS = [
   { name: "Catherine W.", initials: "CW", color: "#3B82F6", tier: "Gold", comment: "My kids love every episode!" },
   { name: "Keziah K.", initials: "KK", color: "#22C55E", tier: "$100", comment: "Representation matters. Thank you!" },
   { name: "Amina K.", initials: "AK", color: "#E24B4A", tier: "Silver", comment: "Educational AND fun!" },
+  { name: "James M.", initials: "JM", color: "#F59E0B", tier: "Bronze · $25", comment: "Love what you're doing for kids!" },
+  { name: "Sarah O.", initials: "SO", color: "#8B5CF6", tier: "Gold · $100", comment: "My daughter watches every episode!" },
+  { name: "David N.", initials: "DN", color: "#06B6D4", tier: "Silver · $50", comment: "Keep up the amazing work!" },
+  { name: "Lisa W.", initials: "LW", color: "#EC4899", tier: "Bronze · $30", comment: "Amaré is my son's favorite!" },
+  { name: "Peter K.", initials: "PK", color: "#10B981", tier: "Gold · $150", comment: "Education through fun, brilliant!" },
 ];
 
 const DONATE_NAV_LINKS = [
