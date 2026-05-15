@@ -52,6 +52,12 @@ const characters = [
     desc: "Brave, energetic & loyal.",
   },
   {
+    name: "Trinity",
+    img: "https://res.cloudinary.com/dee2vqvzl/image/upload/v1778836745/1776066648018_Character_in_T_202604011430_1_jp2axc.jpg",
+    desc: "Nature lover. Grows plant barriers to protect friends.",
+    color: "#22C55E",
+  },
+  {
     name: "Dee",
     img: "https://res.cloudinary.com/dee2vqvzl/image/upload/v1778073916/1776066659252_Character_in_T_202604011430_1_1_ut0asi.jpg",
     desc: "Funny, smart & creative. Engineer & inventor.",
@@ -83,6 +89,7 @@ const SEARCH_DATA = [
   { title: "Nursery Rhymes Collection", category: "Music", emoji: "\u{1F3B6}", anchor: "#music" },
   { title: "Amare", category: "Characters", emoji: "\u{2B50}", anchor: "#characters" },
   { title: "Xavier", category: "Characters", emoji: "\u{1F4AA}", anchor: "#characters" },
+  { title: "Trinity", category: "Characters", emoji: "\u{1F33F}", anchor: "#characters" },
   { title: "Dee", category: "Characters", emoji: "\u{1F9E9}", anchor: "#characters" },
   { title: "Neebah", category: "Characters", emoji: "\u{1F4A1}", anchor: "#characters" },
   { title: "Liz", category: "Characters", emoji: "\u{1F49C}", anchor: "#characters" },
