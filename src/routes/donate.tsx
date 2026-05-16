@@ -7,10 +7,38 @@ export const Route = createFileRoute("/donate")({
   component: DonatePage,
   head: () => ({
     meta: [
-      { title: "Donate — Amaré's Big Planet" },
-      { name: "description", content: "Support Amaré's Big Planet — help create free, inclusive educational content for kids aged 3-13." },
+      { title: "Donate to Amare's Big Planet | Support Free Kids Learning Videos" },
+      { name: "description", content: "Support Amare's Big Planet and help create free, inclusive kids learning songs, stories, and educational videos for children aged 3-13." },
+      { property: "og:title", content: "Donate to Amare's Big Planet" },
+      { property: "og:description", content: "Help Amare and the Gear Crew create free educational songs, stories, and videos for kids around the world." },
+      { property: "og:url", content: "https://amaresbigplanet.com/donate" },
+      { property: "og:type", content: "website" },
+    ],
+    links: [
+      { rel: "canonical", href: "https://amaresbigplanet.com/donate" },
     ],
     scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: "Home",
+              item: "https://amaresbigplanet.com/",
+            },
+            {
+              "@type": "ListItem",
+              position: 2,
+              name: "Donate",
+              item: "https://amaresbigplanet.com/donate",
+            },
+          ],
+        }),
+      },
       { src: "https://js.paystack.co/v1/inline.js" },
     ],
   }),
@@ -215,7 +243,7 @@ function DonatePage() {
         }}>
           {/* Logo — links home */}
           <Link to="/" aria-label="Go to homepage" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none", flexShrink: 0 }}>
-            <img src={amaresLogo} alt="" style={{ width: "48px", height: "48px", borderRadius: "50%", objectFit: "cover", border: "2px solid #0d1b3e" }} />
+            <img src={amaresLogo} alt="Amare character" style={{ width: "48px", height: "48px", borderRadius: "50%", objectFit: "cover", border: "2px solid #0d1b3e" }} />
             <div style={{ display: "flex", flexDirection: "column" }}>
               <img src={amaresTitle} alt="Amare's Big Planet" className="donate-nav-title" style={{ height: "40px", width: "auto" }} />
             </div>
@@ -408,7 +436,7 @@ function DonatePage() {
               fontSize: "56px", fontWeight: 800, lineHeight: 1.1,
               letterSpacing: "-1px", marginBottom: "20px",
             }}>
-              <span style={{ color: "white" }}>Free learning adventures for</span>
+              <span style={{ color: "white" }}>Free learning adventures for </span>
               <br />
               <span style={{ color: "#ffd166" }}>every kid, everywhere.</span>
             </h1>
