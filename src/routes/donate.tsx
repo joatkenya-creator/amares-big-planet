@@ -7,7 +7,7 @@ export const Route = createFileRoute("/donate")({
   component: DonatePage,
   head: () => ({
     meta: [
-      { title: "Donate — Amaré's Big Planet" },
+      { title: "Support — Amaré's Big Planet" },
       { name: "description", content: "Support Amaré's Big Planet — help create free, inclusive educational content for kids aged 3-13." },
     ],
     scripts: [
@@ -36,21 +36,21 @@ const CURRENCY_META = [
 const ONE_TIME_AMOUNTS = [55, 75, 100, 150];
 
 const RECURRING_TIERS = [
-  { name: "Bronze", amount: 100, perk: "Name in video credits" },
-  { name: "Silver", amount: 250, perk: "Early access + credits" },
-  { name: "Gold", amount: 500, perk: "Your child in a song" },
-  { name: "Platinum", amount: 1000, perk: "Custom character cameo" },
+  { name: "\u{1F680} Explorer", amount: 100, perk: "Name in video credits" },
+  { name: "\u{1F30D} Galaxy Builder", amount: 250, perk: "Early access + credits" },
+  { name: "\u2B50 Star Creator", amount: 500, perk: "Your child in a song" },
+  { name: "\u{1FA90} Planet Champion", amount: 1000, perk: "Custom character cameo" },
 ];
 
 const SUPPORTERS = [
-  { name: "Catherine W.", initials: "CW", color: "#3B82F6", tier: "Gold", comment: "My kids love every episode!" },
+  { name: "Catherine W.", initials: "CW", color: "#3B82F6", tier: "\u2B50 Star Creator", comment: "My kids love every episode!" },
   { name: "Keziah K.", initials: "KK", color: "#22C55E", tier: "$100", comment: "Representation matters. Thank you!" },
-  { name: "Amina K.", initials: "AK", color: "#E24B4A", tier: "Silver", comment: "Educational AND fun!" },
-  { name: "James M.", initials: "JM", color: "#F59E0B", tier: "Bronze · $25", comment: "Love what you're doing for kids!" },
-  { name: "Sarah O.", initials: "SO", color: "#8B5CF6", tier: "Gold · $100", comment: "My daughter watches every episode!" },
-  { name: "David N.", initials: "DN", color: "#06B6D4", tier: "Silver · $50", comment: "Keep up the amazing work!" },
-  { name: "Lisa W.", initials: "LW", color: "#EC4899", tier: "Bronze · $30", comment: "Amaré is my son's favorite!" },
-  { name: "Peter K.", initials: "PK", color: "#10B981", tier: "Gold · $150", comment: "Education through fun, brilliant!" },
+  { name: "Amina K.", initials: "AK", color: "#E24B4A", tier: "\u{1F30D} Galaxy Builder", comment: "Educational AND fun!" },
+  { name: "James M.", initials: "JM", color: "#F59E0B", tier: "\u{1F680} Explorer · $25", comment: "Love what you're doing for kids!" },
+  { name: "Sarah O.", initials: "SO", color: "#8B5CF6", tier: "\u2B50 Star Creator · $100", comment: "My daughter watches every episode!" },
+  { name: "David N.", initials: "DN", color: "#06B6D4", tier: "\u{1F30D} Galaxy Builder · $50", comment: "Keep up the amazing work!" },
+  { name: "Lisa W.", initials: "LW", color: "#EC4899", tier: "\u{1F680} Explorer · $30", comment: "Amaré is my son's favorite!" },
+  { name: "Peter K.", initials: "PK", color: "#10B981", tier: "\u2B50 Star Creator · $150", comment: "Education through fun, brilliant!" },
 ];
 
 const DONATE_NAV_LINKS = [
@@ -58,14 +58,14 @@ const DONATE_NAV_LINKS = [
   { label: "Programs", href: "/#programs" },
   { label: "Impact", href: "/#impact" },
   { label: "Stories", href: "/#stories" },
-  { label: "Donate", href: "/donate" },
+  { label: "Support", href: "/donate" },
   { label: "Contact", href: "/#contact" },
 ];
 
 function DonatePage() {
   const [mode, setMode] = useState<"once" | "recurring">("once");
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [customAmount, setCustomAmount] = useState("0");
+  const [customAmount, setCustomAmount] = useState(String(ONE_TIME_AMOUNTS[0]));
   const [dedicate, setDedicate] = useState(false);
   const [showComment, setShowComment] = useState(false);
   const [comment, setComment] = useState("");
@@ -133,12 +133,13 @@ function DonatePage() {
   const buttonText = (() => {
     const suffix = mode === "recurring" ? "/month" : "";
     const sym = isCustom ? currency.symbol : "$";
-    return `\u{1F499} Donate ${sym}${formatNumber(inputValue)}${suffix}`;
+    return `\u{1F499} Support — ${sym}${formatNumber(inputValue)}${suffix}`;
   })();
 
-  // Reset to 0 when mode changes
+  // Reset to first tier when mode changes
   useEffect(() => {
-    setCustomAmount("0");
+    const amt = mode === "once" ? ONE_TIME_AMOUNTS[0] : RECURRING_TIERS[0].amount;
+    setCustomAmount(String(amt));
     setSelectedIndex(0);
   }, [mode]);
 
@@ -177,14 +178,14 @@ function DonatePage() {
       ref: ref,
       metadata: {
         custom_fields: [
-          { display_name: "Donation Type", variable_name: "donation_type", value: mode },
+          { display_name: "Support Type", variable_name: "support_type", value: mode },
           ...(mode === "recurring" ? [{ display_name: "Tier", variable_name: "tier", value: RECURRING_TIERS[selectedIndex].name }] : []),
           ...(dedicate ? [{ display_name: "Dedicated", variable_name: "dedicated", value: "yes" }] : []),
           ...(comment ? [{ display_name: "Comment", variable_name: "comment", value: comment }] : []),
         ],
       },
       callback: (response: any) => {
-        alert(`Thank you for your donation! Reference: ${response.reference}`);
+        alert(`Thank you for your support! Reference: ${response.reference}`);
       },
       onClose: () => {},
     });
@@ -198,7 +199,7 @@ function DonatePage() {
       {/* NAVBAR */}
       <nav
         role="navigation"
-        aria-label="Donation page navigation"
+        aria-label="Support page navigation"
         style={{
           background: "rgba(255,255,255,0.97)",
           backdropFilter: "blur(10px)",
@@ -227,8 +228,8 @@ function DonatePage() {
               <a
                 key={link.label}
                 href={link.href}
-                className={`donate-nav-link${link.label === "Donate" ? " donate-nav-link--active" : ""}`}
-                aria-current={link.label === "Donate" ? "page" : undefined}
+                className={`donate-nav-link${link.label === "Support" ? " donate-nav-link--active" : ""}`}
+                aria-current={link.label === "Support" ? "page" : undefined}
               >
                 {link.label}
               </a>
@@ -251,11 +252,11 @@ function DonatePage() {
               Secure
             </div>
 
-            {/* Donate CTA button */}
+            {/* Support CTA button */}
             <a
               href="#donate-form"
               className="donate-nav-cta"
-              aria-label="Donate now"
+              aria-label="Support now"
               style={{
                 display: "inline-flex", alignItems: "center", gap: "6px",
                 background: "#e0001b", color: "white", fontSize: "14px",
@@ -265,7 +266,7 @@ function DonatePage() {
               onMouseEnter={(e) => { e.currentTarget.style.background = "#b80015"; e.currentTarget.style.transform = "translateY(-1px)"; }}
               onMouseLeave={(e) => { e.currentTarget.style.background = "#e0001b"; e.currentTarget.style.transform = "translateY(0)"; }}
             >
-              Donate
+              Support
             </a>
 
             {/* Hamburger — mobile only */}
@@ -318,8 +319,8 @@ function DonatePage() {
                 onClick={() => setMobileMenuOpen(false)}
                 style={{
                   display: "block", padding: "12px 0",
-                  fontSize: "15px", fontWeight: link.label === "Donate" ? 700 : 500,
-                  color: link.label === "Donate" ? "#e85d04" : "#0d1b3e",
+                  fontSize: "15px", fontWeight: link.label === "Support" ? 700 : 500,
+                  color: link.label === "Support" ? "#e85d04" : "#0d1b3e",
                   textDecoration: "none",
                   borderBottom: "1px solid #f3f4f6",
                 }}
@@ -383,7 +384,7 @@ function DonatePage() {
             }}>CW</div>
             <div>
               <div style={{ fontSize: "12px", fontWeight: 600, color: "#0d1b3e" }}>
-                Catherine W. just donated $50{" "}
+                Catherine W. just contributed $50{" "}
                 <span style={{ color: "#22c55e", fontSize: "8px" }}>{"\u25CF"}</span>
               </div>
             </div>
@@ -418,7 +419,7 @@ function DonatePage() {
               fontSize: "19px", color: "rgba(255,255,255,0.92)",
               maxWidth: "560px", lineHeight: 1.6, marginBottom: "32px",
             }}>
-              Your donation brings free songs, stories, and learning adventures to kids aged 3&ndash;13 around the world. Every dollar helps Amar&eacute; and the Gear Crew reach more little explorers.
+              Your support brings free songs, stories, and learning adventures to kids aged 3&ndash;13 around the world. Every dollar helps Amar&eacute; and the Gear Crew reach more little explorers.
             </p>
 
             {/* Dual CTAs */}
@@ -448,7 +449,7 @@ function DonatePage() {
                 onMouseEnter={(e) => { e.currentTarget.style.background = "#ff8c42"; e.currentTarget.style.transform = "translateY(-2px)"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = "#e85d04"; e.currentTarget.style.transform = "translateY(0)"; }}
               >
-                {"\u2764"} Donate Now {"\u2192"}
+                {"\u2764"} Support Now {"\u2192"}
               </button>
               <a
                 href="https://www.youtube.com/@AmaresBigPlanet"
@@ -505,7 +506,10 @@ function DonatePage() {
           display: "flex", flexDirection: "column", justifyContent: "center",
           position: "relative",
         }}>
-          {/* Heading */}
+          {/* Mission Statement + Heading */}
+          <p style={{ textAlign: "center", fontSize: "12px", color: "#777", lineHeight: 1.5, marginBottom: "8px", fontWeight: 400 }}>
+            Help us build educational adventures that inspire children around the world through music, storytelling, animation, and imagination.
+          </p>
           <h2 style={{ textAlign: "center", fontSize: "16px", fontWeight: 700, color: "#1a1a2e", marginBottom: "16px" }}>
             Make an impact today!
           </h2>
@@ -657,7 +661,7 @@ function DonatePage() {
               onChange={(e) => setDedicate(e.target.checked)}
               style={{ accentColor: "#3B82F6", width: "15px", height: "15px" }}
             />
-            <span style={{ fontSize: "12px", color: "#555" }}>Dedicate my donation</span>
+            <span style={{ fontSize: "12px", color: "#555" }}>Dedicate my contribution</span>
           </label>
 
           {/* Add Comment */}
@@ -688,7 +692,7 @@ function DonatePage() {
             )}
           </div>
 
-          {/* Donate Button */}
+          {/* Support Button */}
           <button
             onClick={handleDonate}
             style={{

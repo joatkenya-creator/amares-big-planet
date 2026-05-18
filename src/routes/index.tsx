@@ -504,7 +504,7 @@ function Index() {
               to="/donate"
               className="nav-link-donate"
             >
-              Donate {"\u{1F499}"}
+              Support {"\u{1F499}"}
             </Link>
           </nav>
 
@@ -713,7 +713,7 @@ function Index() {
             style={{ color: "#3B82F6" }}
             onClick={() => setMenuOpen(false)}
           >
-            Donate {"\u{1F499}"}
+            Support {"\u{1F499}"}
           </Link>
           <div style={{ padding: "16px 24px" }}>
             <a
@@ -836,7 +836,7 @@ function Index() {
             animation: "pulse-dot 2s infinite",
           }} />
           <p style={{ fontSize: 13, color: "rgba(255,255,255,0.9)", fontWeight: 500, margin: 0 }}>
-            💙 <strong style={{ color: "#fff" }}>Help Amaré reach more kids!</strong> Your donation brings free adventures to children all over the world.
+            💙 <strong style={{ color: "#fff" }}>Help Amaré reach more kids!</strong> Your support brings free adventures to children all over the world.
           </p>
           <Link to="/donate" style={{
             background: "#e02020", color: "white", borderRadius: 16,
@@ -847,7 +847,7 @@ function Index() {
             onMouseEnter={e => { e.currentTarget.style.background = "#c01010"; e.currentTarget.style.transform = "scale(1.05)"; }}
             onMouseLeave={e => { e.currentTarget.style.background = "#e02020"; e.currentTarget.style.transform = "scale(1)"; }}
           >
-            Donate Now →
+            Support Now →
           </Link>
           <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
             <div style={{ display: "flex" }}>
@@ -865,7 +865,7 @@ function Index() {
                 }}>{a.initials}</span>
               ))}
             </div>
-            <span style={{ fontSize: 11, color: "rgba(255,255,255,0.6)" }}>127 donated</span>
+            <span style={{ fontSize: 11, color: "rgba(255,255,255,0.6)" }}>127 supporters</span>
           </div>
         </div>
       </section>
@@ -1313,7 +1313,7 @@ function Index() {
           }}>
             <button
               onClick={closeDonationPopup}
-              aria-label="Close donation popup"
+              aria-label="Close support popup"
               style={{
                 position: "absolute",
                 top: 8,
@@ -1332,7 +1332,7 @@ function Index() {
               💙 Help Amaré reach more kids!
             </p>
             <p style={{ fontSize: 13, color: "#555", margin: "0 0 12px", lineHeight: 1.4 }}>
-              Your donation brings free learning adventures to children all over the world.
+              Your support brings free learning adventures to children all over the world.
             </p>
             <Link
               to="/donate"
@@ -1350,7 +1350,7 @@ function Index() {
               onMouseEnter={e => { e.currentTarget.style.background = "#c01010"; e.currentTarget.style.transform = "scale(1.05)"; }}
               onMouseLeave={e => { e.currentTarget.style.background = "#e02020"; e.currentTarget.style.transform = "scale(1)"; }}
             >
-              Donate Now →
+              Support Now →
             </Link>
             <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 10 }}>
               <div style={{ display: "flex" }}>
@@ -1368,7 +1368,7 @@ function Index() {
                   }}>{a.initials}</span>
                 ))}
               </div>
-              <span style={{ fontSize: 11, color: "#888" }}>127 people donated this month</span>
+              <span style={{ fontSize: 11, color: "#888" }}>127 supporters this month</span>
             </div>
           </div>
         </>
