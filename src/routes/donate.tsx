@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect, useRef } from "react";
+import { Youtube } from "lucide-react";
 import amaresLogo from "@/assets/amares-logo.jpeg";
 import amaresTitle from "@/assets/amares-title.png";
 
@@ -496,7 +497,7 @@ function DonatePage() {
               marginTop: "24px", paddingTop: "20px",
             }}>
               {[
-                { icon: "\uD83D\uDCFA", number: "16,400+", label: "YouTube subscribers" },
+                { icon: <Youtube size={18} color="#FF0000" fill="#FF0000" />, number: "16,400+", label: "YouTube subscribers" },
                 { icon: "\uD83C\uDF0D", number: "50+", label: "Countries watching" },
                 { icon: "\uD83C\uDFAC", number: "191", label: "Episodes created" },
                 { icon: "\u2B50", number: "4.9\u2605", label: "Parent rating" },
