@@ -38,7 +38,6 @@ export const Route = createRootRoute({
       { property: "og:title", content: "Amare's Big Planet | Kids Learning Songs & Videos" },
       { property: "og:description", content: "ABC songs, nursery rhymes, space adventures, ocean animals, and fun educational videos for kids." },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: SITE_URL },
       { property: "og:image", content: SOCIAL_IMAGE },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@AmaresBigPlanet" },
@@ -48,10 +47,6 @@ export const Route = createRootRoute({
       {
         rel: "stylesheet",
         href: appCss,
-      },
-      {
-        rel: "canonical",
-        href: SITE_URL,
       },
     ],
     scripts: [
