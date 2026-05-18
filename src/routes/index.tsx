@@ -98,7 +98,7 @@ export const Route = createFileRoute("/")({
   }),
 });
 
-const navLinks = ["Shows", "Music", "Characters", "Games", "Parents"];
+const navLinks = ["Shows", "Music", "Characters", "Games", "Parents", "Blog"];
 
 const shows = [
   {
@@ -578,15 +578,21 @@ function Index() {
 
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-1">
-            {navLinks.map((l) => (
-              <a
-                key={l}
-                href={`#${l.toLowerCase()}`}
-                className={`nav-link${activeSection === l.toLowerCase() ? " active" : ""}`}
-              >
-                {l}
-              </a>
-            ))}
+            {navLinks.map((l) =>
+              l === "Blog" ? (
+                <Link key={l} to="/blog" className="nav-link">
+                  {l}
+                </Link>
+              ) : (
+                <a
+                  key={l}
+                  href={`#${l.toLowerCase()}`}
+                  className={`nav-link${activeSection === l.toLowerCase() ? " active" : ""}`}
+                >
+                  {l}
+                </a>
+              )
+            )}
             <Link
               to="/donate"
               className="nav-link-donate"
@@ -784,16 +790,27 @@ function Index() {
         }}
       >
         <nav className="md:hidden">
-          {navLinks.map((l) => (
-            <a
-              key={l}
-              href={`#${l.toLowerCase()}`}
-              className={`mobile-nav-link${activeSection === l.toLowerCase() ? " active" : ""}`}
-              onClick={() => setMenuOpen(false)}
-            >
-              {l}
-            </a>
-          ))}
+          {navLinks.map((l) =>
+            l === "Blog" ? (
+              <Link
+                key={l}
+                to="/blog"
+                className="mobile-nav-link"
+                onClick={() => setMenuOpen(false)}
+              >
+                {l}
+              </Link>
+            ) : (
+              <a
+                key={l}
+                href={`#${l.toLowerCase()}`}
+                className={`mobile-nav-link${activeSection === l.toLowerCase() ? " active" : ""}`}
+                onClick={() => setMenuOpen(false)}
+              >
+                {l}
+              </a>
+            )
+          )}
           <Link
             to="/donate"
             className="mobile-nav-link"
