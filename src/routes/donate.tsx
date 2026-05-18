@@ -490,22 +490,27 @@ function DonatePage() {
               ))}
             </div>
 
-            {/* Trusted Worldwide */}
-            <div style={{
-              display: "flex", gap: "24px", flexWrap: "wrap",
+            {/* Social Proof Bar */}
+            <div className="donate-social-proof-bar" style={{
+              display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "10px",
               marginTop: "24px", paddingTop: "20px",
             }}>
               {[
-                "Viewed by families in 50+ countries",
-                "12,400+ children learning with Amar\u00E9",
-                "4.9\u2605 average parent rating",
-              ].map((item) => (
-                <div key={item} style={{
-                  display: "flex", alignItems: "center", gap: "6px",
-                  fontSize: "12px", color: "rgba(255,255,255,0.85)", fontWeight: 500,
+                { icon: "\uD83D\uDCFA", number: "16,400+", label: "YouTube subscribers" },
+                { icon: "\uD83C\uDF0D", number: "50+", label: "Countries watching" },
+                { icon: "\uD83C\uDFAC", number: "191", label: "Episodes created" },
+                { icon: "\u2B50", number: "4.9\u2605", label: "Parent rating" },
+              ].map((stat) => (
+                <div key={stat.label} style={{
+                  display: "flex", flexDirection: "column", alignItems: "center",
+                  gap: "4px", padding: "10px 6px",
+                  background: "rgba(255,255,255,0.08)", backdropFilter: "blur(4px)",
+                  border: "1px solid rgba(255,255,255,0.12)",
+                  borderRadius: "10px", textAlign: "center",
                 }}>
-                  <span style={{ color: "#22c55e", fontSize: "8px" }}>{"\u25CF"}</span>
-                  {item}
+                  <span style={{ fontSize: "18px", lineHeight: 1 }}>{stat.icon}</span>
+                  <span style={{ fontSize: "15px", fontWeight: 700, color: "#ffd166", lineHeight: 1.2 }}>{stat.number}</span>
+                  <span style={{ fontSize: "10px", color: "rgba(255,255,255,0.8)", fontWeight: 500, lineHeight: 1.2 }}>{stat.label}</span>
                 </div>
               ))}
             </div>
@@ -894,6 +899,13 @@ function DonatePage() {
           .donate-card-wrapper {
             width: 100% !important;
             flex-shrink: unset !important;
+          }
+        }
+
+        /* Social proof bar — 2x2 on mobile */
+        @media (max-width: 600px) {
+          .donate-social-proof-bar {
+            grid-template-columns: repeat(2, 1fr) !important;
           }
         }
 
