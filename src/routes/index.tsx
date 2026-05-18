@@ -9,6 +9,93 @@ import musicMascot from "@/assets/music-mascot.png";
 
 export const Route = createFileRoute("/")({
   component: Index,
+  head: () => ({
+    meta: [
+      { title: "Amare's Big Planet | Kids Learning Songs, ABCs & Space Videos" },
+      { name: "description", content: "Sing along with Amare's Big Planet: ABC songs, nursery rhymes, ocean animals, solar system songs, and fun educational videos for kids." },
+      { property: "og:title", content: "Amare's Big Planet | Kids Learning Songs & Videos" },
+      { property: "og:description", content: "ABC songs, nursery rhymes, space adventures, ocean animals, and fun educational videos for children." },
+      { property: "og:url", content: "https://amaresbigplanet.com/" },
+    ],
+    links: [
+      { rel: "canonical", href: "https://amaresbigplanet.com/" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: "Home",
+              item: "https://amaresbigplanet.com/",
+            },
+          ],
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "Amare's Big Planet kids videos",
+          itemListElement: [
+            "Learning ABCs I to L",
+            "Ocean Animals Adventure",
+            "BLAST OFF! Solar System Song",
+            "Live - Lofi Study Music for Kids",
+          ].map((name, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            name,
+          })),
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "VideoObject",
+              name: "Learning ABCs I to L",
+              description: "Learn the alphabet with Amare and friends!",
+              thumbnailUrl: "https://img.youtube.com/vi/_ctNtUXel6Q/maxresdefault.jpg",
+              embedUrl: "https://www.youtube.com/embed/_ctNtUXel6Q",
+              url: "https://amaresbigplanet.com/#music",
+            },
+            {
+              "@type": "VideoObject",
+              name: "Ocean Animals Adventure",
+              description: "Discover amazing creatures under the sea!",
+              thumbnailUrl: "https://img.youtube.com/vi/Ga_sef8vcIA/maxresdefault.jpg",
+              embedUrl: "https://www.youtube.com/embed/Ga_sef8vcIA",
+              url: "https://amaresbigplanet.com/#music",
+            },
+            {
+              "@type": "VideoObject",
+              name: "BLAST OFF! Solar System Song",
+              description: "Explore all the planets in our solar system!",
+              thumbnailUrl: "https://img.youtube.com/vi/8jCfqeT6iNc/maxresdefault.jpg",
+              embedUrl: "https://www.youtube.com/embed/8jCfqeT6iNc",
+              url: "https://amaresbigplanet.com/#music",
+            },
+            {
+              "@type": "VideoObject",
+              name: "Live - Lofi Study Music for Kids",
+              description: "Relaxing lofi study music for kids from Amare's Big Planet.",
+              thumbnailUrl: "https://img.youtube.com/vi/9ryVeXuqv-M/maxresdefault.jpg",
+              embedUrl: "https://www.youtube.com/embed/9ryVeXuqv-M",
+              url: "https://amaresbigplanet.com/#watch",
+            },
+          ],
+        }),
+      },
+    ],
+  }),
 });
 
 const navLinks = ["Shows", "Music", "Characters", "Games", "Parents"];
@@ -195,10 +282,10 @@ function Index() {
     return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
 
-  // Donation popup: show after 3s, once per session
+  // Donation popup: delay it so mobile visitors can see the hero first.
   useEffect(() => {
     if (sessionStorage.getItem("donationPopupClosed")) return;
-    const timer = setTimeout(() => setDonationPopupVisible(true), 3000);
+    const timer = setTimeout(() => setDonationPopupVisible(true), 12000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -782,8 +869,11 @@ function Index() {
           🎵 New songs every week!
           </span>
           <h1 className="font-display font-extrabold leading-[0.9] tracking-tight">
+            <span className="sr-only">
+              Amare's Big Planet Kids Learning Songs and Videos
+            </span>
             <span className="block text-2xl sm:text-3xl font-bold text-white mb-4 uppercase tracking-[0.3em]" style={{ textShadow: "0 4px 16px rgba(0,0,0,0.9), 0 2px 4px rgba(0,0,0,0.7)" }}>
-              Welcome to
+              Kids Learning Songs & Videos
             </span>
             <img
               src={amaresTitle}
@@ -938,6 +1028,7 @@ function Index() {
                   <iframe
                     src={`https://www.youtube.com/embed/${video.id}`}
                     title={video.title}
+                    loading="lazy"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                     className="w-full h-full border-0"
@@ -1094,6 +1185,7 @@ function Index() {
                   <iframe
                     src="https://www.youtube.com/embed/9ryVeXuqv-M"
                     title="Live - Lofi Study Music for Kids"
+                    loading="lazy"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                     className="w-full h-full border-0"

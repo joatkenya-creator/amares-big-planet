@@ -2,6 +2,9 @@ import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/r
 
 import appCss from "../styles.css?url";
 
+const SITE_URL = "https://amaresbigplanet.com";
+const SOCIAL_IMAGE = "https://res.cloudinary.com/dee2vqvzl/image/upload/v1778073832/1775135225431_1_zxvc1e.png";
+
 function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -29,19 +32,48 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Amare's Big Planet — Sing, Learn & Play with Amare!" },
-      { name: "description", content: "Welcome to Amare's Big Planet! Songs, stories, and silly fun for little explorers. Join Amare and friends on a colorful adventure around the world." },
+      { title: "Amare's Big Planet | Kids Learning Songs, ABCs & Space Videos" },
+      { name: "description", content: "Watch Amare's Big Planet for kids learning songs, ABC songs, nursery rhymes, space adventures, ocean animals, and fun educational videos for children." },
       { name: "author", content: "Amare's Big Planet" },
-      { property: "og:title", content: "Amare's Big Planet — Sing, Learn & Play" },
-      { property: "og:description", content: "Songs, stories, and silly fun for little explorers. Join Amare and friends!" },
+      { property: "og:title", content: "Amare's Big Planet | Kids Learning Songs & Videos" },
+      { property: "og:description", content: "ABC songs, nursery rhymes, space adventures, ocean animals, and fun educational videos for kids." },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: SOCIAL_IMAGE },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@AmaresBigPlanet" },
+      { name: "twitter:image", content: SOCIAL_IMAGE },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
+      },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Amare's Big Planet",
+          url: SITE_URL,
+          logo: SOCIAL_IMAGE,
+          sameAs: [
+            "https://www.youtube.com/@amaresbigplanet",
+            "https://www.instagram.com/_amaresbigplanet",
+            "https://www.tiktok.com/@amaresbigplanet",
+          ],
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "Amare's Big Planet",
+          url: SITE_URL,
+          description: "Kids learning songs, nursery rhymes, ABC videos, space songs, and educational videos for children.",
+        }),
       },
     ],
   }),
