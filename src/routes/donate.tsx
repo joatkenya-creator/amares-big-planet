@@ -36,10 +36,10 @@ const CURRENCY_META = [
 const ONE_TIME_AMOUNTS = [55, 75, 100, 150];
 
 const RECURRING_TIERS = [
-  { name: "\u{1F680} Explorer", amount: 100, perk: "Name in video credits" },
-  { name: "\u{1F30D} Galaxy Builder", amount: 250, perk: "Early access + credits" },
-  { name: "\u2B50 Star Creator", amount: 500, perk: "Your child in a song" },
-  { name: "\u{1FA90} Planet Champion", amount: 1000, perk: "Custom character cameo" },
+  { name: "\u{1F680} Explorer", amount: 100, perk: "Name on Supporters Wall" },
+  { name: "\u{1F30D} Galaxy Builder", amount: 250, perk: "Early access + digital thank-you pack" },
+  { name: "\u2B50 Star Creator", amount: 500, perk: "Your child\u2019s name featured in episode credits" },
+  { name: "\u{1FA90} Planet Champion", amount: 1000, perk: "Custom animated cameo + private virtual meet" },
 ];
 
 const SUPPORTERS = [
@@ -489,6 +489,26 @@ function DonatePage() {
                 </div>
               ))}
             </div>
+
+            {/* Trusted Worldwide */}
+            <div style={{
+              display: "flex", gap: "24px", flexWrap: "wrap",
+              marginTop: "24px", paddingTop: "20px",
+            }}>
+              {[
+                "Viewed by families in 50+ countries",
+                "12,400+ children learning with Amar\u00E9",
+                "4.9\u2605 average parent rating",
+              ].map((item) => (
+                <div key={item} style={{
+                  display: "flex", alignItems: "center", gap: "6px",
+                  fontSize: "12px", color: "rgba(255,255,255,0.85)", fontWeight: 500,
+                }}>
+                  <span style={{ color: "#22c55e", fontSize: "8px" }}>{"\u25CF"}</span>
+                  {item}
+                </div>
+              ))}
+            </div>
           </div>
 
         </div>
@@ -715,6 +735,33 @@ function DonatePage() {
           {/* Secure Payment */}
           <div style={{ textAlign: "center", fontSize: "10px", color: "#888", marginBottom: "16px" }}>
             {"\u{1F512}"} Secure payment via <span style={{ color: "#00C3F7", fontWeight: 700 }}>Paystack</span>
+          </div>
+
+          {/* Where Your Support Goes */}
+          <div style={{
+            borderTop: "1px solid #eee", paddingTop: "14px", marginBottom: "14px",
+          }}>
+            <div style={{ fontSize: "12px", fontWeight: 600, color: "#1a1a2e", marginBottom: "10px" }}>
+              Where Your Support Goes
+            </div>
+            <div style={{
+              display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px",
+            }}>
+              {[
+                { icon: "\u{1F3AC}", label: "Animation production" },
+                { icon: "\u{1F3B5}", label: "Educational music" },
+                { icon: "\u{1F3AE}", label: "Roblox/game development" },
+                { icon: "\u{1F30D}", label: "Global children\u2019s content" },
+              ].map((item) => (
+                <div key={item.label} style={{
+                  display: "flex", alignItems: "center", gap: "6px",
+                  fontSize: "11px", color: "#555", fontWeight: 500,
+                }}>
+                  <span style={{ fontSize: "14px" }}>{item.icon}</span>
+                  {item.label}
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Recent Supporters */}
