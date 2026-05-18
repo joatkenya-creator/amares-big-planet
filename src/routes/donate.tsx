@@ -8,7 +8,7 @@ export const Route = createFileRoute("/donate")({
   head: () => ({
     meta: [
       { title: "Support — Amaré's Big Planet" },
-      { name: "description", content: "Support Amaré's Big Planet — help create free, inclusive educational content for kids aged 3-13." },
+      { name: "description", content: "Support Amaré's Big Planet — help create free, inclusive educational content for kids aged 1-10." },
     ],
     scripts: [
       { src: "https://js.paystack.co/v1/inline.js" },
