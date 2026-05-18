@@ -737,33 +737,6 @@ function DonatePage() {
             {"\u{1F512}"} Secure payment via <span style={{ color: "#00C3F7", fontWeight: 700 }}>Paystack</span>
           </div>
 
-          {/* Where Your Support Goes */}
-          <div style={{
-            borderTop: "1px solid #eee", paddingTop: "14px", marginBottom: "14px",
-          }}>
-            <div style={{ fontSize: "12px", fontWeight: 600, color: "#1a1a2e", marginBottom: "10px" }}>
-              Where Your Support Goes
-            </div>
-            <div style={{
-              display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px",
-            }}>
-              {[
-                { icon: "\u{1F3AC}", label: "Animation production" },
-                { icon: "\u{1F3B5}", label: "Educational music" },
-                { icon: "\u{1F3AE}", label: "Roblox/game development" },
-                { icon: "\u{1F30D}", label: "Global children\u2019s content" },
-              ].map((item) => (
-                <div key={item.label} style={{
-                  display: "flex", alignItems: "center", gap: "6px",
-                  fontSize: "11px", color: "#555", fontWeight: 500,
-                }}>
-                  <span style={{ fontSize: "14px" }}>{item.icon}</span>
-                  {item.label}
-                </div>
-              ))}
-            </div>
-          </div>
-
           {/* Recent Supporters */}
           <div style={{ borderTop: "1px solid #eee", paddingTop: "14px" }}>
             <div style={{ fontSize: "12px", fontWeight: 600, color: "#1a1a2e", marginBottom: "10px" }}>Recent supporters</div>
@@ -784,6 +757,32 @@ function DonatePage() {
                     </div>
                     <div style={{ fontSize: "11px", color: "#555", fontStyle: "italic" }}>"{s.comment}"</div>
                   </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Where Your Support Goes */}
+          <div style={{
+            background: "#f9fafb", borderRadius: "12px", padding: "16px",
+            marginTop: "16px",
+          }}>
+            <div style={{ fontSize: "13px", fontWeight: 700, color: "#1a1a2e", marginBottom: "12px" }}>
+              Where Your Support Goes
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
+              {[
+                { icon: "\u{1F3AC}", label: "Animation production" },
+                { icon: "\u{1F3B5}", label: "Educational music" },
+                { icon: "\u{1F3AE}", label: "Roblox/game development" },
+                { icon: "\u{1F30D}", label: "Global children\u2019s content" },
+              ].map((item) => (
+                <div key={item.label} style={{
+                  display: "flex", alignItems: "center", gap: "8px",
+                  background: "white", borderRadius: "8px", padding: "10px 12px",
+                }}>
+                  <span style={{ fontSize: "18px", lineHeight: 1 }}>{item.icon}</span>
+                  <span style={{ fontSize: "12px", fontWeight: 600, color: "#444" }}>{item.label}</span>
                 </div>
               ))}
             </div>
