@@ -18,21 +18,25 @@ export const articles: Article[] = [
     excerpt:
       "Music, repetition, and visual storytelling can be powerful tools for children on the autism spectrum. Here\u2019s how Amar\u00e9\u2019s Big Planet is designed with neurodivergent learners in mind.",
     body: `
-<p>A lot of kids' shows are loud, flashy, and unpredictable. For children on the autism spectrum, that's not fun — it's overwhelming. We built Amaré's Big Planet to be different.</p>
+<p>If your child is on the spectrum, you already know — finding the right content is hard. Too loud. Too fast. Too unpredictable.</p>
 
-<h2>Why Music Works So Well</h2>
-<p>Kids with autism love predictability. Songs give them exactly that. When your child knows what comes next in a melody, they can relax and actually take in what's being taught.</p>
-<p>That's why every episode centers around original songs with clear patterns, gentle pacing, and lots of repetition. From ABCs to the solar system — it's all set to music they can sing along to at their own speed.</p>
+<p>We built Amaré's Big Planet with that in mind.</p>
 
-<h2>What We Do Differently</h2>
-<p>Every episode follows the same familiar structure. Calming colors, no jarring transitions, clear visual cues. The Gear Crew shows up every time — same faces, same friends. Kids form real attachments to these characters, and that consistency matters.</p>
-<p>Bruce, our strategic thinker, especially resonates with kids who process the world through patterns and logic. Liz models kindness and emotional awareness. Amaré shows that quiet, steady thinking is powerful.</p>
+<h2>What Makes It Different</h2>
+<p>Our songs repeat. On purpose. Our episodes follow the same structure every time. The colors are calm. The characters don't shout. And kids can watch the same video 100 times — because that's not a problem, that's how they learn.</p>
 
-<h2>Tips That Actually Help</h2>
-<p>Use our songs as transition tools — play the same one for cleanup time or bedtime every day. If your kid wants to rewatch the same episode ten times? Let them. Repetition is learning, not a problem.</p>
-<p>Try asking "What would Dee do?" or "How does Xavier feel?" during episodes. It's a simple way to build social-emotional skills without it feeling like a lesson.</p>
+<p>Characters like Liz (calm and nurturing) and Bruce (logical and analytical) show different ways of thinking. Not every kid learns the same way, and that's okay.</p>
 
-<p>Every child deserves content that works for how their brain works. Explore our episodes on <a href="https://www.youtube.com/@AmaresBigPlanet" target="_blank" rel="noopener">YouTube</a> and find more on our <a href="/music">music page</a>.</p>
+<h2>What Parents Tell Us Works</h2>
+<ul>
+<li>Let them replay favorites — repetition is comfort</li>
+<li>Use the songs during transitions (cleanup time, bedtime)</li>
+<li>Watch together and talk about what the characters are feeling</li>
+</ul>
+
+<p>We don't claim to be therapy. We're just a show that tries to include every kid — not as an afterthought, but from the start.</p>
+
+<p>Every child deserves to feel like the show was made for them. Explore our episodes on <a href="https://www.youtube.com/@AmaresBigPlanet" target="_blank" rel="noopener">YouTube</a>.</p>
 `,
   },
   {
