@@ -413,6 +413,78 @@ function DonatePage() {
             Make an impact today!
           </h2>
 
+          {/* Patreon Section */}
+          <div style={{
+            background: "linear-gradient(135deg, #f5f5f5, #fafafa)", borderRadius: "12px",
+            border: "1.5px solid #222", padding: "20px", marginBottom: "0",
+          }}>
+            <div style={{
+              display: "flex", alignItems: "center", gap: "10px",
+              marginBottom: "6px",
+            }}>
+              <div style={{
+                width: "36px", height: "36px", borderRadius: "8px",
+                background: "#000", display: "flex", alignItems: "center", justifyContent: "center",
+                flexShrink: 0,
+              }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="15.5" cy="8.5" r="6.5" />
+                  <rect x="2" y="2" width="3" height="20" />
+                </svg>
+              </div>
+              <h3 style={{ fontSize: "17px", fontWeight: 700, color: "#1a1a2e", margin: 0 }}>
+                Support via Patreon
+              </h3>
+            </div>
+            <p style={{ fontSize: "12px", color: "#666", margin: "0 0 14px 0", lineHeight: 1.4 }}>
+              For supporters worldwide — pay with card, PayPal, or Apple Pay
+            </p>
+
+            <a
+              href="https://www.patreon.com/c/AmaresBigPlanet"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "block", width: "100%", textAlign: "center",
+                background: "#000", color: "white", fontSize: "16px",
+                fontWeight: 700, padding: "14px 24px", borderRadius: "28px",
+                textDecoration: "none", transition: "all 0.2s",
+                marginBottom: "14px", boxSizing: "border-box",
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = "#333"; e.currentTarget.style.transform = "translateY(-1px)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = "#000"; e.currentTarget.style.transform = "translateY(0)"; }}
+            >
+              Become a Patron
+            </a>
+
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
+              {[
+                { emoji: "🚀", name: "Explorer", price: "$10/mo" },
+                { emoji: "🌍", name: "Galaxy Builder", price: "$25/mo" },
+                { emoji: "⭐", name: "Star Creator", price: "$50/mo" },
+                { emoji: "🪐", name: "Planet Champion", price: "$100/mo" },
+              ].map((tier) => (
+                <span key={tier.name} style={{
+                  display: "inline-flex", alignItems: "center", gap: "4px",
+                  background: "white", border: "1px solid #ddd", borderRadius: "16px",
+                  padding: "4px 10px", fontSize: "11px", fontWeight: 600, color: "#444",
+                }}>
+                  {tier.emoji} {tier.name} — {tier.price}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Divider with "or" */}
+          <div style={{
+            display: "flex", alignItems: "center", gap: "12px",
+            margin: "16px 0",
+          }}>
+            <div style={{ flex: 1, height: "1px", background: "#ddd" }} />
+            <span style={{ fontSize: "13px", color: "#999", fontWeight: 500 }}>or</span>
+            <div style={{ flex: 1, height: "1px", background: "#ddd" }} />
+          </div>
+
           {/* M-Pesa Payment Section */}
           <div style={{
             background: "linear-gradient(135deg, #e8f5e9, #f1f8e9)", borderRadius: "12px",
@@ -421,13 +493,16 @@ function DonatePage() {
             <div style={{
               display: "flex", alignItems: "center", gap: "10px",
               background: "#4CAF50", borderRadius: "10px",
-              padding: "12px 16px", marginBottom: "14px",
+              padding: "12px 16px", marginBottom: "6px",
             }}>
               <img src="/mpesa-logo.png" alt="M-Pesa" style={{ height: "40px", width: "auto", flexShrink: 0 }} />
               <h3 style={{ fontSize: "17px", fontWeight: 700, color: "white", margin: 0 }}>
                 Support via M-Pesa
               </h3>
             </div>
+            <p style={{ fontSize: "12px", color: "#666", margin: "0 0 14px 0", lineHeight: 1.4 }}>
+              For supporters in Kenya
+            </p>
 
 
             {/* Payment Details — copyable */}
