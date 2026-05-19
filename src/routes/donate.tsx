@@ -420,7 +420,7 @@ function DonatePage() {
               fontSize: "19px", color: "rgba(255,255,255,0.92)",
               maxWidth: "560px", lineHeight: 1.6, marginBottom: "32px",
             }}>
-              Your support brings free songs, stories, and learning adventures to kids aged 3&ndash;13 around the world. Every dollar helps Amar&eacute; and the Gear Crew reach more little explorers.
+              Your support brings free songs, stories, and learning adventures to kids aged 1&ndash;10 around the world. Every dollar helps Amar&eacute; and the Gear Crew reach more little explorers.
             </p>
 
             {/* Dual CTAs */}
