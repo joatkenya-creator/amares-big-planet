@@ -1330,7 +1330,7 @@ function Index() {
               </div>
               <div className="flex gap-2">
                 <span className="rounded-xl text-white font-bold" style={{ fontSize: "11px", padding: "4px 10px", background: "#00BFB3" }}>
-                  Ages 3-13
+                  Ages 1-10
                 </span>
                 <span className="rounded-xl text-white font-bold" style={{ fontSize: "11px", padding: "4px 10px", background: "#7c3aed" }}>
                   Kid Safe
