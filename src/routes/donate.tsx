@@ -339,23 +339,25 @@ function DonatePage() {
           position: "absolute", top: 0, left: 0,
           width: "100%", height: "100%",
           overflow: "hidden", zIndex: 0,
+          backgroundImage: "url(/images/donation-hero-bg.jpg)",
+          backgroundSize: "cover", backgroundPosition: "center",
         }}>
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            poster="/images/donation-hero-bg.jpg"
+          <iframe
+            className="donate-hero-youtube"
+            src="https://www.youtube.com/embed/_cZMYWcZlNc?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&rel=0&playlist=_cZMYWcZlNc&playsinline=1&modestbranding=1&disablekb=1"
+            title="Background video"
+            allow="autoplay; encrypted-media"
             style={{
               position: "absolute",
-              top: 0, left: 0,
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
+              top: "50%", left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "100vw", height: "100vh",
+              minWidth: "100%", minHeight: "100%",
+              border: "none",
+              pointerEvents: "none",
+              zIndex: 0,
             }}
-          >
-            <source src="/support-bg.mp4" type="video/mp4" />
-          </video>
+          />
         </div>
 
         {/* Dark overlay — full width */}
@@ -907,6 +909,9 @@ function DonatePage() {
           .donate-card-wrapper {
             width: 100% !important;
             flex-shrink: unset !important;
+          }
+          .donate-hero-youtube {
+            display: none !important;
           }
         }
 
