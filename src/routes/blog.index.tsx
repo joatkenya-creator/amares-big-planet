@@ -375,7 +375,7 @@ function BlogIndex() {
                         borderRadius: "20px",
                       }}
                     >
-                      {"Read More \u2192"}
+                      {"Learn More \u2192"}
                     </span>
                   </div>
                 </div>
