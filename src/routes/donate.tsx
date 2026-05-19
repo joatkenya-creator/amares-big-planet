@@ -15,32 +15,6 @@ export const Route = createFileRoute("/donate")({
   }),
 });
 
-const FALLBACK_RATES: Record<string, number> = {
-  USD: 1, GBP: 0.79, EUR: 0.92, CAD: 1.36,
-  AUD: 1.53, KES: 129, NGN: 1550, ZAR: 18.5, GHS: 15.2,
-};
-
-const CURRENCY_META = [
-  { code: "USD", flag: "🇺🇸", label: "US Dollar", symbol: "$" },
-  { code: "GBP", flag: "🇬🇧", label: "British Pound", symbol: "£" },
-  { code: "EUR", flag: "🇪🇺", label: "Euro", symbol: "€" },
-  { code: "CAD", flag: "🇨🇦", label: "Canadian Dollar", symbol: "C$" },
-  { code: "AUD", flag: "🇦🇺", label: "Australian Dollar", symbol: "A$" },
-  { code: "KES", flag: "🇰🇪", label: "Kenyan Shilling", symbol: "KSh" },
-  { code: "NGN", flag: "🇳🇬", label: "Nigerian Naira", symbol: "₦" },
-  { code: "ZAR", flag: "🇿🇦", label: "South African Rand", symbol: "R" },
-  { code: "GHS", flag: "🇬🇭", label: "Ghanaian Cedi", symbol: "GH₵" },
-];
-
-const ONE_TIME_AMOUNTS = [55, 75, 100, 150];
-
-const RECURRING_TIERS = [
-  { name: "\u{1F680} Explorer", amount: 100, perk: "Name on Supporters Wall" },
-  { name: "\u{1F30D} Galaxy Builder", amount: 250, perk: "Early access + digital thank-you pack" },
-  { name: "\u2B50 Star Creator", amount: 500, perk: "Your child\u2019s name featured in episode credits" },
-  { name: "\u{1FA90} Planet Champion", amount: 1000, perk: "Custom animated cameo + private virtual meet" },
-];
-
 const SUPPORTERS = [
   { name: "Catherine W.", initials: "CW", color: "#3B82F6", tier: "\u2B50 Star Creator", comment: "My kids love every episode!" },
   { name: "Keziah K.", initials: "KK", color: "#22C55E", tier: "$100", comment: "Representation matters. Thank you!" },
@@ -63,13 +37,8 @@ const DONATE_NAV_LINKS = [
 ];
 
 function DonatePage() {
-  const [mode, setMode] = useState<"once" | "recurring">("once");
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [customAmount, setCustomAmount] = useState(String(ONE_TIME_AMOUNTS[0]));
   const [copiedField, setCopiedField] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [currencyCode, setCurrencyCode] = useState("USD");
-  const [rates, setRates] = useState<Record<string, number>>(FALLBACK_RATES);
   const [scrolled, setScrolled] = useState(false);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
 
@@ -81,70 +50,11 @@ function DonatePage() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    const fetchRates = async () => {
-      try {
-        const API_KEY = import.meta.env.VITE_EXCHANGE_RATE_API_KEY;
-        const response = await fetch(
-          `https://v6.exchangerate-api.com/v6/${API_KEY}/latest/USD`
-        );
-        const data = await response.json();
-        if (data.result === 'success') {
-          setRates(data.conversion_rates);
-        }
-      } catch (error) {
-        setRates(FALLBACK_RATES);
-      }
-    };
-    fetchRates();
-  }, []);
-
-  const meta = CURRENCY_META.find((c) => c.code === currencyCode) ?? CURRENCY_META[0];
-  const currency = { ...meta, rate: rates[currencyCode] ?? 1 };
-
-  // Single source of truth: always read from customAmount
-  const inputValue = parseFloat(customAmount) || 0;
-
-  const formatNumber = (n: number) =>
-    n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-
-  const isCustom = selectedIndex === -1;
-
-  const conversionText = (() => {
-    if (inputValue === 0) return "";
-    const kesRate = rates.KES ?? 129;
-    if (!isCustom) {
-      // Tier selected — amount is always USD
-      const kshAmount = inputValue * kesRate;
-      return `≈ KSh ${formatNumber(kshAmount)}`;
-    }
-    // Custom amount — in selected currency
-    const usdAmount = inputValue / currency.rate;
-    const kshAmount = usdAmount * kesRate;
-    if (currency.code === "USD") return `≈ KSh ${formatNumber(kshAmount)}`;
-    if (currency.code === "KES") return `≈ $${formatNumber(usdAmount)} USD`;
-    return `≈ $${formatNumber(usdAmount)} USD · KSh ${formatNumber(kshAmount)}`;
-  })();
-
   function copyToClipboard(text: string, field: string) {
     navigator.clipboard.writeText(text).then(() => {
       setCopiedField(field);
       setTimeout(() => setCopiedField(null), 2000);
     });
-  }
-
-  // Reset to first tier when mode changes
-  useEffect(() => {
-    const amt = mode === "once" ? ONE_TIME_AMOUNTS[0] : RECURRING_TIERS[0].amount;
-    setCustomAmount(String(amt));
-    setSelectedIndex(0);
-  }, [mode]);
-
-  // When a tier is selected, write the converted amount into the input
-  function selectTier(i: number) {
-    setSelectedIndex(i);
-    const amt = mode === "once" ? ONE_TIME_AMOUNTS[i] : RECURRING_TIERS[i].amount;
-    setCustomAmount(String(amt));
   }
 
   return (
@@ -503,127 +413,6 @@ function DonatePage() {
             Make an impact today!
           </h2>
 
-          {/* Toggle */}
-          <div style={{
-            display: "flex", background: "#f0f0f0", borderRadius: "24px", padding: "3px", marginBottom: "16px",
-          }}>
-            {(["once", "recurring"] as const).map((m) => (
-              <button
-                key={m}
-                onClick={() => setMode(m)}
-                style={{
-                  flex: 1, padding: "8px 0", borderRadius: "22px", border: "none", cursor: "pointer",
-                  fontSize: "13px", fontWeight: 600, transition: "all 0.2s",
-                  background: mode === m ? "#1a1a2e" : "transparent",
-                  color: mode === m ? "white" : "#555",
-                }}
-              >
-                {m === "once" ? "Give once" : "Monthly \u{1F499}"}
-              </button>
-            ))}
-          </div>
-
-          {/* Tier Grid */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", marginBottom: "16px" }}>
-            {mode === "once"
-              ? ONE_TIME_AMOUNTS.map((amt, i) => {
-                  const isActive = selectedIndex === i && inputValue === amt;
-                  return (
-                    <button
-                      key={amt}
-                      onClick={() => selectTier(i)}
-                      style={{
-                        padding: "12px 8px", borderRadius: "10px", cursor: "pointer",
-                        border: isActive ? "1.5px solid #3B82F6" : "1.5px solid #e0e0e0",
-                        background: isActive ? "#f0f6ff" : "white",
-                        textAlign: "center", transition: "all 0.15s",
-                      }}
-                    >
-                      <div style={{ fontSize: "16px", fontWeight: 700, color: "#1a1a2e" }}>${amt}</div>
-                    </button>
-                  );
-                })
-              : RECURRING_TIERS.map((tier, i) => {
-                  const isActive = selectedIndex === i && inputValue === tier.amount;
-                  return (
-                    <button
-                      key={tier.name}
-                      onClick={() => selectTier(i)}
-                      style={{
-                        padding: "10px 8px", borderRadius: "10px", cursor: "pointer",
-                        border: isActive ? "1.5px solid #3B82F6" : "1.5px solid #e0e0e0",
-                        background: isActive ? "#f0f6ff" : "white",
-                        textAlign: "center", transition: "all 0.15s",
-                      }}
-                    >
-                      <div style={{ fontSize: "11px", fontWeight: 700, color: "#3B82F6" }}>{tier.name}</div>
-                      <div style={{ fontSize: "15px", fontWeight: 700, color: "#1a1a2e" }}>${tier.amount}/mo</div>
-                      <div style={{ fontSize: "10px", color: "#888", marginTop: "2px" }}>{tier.perk}</div>
-                    </button>
-                  );
-                })}
-          </div>
-
-          {/* Custom Amount with Currency Dropdown */}
-          <div style={{
-            border: "1.5px solid #e0e0e0", borderRadius: "10px", padding: "10px", marginBottom: "4px",
-            transition: "border-color 0.2s", background: "white",
-          }}>
-            <div style={{ fontSize: "11px", color: "#888", marginBottom: "6px" }}>Or enter custom amount</div>
-            <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-              <span style={{ fontSize: "15px", color: "#1a1a2e", fontWeight: 600 }}>{currency.symbol}</span>
-              <input
-                type="number"
-                min="0"
-                placeholder="0.00"
-                value={customAmount}
-                onChange={(e) => {
-                  setCustomAmount(e.target.value);
-                  setSelectedIndex(-1);
-                }}
-                onFocus={(e) => {
-                  const parent = e.target.parentElement?.parentElement;
-                  if (parent) parent.style.borderColor = "#3B82F6";
-                }}
-                onBlur={(e) => {
-                  const parent = e.target.parentElement?.parentElement;
-                  if (parent) parent.style.borderColor = "#e0e0e0";
-                }}
-                style={{
-                  flex: 1, border: "none", outline: "none", fontSize: "15px", fontWeight: 600,
-                  background: "transparent", minWidth: 0,
-                }}
-              />
-              <select
-                value={currencyCode}
-                onChange={(e) => {
-                  setCurrencyCode(e.target.value);
-                  setSelectedIndex(-1);
-                }}
-                style={{
-                  padding: "4px 6px", borderRadius: "6px",
-                  border: "1px solid #e0e0e0", fontSize: "13px", fontWeight: 600,
-                  color: "#1a1a2e", background: "#f5f5f5", outline: "none",
-                  cursor: "pointer", flexShrink: 0,
-                }}
-              >
-                {CURRENCY_META.map((c) => (
-                  <option key={c.code} value={c.code}>
-                    {c.flag} {c.code}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          {/* Conversion Display */}
-          {conversionText && (
-            <div style={{ fontSize: "11px", color: "#3B82F6", marginBottom: "12px", paddingLeft: "2px" }}>
-              {conversionText}
-            </div>
-          )}
-          {!conversionText && <div style={{ marginBottom: "12px" }} />}
-
           {/* M-Pesa Payment Section */}
           <div style={{
             background: "linear-gradient(135deg, #e8f5e9, #f1f8e9)", borderRadius: "12px",
@@ -634,11 +423,7 @@ function DonatePage() {
               background: "#4CAF50", borderRadius: "10px",
               padding: "12px 16px", marginBottom: "14px",
             }}>
-              <div style={{
-                width: "36px", height: "36px", borderRadius: "50%", background: "white",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                color: "#4CAF50", fontSize: "18px", fontWeight: 800, flexShrink: 0,
-              }}>M</div>
+              <img src="/mpesa-logo.png" alt="M-Pesa" style={{ height: "40px", width: "auto", flexShrink: 0 }} />
               <h3 style={{ fontSize: "17px", fontWeight: 700, color: "white", margin: 0 }}>
                 Support via M-Pesa
               </h3>
