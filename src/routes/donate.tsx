@@ -11,9 +11,7 @@ export const Route = createFileRoute("/donate")({
       { title: "Support — Amaré's Big Planet" },
       { name: "description", content: "Support Amaré's Big Planet — help create free, inclusive educational content for kids aged 1-10." },
     ],
-    scripts: [
-      { src: "https://js.paystack.co/v1/inline.js" },
-    ],
+    scripts: [],
   }),
 });
 
@@ -68,11 +66,7 @@ function DonatePage() {
   const [mode, setMode] = useState<"once" | "recurring">("once");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [customAmount, setCustomAmount] = useState(String(ONE_TIME_AMOUNTS[0]));
-  const [dedicate, setDedicate] = useState(false);
-  const [showComment, setShowComment] = useState(false);
-  const [comment, setComment] = useState("");
-  const [email, setEmail] = useState("");
-  const [emailError, setEmailError] = useState(false);
+  const [copiedField, setCopiedField] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currencyCode, setCurrencyCode] = useState("USD");
   const [rates, setRates] = useState<Record<string, number>>(FALLBACK_RATES);
@@ -132,11 +126,12 @@ function DonatePage() {
     return `≈ $${formatNumber(usdAmount)} USD · KSh ${formatNumber(kshAmount)}`;
   })();
 
-  const buttonText = (() => {
-    const suffix = mode === "recurring" ? "/month" : "";
-    const sym = isCustom ? currency.symbol : "$";
-    return `\u{1F499} Support — ${sym}${formatNumber(inputValue)}${suffix}`;
-  })();
+  function copyToClipboard(text: string, field: string) {
+    navigator.clipboard.writeText(text).then(() => {
+      setCopiedField(field);
+      setTimeout(() => setCopiedField(null), 2000);
+    });
+  }
 
   // Reset to first tier when mode changes
   useEffect(() => {
@@ -150,48 +145,6 @@ function DonatePage() {
     setSelectedIndex(i);
     const amt = mode === "once" ? ONE_TIME_AMOUNTS[i] : RECURRING_TIERS[i].amount;
     setCustomAmount(String(amt));
-  }
-
-  function handleDonate() {
-    if (!email) {
-      setEmailError(true);
-      return;
-    }
-    setEmailError(false);
-    initiatePaystack();
-  }
-
-  function initiatePaystack() {
-    const amountInSmallestUnit = Math.round(inputValue * 100);
-
-    const ref = `ABP-${Date.now()}-${Math.random().toString(36).substring(2, 8)}`;
-
-    const PaystackPop = (window as any).PaystackPop;
-    if (!PaystackPop) {
-      alert("Payment system is loading. Please try again in a moment.");
-      return;
-    }
-
-    const handler = PaystackPop.setup({
-      key: "pk_test_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-      email: email,
-      amount: amountInSmallestUnit,
-      currency: isCustom ? currencyCode : "USD",
-      ref: ref,
-      metadata: {
-        custom_fields: [
-          { display_name: "Support Type", variable_name: "support_type", value: mode },
-          ...(mode === "recurring" ? [{ display_name: "Tier", variable_name: "tier", value: RECURRING_TIERS[selectedIndex].name }] : []),
-          ...(dedicate ? [{ display_name: "Dedicated", variable_name: "dedicated", value: "yes" }] : []),
-          ...(comment ? [{ display_name: "Comment", variable_name: "comment", value: comment }] : []),
-        ],
-      },
-      callback: (response: any) => {
-        alert(`Thank you for your support! Reference: ${response.reference}`);
-      },
-      onClose: () => {},
-    });
-    handler.openIframe();
   }
 
   return (
@@ -671,86 +624,78 @@ function DonatePage() {
           )}
           {!conversionText && <div style={{ marginBottom: "12px" }} />}
 
-          {/* Email */}
-          <div style={{ marginBottom: "12px" }}>
-            <input
-              type="email"
-              placeholder="Enter your email address"
-              value={email}
-              onChange={(e) => { setEmail(e.target.value); if (e.target.value) setEmailError(false); }}
-              style={{
-                width: "100%", padding: "10px",
-                border: emailError ? "1.5px solid #e02020" : "1.5px solid #e0e0e0",
-                borderRadius: "10px", fontSize: "14px", outline: "none", boxSizing: "border-box",
-                transition: "border-color 0.2s",
-              }}
-              onFocus={(e) => { if (!emailError) e.target.style.borderColor = "#3B82F6"; }}
-              onBlur={(e) => { if (!emailError) e.target.style.borderColor = "#e0e0e0"; }}
-            />
+          {/* M-Pesa Payment Section */}
+          <div style={{
+            background: "linear-gradient(135deg, #e8f5e9, #f1f8e9)", borderRadius: "12px",
+            border: "1.5px solid #4CAF50", padding: "20px", marginBottom: "16px",
+          }}>
+            <div style={{
+              display: "flex", alignItems: "center", gap: "8px", marginBottom: "14px",
+            }}>
+              <div style={{
+                width: "32px", height: "32px", borderRadius: "50%", background: "#4CAF50",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                color: "white", fontSize: "16px", fontWeight: 700, flexShrink: 0,
+              }}>M</div>
+              <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#2E7D32", margin: 0 }}>
+                Pay via M-Pesa
+              </h3>
+            </div>
+
+            {/* Payment Details — copyable */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginBottom: "16px" }}>
+              {[
+                { label: "Paybill", value: "542542", copyable: true },
+                { label: "Account Number", value: "120129", copyable: true },
+                { label: "Account Name", value: "Jack Urban Services Ltd", copyable: false },
+              ].map((item) => (
+                <div key={item.label} style={{
+                  display: "flex", alignItems: "center", justifyContent: "space-between",
+                  background: "white", borderRadius: "8px", padding: "10px 12px",
+                  border: "1px solid #C8E6C9",
+                }}>
+                  <div>
+                    <div style={{ fontSize: "10px", color: "#666", fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.5px" }}>{item.label}</div>
+                    <div style={{ fontSize: "15px", fontWeight: 700, color: "#1a1a2e", fontFamily: "monospace" }}>{item.value}</div>
+                  </div>
+                  {item.copyable && (
+                    <button
+                      onClick={() => copyToClipboard(item.value, item.label)}
+                      style={{
+                        background: copiedField === item.label ? "#4CAF50" : "#E8F5E9",
+                        border: "1px solid #4CAF50", borderRadius: "6px",
+                        padding: "6px 12px", cursor: "pointer", fontSize: "11px",
+                        fontWeight: 600, color: copiedField === item.label ? "white" : "#2E7D32",
+                        transition: "all 0.2s", flexShrink: 0,
+                      }}
+                    >
+                      {copiedField === item.label ? "Copied!" : "Copy"}
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* Steps */}
+            <div style={{ fontSize: "12px", color: "#333", lineHeight: 1.8 }}>
+              <div style={{ fontWeight: 700, color: "#2E7D32", marginBottom: "6px", fontSize: "13px" }}>Payment Steps:</div>
+              <div><span style={{ fontWeight: 700, color: "#4CAF50" }}>1.</span> Go to M-Pesa on your phone</div>
+              <div><span style={{ fontWeight: 700, color: "#4CAF50" }}>2.</span> Select "Lipa Na M-Pesa"</div>
+              <div><span style={{ fontWeight: 700, color: "#4CAF50" }}>3.</span> Select "Pay Bill"</div>
+              <div><span style={{ fontWeight: 700, color: "#4CAF50" }}>4.</span> Enter Business Number: <strong>542542</strong></div>
+              <div><span style={{ fontWeight: 700, color: "#4CAF50" }}>5.</span> Enter Account Number: <strong>120129</strong></div>
+              <div><span style={{ fontWeight: 700, color: "#4CAF50" }}>6.</span> Enter the amount</div>
+              <div><span style={{ fontWeight: 700, color: "#4CAF50" }}>7.</span> Enter your M-Pesa PIN and confirm</div>
+            </div>
           </div>
 
-          {/* Dedicate */}
-          <label style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "10px", cursor: "pointer" }}>
-            <input
-              type="checkbox"
-              checked={dedicate}
-              onChange={(e) => setDedicate(e.target.checked)}
-              style={{ accentColor: "#3B82F6", width: "15px", height: "15px" }}
-            />
-            <span style={{ fontSize: "12px", color: "#555" }}>Dedicate my contribution</span>
-          </label>
-
-          {/* Add Comment */}
-          <div style={{ marginBottom: "14px" }}>
-            <button
-              onClick={() => setShowComment(!showComment)}
-              style={{
-                background: "none", border: "none", cursor: "pointer",
-                fontSize: "13px", color: "#555", padding: 0, display: "flex", alignItems: "center", gap: "4px",
-              }}
-            >
-              {"\u{1F4AC}"} Add a comment
-            </button>
-            {showComment && (
-              <textarea
-                placeholder="Share why you support Amar&#233;'s Big Planet..."
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-                style={{
-                  width: "100%", marginTop: "8px", padding: "10px", border: "1.5px solid #e0e0e0",
-                  borderRadius: "8px", fontSize: "12px", resize: "vertical", minHeight: "60px",
-                  outline: "none", boxSizing: "border-box", fontFamily: "sans-serif",
-                  transition: "border-color 0.2s",
-                }}
-                onFocus={(e) => { e.target.style.borderColor = "#3B82F6"; }}
-                onBlur={(e) => { e.target.style.borderColor = "#e0e0e0"; }}
-              />
-            )}
-          </div>
-
-          {/* Support Button */}
-          <button
-            onClick={handleDonate}
-            style={{
-              width: "100%", padding: "12px", borderRadius: "10px", border: "none",
-              background: "#e02020", color: "white", fontWeight: 700, fontSize: "15px",
-              cursor: "pointer", transition: "all 0.2s", marginBottom: "10px",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = "#c01010";
-              e.currentTarget.style.transform = "scale(1.02)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = "#e02020";
-              e.currentTarget.style.transform = "scale(1)";
-            }}
-          >
-            {buttonText}
-          </button>
-
-          {/* Secure Payment */}
-          <div style={{ textAlign: "center", fontSize: "10px", color: "#888", marginBottom: "16px" }}>
-            {"\u{1F512}"} Secure payment via <span style={{ color: "#00C3F7", fontWeight: 700 }}>Paystack</span>
+          {/* Confirmation Note */}
+          <div style={{
+            textAlign: "center", fontSize: "13px", color: "#2E7D32",
+            background: "#f0fdf4", borderRadius: "8px", padding: "12px",
+            marginBottom: "16px", fontWeight: 500, lineHeight: 1.5,
+          }}>
+            Once you've sent your M-Pesa payment, you're all set! Thank you for supporting Amar&eacute;'s Big Planet {"\uD83D\uDC9A"}
           </div>
 
           {/* Recent Supporters */}
