@@ -366,9 +366,13 @@ function BlogIndex() {
                     {/* Read more */}
                     <span
                       style={{
+                        display: "inline-block",
                         fontSize: "14px",
                         fontWeight: 600,
-                        color: "#3B82F6",
+                        color: "#FFFFFF",
+                        backgroundColor: "#3B82F6",
+                        padding: "6px 16px",
+                        borderRadius: "20px",
                       }}
                     >
                       {"Read More \u2192"}
