@@ -354,7 +354,7 @@ function DonatePage() {
               objectFit: "cover",
             }}
           >
-            <source src="/videos/donation-bg.mp4" type="video/mp4" />
+            <source src="/support-bg.mp4" type="video/mp4" />
           </video>
         </div>
 
