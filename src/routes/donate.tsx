@@ -644,21 +644,6 @@ function DonatePage() {
               </h3>
             </div>
 
-            {/* Suggested Amounts */}
-            <div style={{ marginBottom: "14px" }}>
-              <div style={{ fontSize: "11px", color: "#666", marginBottom: "8px", fontWeight: 500 }}>
-                Suggested amounts (send any amount you like)
-              </div>
-              <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
-                {["KSh 500", "KSh 1,000", "KSh 2,500", "KSh 5,000"].map((amt) => (
-                  <span key={amt} style={{
-                    background: "white", border: "1px solid #C8E6C9", borderRadius: "20px",
-                    padding: "6px 14px", fontSize: "13px", fontWeight: 600,
-                    color: "#2E7D32", cursor: "default",
-                  }}>{amt}</span>
-                ))}
-              </div>
-            </div>
 
             {/* Payment Details — copyable */}
             <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginBottom: "16px" }}>
