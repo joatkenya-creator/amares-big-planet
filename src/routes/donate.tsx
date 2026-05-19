@@ -193,8 +193,6 @@ function DonatePage() {
     handler.openIframe();
   }
 
-  const youtubeVideoId = "gGeTgljHdA4";
-
   return (
     <div style={{ minHeight: "100vh", fontFamily: "sans-serif", display: "flex", flexDirection: "column" }}>
       {/* NAVBAR */}
@@ -341,25 +339,23 @@ function DonatePage() {
           position: "absolute", top: 0, left: 0,
           width: "100%", height: "100%",
           overflow: "hidden", zIndex: 0,
-          background: "url('/images/donation-hero-bg.jpg') center/cover no-repeat",
         }}>
-          <iframe
-            className="donate-hero-video"
-            src="https://www.youtube.com/embed/_cZMYWcZlNc?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&playlist=_cZMYWcZlNc&playsinline=1"
-            title=""
-            allow="autoplay; encrypted-media"
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster="/images/donation-hero-bg.jpg"
             style={{
               position: "absolute",
-              top: "50%", left: "50%",
-              width: "177.78vh", /* 16:9 ratio */
-              height: "100vh",
-              minWidth: "100%",
-              minHeight: "100%",
-              transform: "translate(-50%, -50%)",
-              border: "none",
-              pointerEvents: "none",
+              top: 0, left: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
             }}
-          />
+          >
+            <source src="/videos/donation-bg.mp4" type="video/mp4" />
+          </video>
         </div>
 
         {/* Dark overlay — full width */}
@@ -901,13 +897,6 @@ function DonatePage() {
         .donate-nav-hamburger:focus-visible {
           outline: 2px solid #e85d04;
           outline-offset: 2px;
-        }
-
-        /* Hide YouTube iframe on mobile — fall back to background image */
-        @media (max-width: 768px) {
-          .donate-hero-video {
-            display: none !important;
-          }
         }
 
         /* Layout responsive */
