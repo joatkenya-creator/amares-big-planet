@@ -630,33 +630,51 @@ function DonatePage() {
             border: "1.5px solid #4CAF50", padding: "20px", marginBottom: "16px",
           }}>
             <div style={{
-              display: "flex", alignItems: "center", gap: "8px", marginBottom: "14px",
+              display: "flex", alignItems: "center", gap: "10px",
+              background: "#4CAF50", borderRadius: "10px",
+              padding: "12px 16px", marginBottom: "14px",
             }}>
               <div style={{
-                width: "32px", height: "32px", borderRadius: "50%", background: "#4CAF50",
+                width: "36px", height: "36px", borderRadius: "50%", background: "white",
                 display: "flex", alignItems: "center", justifyContent: "center",
-                color: "white", fontSize: "16px", fontWeight: 700, flexShrink: 0,
+                color: "#4CAF50", fontSize: "18px", fontWeight: 800, flexShrink: 0,
               }}>M</div>
-              <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#2E7D32", margin: 0 }}>
+              <h3 style={{ fontSize: "17px", fontWeight: 700, color: "white", margin: 0 }}>
                 Pay via M-Pesa
               </h3>
+            </div>
+
+            {/* Suggested Amounts */}
+            <div style={{ marginBottom: "14px" }}>
+              <div style={{ fontSize: "11px", color: "#666", marginBottom: "8px", fontWeight: 500 }}>
+                Suggested amounts (send any amount you like)
+              </div>
+              <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
+                {["KSh 500", "KSh 1,000", "KSh 2,500", "KSh 5,000"].map((amt) => (
+                  <span key={amt} style={{
+                    background: "white", border: "1px solid #C8E6C9", borderRadius: "20px",
+                    padding: "6px 14px", fontSize: "13px", fontWeight: 600,
+                    color: "#2E7D32", cursor: "default",
+                  }}>{amt}</span>
+                ))}
+              </div>
             </div>
 
             {/* Payment Details — copyable */}
             <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginBottom: "16px" }}>
               {[
-                { label: "Paybill", value: "542542", copyable: true },
-                { label: "Account Number", value: "120129", copyable: true },
-                { label: "Account Name", value: "Jack Urban Services Ltd", copyable: false },
+                { label: "Paybill Number", value: "542542", copyable: true, big: true },
+                { label: "Account Number", value: "120129", copyable: true, big: true },
+                { label: "Account Name", value: "Jack Urban Services Ltd", copyable: false, big: false },
               ].map((item) => (
                 <div key={item.label} style={{
                   display: "flex", alignItems: "center", justifyContent: "space-between",
-                  background: "white", borderRadius: "8px", padding: "10px 12px",
+                  background: "white", borderRadius: "8px", padding: item.big ? "12px 14px" : "10px 12px",
                   border: "1px solid #C8E6C9",
                 }}>
                   <div>
                     <div style={{ fontSize: "10px", color: "#666", fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.5px" }}>{item.label}</div>
-                    <div style={{ fontSize: "15px", fontWeight: 700, color: "#1a1a2e", fontFamily: "monospace" }}>{item.value}</div>
+                    <div style={{ fontSize: item.big ? "22px" : "15px", fontWeight: 800, color: "#1a1a2e", fontFamily: "monospace", letterSpacing: item.big ? "1px" : "0" }}>{item.value}</div>
                   </div>
                   {item.copyable && (
                     <button
@@ -676,26 +694,32 @@ function DonatePage() {
               ))}
             </div>
 
-            {/* Steps */}
-            <div style={{ fontSize: "12px", color: "#333", lineHeight: 1.8 }}>
-              <div style={{ fontWeight: 700, color: "#2E7D32", marginBottom: "6px", fontSize: "13px" }}>Payment Steps:</div>
-              <div><span style={{ fontWeight: 700, color: "#4CAF50" }}>1.</span> Go to M-Pesa on your phone</div>
-              <div><span style={{ fontWeight: 700, color: "#4CAF50" }}>2.</span> Select "Lipa Na M-Pesa"</div>
-              <div><span style={{ fontWeight: 700, color: "#4CAF50" }}>3.</span> Select "Pay Bill"</div>
-              <div><span style={{ fontWeight: 700, color: "#4CAF50" }}>4.</span> Enter Business Number: <strong>542542</strong></div>
-              <div><span style={{ fontWeight: 700, color: "#4CAF50" }}>5.</span> Enter Account Number: <strong>120129</strong></div>
-              <div><span style={{ fontWeight: 700, color: "#4CAF50" }}>6.</span> Enter the amount</div>
-              <div><span style={{ fontWeight: 700, color: "#4CAF50" }}>7.</span> Enter your M-Pesa PIN and confirm</div>
+            {/* Steps — compact */}
+            <div style={{
+              fontSize: "13px", color: "#333", lineHeight: 1.7,
+              background: "white", borderRadius: "8px", padding: "10px 14px",
+              border: "1px solid #C8E6C9",
+            }}>
+              <span style={{ fontWeight: 600, color: "#2E7D32" }}>On your phone:</span>{" "}
+              M-Pesa → Lipa Na M-Pesa → Pay Bill → Enter <strong>542542</strong> → Account <strong>120129</strong> → Enter amount → Confirm ✓
             </div>
           </div>
 
-          {/* Confirmation Note */}
+          {/* Confirmation Note — subtle */}
           <div style={{
-            textAlign: "center", fontSize: "13px", color: "#2E7D32",
-            background: "#f0fdf4", borderRadius: "8px", padding: "12px",
-            marginBottom: "16px", fontWeight: 500, lineHeight: 1.5,
+            textAlign: "center", fontSize: "11px", color: "#4CAF50",
+            background: "#f0fdf4", borderRadius: "6px", padding: "8px 12px",
+            marginBottom: "6px", fontWeight: 500, lineHeight: 1.5,
           }}>
-            Once you've sent your M-Pesa payment, you're all set! Thank you for supporting Amar&eacute;'s Big Planet {"\uD83D\uDC9A"}
+            Once you've sent your M-Pesa payment, you're all set! Thank you for supporting Amar&eacute;'s Big Planet 💚
+          </div>
+
+          {/* Trust element */}
+          <div style={{
+            textAlign: "center", fontSize: "11px", color: "#888",
+            marginBottom: "16px", fontWeight: 400,
+          }}>
+            🔒 M-Pesa payments are processed securely by Safaricom
           </div>
 
           {/* Recent Supporters */}
