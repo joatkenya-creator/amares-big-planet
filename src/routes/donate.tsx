@@ -640,7 +640,7 @@ function DonatePage() {
                 color: "#4CAF50", fontSize: "18px", fontWeight: 800, flexShrink: 0,
               }}>M</div>
               <h3 style={{ fontSize: "17px", fontWeight: 700, color: "white", margin: 0 }}>
-                Pay via M-Pesa
+                Support via M-Pesa
               </h3>
             </div>
 
