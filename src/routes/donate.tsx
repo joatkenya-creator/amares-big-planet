@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect, useRef } from "react";
 import amaresLogo from "@/assets/amares-logo.jpeg";
 import amaresTitle from "@/assets/amares-title.png";
+import amareHero from "@/assets/amare-hero.jpg";
 
 export const Route = createFileRoute("/donate")({
   component: DonatePage,
@@ -339,7 +340,7 @@ function DonatePage() {
           position: "absolute", top: 0, left: 0,
           width: "100%", height: "100%",
           overflow: "hidden", zIndex: 0,
-          backgroundImage: "url(/images/donation-hero-bg.jpg)",
+          backgroundImage: `url(${amareHero})`,
           backgroundSize: "cover", backgroundPosition: "center",
         }}>
           <iframe
