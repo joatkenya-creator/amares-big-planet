@@ -41,6 +41,37 @@ function DonatePage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [amount, setAmount] = useState("");
+  const [mpesaLoading, setMpesaLoading] = useState(false);
+  const [mpesaStatus, setMpesaStatus] = useState<"idle" | "sent" | "error">("idle");
+  const [mpesaMessage, setMpesaMessage] = useState("");
+
+  async function handleMpesaPay() {
+    if (!phoneNumber || !amount) return;
+    setMpesaLoading(true);
+    setMpesaStatus("idle");
+    try {
+      const res = await fetch("/api/mpesa-stk", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phoneNumber, amount: Number(amount) }),
+      });
+      const data = await res.json();
+      if (data.ResponseCode === "0") {
+        setMpesaStatus("sent");
+        setMpesaMessage("Check your phone for the M-Pesa prompt and enter your PIN.");
+      } else {
+        setMpesaStatus("error");
+        setMpesaMessage(data.errorMessage || data.CustomerMessage || "Something went wrong. Try again.");
+      }
+    } catch {
+      setMpesaStatus("error");
+      setMpesaMessage("Network error. Please try again.");
+    } finally {
+      setMpesaLoading(false);
+    }
+  }
 
   useEffect(() => {
     function handleScroll() {
@@ -505,48 +536,70 @@ function DonatePage() {
             </p>
 
 
-            {/* Payment Details — copyable */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginBottom: "16px" }}>
-              {[
-                { label: "Paybill Number", value: "542542", copyable: true, big: true },
-                { label: "Account Number", value: "120129", copyable: true, big: true },
-                { label: "Account Name", value: "Jack Urban Services Ltd", copyable: false, big: false },
-              ].map((item) => (
-                <div key={item.label} style={{
-                  display: "flex", alignItems: "center", justifyContent: "space-between",
-                  background: "white", borderRadius: "8px", padding: item.big ? "12px 14px" : "10px 12px",
-                  border: "1px solid #C8E6C9",
-                }}>
-                  <div>
-                    <div style={{ fontSize: "10px", color: "#666", fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.5px" }}>{item.label}</div>
-                    <div style={{ fontSize: item.big ? "22px" : "15px", fontWeight: 800, color: "#1a1a2e", fontFamily: "monospace", letterSpacing: item.big ? "1px" : "0" }}>{item.value}</div>
-                  </div>
-                  {item.copyable && (
-                    <button
-                      onClick={() => copyToClipboard(item.value, item.label)}
-                      style={{
-                        background: copiedField === item.label ? "#4CAF50" : "#E8F5E9",
-                        border: "1px solid #4CAF50", borderRadius: "6px",
-                        padding: "6px 12px", cursor: "pointer", fontSize: "11px",
-                        fontWeight: 600, color: copiedField === item.label ? "white" : "#2E7D32",
-                        transition: "all 0.2s", flexShrink: 0,
-                      }}
-                    >
-                      {copiedField === item.label ? "Copied!" : "Copy"}
-                    </button>
-                  )}
-                </div>
-              ))}
+            {/* Phone + Amount inputs */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginBottom: "12px" }}>
+              <input
+                type="tel"
+                placeholder="Phone number (e.g. 0712345678)"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                style={{
+                  width: "100%", padding: "12px 14px", borderRadius: "8px",
+                  border: "1px solid #C8E6C9", fontSize: "15px", boxSizing: "border-box",
+                  outline: "none", background: "white",
+                }}
+              />
+              <input
+                type="number"
+                placeholder="Amount (KES)"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                min="1"
+                style={{
+                  width: "100%", padding: "12px 14px", borderRadius: "8px",
+                  border: "1px solid #C8E6C9", fontSize: "15px", boxSizing: "border-box",
+                  outline: "none", background: "white",
+                }}
+              />
             </div>
 
-            {/* Steps — compact */}
+            {/* Pay button */}
+            <button
+              onClick={handleMpesaPay}
+              disabled={mpesaLoading || !phoneNumber || !amount}
+              style={{
+                width: "100%", padding: "14px", borderRadius: "28px",
+                background: mpesaLoading ? "#81C784" : "#4CAF50",
+                color: "white", fontSize: "16px", fontWeight: 700,
+                border: "none", cursor: mpesaLoading ? "not-allowed" : "pointer",
+                transition: "all 0.2s", marginBottom: "10px",
+              }}
+            >
+              {mpesaLoading ? "Sending prompt..." : "Pay with M-Pesa"}
+            </button>
+
+            {/* Status message */}
+            {mpesaStatus !== "idle" && (
+              <div style={{
+                padding: "10px 14px", borderRadius: "8px", fontSize: "13px",
+                fontWeight: 500, textAlign: "center", marginBottom: "8px",
+                background: mpesaStatus === "sent" ? "#E8F5E9" : "#FFEBEE",
+                color: mpesaStatus === "sent" ? "#2E7D32" : "#C62828",
+                border: `1px solid ${mpesaStatus === "sent" ? "#C8E6C9" : "#FFCDD2"}`,
+              }}>
+                {mpesaMessage}
+              </div>
+            )}
+
+            {/* Manual fallback — compact */}
             <div style={{
-              fontSize: "13px", color: "#333", lineHeight: 1.7,
+              fontSize: "12px", color: "#555", lineHeight: 1.6,
               background: "white", borderRadius: "8px", padding: "10px 14px",
               border: "1px solid #C8E6C9",
             }}>
-              <span style={{ fontWeight: 600, color: "#2E7D32" }}>On your phone:</span>{" "}
-              M-Pesa → Lipa Na M-Pesa → Pay Bill → Enter <strong>542542</strong> → Account <strong>120129</strong> → Enter amount → Confirm ✓
+              <span style={{ fontWeight: 600, color: "#2E7D32" }}>Or manually:</span>{" "}
+              M-Pesa {"\u2192"} Lipa Na M-Pesa {"\u2192"} Pay Bill {"\u2192"}{" "}
+              <strong>542542</strong> {"\u2192"} Account <strong>120129</strong> {"\u2192"} Amount {"\u2192"} Confirm
             </div>
           </div>
 
