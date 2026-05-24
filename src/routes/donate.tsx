@@ -94,8 +94,8 @@ function DonatePage() {
         role="navigation"
         aria-label="Support page navigation"
         style={{
-          background: scrolled ? "rgba(255,255,255,0.97)" : "rgba(0,0,0,0.7)",
-          backdropFilter: "blur(10px)",
+          background: scrolled ? "rgba(255,255,255,0.97)" : "transparent",
+          backdropFilter: scrolled ? "blur(10px)" : "none",
           boxShadow: scrolled ? "0 2px 12px rgba(0,0,0,0.1)" : "none",
           transition: "background 0.3s ease, box-shadow 0.3s ease",
           position: "fixed",
@@ -111,9 +111,9 @@ function DonatePage() {
         }}>
           {/* Logo — links home */}
           <Link to="/" aria-label="Go to homepage" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none", flexShrink: 0 }}>
-            <img src={amaresLogo} alt="" style={{ width: "48px", height: "48px", borderRadius: "50%", objectFit: "cover", border: scrolled ? "2px solid #0d1b3e" : "2px solid rgba(255,255,255,0.5)" }} />
+            <img src={amaresLogo} alt="" style={{ width: "48px", height: "48px", borderRadius: "50%", objectFit: "cover", border: scrolled ? "2px solid #0d1b3e" : "2px solid rgba(255,255,255,0.3)" }} />
             <div style={{ display: "flex", flexDirection: "column" }}>
-              <img src={amaresTitle} alt="Amare's Big Planet" className="donate-nav-title" style={{ height: "40px", width: "auto", filter: scrolled ? "none" : "brightness(0) invert(1)", transition: "filter 0.3s ease" }} />
+              <img src={amaresTitle} alt="Amare's Big Planet" className="donate-nav-title" style={{ height: "40px", width: "auto", filter: scrolled ? "none" : "drop-shadow(0 1px 3px rgba(0,0,0,0.7))", transition: "filter 0.3s ease" }} />
             </div>
           </Link>
 
@@ -729,6 +729,7 @@ function DonatePage() {
         /* Transparent navbar state — links turn white */
         .donate-nav-links--transparent .donate-nav-link {
           color: rgba(255,255,255,0.9);
+          text-shadow: 0 1px 4px rgba(0,0,0,0.6);
         }
         .donate-nav-links--transparent .donate-nav-link:hover {
           color: #fff;
@@ -736,6 +737,7 @@ function DonatePage() {
         }
         .donate-nav-links--transparent .donate-nav-link--active {
           color: #ffd166 !important;
+          text-shadow: 0 1px 4px rgba(0,0,0,0.6);
         }
         .donate-nav-links--transparent .donate-nav-link--active::after {
           background: #ffd166;
