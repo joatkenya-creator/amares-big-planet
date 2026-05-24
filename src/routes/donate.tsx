@@ -95,12 +95,14 @@ function DonatePage() {
         role="navigation"
         aria-label="Support page navigation"
         style={{
-          background: "rgba(255,255,255,0.97)",
+          background: scrolled ? "rgba(255,255,255,0.97)" : "rgba(0,0,0,0.25)",
           backdropFilter: "blur(10px)",
           boxShadow: scrolled ? "0 2px 12px rgba(0,0,0,0.1)" : "none",
-          transition: "box-shadow 0.3s ease",
-          position: "sticky",
+          transition: "background 0.3s ease, box-shadow 0.3s ease",
+          position: "fixed",
           top: 0,
+          left: 0,
+          right: 0,
           zIndex: 1000,
         }}
       >
@@ -110,14 +112,14 @@ function DonatePage() {
         }}>
           {/* Logo — links home */}
           <Link to="/" aria-label="Go to homepage" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none", flexShrink: 0 }}>
-            <img src={amaresLogo} alt="" style={{ width: "48px", height: "48px", borderRadius: "50%", objectFit: "cover", border: "2px solid #0d1b3e" }} />
+            <img src={amaresLogo} alt="" style={{ width: "48px", height: "48px", borderRadius: "50%", objectFit: "cover", border: scrolled ? "2px solid #0d1b3e" : "2px solid rgba(255,255,255,0.5)" }} />
             <div style={{ display: "flex", flexDirection: "column" }}>
-              <img src={amaresTitle} alt="Amare's Big Planet" className="donate-nav-title" style={{ height: "40px", width: "auto" }} />
+              <img src={amaresTitle} alt="Amare's Big Planet" className="donate-nav-title" style={{ height: "40px", width: "auto", filter: scrolled ? "none" : "brightness(0) invert(1)", transition: "filter 0.3s ease" }} />
             </div>
           </Link>
 
           {/* Center nav links — desktop only */}
-          <div className="donate-nav-links" style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+          <div className={`donate-nav-links${scrolled ? "" : " donate-nav-links--transparent"}`} style={{ display: "flex", alignItems: "center", gap: "4px" }}>
             {DONATE_NAV_LINKS.map((link) => (
               <a
                 key={link.label}
@@ -135,9 +137,11 @@ function DonatePage() {
             {/* Secure trust pill — desktop only */}
             <div className="donate-nav-trust" style={{
               display: "flex", alignItems: "center", gap: "6px",
-              background: "#f0fdf4", border: "1px solid #bbf7d0",
+              background: scrolled ? "#f0fdf4" : "rgba(255,255,255,0.15)",
+              border: scrolled ? "1px solid #bbf7d0" : "1px solid rgba(255,255,255,0.3)",
               borderRadius: "20px", padding: "5px 12px", fontSize: "12px",
-              fontWeight: 600, color: "#166534",
+              fontWeight: 600, color: scrolled ? "#166534" : "#fff",
+              transition: "all 0.3s ease",
             }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22C55E" strokeWidth="2" strokeLinecap="round" style={{ flexShrink: 0 }}>
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
@@ -176,17 +180,17 @@ function DonatePage() {
               }}
             >
               <span style={{
-                display: "block", width: "22px", height: "2px", background: "#0d1b3e",
+                display: "block", width: "22px", height: "2px", background: scrolled ? "#0d1b3e" : "#fff",
                 borderRadius: "2px", transition: "all 0.3s",
                 transform: mobileMenuOpen ? "rotate(45deg) translateY(6px)" : "none",
               }} />
               <span style={{
-                display: "block", width: "22px", height: "2px", background: "#0d1b3e",
+                display: "block", width: "22px", height: "2px", background: scrolled ? "#0d1b3e" : "#fff",
                 borderRadius: "2px", transition: "all 0.3s",
                 opacity: mobileMenuOpen ? 0 : 1,
               }} />
               <span style={{
-                display: "block", width: "22px", height: "2px", background: "#0d1b3e",
+                display: "block", width: "22px", height: "2px", background: scrolled ? "#0d1b3e" : "#fff",
                 borderRadius: "2px", transition: "all 0.3s",
                 transform: mobileMenuOpen ? "rotate(-45deg) translateY(-6px)" : "none",
               }} />
@@ -227,7 +231,7 @@ function DonatePage() {
       </nav>
 
       {/* MAIN CONTENT — Split Screen */}
-      <div style={{ flex: 1, position: "relative", overflow: "hidden", minHeight: "calc(100vh - 71px)" }}>
+      <div style={{ flex: 1, position: "relative", overflow: "hidden", minHeight: "100vh" }}>
 
         {/* Video Background — YouTube iframe (hidden on mobile, replaced by bg image) */}
         <div className="donate-hero-video-wrap" style={{
@@ -244,9 +248,8 @@ function DonatePage() {
             allow="autoplay; encrypted-media"
             style={{
               position: "absolute",
-              top: 0, left: "50%",
-              transform: "translateX(-50%)",
-              width: "100vw", height: "100vh",
+              top: 0, left: 0,
+              width: "100%", height: "100%",
               minWidth: "100%", minHeight: "100%",
               border: "none",
               pointerEvents: "none",
@@ -264,7 +267,7 @@ function DonatePage() {
         }} />
 
         {/* Content layer — flex row above video + overlay */}
-        <div className="donate-content-row" style={{ position: "relative", zIndex: 2, display: "flex", minHeight: "calc(100vh - 71px)" }}>
+        <div className="donate-content-row" style={{ position: "relative", zIndex: 2, display: "flex", minHeight: "100vh", paddingTop: "71px" }}>
 
         {/* LEFT SIDE — Hero */}
         <div className="donate-hero" style={{
@@ -729,6 +732,24 @@ function DonatePage() {
         .donate-nav-link--active::after {
           width: 60% !important;
           background: #e85d04;
+        }
+
+        /* Transparent navbar state — links turn white */
+        .donate-nav-links--transparent .donate-nav-link {
+          color: rgba(255,255,255,0.9);
+        }
+        .donate-nav-links--transparent .donate-nav-link:hover {
+          color: #fff;
+          background: rgba(255,255,255,0.1);
+        }
+        .donate-nav-links--transparent .donate-nav-link--active {
+          color: #ffd166 !important;
+        }
+        .donate-nav-links--transparent .donate-nav-link--active::after {
+          background: #ffd166;
+        }
+        .donate-nav-links--transparent .donate-nav-link::after {
+          background: #ffd166;
         }
 
         /* Secure dot pulse */
