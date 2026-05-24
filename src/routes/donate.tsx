@@ -95,7 +95,7 @@ function DonatePage() {
         role="navigation"
         aria-label="Support page navigation"
         style={{
-          background: scrolled ? "rgba(255,255,255,0.97)" : "rgba(0,0,0,0.25)",
+          background: scrolled ? "rgba(255,255,255,0.97)" : "rgba(0,0,0,0.7)",
           backdropFilter: "blur(10px)",
           boxShadow: scrolled ? "0 2px 12px rgba(0,0,0,0.1)" : "none",
           transition: "background 0.3s ease, box-shadow 0.3s ease",
