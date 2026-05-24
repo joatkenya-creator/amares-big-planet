@@ -239,7 +239,7 @@ function DonatePage() {
         }}>
           <iframe
             className="donate-hero-youtube"
-            src="https://www.youtube.com/embed/_cZMYWcZlNc?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&rel=0&playlist=_cZMYWcZlNc&playsinline=1&modestbranding=1&disablekb=1"
+            src="https://www.youtube.com/embed/fY6_epxkJQo?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&rel=0&playlist=fY6_epxkJQo&playsinline=1&modestbranding=1&disablekb=1"
             title="Background video"
             allow="autoplay; encrypted-media"
             style={{
