@@ -248,9 +248,10 @@ function DonatePage() {
             allow="autoplay; encrypted-media"
             style={{
               position: "absolute",
-              top: 0, left: 0,
-              width: "100%", height: "100%",
-              minWidth: "100%", minHeight: "100%",
+              top: "50%", left: "50%",
+              transform: "translate(-50%, -50%) scale(1.2)",
+              width: "100vw", height: "56.25vw",
+              minHeight: "100vh", minWidth: "177.78vh",
               border: "none",
               pointerEvents: "none",
               zIndex: 0,
