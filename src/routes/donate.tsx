@@ -244,8 +244,8 @@ function DonatePage() {
             allow="autoplay; encrypted-media"
             style={{
               position: "absolute",
-              top: "50%", left: "50%",
-              transform: "translate(-50%, -50%)",
+              top: 0, left: "50%",
+              transform: "translateX(-50%)",
               width: "100vw", height: "100vh",
               minWidth: "100%", minHeight: "100%",
               border: "none",
