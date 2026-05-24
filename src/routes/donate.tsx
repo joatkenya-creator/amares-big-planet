@@ -2,7 +2,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect, useRef } from "react";
 import amaresLogo from "@/assets/amares-logo.jpeg";
 import amaresTitle from "@/assets/amares-title.png";
-import amareHero from "@/assets/amare-hero.jpg";
 
 export const Route = createFileRoute("/donate")({
   component: DonatePage,
@@ -233,37 +232,29 @@ function DonatePage() {
       {/* MAIN CONTENT — Split Screen */}
       <div style={{ flex: 1, position: "relative", overflow: "hidden", minHeight: "100vh" }}>
 
-        {/* Video Background — YouTube iframe (hidden on mobile, replaced by bg image) */}
-        <div className="donate-hero-video-wrap" style={{
-          position: "absolute", top: 0, left: 0,
-          width: "100%", height: "100%",
-          overflow: "hidden", zIndex: 0,
-          backgroundImage: `url(${amareHero})`,
-          backgroundSize: "cover", backgroundPosition: "center",
-        }}>
-          <iframe
-            className="donate-hero-youtube"
-            src="https://www.youtube.com/embed/fY6_epxkJQo?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&rel=0&playlist=fY6_epxkJQo&playsinline=1&modestbranding=1&disablekb=1"
-            title="Background video"
-            allow="autoplay; encrypted-media"
-            style={{
-              position: "absolute",
-              top: "50%", left: "50%",
-              transform: "translate(-50%, -50%) scale(1.2)",
-              width: "100vw", height: "56.25vw",
-              minHeight: "100vh", minWidth: "177.78vh",
-              border: "none",
-              pointerEvents: "none",
-              zIndex: 0,
-            }}
-          />
-        </div>
+        {/* Video Background — HTML5 video (autoplays on mobile with playsInline + muted) */}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          style={{
+            position: "absolute",
+            top: 0, left: 0,
+            width: "100%", height: "100%",
+            objectFit: "cover",
+            zIndex: 0,
+            pointerEvents: "none",
+          }}
+        >
+          <source src="https://res.cloudinary.com/dee2vqvzl/video/upload/v1779646039/Shape_the_Future_of_Learning__Sponsor_Amare_s_Big_Planet_1_dbmrgt.mp4" type="video/mp4" />
+        </video>
 
         {/* Dark overlay — full width */}
         <div style={{
           position: "absolute", top: 0, left: 0,
           width: "100%", height: "100%",
-          background: "linear-gradient(to right, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.55) 50%, rgba(0,0,0,0.35) 100%)",
+          background: "rgba(0,0,0,0.5)",
           zIndex: 1,
         }} />
 
@@ -799,9 +790,6 @@ function DonatePage() {
           .donate-card-wrapper {
             width: 100% !important;
             flex-shrink: unset !important;
-          }
-          .donate-hero-youtube {
-            display: none !important;
           }
         }
 
