@@ -233,6 +233,18 @@ function BlogIndex() {
           textAlign: "center",
         }}
       >
+        <img
+          src={amaresLogo}
+          alt="Amare's Big Planet"
+          style={{
+            width: "90px",
+            height: "90px",
+            borderRadius: "50%",
+            objectFit: "cover",
+            marginBottom: "20px",
+            border: "3px solid rgba(255,255,255,0.3)",
+          }}
+        />
         <h1
           style={{
             fontSize: "clamp(32px, 5vw, 52px)",
