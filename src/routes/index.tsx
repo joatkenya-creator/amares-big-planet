@@ -140,7 +140,7 @@ const characters = [
   },
   {
     name: "Trinity",
-    img: "https://res.cloudinary.com/dee2vqvzl/image/upload/v1778836745/1776066648018_Character_in_T_202604011430_1_jp2axc.jpg",
+    img: "https://res.cloudinary.com/dee2vqvzl/image/upload/v1779704810/WhatsApp_Image_2026-05-25_at_13.17.11_dirmsz.jpg",
     desc: "Nature lover. Grows plant barriers to protect friends.",
     color: "#22C55E",
   },
