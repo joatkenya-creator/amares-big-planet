@@ -66,6 +66,7 @@ export const Route = createFileRoute("/")({
               thumbnailUrl: "https://img.youtube.com/vi/_ctNtUXel6Q/maxresdefault.jpg",
               embedUrl: "https://www.youtube.com/embed/_ctNtUXel6Q",
               url: "https://amaresbigplanet.com/#music",
+              uploadDate: "2026-05-16",
             },
             {
               "@type": "VideoObject",
@@ -74,6 +75,7 @@ export const Route = createFileRoute("/")({
               thumbnailUrl: "https://img.youtube.com/vi/Ga_sef8vcIA/maxresdefault.jpg",
               embedUrl: "https://www.youtube.com/embed/Ga_sef8vcIA",
               url: "https://amaresbigplanet.com/#music",
+              uploadDate: "2026-05-16",
             },
             {
               "@type": "VideoObject",
@@ -82,6 +84,7 @@ export const Route = createFileRoute("/")({
               thumbnailUrl: "https://img.youtube.com/vi/8jCfqeT6iNc/maxresdefault.jpg",
               embedUrl: "https://www.youtube.com/embed/8jCfqeT6iNc",
               url: "https://amaresbigplanet.com/#music",
+              uploadDate: "2026-05-16",
             },
             {
               "@type": "VideoObject",
@@ -90,6 +93,7 @@ export const Route = createFileRoute("/")({
               thumbnailUrl: "https://img.youtube.com/vi/9ryVeXuqv-M/maxresdefault.jpg",
               embedUrl: "https://www.youtube.com/embed/9ryVeXuqv-M",
               url: "https://amaresbigplanet.com/#watch",
+              uploadDate: "2026-05-16",
             },
           ],
         }),
