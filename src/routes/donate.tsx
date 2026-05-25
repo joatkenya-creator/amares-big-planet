@@ -522,6 +522,7 @@ function DonatePage() {
               padding: "12px 16px", marginBottom: "6px",
             }}>
               <img src="/mpesa-logo.png" alt="M-Pesa" style={{ height: "40px", width: "auto", flexShrink: 0 }} />
+              <img src="/safcom.png" alt="Safaricom" style={{ height: "34px", width: "auto", flexShrink: 0 }} />
               <h3 style={{ fontSize: "17px", fontWeight: 700, color: "white", margin: 0 }}>
                 Support via M-Pesa
               </h3>
