@@ -57,10 +57,8 @@ function ArticlesPage() {
       <section className="mx-auto max-w-6xl px-4 py-12">
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {articles.map((article) => (
-            <Link
+            <article
               key={article.slug}
-              to="/articles/$slug"
-              params={{ slug: article.slug }}
               className="overflow-hidden rounded-2xl border border-[#cce9f5] bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
             >
               <img
@@ -75,9 +73,15 @@ function ArticlesPage() {
                 </div>
                 <h2 className="mt-3 text-xl font-extrabold leading-snug text-[#10172a]">{article.title}</h2>
                 <p className="mt-3 text-sm leading-6 text-[#5b6f82]">{article.description}</p>
-                <span className="mt-5 inline-flex font-bold text-[#e02020]">Read guide</span>
+                <Link
+                  to="/articles/$slug"
+                  params={{ slug: article.slug }}
+                  className="mt-5 inline-flex rounded-full bg-[#e02020] px-5 py-2.5 text-sm font-extrabold text-white shadow-sm transition hover:bg-[#b91c1c] focus:outline-none focus:ring-4 focus:ring-[#fca5a5]"
+                >
+                  Learn more
+                </Link>
               </div>
-            </Link>
+            </article>
           ))}
         </div>
       </section>

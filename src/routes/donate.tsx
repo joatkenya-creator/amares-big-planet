@@ -30,7 +30,7 @@ const DONATE_NAV_LINKS = [
   { label: "Programs", href: "/#programs" },
   { label: "Impact", href: "/#impact" },
   { label: "Stories", href: "/#stories" },
-  { label: "Blog", href: "/blog" },
+  { label: "Articles", href: "/articles" },
   { label: "Support", href: "/donate" },
   { label: "Contact", href: "/#contact" },
 ];

@@ -102,7 +102,7 @@ export const Route = createFileRoute("/")({
   }),
 });
 
-const navLinks = ["Shows", "Music", "Characters", "Games", "Parents", "Blog"];
+const navLinks = ["Shows", "Music", "Characters", "Games", "Parents", "Articles"];
 
 const shows = [
   {
@@ -583,8 +583,8 @@ function Index() {
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-1">
             {navLinks.map((l) =>
-              l === "Blog" ? (
-                <Link key={l} to="/blog" className="nav-link">
+              l === "Articles" ? (
+                <Link key={l} to="/articles" className="nav-link">
                   {l}
                 </Link>
               ) : (
@@ -602,12 +602,6 @@ function Index() {
               className="nav-link-donate"
             >
               Support {"\u{1F499}"}
-            </Link>
-            <Link
-              to="/articles"
-              className="nav-link"
-            >
-              Articles
             </Link>
           </nav>
 
@@ -801,10 +795,10 @@ function Index() {
       >
         <nav className="md:hidden">
           {navLinks.map((l) =>
-            l === "Blog" ? (
+            l === "Articles" ? (
               <Link
                 key={l}
-                to="/blog"
+                to="/articles"
                 className="mobile-nav-link"
                 onClick={() => setMenuOpen(false)}
               >
@@ -828,13 +822,6 @@ function Index() {
             onClick={() => setMenuOpen(false)}
           >
             Support {"\u{1F499}"}
-          </Link>
-          <Link
-            to="/articles"
-            className="mobile-nav-link"
-            onClick={() => setMenuOpen(false)}
-          >
-            Articles
           </Link>
           <div style={{ padding: "16px 24px" }}>
             <a
