@@ -62,11 +62,11 @@ function DonatePage() {
         setMpesaMessage("Check your phone for the M-Pesa prompt and enter your PIN.");
       } else {
         setMpesaStatus("error");
-        setMpesaMessage(data.errorMessage || data.CustomerMessage || "Something went wrong. Try again.");
+        setMpesaMessage(data.error || data.errorMessage || data.CustomerMessage || "Something went wrong. Try again.");
       }
-    } catch {
+    } catch (err) {
       setMpesaStatus("error");
-      setMpesaMessage("Network error. Please try again.");
+      setMpesaMessage(`Network error: ${err instanceof Error ? err.message : "Please check your connection and try again."}`);
     } finally {
       setMpesaLoading(false);
     }

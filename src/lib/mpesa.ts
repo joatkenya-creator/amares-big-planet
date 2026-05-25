@@ -1,7 +1,6 @@
 const SANDBOX_URL = "https://sandbox.safaricom.co.ke";
 const PRODUCTION_URL = "https://api.safaricom.co.ke";
 
-const PAYBILL = "542542";
 const ACCOUNT_NUMBER = "120129";
 
 function getBaseUrl(env: string) {
@@ -34,6 +33,7 @@ export async function getMpesaToken(
 export async function stkPush(params: {
   token: string;
   passkey: string;
+  shortcode: string;
   phoneNumber: string;
   amount: number;
   callbackUrl: string;
@@ -46,7 +46,7 @@ export async function stkPush(params: {
     .replace(/[-T:.Z]/g, "")
     .slice(0, 14);
 
-  const password = btoa(`${PAYBILL}${params.passkey}${timestamp}`);
+  const password = btoa(`${params.shortcode}${params.passkey}${timestamp}`);
 
   // Format phone: 0712345678 -> 254712345678
   let phone = params.phoneNumber.replace(/\s+/g, "");
@@ -57,13 +57,13 @@ export async function stkPush(params: {
   }
 
   const body = {
-    BusinessShortCode: PAYBILL,
+    BusinessShortCode: params.shortcode,
     Password: password,
     Timestamp: timestamp,
     TransactionType: "CustomerPayBillOnline",
     Amount: params.amount,
     PartyA: phone,
-    PartyB: PAYBILL,
+    PartyB: params.shortcode,
     PhoneNumber: phone,
     CallBackURL: params.callbackUrl,
     AccountReference: ACCOUNT_NUMBER,
