@@ -98,7 +98,7 @@ export const Route = createFileRoute("/")({
   }),
 });
 
-const navLinks = ["Shows", "Music", "Characters", "Games", "Parents", "Blog"];
+const navLinks = ["Shows", "Music", "Characters", "Games", "Parents"];
 
 const shows = [
   {
@@ -579,19 +579,13 @@ function Index() {
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-1">
             {navLinks.map((l) =>
-              l === "Blog" ? (
-                <Link key={l} to="/blog" className="nav-link">
-                  {l}
-                </Link>
-              ) : (
-                <a
-                  key={l}
-                  href={`#${l.toLowerCase()}`}
-                  className={`nav-link${activeSection === l.toLowerCase() ? " active" : ""}`}
-                >
-                  {l}
-                </a>
-              )
+              <a
+                key={l}
+                href={`#${l.toLowerCase()}`}
+                className={`nav-link${activeSection === l.toLowerCase() ? " active" : ""}`}
+              >
+                {l}
+              </a>
             )}
             <Link
               to="/donate"
@@ -791,16 +785,6 @@ function Index() {
       >
         <nav className="md:hidden">
           {navLinks.map((l) =>
-            l === "Blog" ? (
-              <Link
-                key={l}
-                to="/blog"
-                className="mobile-nav-link"
-                onClick={() => setMenuOpen(false)}
-              >
-                {l}
-              </Link>
-            ) : (
               <a
                 key={l}
                 href={`#${l.toLowerCase()}`}
@@ -809,7 +793,6 @@ function Index() {
               >
                 {l}
               </a>
-            )
           )}
           <Link
             to="/donate"
