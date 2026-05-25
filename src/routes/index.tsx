@@ -599,6 +599,12 @@ function Index() {
             >
               Support {"\u{1F499}"}
             </Link>
+            <Link
+              to="/articles"
+              className="nav-link"
+            >
+              Articles
+            </Link>
           </nav>
 
           <div className="flex items-center gap-3">
@@ -818,6 +824,13 @@ function Index() {
             onClick={() => setMenuOpen(false)}
           >
             Support {"\u{1F499}"}
+          </Link>
+          <Link
+            to="/articles"
+            className="mobile-nav-link"
+            onClick={() => setMenuOpen(false)}
+          >
+            Articles
           </Link>
           <div style={{ padding: "16px 24px" }}>
             <a
@@ -1360,6 +1373,7 @@ function Index() {
             </div>
             <nav className="flex flex-wrap gap-5 text-sm font-medium">
               <a href="https://www.youtube.com/@amaresbigplanet/about" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--sunshine)] transition-colors">About</a>
+              <Link to="/articles" className="hover:text-[var(--sunshine)] transition-colors">Learning Hub</Link>
               <a href="mailto:amareplanet8@gmail.com" className="hover:text-[var(--sunshine)] transition-colors">Contact</a>
               <a className="hover:text-[var(--sunshine)] transition-colors">Privacy</a>
               <a href="https://www.youtube.com/@amaresbigplanet?sub_confirmation=1" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--sunshine)] transition-colors">Subscribe</a>
