@@ -16,18 +16,85 @@ type SiteNavProps = {
 
 export function SiteNav({ active }: SiteNavProps) {
   return (
-    <header className="sticky top-0 z-[1000] border-b-4 border-[var(--primary)]/20 bg-background/90 backdrop-blur-md shadow-sm">
+    <header className="sticky top-0 z-[1000] border-b-4 border-[var(--primary)]/20 bg-background/80 backdrop-blur-md">
+      <style>{`
+        .site-nav-link {
+          position: relative;
+          padding: 8px 16px;
+          border-radius: 9999px;
+          font-weight: 600;
+          color: var(--foreground);
+          text-decoration: none;
+          transition: color 0.3s ease;
+        }
+        .site-nav-link::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 0;
+          height: 2px;
+          background: #2a2a6e;
+          transition: width 0.3s ease;
+          border-radius: 1px;
+        }
+        .site-nav-link:hover,
+        .site-nav-link.active {
+          color: #2a2a6e;
+        }
+        .site-nav-link:hover::after,
+        .site-nav-link.active::after {
+          width: 60%;
+        }
+        .site-nav-link.active {
+          font-weight: 700;
+        }
+        .site-nav-donate {
+          position: relative;
+          padding: 8px 16px;
+          border-radius: 9999px;
+          font-weight: 600;
+          font-size: 15px;
+          color: #3B82F6;
+          text-decoration: none;
+          transition: color 0.3s ease;
+        }
+        .site-nav-donate::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 0;
+          height: 2px;
+          background: #3B82F6;
+          transition: width 0.3s ease;
+          border-radius: 1px;
+        }
+        .site-nav-donate:hover::after,
+        .site-nav-donate.active::after {
+          width: 60%;
+        }
+        @media (max-width: 1024px) {
+          .site-nav-link,
+          .site-nav-donate {
+            padding: 8px 10px;
+            font-size: 13px;
+          }
+        }
+      `}</style>
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-        <Link to="/" className="flex shrink-0 items-center gap-2.5">
+        <Link to="/" className="group flex shrink-0 items-center gap-2.5">
           <img
             src={amaresLogo}
             alt="Amare character"
-            className="h-10 w-10 rounded-full border-2 border-[#2a2a6e] object-cover sm:h-12 sm:w-12"
+            className="h-12 w-12 rounded-full border-2 border-[#2a2a6e] object-cover max-[768px]:h-9 max-[768px]:w-9"
           />
           <img
             src={amaresTitle}
             alt="Amare's Big Planet logo"
-            className="h-10 w-auto sm:h-14"
+            className="h-12 w-auto group-hover:animate-wiggle sm:h-14 max-[768px]:h-10"
           />
         </Link>
 
@@ -36,45 +103,37 @@ export function SiteNav({ active }: SiteNavProps) {
             <a
               key={link.label}
               href={link.href}
-              className="rounded-full px-3 py-2 text-sm font-bold text-[#0d1b3e] transition hover:bg-[#fff3b0] hover:text-[#2a2a6e]"
+              className="site-nav-link"
             >
               {link.label}
             </a>
           ))}
           <Link
             to="/articles"
-            className={`rounded-full px-3 py-2 text-sm font-bold transition ${
-              active === "Articles"
-                ? "bg-[#fff3b0] text-[#2a2a6e]"
-                : "text-[#0d1b3e] hover:bg-[#fff3b0] hover:text-[#2a2a6e]"
-            }`}
+            className={`site-nav-link${active === "Articles" ? " active" : ""}`}
           >
             Articles
           </Link>
           <Link
             to="/donate"
-            className={`rounded-full px-4 py-2 text-sm font-extrabold transition ${
-              active === "Support"
-                ? "bg-[#3b82f6] text-white"
-                : "bg-[#e02020] text-white hover:bg-[#b91c1c]"
-            }`}
+            className={`site-nav-donate${active === "Support" ? " active" : ""}`}
           >
-            Support
+            Support {"\u{1F499}"}
           </Link>
         </nav>
 
         <div className="flex items-center gap-2 md:hidden">
           <Link
             to="/articles"
-            className="rounded-full bg-[#fff3b0] px-3 py-2 text-sm font-extrabold text-[#2a2a6e]"
+            className="rounded-full px-3 py-2 text-sm font-extrabold text-[#2a2a6e]"
           >
             Articles
           </Link>
           <Link
             to="/donate"
-            className="rounded-full bg-[#e02020] px-3 py-2 text-sm font-extrabold text-white"
+            className="rounded-full px-3 py-2 text-sm font-extrabold text-[#3B82F6]"
           >
-            Support
+            Support {"\u{1F499}"}
           </Link>
         </div>
       </div>
