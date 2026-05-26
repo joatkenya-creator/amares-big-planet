@@ -16,7 +16,7 @@ export const Route = createFileRoute("/articles/$slug")({
       { property: "og:title", content: `${loaderData.title} | Amare's Big Planet` },
       { property: "og:description", content: loaderData.description },
       { property: "og:url", content: `https://amaresbigplanet.com/articles/${loaderData.slug}` },
-      { property: "og:image", content: `https://img.youtube.com/vi/${loaderData.videoId}/maxresdefault.jpg` },
+      { property: "og:image", content: `https://img.youtube.com/vi/${loaderData.videoId}/hqdefault.jpg` },
     ],
     links: [
       { rel: "canonical", href: `https://amaresbigplanet.com/articles/${loaderData.slug}` },
@@ -29,7 +29,7 @@ export const Route = createFileRoute("/articles/$slug")({
           "@type": "Article",
           headline: loaderData.title,
           description: loaderData.description,
-          image: `https://img.youtube.com/vi/${loaderData.videoId}/maxresdefault.jpg`,
+          image: `https://img.youtube.com/vi/${loaderData.videoId}/hqdefault.jpg`,
           author: {
             "@type": "Organization",
             name: "Amare's Big Planet",
