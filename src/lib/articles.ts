@@ -226,8 +226,8 @@ const articleDrafts = [
     title: "How Phonics Songs Help Toddlers Learn to Read",
     description: "Phonics songs build the listening skills toddlers need before reading begins. Here's what the research says, and how to use them at home.",
     category: "Phonics & Reading",
-    videoId: "_ctNtUXel6Q",
-    videoTitle: "Learning ABCs I to L",
+    videoId: "lq04hVUf0ng",
+    videoTitle: "Learn the Alphabet A to T | ABC Phonics Songs & Toddler Learning Compilation",
     readingTime: "6 min read",
     keywords: [
       "phonics for toddlers",
@@ -281,7 +281,7 @@ const articleDrafts = [
     description: "A practical guide to using morning songs to make getting dressed, eating breakfast, and leaving the house easier with toddlers.",
     category: "Routines & Music",
     videoId: "_ctNtUXel6Q",
-    videoTitle: "Learning ABCs I to L",
+    videoTitle: "Head Shoulders Knees & Toes Song for Kids | Fun Learning & Dance Along",
     readingTime: "5 min read",
     keywords: [
       "morning songs for toddlers",
@@ -333,7 +333,7 @@ const articleDrafts = [
     description: "A friendly introduction to the Galaxy Train, the Gear Crew, and how character-led space adventures turn into real learning for kids.",
     category: "Galaxy Train",
     videoId: "8jCfqeT6iNc",
-    videoTitle: "BLAST OFF! Solar System Song",
+    videoTitle: "BLAST OFF! Solar System Train Song | Learn Planets aboard the Galaxy Train",
     readingTime: "6 min read",
     keywords: [
       "galaxy train",
@@ -385,8 +385,8 @@ const articleDrafts = [
     title: "Nursery Rhymes & Kids' Songs: Why They Matter and How to Use Them",
     description: "Why nursery rhymes still belong in every childhood — what they do for a young brain, and how to weave them into a normal day.",
     category: "Nursery Rhymes",
-    videoId: "_ctNtUXel6Q",
-    videoTitle: "Learning ABCs I to L",
+    videoId: "eyEmlXfgIoA",
+    videoTitle: "ABC Song A to P Compilation | Learn Letters & Words",
     readingTime: "7 min read",
     keywords: [
       "nursery rhymes",
