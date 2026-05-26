@@ -66,6 +66,7 @@ export const Route = createFileRoute("/")({
               thumbnailUrl: "https://img.youtube.com/vi/_ctNtUXel6Q/maxresdefault.jpg",
               embedUrl: "https://www.youtube.com/embed/_ctNtUXel6Q",
               url: "https://amaresbigplanet.com/#music",
+              uploadDate: "2026-05-16T00:00:00+03:00",
             },
             {
               "@type": "VideoObject",
@@ -74,6 +75,7 @@ export const Route = createFileRoute("/")({
               thumbnailUrl: "https://img.youtube.com/vi/Ga_sef8vcIA/maxresdefault.jpg",
               embedUrl: "https://www.youtube.com/embed/Ga_sef8vcIA",
               url: "https://amaresbigplanet.com/#music",
+              uploadDate: "2026-05-16T00:00:00+03:00",
             },
             {
               "@type": "VideoObject",
@@ -82,6 +84,7 @@ export const Route = createFileRoute("/")({
               thumbnailUrl: "https://img.youtube.com/vi/8jCfqeT6iNc/maxresdefault.jpg",
               embedUrl: "https://www.youtube.com/embed/8jCfqeT6iNc",
               url: "https://amaresbigplanet.com/#music",
+              uploadDate: "2026-05-16T00:00:00+03:00",
             },
             {
               "@type": "VideoObject",
@@ -90,6 +93,7 @@ export const Route = createFileRoute("/")({
               thumbnailUrl: "https://img.youtube.com/vi/9ryVeXuqv-M/maxresdefault.jpg",
               embedUrl: "https://www.youtube.com/embed/9ryVeXuqv-M",
               url: "https://amaresbigplanet.com/#watch",
+              uploadDate: "2026-05-16T00:00:00+03:00",
             },
           ],
         }),
@@ -98,7 +102,7 @@ export const Route = createFileRoute("/")({
   }),
 });
 
-const navLinks = ["Shows", "Music", "Characters", "Games", "Parents"];
+const navLinks = ["Shows", "Music", "Characters", "Games", "Parents", "Articles"];
 
 const shows = [
   {
@@ -579,13 +583,19 @@ function Index() {
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-1">
             {navLinks.map((l) =>
-              <a
-                key={l}
-                href={`#${l.toLowerCase()}`}
-                className={`nav-link${activeSection === l.toLowerCase() ? " active" : ""}`}
-              >
-                {l}
-              </a>
+              l === "Articles" ? (
+                <Link key={l} to="/articles" className="nav-link">
+                  {l}
+                </Link>
+              ) : (
+                <a
+                  key={l}
+                  href={`#${l.toLowerCase()}`}
+                  className={`nav-link${activeSection === l.toLowerCase() ? " active" : ""}`}
+                >
+                  {l}
+                </a>
+              )
             )}
             <Link
               to="/donate"
@@ -785,6 +795,16 @@ function Index() {
       >
         <nav className="md:hidden">
           {navLinks.map((l) =>
+            l === "Articles" ? (
+              <Link
+                key={l}
+                to="/articles"
+                className="mobile-nav-link"
+                onClick={() => setMenuOpen(false)}
+              >
+                {l}
+              </Link>
+            ) : (
               <a
                 key={l}
                 href={`#${l.toLowerCase()}`}
@@ -793,6 +813,7 @@ function Index() {
               >
                 {l}
               </a>
+            )
           )}
           <Link
             to="/donate"
@@ -1343,6 +1364,7 @@ function Index() {
             </div>
             <nav className="flex flex-wrap gap-5 text-sm font-medium">
               <a href="https://www.youtube.com/@amaresbigplanet/about" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--sunshine)] transition-colors">About</a>
+              <Link to="/articles" className="hover:text-[var(--sunshine)] transition-colors">Learning Hub</Link>
               <a href="mailto:amareplanet8@gmail.com" className="hover:text-[var(--sunshine)] transition-colors">Contact</a>
               <a className="hover:text-[var(--sunshine)] transition-colors">Privacy</a>
               <a href="https://www.youtube.com/@amaresbigplanet?sub_confirmation=1" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--sunshine)] transition-colors">Subscribe</a>
