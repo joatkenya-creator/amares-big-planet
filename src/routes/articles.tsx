@@ -62,7 +62,7 @@ function ArticlesPage() {
               className="overflow-hidden rounded-2xl border border-[#cce9f5] bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
             >
               <img
-                src={`https://img.youtube.com/vi/${article.videoId}/maxresdefault.jpg`}
+                src={`https://img.youtube.com/vi/${article.videoId}/hqdefault.jpg`}
                 alt={`${article.videoTitle} video thumbnail`}
                 className="aspect-video w-full object-cover"
               />
