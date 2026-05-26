@@ -48,27 +48,32 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://amaresbigplanet.com/articles/how-music-helps-autistic-children-learn</loc>
+    <loc>https://amaresbigplanet.com/articles/abc-songs-for-preschool-kids</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://amaresbigplanet.com/articles/how-music-helps-kids-learn</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://amaresbigplanet.com/articles/ocean-animal-videos-for-kids</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://amaresbigplanet.com/articles/solar-system-song-for-kids</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://amaresbigplanet.com/articles/screen-time-learning-activities-for-kids</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://amaresbigplanet.com/articles/sensory-friendly-songs-for-preschool-kids</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://amaresbigplanet.com/articles/abc-songs-for-kids-with-autism</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://amaresbigplanet.com/articles/visual-learning-activities-for-autistic-children</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://amaresbigplanet.com/articles/inclusive-kids-learning-videos</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

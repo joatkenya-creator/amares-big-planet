@@ -60,14 +60,41 @@ const articleDrafts = [
     parentTip: "Start with one short video, then replay the same song another day. Familiarity can help children feel more confident.",
   },
   {
-    slug: "how-music-helps-autistic-children-learn",
-    title: "How Music Helps Autistic Children Learn",
-    description: "Learn how rhythm, repetition, melody, and movement can support early learning for autistic and neurodiverse children.",
+    slug: "abc-songs-for-preschool-kids",
+    title: "ABC Songs for Preschool Kids",
+    description: "How alphabet songs can help preschool children practice letters, sounds, listening, and early confidence.",
+    category: "ABC Learning",
+    videoId: "_ctNtUXel6Q",
+    videoTitle: "Learning ABCs I to L",
+    readingTime: "4 min read",
+    keywords: ["ABC songs for preschool kids", "alphabet songs for kids", "early literacy songs"],
+    intro: "ABC songs give children a joyful first step into early literacy. Music, visuals, and repetition help letters feel familiar before formal reading begins.",
+    sections: [
+      {
+        heading: "Why alphabet songs work",
+        body: "A song gives children a rhythm to follow, which makes letter names easier to remember. When letters appear with characters, colors, and movement, children get more than one way to connect with the lesson.",
+      },
+      {
+        heading: "Practice a few letters at a time",
+        body: "Young learners do not need to master the whole alphabet in one sitting. Families can focus on a small section, repeat it during the week, and celebrate one letter a child recognizes.",
+      },
+      {
+        heading: "Make it active",
+        body: "Children can point to letters, clap with the beat, say a letter sound, or find an object that begins with the same letter. These small activities turn screen time into shared learning time.",
+      },
+    ],
+    learningGoals: ["Letter names", "Early literacy", "Listening skills", "Confidence with repetition"],
+    parentTip: "Choose one letter from the song and look for it around the room after watching.",
+  },
+  {
+    slug: "how-music-helps-kids-learn",
+    title: "How Music Helps Kids Learn",
+    description: "Learn how rhythm, repetition, melody, and movement can support memory, language, and joyful learning for children.",
     category: "Music & Learning",
     videoId: "9ryVeXuqv-M",
     videoTitle: "Live - Lofi Study Music for Kids",
     readingTime: "4 min read",
-    keywords: ["music for autistic children", "kids learning through music", "neurodiverse learning songs"],
+    keywords: ["music for kids learning", "kids learning through music", "educational songs for children"],
     intro: "Music can make learning feel predictable and enjoyable. Rhythm gives children a pattern to follow, while repeated lyrics can make letters, numbers, and ideas easier to remember.",
     sections: [
       {
@@ -83,8 +110,89 @@ const articleDrafts = [
         body: "Some children learn by moving, clapping, rocking, or dancing. Songs give families a natural way to bring movement into learning while keeping the moment playful.",
       },
     ],
-    learningGoals: ["Memory through repetition", "Listening skills", "Pattern recognition", "Calm focus"],
-    parentTip: "Let your child choose whether to sing, move, listen quietly, or repeat one favorite part. All of those can be meaningful participation.",
+    learningGoals: ["Memory through repetition", "Listening skills", "Pattern recognition", "Language development"],
+    parentTip: "Let your child sing, hum, dance, clap, or listen quietly. Each response can still be learning.",
+  },
+  {
+    slug: "ocean-animal-videos-for-kids",
+    title: "Ocean Animal Videos for Kids",
+    description: "Simple ways ocean songs and videos can build vocabulary, curiosity, and early science learning for children.",
+    category: "Ocean Animals",
+    videoId: "Ga_sef8vcIA",
+    videoTitle: "Ocean Animals Adventure",
+    readingTime: "3 min read",
+    keywords: ["ocean animals for kids", "sea animals song", "animal learning videos for children"],
+    intro: "Ocean animal videos can introduce children to new words, creatures, colors, and habitats. A playful song makes early science feel exciting and easy to revisit.",
+    sections: [
+      {
+        heading: "Build vocabulary through animals",
+        body: "Names like fish, crab, dolphin, and octopus help children practice new sounds and meanings. Repeating those names in a song gives kids more chances to remember them.",
+      },
+      {
+        heading: "Connect animals to movement",
+        body: "Parents can ask children to swim like a fish, wiggle like an octopus, or snap like a crab. Movement keeps the lesson playful and helps children act out what they see.",
+      },
+      {
+        heading: "Start simple science conversations",
+        body: "A video can lead to questions like, 'Where does this animal live?' or 'What color is it?' These tiny conversations build curiosity and observation skills.",
+      },
+    ],
+    learningGoals: ["Animal names", "Vocabulary", "Observation skills", "Curiosity about nature"],
+    parentTip: "After watching, ask your child to choose their favorite ocean animal and describe one thing about it.",
+  },
+  {
+    slug: "solar-system-song-for-kids",
+    title: "Solar System Song for Kids",
+    description: "How space songs can introduce planets, science vocabulary, imagination, and curiosity for young learners.",
+    category: "Space & Science",
+    videoId: "8jCfqeT6iNc",
+    videoTitle: "BLAST OFF! Solar System Song",
+    readingTime: "4 min read",
+    keywords: ["solar system song for kids", "planets for children", "space videos for kids"],
+    intro: "Space is full of wonder, and songs can make big science ideas feel friendly. Planet songs help children hear new words, imagine faraway places, and ask curious questions.",
+    sections: [
+      {
+        heading: "Introduce planet names",
+        body: "Children can begin by hearing the names of planets in a memorable order. The song does not have to teach every detail at once; familiarity comes first.",
+      },
+      {
+        heading: "Use visuals to support meaning",
+        body: "Bright planets, stars, rockets, and space scenes help children connect words with images. This is especially useful when the topic is something they cannot see outside every day.",
+      },
+      {
+        heading: "Turn curiosity into conversation",
+        body: "After the song, families can ask simple questions: Which planet was red? Which one had rings? What would you see from a rocket window?",
+      },
+    ],
+    learningGoals: ["Planet names", "Science vocabulary", "Imagination", "Listening practice"],
+    parentTip: "Draw circles for planets after watching and let your child color their own solar system.",
+  },
+  {
+    slug: "screen-time-learning-activities-for-kids",
+    title: "Screen Time Learning Activities for Kids",
+    description: "Simple ways parents can turn educational videos into active learning moments at home.",
+    category: "Parent Guides",
+    videoId: "Ga_sef8vcIA",
+    videoTitle: "Ocean Animals Adventure",
+    readingTime: "4 min read",
+    keywords: ["screen time learning activities", "educational videos for kids", "learning at home for children"],
+    intro: "Educational videos work best when they become part of a shared moment. Parents can use songs and stories to spark movement, conversation, drawing, counting, and pretend play.",
+    sections: [
+      {
+        heading: "Pause and talk",
+        body: "A short pause gives children time to answer, point, repeat a word, or ask a question. This turns watching into interaction.",
+      },
+      {
+        heading: "Move with the video",
+        body: "Children can clap to the beat, count steps, act like animals, or pretend to fly through space. Movement helps young learners stay engaged.",
+      },
+      {
+        heading: "Extend the idea after watching",
+        body: "After a video, children can draw a planet, find a letter, sort colors, or tell a short story about a favorite character.",
+      },
+    ],
+    learningGoals: ["Conversation", "Movement", "Creative play", "Memory through repetition"],
+    parentTip: "Pick one simple activity after each video, such as drawing one character or naming one new word.",
   },
   {
     slug: "sensory-friendly-songs-for-preschool-kids",
@@ -110,89 +218,8 @@ const articleDrafts = [
         body: "A short, positive learning moment is better than a long session that becomes tiring. Families can always return to the song later.",
       },
     ],
-    learningGoals: ["Animal names", "Vocabulary", "Listening practice", "Gentle engagement"],
+    learningGoals: ["Vocabulary", "Listening practice", "Gentle engagement", "Comfort with routine"],
     parentTip: "Try watching with the volume lower first, then adjust based on what feels comfortable for your child.",
-  },
-  {
-    slug: "abc-songs-for-kids-with-autism",
-    title: "ABC Songs for Kids with Autism",
-    description: "How alphabet songs can support autistic and neurodiverse children through repetition, visuals, and joyful practice.",
-    category: "ABC Learning",
-    videoId: "_ctNtUXel6Q",
-    videoTitle: "Learning ABCs I to L",
-    readingTime: "4 min read",
-    keywords: ["ABC songs for kids with autism", "alphabet songs for autistic kids", "letters for neurodiverse learners"],
-    intro: "Alphabet songs can be a friendly way to introduce letters. The melody, rhythm, and repeated sounds give children many chances to hear and recognize letter names.",
-    sections: [
-      {
-        heading: "Start with a few letters at a time",
-        body: "Some children enjoy the whole alphabet song, while others may do better with a smaller group of letters. Either approach is okay.",
-      },
-      {
-        heading: "Connect letters to visuals",
-        body: "Pointing to letters, pictures, or objects while the song plays can help children connect what they hear with what they see.",
-      },
-      {
-        heading: "Celebrate recognition",
-        body: "If a child notices one letter, hums one part, or watches with interest, that is progress. Learning through music should feel encouraging.",
-      },
-    ],
-    learningGoals: ["Letter names", "Letter order", "Early literacy", "Confidence"],
-    parentTip: "Replay one favorite section and ask, 'Do you see this letter?' Keep it light and playful.",
-  },
-  {
-    slug: "visual-learning-activities-for-autistic-children",
-    title: "Visual Learning Activities for Autistic Children",
-    description: "Simple visual learning ideas using songs, pictures, characters, and repetition for children who learn best by seeing.",
-    category: "Parent Guides",
-    videoId: "8jCfqeT6iNc",
-    videoTitle: "BLAST OFF! Solar System Song",
-    readingTime: "4 min read",
-    keywords: ["visual learning activities", "autistic children learning", "visual learners kids"],
-    intro: "Visual learning can help children connect ideas with images. Songs about planets, animals, colors, and letters are a natural way to pair words with memorable pictures.",
-    sections: [
-      {
-        heading: "Use pictures with songs",
-        body: "When a song names a planet or animal, pause and look at the picture together. This gives the child time to connect the word, sound, and image.",
-      },
-      {
-        heading: "Create a simple routine",
-        body: "Try a pattern: watch, pause, point, repeat. A small routine can make learning feel predictable and calm.",
-      },
-      {
-        heading: "Let characters support attention",
-        body: "Friendly characters can give children a visual anchor. Children may remember a learning idea because they connect it with a character they enjoy.",
-      },
-    ],
-    learningGoals: ["Visual recognition", "Planet names", "Vocabulary", "Routine-based learning"],
-    parentTip: "After a video, ask your child to choose their favorite picture or character. That can open the door to more conversation.",
-  },
-  {
-    slug: "inclusive-kids-learning-videos",
-    title: "Inclusive Kids Learning Videos for Every Child",
-    description: "Why inclusive children's content should support many learning styles through music, visuals, repetition, and joyful characters.",
-    category: "Inclusive Learning",
-    videoId: "Ga_sef8vcIA",
-    videoTitle: "Ocean Animals Adventure",
-    readingTime: "3 min read",
-    keywords: ["inclusive kids learning videos", "educational videos for every child", "neurodiverse kids content"],
-    intro: "Every child learns differently. Inclusive kids content gives children multiple ways to engage: listening, watching, moving, singing, repeating, or simply enjoying the story.",
-    sections: [
-      {
-        heading: "Different children need different entry points",
-        body: "Some children love music. Others connect first with visuals, characters, movement, or repeated words. A strong learning video gives children more than one way in.",
-      },
-      {
-        heading: "Representation and confidence matter",
-        body: "When children see joyful characters, caring friends, and positive learning moments, they can feel invited into the experience.",
-      },
-      {
-        heading: "Parents can adapt the moment",
-        body: "Families can pause, replay, lower the volume, skip ahead, or focus on one small learning goal. The best learning experience is the one that works for the child in front of you.",
-      },
-    ],
-    learningGoals: ["Inclusive learning", "Vocabulary", "Music and movement", "Parent-child connection"],
-    parentTip: "Use ABP videos flexibly. There is no one right way for a child to enjoy or learn from a song.",
   },
 ] satisfies Array<Omit<Article, "excerpt" | "readTime" | "publishDate" | "body">>;
 
@@ -200,7 +227,7 @@ export const articles: Article[] = articleDrafts.map((article) => ({
   ...article,
   excerpt: article.description,
   readTime: article.readingTime,
-  publishDate: "May 25, 2026",
+  publishDate: "May 26, 2026",
   body: articleBody(article),
 }));
 
