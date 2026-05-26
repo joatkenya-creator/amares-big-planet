@@ -1,6 +1,6 @@
 import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
 import { articles } from "@/lib/articles";
-import amaresLogo from "@/assets/amares-logo.jpeg";
+import { SiteNav } from "@/components/SiteNav";
 
 export const Route = createFileRoute("/articles")({
   component: ArticlesPage,
@@ -27,20 +27,7 @@ function ArticlesPage() {
 
   return (
     <main className="min-h-screen bg-[#f4fbff] text-[#10172a]">
-      <header className="border-b border-[#d8eef7] bg-white/90 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
-          <Link to="/" className="flex items-center gap-3 font-bold text-[#102a56]">
-            <img src={amaresLogo} alt="Amare character" className="h-11 w-11 rounded-full object-cover" />
-            Amare's Big Planet
-          </Link>
-          <nav className="flex items-center gap-4 text-sm font-semibold">
-            <Link to="/" className="text-[#27415f] hover:text-[#e02020]">Home</Link>
-            <a href="https://www.youtube.com/@amaresbigplanet" target="_blank" rel="noopener noreferrer" className="rounded-full bg-[#e02020] px-4 py-2 text-white">
-              YouTube
-            </a>
-          </nav>
-        </div>
-      </header>
+      <SiteNav active="Articles" />
 
       <section className="bg-[#dff5ff]">
         <div className="mx-auto max-w-6xl px-4 py-16 text-center">
