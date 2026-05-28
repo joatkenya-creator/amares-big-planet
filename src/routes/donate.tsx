@@ -111,7 +111,7 @@ function DonatePage() {
         }}>
           {/* Logo — links home */}
           <Link to="/" aria-label="Go to homepage" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none", flexShrink: 0 }}>
-            <img src={amaresLogo} alt="" style={{ width: "48px", height: "48px", borderRadius: "50%", objectFit: "cover", border: "2px solid #0d1b3e" }} />
+            <img src={amaresLogo} alt="Amare character" style={{ width: "48px", height: "48px", borderRadius: "50%", objectFit: "cover", border: "2px solid #0d1b3e" }} />
             <div style={{ display: "flex", flexDirection: "column" }}>
               <img src={amaresTitle} alt="Amare's Big Planet" className="donate-nav-title" style={{ height: "40px", width: "auto", filter: scrolled ? "none" : "drop-shadow(0 1px 3px rgba(0,0,0,0.7))", transition: "filter 0.3s ease" }} />
             </div>

@@ -870,14 +870,12 @@ function Index() {
         {/* floating decor */}
         <img
           src={sunMascot}
-          alt=""
-          aria-hidden
+          alt="Smiling sun mascot"
           className="absolute top-10 left-6 w-20 sm:w-32 animate-float-slow z-10"
         />
         <img
           src="https://res.cloudinary.com/dee2vqvzl/image/upload/v1778586253/train_nxikdm.png"
-          alt=""
-          aria-hidden
+          alt="Galaxy train illustration"
           className="absolute bottom-10 left-4"
           style={{ width: 150, opacity: 0.9, animation: "float 3s ease-in-out infinite" }}
         />
@@ -1192,8 +1190,7 @@ function Index() {
             <div className="bg-background rounded-[2.25rem] p-10 sm:p-16 text-center relative overflow-hidden">
               <img
                 src={musicMascot}
-                alt=""
-                aria-hidden
+                alt="Music note mascot"
                 className="absolute -top-6 -right-6 w-32 sm:w-44 animate-wiggle"
               />
               <h2 className="font-display text-4xl sm:text-6xl font-extrabold text-foreground">
