@@ -1083,6 +1083,22 @@ function Index() {
               More Songs on YouTube
             </a>
           </div>
+          <div className="mt-8 grid gap-3 rounded-3xl bg-white/80 p-5 shadow-soft md:grid-cols-3">
+            {[
+              { title: "ABC Songs for Preschool Kids", slug: "abc-songs-for-preschool-kids" },
+              { title: "Ocean Animal Videos for Kids", slug: "ocean-animal-videos-for-kids" },
+              { title: "Solar System Song for Kids", slug: "solar-system-song-for-kids" },
+            ].map((guide) => (
+              <Link
+                key={guide.slug}
+                to="/articles/$slug"
+                params={{ slug: guide.slug }}
+                className="rounded-2xl border border-[#d8eef7] bg-[#f7fdff] px-4 py-3 text-sm font-extrabold text-[#102a56] transition hover:-translate-y-0.5 hover:text-[#e02020]"
+              >
+                Learn more: {guide.title}
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -1297,6 +1313,22 @@ function Index() {
                 <p style={{ fontSize: "12px", color: "#888", marginTop: "8px" }}>
                   No spam — just updates on new episodes and songs.
                 </p>
+                <div className="mt-5 flex flex-wrap gap-3">
+                  <Link
+                    to="/articles/$slug"
+                    params={{ slug: "screen-time-learning-activities-for-kids" }}
+                    className="rounded-full bg-white px-5 py-2.5 text-sm font-extrabold text-[#102a56] shadow-soft transition hover:-translate-y-0.5 hover:text-[#e02020]"
+                  >
+                    Screen time learning ideas
+                  </Link>
+                  <Link
+                    to="/articles/$slug"
+                    params={{ slug: "sensory-friendly-songs-for-preschool-kids" }}
+                    className="rounded-full bg-white px-5 py-2.5 text-sm font-extrabold text-[#102a56] shadow-soft transition hover:-translate-y-0.5 hover:text-[#e02020]"
+                  >
+                    Sensory-friendly songs
+                  </Link>
+                </div>
               </div>
             </div>
             <div className="flex-shrink-0 flex flex-col items-center gap-4">
