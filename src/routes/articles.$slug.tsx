@@ -1,10 +1,26 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, redirect } from "@tanstack/react-router";
 import { articles, getArticle } from "@/lib/articles";
-import amaresLogo from "@/assets/amares-logo.jpeg";
+import { SiteNav } from "@/components/SiteNav";
+
+const legacyArticleRedirects: Record<string, string> = {
+  "abc-songs-for-kids-with-autism": "abc-songs-for-preschool-kids",
+  "how-music-helps-autistic-children-learn": "how-music-helps-kids-learn",
+  "inclusive-kids-learning-videos": "screen-time-learning-activities-for-kids",
+  "visual-learning-activities-for-autistic-children": "screen-time-learning-activities-for-kids",
+};
 
 export const Route = createFileRoute("/articles/$slug")({
   component: ArticlePage,
   loader: ({ params }) => {
+    const redirectSlug = legacyArticleRedirects[params.slug];
+    if (redirectSlug) {
+      throw redirect({
+        to: "/articles/$slug",
+        params: { slug: redirectSlug },
+        statusCode: 301,
+      });
+    }
+
     const article = getArticle(params.slug);
     if (!article) throw notFound();
     return article;
@@ -51,17 +67,7 @@ function ArticlePage() {
 
   return (
     <main className="min-h-screen bg-[#fffdf7] text-[#10172a]">
-      <header className="border-b border-[#f1dfb8] bg-white/90 backdrop-blur">
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
-          <Link to="/" className="flex items-center gap-3 font-bold text-[#102a56]">
-            <img src={amaresLogo} alt="Amare character" className="h-11 w-11 rounded-full object-cover" />
-            Amare's Big Planet
-          </Link>
-          <Link to="/articles" className="rounded-full bg-[#102a56] px-4 py-2 text-sm font-bold text-white">
-            Learning Hub
-          </Link>
-        </div>
-      </header>
+      <SiteNav active="Articles" />
 
       <article className="mx-auto max-w-4xl px-4 py-12">
         <Link to="/articles" className="font-bold text-[#0f7c90]">Back to Learning Hub</Link>

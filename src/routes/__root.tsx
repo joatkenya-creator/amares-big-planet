@@ -55,6 +55,31 @@ export const Route = createRootRoute({
         href: "/favicon-512.png",
       },
       {
+        rel: "preconnect",
+        href: "https://www.youtube.com",
+      },
+      {
+        rel: "preconnect",
+        href: "https://i.ytimg.com",
+      },
+      {
+        rel: "preconnect",
+        href: "https://img.youtube.com",
+      },
+      {
+        rel: "preconnect",
+        href: "https://res.cloudinary.com",
+      },
+      {
+        rel: "preconnect",
+        href: "https://fonts.googleapis.com",
+      },
+      {
+        rel: "preconnect",
+        href: "https://fonts.gstatic.com",
+        crossOrigin: "anonymous",
+      },
+      {
         rel: "stylesheet",
         href: appCss,
       },

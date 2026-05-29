@@ -870,14 +870,12 @@ function Index() {
         {/* floating decor */}
         <img
           src={sunMascot}
-          alt=""
-          aria-hidden
+          alt="Smiling sun mascot"
           className="absolute top-10 left-6 w-20 sm:w-32 animate-float-slow z-10"
         />
         <img
           src="https://res.cloudinary.com/dee2vqvzl/image/upload/v1778586253/train_nxikdm.png"
-          alt=""
-          aria-hidden
+          alt="Galaxy train illustration"
           className="absolute bottom-10 left-4"
           style={{ width: 150, opacity: 0.9, animation: "float 3s ease-in-out infinite" }}
         />
@@ -1083,6 +1081,22 @@ function Index() {
               More Songs on YouTube
             </a>
           </div>
+          <div className="mt-8 grid gap-3 rounded-3xl bg-white/80 p-5 shadow-soft md:grid-cols-3">
+            {[
+              { title: "ABC Songs for Preschool Kids", slug: "abc-songs-for-preschool-kids" },
+              { title: "Ocean Animal Videos for Kids", slug: "ocean-animal-videos-for-kids" },
+              { title: "Solar System Song for Kids", slug: "solar-system-song-for-kids" },
+            ].map((guide) => (
+              <Link
+                key={guide.slug}
+                to="/articles/$slug"
+                params={{ slug: guide.slug }}
+                className="rounded-2xl border border-[#d8eef7] bg-[#f7fdff] px-4 py-3 text-sm font-extrabold text-[#102a56] transition hover:-translate-y-0.5 hover:text-[#e02020]"
+              >
+                Learn more: {guide.title}
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -1176,8 +1190,7 @@ function Index() {
             <div className="bg-background rounded-[2.25rem] p-10 sm:p-16 text-center relative overflow-hidden">
               <img
                 src={musicMascot}
-                alt=""
-                aria-hidden
+                alt="Music note mascot"
                 className="absolute -top-6 -right-6 w-32 sm:w-44 animate-wiggle"
               />
               <h2 className="font-display text-4xl sm:text-6xl font-extrabold text-foreground">
@@ -1297,6 +1310,22 @@ function Index() {
                 <p style={{ fontSize: "12px", color: "#888", marginTop: "8px" }}>
                   No spam — just updates on new episodes and songs.
                 </p>
+                <div className="mt-5 flex flex-wrap gap-3">
+                  <Link
+                    to="/articles/$slug"
+                    params={{ slug: "screen-time-learning-activities-for-kids" }}
+                    className="rounded-full bg-white px-5 py-2.5 text-sm font-extrabold text-[#102a56] shadow-soft transition hover:-translate-y-0.5 hover:text-[#e02020]"
+                  >
+                    Screen time learning ideas
+                  </Link>
+                  <Link
+                    to="/articles/$slug"
+                    params={{ slug: "sensory-friendly-songs-for-preschool-kids" }}
+                    className="rounded-full bg-white px-5 py-2.5 text-sm font-extrabold text-[#102a56] shadow-soft transition hover:-translate-y-0.5 hover:text-[#e02020]"
+                  >
+                    Sensory-friendly songs
+                  </Link>
+                </div>
               </div>
             </div>
             <div className="flex-shrink-0 flex flex-col items-center gap-4">
