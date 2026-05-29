@@ -1,10 +1,26 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, redirect } from "@tanstack/react-router";
 import { articles, getArticle } from "@/lib/articles";
 import { SiteNav } from "@/components/SiteNav";
+
+const legacyArticleRedirects: Record<string, string> = {
+  "abc-songs-for-kids-with-autism": "abc-songs-for-preschool-kids",
+  "how-music-helps-autistic-children-learn": "how-music-helps-kids-learn",
+  "inclusive-kids-learning-videos": "screen-time-learning-activities-for-kids",
+  "visual-learning-activities-for-autistic-children": "screen-time-learning-activities-for-kids",
+};
 
 export const Route = createFileRoute("/articles/$slug")({
   component: ArticlePage,
   loader: ({ params }) => {
+    const redirectSlug = legacyArticleRedirects[params.slug];
+    if (redirectSlug) {
+      throw redirect({
+        to: "/articles/$slug",
+        params: { slug: redirectSlug },
+        statusCode: 301,
+      });
+    }
+
     const article = getArticle(params.slug);
     if (!article) throw notFound();
     return article;
