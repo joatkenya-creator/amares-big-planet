@@ -1365,7 +1365,7 @@ function Index() {
             <nav className="flex flex-wrap gap-5 text-sm font-medium">
               <a href="https://www.youtube.com/@amaresbigplanet/about" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--sunshine)] transition-colors">About</a>
               <Link to="/articles" className="hover:text-[var(--sunshine)] transition-colors">Learning Hub</Link>
-              <a href="mailto:amareplanet8@gmail.com" className="hover:text-[var(--sunshine)] transition-colors">Contact</a>
+              <a href="mailto:partnership@amaresbigplanet.com" className="hover:text-[var(--sunshine)] transition-colors">Contact</a>
               <a className="hover:text-[var(--sunshine)] transition-colors">Privacy</a>
               <a href="https://www.youtube.com/@amaresbigplanet?sub_confirmation=1" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--sunshine)] transition-colors">Subscribe</a>
             </nav>
