@@ -844,26 +844,15 @@ function Index() {
 
       {/* HERO */}
       <section className="relative bg-black pb-24 sm:pb-32 overflow-hidden min-h-[80vh]">
-        {/* Video background */}
+        {/* Static background keeps decorative media out of Google's video index. */}
         <div className="absolute inset-0 z-0 overflow-hidden">
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
+          <div
+            className="absolute inset-0"
             style={{
-              position: 'absolute',
-              top: '0',
-              left: '0',
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              pointerEvents: 'none',
-              zIndex: 0,
+              background:
+                "linear-gradient(135deg, #102a56 0%, #2a2a6e 48%, #111827 100%)",
             }}
-          >
-            <source src="/videos/donation-bg.mp4" type="video/mp4" />
-          </video>
+          />
           <div className="absolute inset-0 bg-black/50" />
         </div>
         <div className="pt-20 sm:pt-28" />
