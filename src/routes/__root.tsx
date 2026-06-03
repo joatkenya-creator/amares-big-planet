@@ -86,6 +86,18 @@ export const Route = createRootRoute({
     ],
     scripts: [
       {
+        src: "https://www.googletagmanager.com/gtag/js?id=G-GHTYWFJNEF",
+        async: true,
+      },
+      {
+        children: `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){window.dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-GHTYWFJNEF');
+        `,
+      },
+      {
         type: "application/ld+json",
         children: JSON.stringify({
           "@context": "https://schema.org",
