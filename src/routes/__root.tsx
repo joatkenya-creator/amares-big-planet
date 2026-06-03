@@ -86,16 +86,6 @@ export const Route = createRootRoute({
     ],
     scripts: [
       {
-<<<<<<< HEAD
-        src: "https://www.googletagmanager.com/gtag/js?id=G-QFWHS1F4BW",
-        async: true,
-      },
-      {
-        children: `window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-QFWHS1F4BW');`,
-=======
         src: "https://www.googletagmanager.com/gtag/js?id=G-GHTYWFJNEF",
         async: true,
       },
@@ -106,7 +96,15 @@ gtag('config', 'G-QFWHS1F4BW');`,
           gtag('js', new Date());
           gtag('config', 'G-GHTYWFJNEF');
         `,
->>>>>>> e6f1f4dd4e0a2ee8cfdd3c77c87f316e9ab89869
+      },
+      {
+        children: `
+          (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+          })(window, document, "clarity", "script", "x19l4waadv");
+        `,
       },
       {
         type: "application/ld+json",
