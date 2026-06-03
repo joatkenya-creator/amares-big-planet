@@ -241,6 +241,29 @@ function DonatePage() {
       >
 
         {/* Video Background — HTML5 video (autoplays on mobile with playsInline + muted) */}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-hidden="true"
+          tabIndex={-1}
+          disablePictureInPicture
+          controls={false}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            zIndex: 0,
+            pointerEvents: "none",
+          }}
+        >
+          <source src="https://res.cloudinary.com/dee2vqvzl/video/upload/v1779646039/Shape_the_Future_of_Learning__Sponsor_Amare_s_Big_Planet_1_dbmrgt.mp4" type="video/mp4" />
+        </video>
         {/* Dark overlay — full width */}
         <div style={{
           position: "absolute", top: 0, left: 0,

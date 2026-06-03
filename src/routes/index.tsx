@@ -844,15 +844,31 @@ function Index() {
 
       {/* HERO */}
       <section className="relative bg-black pb-24 sm:pb-32 overflow-hidden min-h-[80vh]">
-        {/* Static background keeps decorative media out of Google's video index. */}
+        {/* Decorative background video. Keep it hidden from assistive tech and out of video schema. */}
         <div className="absolute inset-0 z-0 overflow-hidden">
-          <div
-            className="absolute inset-0"
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-hidden="true"
+            tabIndex={-1}
+            disablePictureInPicture
+            controls={false}
             style={{
-              background:
-                "linear-gradient(135deg, #102a56 0%, #2a2a6e 48%, #111827 100%)",
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              pointerEvents: "none",
+              zIndex: 0,
             }}
-          />
+          >
+            <source src="/videos/donation-bg.mp4" type="video/mp4" />
+          </video>
           <div className="absolute inset-0 bg-black/50" />
         </div>
         <div className="pt-20 sm:pt-28" />
