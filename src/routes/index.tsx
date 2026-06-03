@@ -847,10 +847,19 @@ function Index() {
         {/* Video background */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <video
+            ref={(el) => {
+              if (el) {
+                el.muted = true;
+                el.play().catch((err) => console.error("Hero video play failed:", err));
+              }
+            }}
+            src="/videos/donation-bg.mp4"
             autoPlay
             muted
             loop
             playsInline
+            preload="auto"
+            onError={(e) => console.error("Hero video error:", e)}
             style={{
               position: 'absolute',
               top: '0',
@@ -861,9 +870,7 @@ function Index() {
               pointerEvents: 'none',
               zIndex: 0,
             }}
-          >
-            <source src="/videos/donation-bg.mp4" type="video/mp4" />
-          </video>
+          />
           <div className="absolute inset-0 bg-black/50" />
         </div>
         <div className="pt-20 sm:pt-28" />
