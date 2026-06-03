@@ -230,7 +230,15 @@ function DonatePage() {
       </nav>
 
       {/* MAIN CONTENT — Split Screen */}
-      <div style={{ flex: 1, position: "relative", overflow: "hidden", minHeight: "100vh" }}>
+      <div
+        style={{
+          flex: 1,
+          position: "relative",
+          overflow: "hidden",
+          minHeight: "100vh",
+          background: "linear-gradient(135deg, #0d1b3e 0%, #172554 48%, #7c2d12 100%)",
+        }}
+      >
 
         {/* Video Background — HTML5 video (autoplays on mobile with playsInline + muted) */}
         <video
@@ -238,28 +246,60 @@ function DonatePage() {
           muted
           loop
           playsInline
+          preload="metadata"
+          aria-hidden="true"
+          tabIndex={-1}
+          disablePictureInPicture
+          controls={false}
           style={{
             position: "absolute",
-            top: 0, left: 0,
-            width: "100%", height: "100%",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
             objectFit: "cover",
+            filter: "blur(24px)",
+            transform: "scale(1.08)",
+            opacity: 0.75,
             zIndex: 0,
             pointerEvents: "none",
           }}
         >
           <source src="https://res.cloudinary.com/dee2vqvzl/video/upload/v1779646039/Shape_the_Future_of_Learning__Sponsor_Amare_s_Big_Planet_1_dbmrgt.mp4" type="video/mp4" />
         </video>
-
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-hidden="true"
+          tabIndex={-1}
+          disablePictureInPicture
+          controls={false}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "contain",
+            zIndex: 1,
+            pointerEvents: "none",
+          }}
+        >
+          <source src="https://res.cloudinary.com/dee2vqvzl/video/upload/v1779646039/Shape_the_Future_of_Learning__Sponsor_Amare_s_Big_Planet_1_dbmrgt.mp4" type="video/mp4" />
+        </video>
         {/* Dark overlay — full width */}
         <div style={{
           position: "absolute", top: 0, left: 0,
           width: "100%", height: "100%",
           background: "rgba(0,0,0,0.5)",
-          zIndex: 1,
+          zIndex: 2,
         }} />
 
         {/* Content layer — flex row above video + overlay */}
-        <div className="donate-content-row" style={{ position: "relative", zIndex: 2, display: "flex", minHeight: "100vh", paddingTop: "71px" }}>
+        <div className="donate-content-row" style={{ position: "relative", zIndex: 3, display: "flex", minHeight: "100vh", paddingTop: "71px" }}>
 
         {/* LEFT SIDE — Hero */}
         <div className="donate-hero" style={{

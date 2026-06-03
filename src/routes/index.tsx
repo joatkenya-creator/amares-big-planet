@@ -844,7 +844,7 @@ function Index() {
 
       {/* HERO */}
       <section className="relative bg-black pb-24 sm:pb-32 overflow-hidden min-h-[80vh]">
-        {/* Video background */}
+        {/* Decorative background video. Keep it hidden from assistive tech and out of video schema. */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <video
             ref={(el) => {
@@ -858,16 +858,24 @@ function Index() {
             muted
             loop
             playsInline
+<<<<<<< HEAD
             preload="auto"
             onError={(e) => console.error("Hero video error:", e)}
+=======
+            preload="metadata"
+            aria-hidden="true"
+            tabIndex={-1}
+            disablePictureInPicture
+            controls={false}
+>>>>>>> e6f1f4dd4e0a2ee8cfdd3c77c87f316e9ab89869
             style={{
-              position: 'absolute',
-              top: '0',
-              left: '0',
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              pointerEvents: 'none',
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              pointerEvents: "none",
               zIndex: 0,
             }}
           />
