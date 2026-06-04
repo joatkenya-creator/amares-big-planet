@@ -86,7 +86,6 @@ export const Route = createRootRoute({
     ],
     scripts: [
       {
-<<<<<<< HEAD
         src: "https://www.googletagmanager.com/gtag/js?id=G-QFWHS1F4BW",
         async: true,
       },
@@ -95,18 +94,6 @@ export const Route = createRootRoute({
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-QFWHS1F4BW');`,
-=======
-        src: "https://www.googletagmanager.com/gtag/js?id=G-GHTYWFJNEF",
-        async: true,
-      },
-      {
-        children: `
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){window.dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-GHTYWFJNEF');
-        `,
->>>>>>> e6f1f4dd4e0a2ee8cfdd3c77c87f316e9ab89869
       },
       {
         type: "application/ld+json",
