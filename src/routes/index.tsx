@@ -858,16 +858,12 @@ function Index() {
             muted
             loop
             playsInline
-<<<<<<< HEAD
             preload="auto"
             onError={(e) => console.error("Hero video error:", e)}
-=======
-            preload="metadata"
             aria-hidden="true"
             tabIndex={-1}
             disablePictureInPicture
             controls={false}
->>>>>>> e6f1f4dd4e0a2ee8cfdd3c77c87f316e9ab89869
             style={{
               position: "absolute",
               top: 0,
