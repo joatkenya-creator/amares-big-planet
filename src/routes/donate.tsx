@@ -111,7 +111,7 @@ function DonatePage() {
         }}>
           {/* Logo — links home */}
           <Link to="/" aria-label="Go to homepage" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none", flexShrink: 0 }}>
-            <img src={amaresLogo} alt="" style={{ width: "48px", height: "48px", borderRadius: "50%", objectFit: "cover", border: "2px solid #0d1b3e" }} />
+            <img src={amaresLogo} alt="Amare character" style={{ width: "48px", height: "48px", borderRadius: "50%", objectFit: "cover", border: "2px solid #0d1b3e" }} />
             <div style={{ display: "flex", flexDirection: "column" }}>
               <img src={amaresTitle} alt="Amare's Big Planet" className="donate-nav-title" style={{ height: "40px", width: "auto", filter: scrolled ? "none" : "drop-shadow(0 1px 3px rgba(0,0,0,0.7))", transition: "filter 0.3s ease" }} />
             </div>
@@ -230,7 +230,15 @@ function DonatePage() {
       </nav>
 
       {/* MAIN CONTENT — Split Screen */}
-      <div style={{ flex: 1, position: "relative", overflow: "hidden", minHeight: "100vh" }}>
+      <div
+        style={{
+          flex: 1,
+          position: "relative",
+          overflow: "hidden",
+          minHeight: "100vh",
+          background: "linear-gradient(135deg, #0d1b3e 0%, #172554 48%, #7c2d12 100%)",
+        }}
+      >
 
         {/* Video Background — HTML5 video (autoplays on mobile with playsInline + muted) */}
         <video
@@ -238,10 +246,17 @@ function DonatePage() {
           muted
           loop
           playsInline
+          preload="metadata"
+          aria-hidden="true"
+          tabIndex={-1}
+          disablePictureInPicture
+          controls={false}
           style={{
             position: "absolute",
-            top: 0, left: 0,
-            width: "100%", height: "100%",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
             objectFit: "cover",
             zIndex: 0,
             pointerEvents: "none",
@@ -249,7 +264,6 @@ function DonatePage() {
         >
           <source src="https://res.cloudinary.com/dee2vqvzl/video/upload/v1779646039/Shape_the_Future_of_Learning__Sponsor_Amare_s_Big_Planet_1_dbmrgt.mp4" type="video/mp4" />
         </video>
-
         {/* Dark overlay — full width */}
         <div style={{
           position: "absolute", top: 0, left: 0,

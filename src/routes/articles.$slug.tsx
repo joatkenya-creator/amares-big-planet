@@ -1,19 +1,36 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { articles, getArticle } from "@/lib/articles";
+import { createFileRoute, Link, notFound, redirect } from "@tanstack/react-router";
+import { getArticle, getRelatedArticles } from "@/lib/articles";
 import { SiteNav } from "@/components/SiteNav";
+
+const legacyArticleRedirects: Record<string, string> = {
+  "abc-songs-for-kids-with-autism": "abc-songs-for-preschool-kids",
+  "how-music-helps-autistic-children-learn": "how-music-helps-kids-learn",
+  "inclusive-kids-learning-videos": "screen-time-learning-activities-for-kids",
+  "visual-learning-activities-for-autistic-children": "screen-time-learning-activities-for-kids",
+};
 
 export const Route = createFileRoute("/articles/$slug")({
   component: ArticlePage,
   loader: ({ params }) => {
+    const redirectSlug = legacyArticleRedirects[params.slug];
+    if (redirectSlug) {
+      throw redirect({
+        to: "/articles/$slug",
+        params: { slug: redirectSlug },
+        statusCode: 301,
+      });
+    }
+
     const article = getArticle(params.slug);
     if (!article) throw notFound();
     return article;
   },
   head: ({ loaderData }) => ({
     meta: [
-      { title: `${loaderData.title} | Amare's Big Planet` },
+      { title: `${loaderData.title} | Amare's Learning Hub` },
       { name: "description", content: loaderData.description },
-      { property: "og:title", content: `${loaderData.title} | Amare's Big Planet` },
+      { name: "keywords", content: loaderData.keywords.join(", ") },
+      { property: "og:title", content: `${loaderData.title} | Amare's Learning Hub` },
       { property: "og:description", content: loaderData.description },
       { property: "og:url", content: `https://amaresbigplanet.com/articles/${loaderData.slug}` },
       { property: "og:image", content: `https://img.youtube.com/vi/${loaderData.videoId}/hqdefault.jpg` },
@@ -29,6 +46,7 @@ export const Route = createFileRoute("/articles/$slug")({
           "@type": "Article",
           headline: loaderData.title,
           description: loaderData.description,
+          keywords: loaderData.keywords,
           image: `https://img.youtube.com/vi/${loaderData.videoId}/hqdefault.jpg`,
           author: {
             "@type": "Organization",
@@ -47,7 +65,8 @@ export const Route = createFileRoute("/articles/$slug")({
 
 function ArticlePage() {
   const article = Route.useLoaderData();
-  const related = articles.filter((item) => item.slug !== article.slug).slice(0, 3);
+  const related = getRelatedArticles(article.slug, 3);
+  const inlineRelated = related.slice(0, 2);
 
   return (
     <main className="min-h-screen bg-[#fffdf7] text-[#10172a]">
@@ -55,6 +74,7 @@ function ArticlePage() {
 
       <article className="mx-auto max-w-4xl px-4 py-12">
         <Link to="/articles" className="font-bold text-[#0f7c90]">Back to Learning Hub</Link>
+        <p className="mt-6 text-sm font-bold text-[#5b6f82]">Amare's Big Planet guide</p>
         <p className="mt-8 text-sm font-extrabold uppercase tracking-[0.2em] text-[#0f7c90]">{article.category}</p>
         <h1 className="mt-3 text-4xl font-extrabold leading-tight sm:text-6xl">{article.title}</h1>
         <p className="mt-5 text-lg leading-8 text-[#4b5f75]">{article.description}</p>
@@ -71,6 +91,24 @@ function ArticlePage() {
         </div>
 
         <p className="mt-8 text-lg leading-8 text-[#26394d]">{article.intro}</p>
+
+        {inlineRelated.length > 0 && (
+          <nav aria-label="Related article links" className="mt-8 rounded-2xl border border-[#d8eef7] bg-white p-5 shadow-sm">
+            <h2 className="text-xl font-extrabold">Keep exploring this topic</h2>
+            <div className="mt-4 flex flex-wrap gap-3">
+              {inlineRelated.map((item) => (
+                <Link
+                  key={item.slug}
+                  to="/articles/$slug"
+                  params={{ slug: item.slug }}
+                  className="rounded-full bg-[#e8f8ff] px-4 py-2 text-sm font-extrabold text-[#0f7c90] transition hover:bg-[#dff5ff] hover:text-[#e02020]"
+                >
+                  {item.title}
+                </Link>
+              ))}
+            </div>
+          </nav>
+        )}
 
         <div className="mt-8 rounded-2xl border border-[#f0dbad] bg-[#fff6df] p-5">
           <h2 className="text-2xl font-extrabold">What kids can practice</h2>
@@ -109,9 +147,11 @@ function ArticlePage() {
                 key={item.slug}
                 to="/articles/$slug"
                 params={{ slug: item.slug }}
-                className="rounded-2xl border border-[#d8eef7] bg-white p-4 font-bold text-[#102a56] hover:text-[#e02020]"
+                className="rounded-2xl border border-[#d8eef7] bg-white p-4 transition hover:-translate-y-1 hover:shadow-md"
               >
-                {item.title}
+                <span className="text-xs font-extrabold uppercase tracking-wide text-[#0f7c90]">{item.category}</span>
+                <span className="mt-2 block font-extrabold text-[#102a56]">{item.title}</span>
+                <span className="mt-2 block text-sm font-medium leading-6 text-[#5b6f82]">{item.description}</span>
               </Link>
             ))}
           </div>

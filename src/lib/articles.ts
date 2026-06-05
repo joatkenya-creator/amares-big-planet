@@ -27,7 +27,7 @@ function articleBody(article: Pick<Article, "intro" | "sections" | "learningGoal
     `<ul>${article.learningGoals.map((goal) => `<li>${goal}</li>`).join("")}</ul>`,
     ...article.sections.map((section) => `<h2>${section.heading}</h2><p>${section.body}</p>`),
     `<blockquote><strong>Parent tip:</strong> ${article.parentTip}</blockquote>`,
-    `<p><em>Note: Amare's Big Planet creates educational entertainment for families. This guide is not medical, diagnostic, or therapeutic advice.</em></p>`,
+    `<p><em>Note: Amare's Big Planet creates Amare's songs, stories, and educational entertainment for families. This guide is not medical, diagnostic, or therapeutic advice.</em></p>`,
   ].join("");
 }
 
@@ -35,29 +35,36 @@ const articleDrafts = [
   {
     slug: "autism-friendly-learning-videos-for-kids",
     title: "Autism-Friendly Learning Videos for Kids",
-    description: "A parent-friendly guide to choosing gentle, visual, repetitive learning videos for autistic and neurodiverse children.",
+    description: "A parent-friendly guide to autism-friendly learning videos, gentle visuals, repetition, and sensory-aware educational songs for autistic and neurodiverse children.",
     category: "Inclusive Learning",
     videoId: "_ctNtUXel6Q",
     videoTitle: "Learning ABCs I to L",
     readingTime: "4 min read",
-    keywords: ["autism-friendly learning videos", "educational videos for autistic children", "inclusive kids learning"],
-    intro: "Many children learn best when lessons are calm, visual, repetitive, and joyful. Amare's Big Planet uses music, bright characters, simple words, and repeated ideas to support different learning styles.",
+    keywords: [
+      "autism-friendly learning videos",
+      "educational videos for autistic children",
+      "autism learning videos for kids",
+      "sensory-friendly videos for autistic children",
+      "neurodiverse kids learning",
+      "inclusive kids learning",
+    ],
+    intro: "Many autistic and neurodiverse children learn best when lessons are calm, visual, repetitive, and joyful. Amare's Big Planet uses music, bright characters, simple words, and repeated ideas to support different learning styles without pressure.",
     sections: [
       {
         heading: "What makes a learning video autism-friendly?",
-        body: "Helpful videos often use clear routines, predictable repetition, simple language, and visuals that match the words being sung or spoken. These choices can make learning feel less overwhelming and easier to follow.",
+        body: "Helpful autism-friendly videos often use clear routines, predictable repetition, simple language, and visuals that match the words being sung or spoken. These choices can make learning feel less overwhelming and easier to follow for children who prefer structure.",
       },
       {
-        heading: "How ABP supports different learners",
-        body: "ABP songs are built around familiar learning topics such as letters, animals, planets, and music. Children can watch, listen, sing, move, or simply enjoy the characters at their own pace.",
+        heading: "How Amare's supports different learners",
+        body: "Amare's songs are built around familiar learning topics such as letters, animals, planets, and music. Children can watch, listen, sing, move, or simply enjoy the characters at their own pace, which can be helpful for autistic children and sensory-sensitive learners.",
       },
       {
-        heading: "Use videos as a shared activity",
-        body: "A parent or teacher can pause the video, repeat a favorite part, point to letters or pictures, and celebrate small moments of recognition. The goal is connection, confidence, and fun.",
+        heading: "Use autism learning videos as a shared activity",
+        body: "A parent, caregiver, or teacher can pause the video, repeat a favorite part, point to letters or pictures, and celebrate small moments of recognition. The goal is connection, confidence, and fun, not forcing a child to perform.",
       },
     ],
-    learningGoals: ["Letter recognition", "Listening practice", "Visual learning", "Confidence through repetition"],
-    parentTip: "Start with one short video, then replay the same song another day. Familiarity can help children feel more confident.",
+    learningGoals: ["Letter recognition", "Listening practice", "Visual learning", "Sensory-aware repetition"],
+    parentTip: "Start with one short autism-friendly video, then replay the same song another day. Familiarity can help children feel more confident.",
   },
   {
     slug: "abc-songs-for-preschool-kids",
@@ -68,7 +75,7 @@ const articleDrafts = [
     videoTitle: "Learning ABCs I to L",
     readingTime: "4 min read",
     keywords: ["ABC songs for preschool kids", "alphabet songs for kids", "early literacy songs"],
-    intro: "ABC songs give children a joyful first step into early literacy. Music, visuals, and repetition help letters feel familiar before formal reading begins.",
+    intro: "Amare's ABC songs give children a joyful first step into early literacy. Music, visuals, and repetition help letters feel familiar before formal reading begins.",
     sections: [
       {
         heading: "Why alphabet songs work",
@@ -95,7 +102,7 @@ const articleDrafts = [
     videoTitle: "Live - Lofi Study Music for Kids",
     readingTime: "4 min read",
     keywords: ["music for kids learning", "kids learning through music", "educational songs for children"],
-    intro: "Music can make learning feel predictable and enjoyable. Rhythm gives children a pattern to follow, while repeated lyrics can make letters, numbers, and ideas easier to remember.",
+    intro: "At Amare's, music is used to make learning feel predictable and enjoyable. Rhythm gives children a pattern to follow, while repeated lyrics can make letters, numbers, and ideas easier to remember.",
     sections: [
       {
         heading: "Rhythm creates structure",
@@ -149,7 +156,7 @@ const articleDrafts = [
     videoTitle: "BLAST OFF! Solar System Song",
     readingTime: "4 min read",
     keywords: ["solar system song for kids", "planets for children", "space videos for kids"],
-    intro: "Space is full of wonder, and songs can make big science ideas feel friendly. Planet songs help children hear new words, imagine faraway places, and ask curious questions.",
+    intro: "Space is full of wonder, and Amare's planet songs can make big science ideas feel friendly. Planet songs help children hear new words, imagine faraway places, and ask curious questions.",
     sections: [
       {
         heading: "Introduce planet names",
@@ -176,7 +183,7 @@ const articleDrafts = [
     videoTitle: "Shape the Future of Learning: Sponsor Amare's Big Planet",
     readingTime: "4 min read",
     keywords: ["screen time learning activities", "educational videos for kids", "learning at home for children"],
-    intro: "Educational videos work best when they become part of a shared moment. Parents can use songs and stories to spark movement, conversation, drawing, counting, and pretend play.",
+    intro: "Amare's educational videos work best when they become part of a shared moment. Parents can use songs and stories to spark movement, conversation, drawing, counting, and pretend play.",
     sections: [
       {
         heading: "Pause and talk",
@@ -197,13 +204,13 @@ const articleDrafts = [
   {
     slug: "sensory-friendly-songs-for-preschool-kids",
     title: "Sensory-Friendly Songs for Preschool Kids",
-    description: "A guide to using gentle songs, simple visuals, and predictable routines for preschool learning at home.",
+    description: "A guide to sensory-friendly songs, gentle visuals, predictable routines, and calm learning videos for preschoolers, autistic children, and sensory-sensitive kids.",
     category: "Inclusive Learning",
     videoId: "AfPHinD_Xn0",
     videoTitle: "LIVE: Study With Me | Lofi Focus Music for Kids & Homework Time",
     readingTime: "3 min read",
-    keywords: ["sensory-friendly songs", "preschool learning songs", "gentle kids videos"],
-    intro: "Sensory-friendly learning is about making a child feel safe, interested, and supported. Songs with simple patterns, clear visuals, and a steady pace can help children engage without pressure.",
+    keywords: ["sensory-friendly songs", "preschool learning songs", "gentle kids videos", "sensory-friendly videos for autistic children", "calm learning videos for kids", "autism-friendly songs"],
+    intro: "Sensory-friendly learning is about making a child feel safe, interested, and supported. Songs with simple patterns, clear visuals, and a steady pace can help preschoolers, autistic children, and sensory-sensitive kids engage without pressure.",
     sections: [
       {
         heading: "Choose simple, predictable songs",
@@ -455,6 +462,84 @@ export function getArticleBySlug(slug: string) {
   return getArticle(slug);
 }
 
+const relatedArticleSlugs: Record<string, string[]> = {
+  "autism-friendly-learning-videos-for-kids": [
+    "sensory-friendly-songs-for-preschool-kids",
+    "abc-songs-for-preschool-kids",
+    "screen-time-learning-activities-for-kids",
+  ],
+  "abc-songs-for-preschool-kids": [
+    "how-phonics-songs-help-toddlers-learn-to-read",
+    "how-music-helps-kids-learn",
+    "nursery-rhymes-why-they-matter",
+  ],
+  "how-music-helps-kids-learn": [
+    "abc-songs-for-preschool-kids",
+    "sensory-friendly-songs-for-preschool-kids",
+    "nursery-rhymes-why-they-matter",
+  ],
+  "ocean-animal-videos-for-kids": [
+    "screen-time-learning-activities-for-kids",
+    "how-music-helps-kids-learn",
+    "solar-system-song-for-kids",
+  ],
+  "solar-system-song-for-kids": [
+    "meet-the-galaxy-train-crew",
+    "screen-time-learning-activities-for-kids",
+    "ocean-animal-videos-for-kids",
+  ],
+  "screen-time-learning-activities-for-kids": [
+    "autism-friendly-learning-videos-for-kids",
+    "solar-system-song-for-kids",
+    "morning-routine-songs-for-toddlers",
+  ],
+  "sensory-friendly-songs-for-preschool-kids": [
+    "autism-friendly-learning-videos-for-kids",
+    "how-music-helps-kids-learn",
+    "morning-routine-songs-for-toddlers",
+  ],
+  "how-phonics-songs-help-toddlers-learn-to-read": [
+    "abc-songs-for-preschool-kids",
+    "nursery-rhymes-why-they-matter",
+    "how-music-helps-kids-learn",
+  ],
+  "morning-routine-songs-for-toddlers": [
+    "sensory-friendly-songs-for-preschool-kids",
+    "nursery-rhymes-why-they-matter",
+    "screen-time-learning-activities-for-kids",
+  ],
+  "meet-the-galaxy-train-crew": [
+    "solar-system-song-for-kids",
+    "ocean-animal-videos-for-kids",
+    "screen-time-learning-activities-for-kids",
+  ],
+  "nursery-rhymes-why-they-matter": [
+    "morning-routine-songs-for-toddlers",
+    "how-phonics-songs-help-toddlers-learn-to-read",
+    "how-music-helps-kids-learn",
+  ],
+};
+
 export function getRelatedArticles(slug: string, count = 2) {
-  return articles.filter((article) => article.slug !== slug).slice(0, count);
+  const article = getArticle(slug);
+  if (!article) return [];
+
+  const explicit = (relatedArticleSlugs[slug] ?? [])
+    .map((relatedSlug) => getArticle(relatedSlug))
+    .filter((relatedArticle): relatedArticle is Article => Boolean(relatedArticle));
+
+  const fallback = articles.filter((candidate) => {
+    if (candidate.slug === slug) return false;
+    if (explicit.some((relatedArticle) => relatedArticle.slug === candidate.slug)) return false;
+    return candidate.category === article.category || candidate.keywords.some((keyword) => article.keywords.includes(keyword));
+  });
+
+  const remaining = articles.filter((candidate) => {
+    if (candidate.slug === slug) return false;
+    if (explicit.some((relatedArticle) => relatedArticle.slug === candidate.slug)) return false;
+    if (fallback.some((relatedArticle) => relatedArticle.slug === candidate.slug)) return false;
+    return true;
+  });
+
+  return [...explicit, ...fallback, ...remaining].slice(0, count);
 }
