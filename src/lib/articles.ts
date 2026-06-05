@@ -455,6 +455,84 @@ export function getArticleBySlug(slug: string) {
   return getArticle(slug);
 }
 
+const relatedArticleSlugs: Record<string, string[]> = {
+  "autism-friendly-learning-videos-for-kids": [
+    "sensory-friendly-songs-for-preschool-kids",
+    "abc-songs-for-preschool-kids",
+    "screen-time-learning-activities-for-kids",
+  ],
+  "abc-songs-for-preschool-kids": [
+    "how-phonics-songs-help-toddlers-learn-to-read",
+    "how-music-helps-kids-learn",
+    "nursery-rhymes-why-they-matter",
+  ],
+  "how-music-helps-kids-learn": [
+    "abc-songs-for-preschool-kids",
+    "sensory-friendly-songs-for-preschool-kids",
+    "nursery-rhymes-why-they-matter",
+  ],
+  "ocean-animal-videos-for-kids": [
+    "screen-time-learning-activities-for-kids",
+    "how-music-helps-kids-learn",
+    "solar-system-song-for-kids",
+  ],
+  "solar-system-song-for-kids": [
+    "meet-the-galaxy-train-crew",
+    "screen-time-learning-activities-for-kids",
+    "ocean-animal-videos-for-kids",
+  ],
+  "screen-time-learning-activities-for-kids": [
+    "autism-friendly-learning-videos-for-kids",
+    "solar-system-song-for-kids",
+    "morning-routine-songs-for-toddlers",
+  ],
+  "sensory-friendly-songs-for-preschool-kids": [
+    "autism-friendly-learning-videos-for-kids",
+    "how-music-helps-kids-learn",
+    "morning-routine-songs-for-toddlers",
+  ],
+  "how-phonics-songs-help-toddlers-learn-to-read": [
+    "abc-songs-for-preschool-kids",
+    "nursery-rhymes-why-they-matter",
+    "how-music-helps-kids-learn",
+  ],
+  "morning-routine-songs-for-toddlers": [
+    "sensory-friendly-songs-for-preschool-kids",
+    "nursery-rhymes-why-they-matter",
+    "screen-time-learning-activities-for-kids",
+  ],
+  "meet-the-galaxy-train-crew": [
+    "solar-system-song-for-kids",
+    "ocean-animal-videos-for-kids",
+    "screen-time-learning-activities-for-kids",
+  ],
+  "nursery-rhymes-why-they-matter": [
+    "morning-routine-songs-for-toddlers",
+    "how-phonics-songs-help-toddlers-learn-to-read",
+    "how-music-helps-kids-learn",
+  ],
+};
+
 export function getRelatedArticles(slug: string, count = 2) {
-  return articles.filter((article) => article.slug !== slug).slice(0, count);
+  const article = getArticle(slug);
+  if (!article) return [];
+
+  const explicit = (relatedArticleSlugs[slug] ?? [])
+    .map((relatedSlug) => getArticle(relatedSlug))
+    .filter((relatedArticle): relatedArticle is Article => Boolean(relatedArticle));
+
+  const fallback = articles.filter((candidate) => {
+    if (candidate.slug === slug) return false;
+    if (explicit.some((relatedArticle) => relatedArticle.slug === candidate.slug)) return false;
+    return candidate.category === article.category || candidate.keywords.some((keyword) => article.keywords.includes(keyword));
+  });
+
+  const remaining = articles.filter((candidate) => {
+    if (candidate.slug === slug) return false;
+    if (explicit.some((relatedArticle) => relatedArticle.slug === candidate.slug)) return false;
+    if (fallback.some((relatedArticle) => relatedArticle.slug === candidate.slug)) return false;
+    return true;
+  });
+
+  return [...explicit, ...fallback, ...remaining].slice(0, count);
 }

@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound, redirect } from "@tanstack/react-router";
-import { articles, getArticle } from "@/lib/articles";
+import { getArticle, getRelatedArticles } from "@/lib/articles";
 import { SiteNav } from "@/components/SiteNav";
 
 const legacyArticleRedirects: Record<string, string> = {
@@ -63,7 +63,8 @@ export const Route = createFileRoute("/articles/$slug")({
 
 function ArticlePage() {
   const article = Route.useLoaderData();
-  const related = articles.filter((item) => item.slug !== article.slug).slice(0, 3);
+  const related = getRelatedArticles(article.slug, 3);
+  const inlineRelated = related.slice(0, 2);
 
   return (
     <main className="min-h-screen bg-[#fffdf7] text-[#10172a]">
@@ -87,6 +88,24 @@ function ArticlePage() {
         </div>
 
         <p className="mt-8 text-lg leading-8 text-[#26394d]">{article.intro}</p>
+
+        {inlineRelated.length > 0 && (
+          <nav aria-label="Related article links" className="mt-8 rounded-2xl border border-[#d8eef7] bg-white p-5 shadow-sm">
+            <h2 className="text-xl font-extrabold">Keep exploring this topic</h2>
+            <div className="mt-4 flex flex-wrap gap-3">
+              {inlineRelated.map((item) => (
+                <Link
+                  key={item.slug}
+                  to="/articles/$slug"
+                  params={{ slug: item.slug }}
+                  className="rounded-full bg-[#e8f8ff] px-4 py-2 text-sm font-extrabold text-[#0f7c90] transition hover:bg-[#dff5ff] hover:text-[#e02020]"
+                >
+                  {item.title}
+                </Link>
+              ))}
+            </div>
+          </nav>
+        )}
 
         <div className="mt-8 rounded-2xl border border-[#f0dbad] bg-[#fff6df] p-5">
           <h2 className="text-2xl font-extrabold">What kids can practice</h2>
@@ -125,9 +144,11 @@ function ArticlePage() {
                 key={item.slug}
                 to="/articles/$slug"
                 params={{ slug: item.slug }}
-                className="rounded-2xl border border-[#d8eef7] bg-white p-4 font-bold text-[#102a56] hover:text-[#e02020]"
+                className="rounded-2xl border border-[#d8eef7] bg-white p-4 transition hover:-translate-y-1 hover:shadow-md"
               >
-                {item.title}
+                <span className="text-xs font-extrabold uppercase tracking-wide text-[#0f7c90]">{item.category}</span>
+                <span className="mt-2 block font-extrabold text-[#102a56]">{item.title}</span>
+                <span className="mt-2 block text-sm font-medium leading-6 text-[#5b6f82]">{item.description}</span>
               </Link>
             ))}
           </div>

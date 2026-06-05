@@ -29,6 +29,29 @@ const NAV_LINKS = [
   { label: "Contact", href: "/#contact" },
 ];
 
+const TOPIC_PATHWAYS = [
+  {
+    label: "ABCs & Reading",
+    slug: "abc-songs-for-preschool-kids",
+    description: "Start with alphabet songs, phonics, and early literacy.",
+  },
+  {
+    label: "Gentle Learning",
+    slug: "sensory-friendly-songs-for-preschool-kids",
+    description: "Explore calm songs, routines, and inclusive learning ideas.",
+  },
+  {
+    label: "Space Adventures",
+    slug: "solar-system-song-for-kids",
+    description: "Follow planet songs and the Galaxy Train learning world.",
+  },
+  {
+    label: "Parent Activities",
+    slug: "screen-time-learning-activities-for-kids",
+    description: "Turn videos into movement, conversation, and creative play.",
+  },
+];
+
 function ArticlesPage() {
   const pathname = useRouterState({ select: (state) => state.location.pathname });
   const [scrolled, setScrolled] = useState(false);
@@ -224,6 +247,23 @@ function ArticlesPage() {
       `}</style>
 
       <section className="mx-auto max-w-6xl px-4 py-12">
+        <div className="mb-8 rounded-3xl border border-[#cce9f5] bg-white p-5 shadow-sm">
+          <h2 className="text-2xl font-extrabold text-[#102a56]">Explore learning paths</h2>
+          <div className="mt-5 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {TOPIC_PATHWAYS.map((pathway) => (
+              <Link
+                key={pathway.slug}
+                to="/articles/$slug"
+                params={{ slug: pathway.slug }}
+                className="rounded-2xl bg-[#f4fbff] p-4 transition hover:-translate-y-1 hover:bg-[#e8f8ff]"
+              >
+                <span className="block font-extrabold text-[#0f7c90]">{pathway.label}</span>
+                <span className="mt-2 block text-sm font-medium leading-6 text-[#5b6f82]">{pathway.description}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {articles.map((article) => (
             <article
