@@ -27,7 +27,7 @@ function articleBody(article: Pick<Article, "intro" | "sections" | "learningGoal
     `<ul>${article.learningGoals.map((goal) => `<li>${goal}</li>`).join("")}</ul>`,
     ...article.sections.map((section) => `<h2>${section.heading}</h2><p>${section.body}</p>`),
     `<blockquote><strong>Parent tip:</strong> ${article.parentTip}</blockquote>`,
-    `<p><em>Note: Amare's Big Planet creates educational entertainment for families. This guide is not medical, diagnostic, or therapeutic advice.</em></p>`,
+    `<p><em>Note: Amare's Big Planet creates Amare's songs, stories, and educational entertainment for families. This guide is not medical, diagnostic, or therapeutic advice.</em></p>`,
   ].join("");
 }
 
@@ -68,7 +68,7 @@ const articleDrafts = [
     videoTitle: "Learning ABCs I to L",
     readingTime: "4 min read",
     keywords: ["ABC songs for preschool kids", "alphabet songs for kids", "early literacy songs"],
-    intro: "ABC songs give children a joyful first step into early literacy. Music, visuals, and repetition help letters feel familiar before formal reading begins.",
+    intro: "Amare's ABC songs give children a joyful first step into early literacy. Music, visuals, and repetition help letters feel familiar before formal reading begins.",
     sections: [
       {
         heading: "Why alphabet songs work",
@@ -95,7 +95,7 @@ const articleDrafts = [
     videoTitle: "Live - Lofi Study Music for Kids",
     readingTime: "4 min read",
     keywords: ["music for kids learning", "kids learning through music", "educational songs for children"],
-    intro: "Music can make learning feel predictable and enjoyable. Rhythm gives children a pattern to follow, while repeated lyrics can make letters, numbers, and ideas easier to remember.",
+    intro: "At Amare's, music is used to make learning feel predictable and enjoyable. Rhythm gives children a pattern to follow, while repeated lyrics can make letters, numbers, and ideas easier to remember.",
     sections: [
       {
         heading: "Rhythm creates structure",
@@ -149,7 +149,7 @@ const articleDrafts = [
     videoTitle: "BLAST OFF! Solar System Song",
     readingTime: "4 min read",
     keywords: ["solar system song for kids", "planets for children", "space videos for kids"],
-    intro: "Space is full of wonder, and songs can make big science ideas feel friendly. Planet songs help children hear new words, imagine faraway places, and ask curious questions.",
+    intro: "Space is full of wonder, and Amare's planet songs can make big science ideas feel friendly. Planet songs help children hear new words, imagine faraway places, and ask curious questions.",
     sections: [
       {
         heading: "Introduce planet names",
@@ -176,7 +176,7 @@ const articleDrafts = [
     videoTitle: "Shape the Future of Learning: Sponsor Amare's Big Planet",
     readingTime: "4 min read",
     keywords: ["screen time learning activities", "educational videos for kids", "learning at home for children"],
-    intro: "Educational videos work best when they become part of a shared moment. Parents can use songs and stories to spark movement, conversation, drawing, counting, and pretend play.",
+    intro: "Amare's educational videos work best when they become part of a shared moment. Parents can use songs and stories to spark movement, conversation, drawing, counting, and pretend play.",
     sections: [
       {
         heading: "Pause and talk",

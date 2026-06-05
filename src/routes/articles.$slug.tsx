@@ -27,9 +27,9 @@ export const Route = createFileRoute("/articles/$slug")({
   },
   head: ({ loaderData }) => ({
     meta: [
-      { title: `${loaderData.title} | Amare's Big Planet` },
+      { title: `${loaderData.title} | Amare's Learning Hub` },
       { name: "description", content: loaderData.description },
-      { property: "og:title", content: `${loaderData.title} | Amare's Big Planet` },
+      { property: "og:title", content: `${loaderData.title} | Amare's Learning Hub` },
       { property: "og:description", content: loaderData.description },
       { property: "og:url", content: `https://amaresbigplanet.com/articles/${loaderData.slug}` },
       { property: "og:image", content: `https://img.youtube.com/vi/${loaderData.videoId}/hqdefault.jpg` },
@@ -72,6 +72,7 @@ function ArticlePage() {
 
       <article className="mx-auto max-w-4xl px-4 py-12">
         <Link to="/articles" className="font-bold text-[#0f7c90]">Back to Learning Hub</Link>
+        <p className="mt-6 text-sm font-bold text-[#5b6f82]">Amare's Big Planet guide</p>
         <p className="mt-8 text-sm font-extrabold uppercase tracking-[0.2em] text-[#0f7c90]">{article.category}</p>
         <h1 className="mt-3 text-4xl font-extrabold leading-tight sm:text-6xl">{article.title}</h1>
         <p className="mt-5 text-lg leading-8 text-[#4b5f75]">{article.description}</p>

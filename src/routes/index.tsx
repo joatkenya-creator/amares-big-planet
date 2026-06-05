@@ -11,10 +11,10 @@ export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "Amare's Big Planet | Kids Learning Songs, ABCs & Space Videos" },
-      { name: "description", content: "Sing along with Amare's Big Planet: ABC songs, nursery rhymes, ocean animals, solar system songs, and fun educational videos for kids." },
-      { property: "og:title", content: "Amare's Big Planet | Kids Learning Songs & Videos" },
-      { property: "og:description", content: "ABC songs, nursery rhymes, space adventures, ocean animals, and fun educational videos for children." },
+      { title: "Amare's Big Planet | Amare's Kids Songs, ABCs & Space Videos" },
+      { name: "description", content: "Sing along with Amare's: ABC songs, nursery rhymes, ocean animals, solar system songs, and fun educational videos from Amare's Big Planet." },
+      { property: "og:title", content: "Amare's Big Planet | Amare's Kids Songs & Videos" },
+      { property: "og:description", content: "Amare's Big Planet shares ABC songs, nursery rhymes, space adventures, ocean animals, and fun educational videos for children." },
       { property: "og:url", content: "https://amaresbigplanet.com/" },
     ],
     links: [
@@ -41,7 +41,7 @@ export const Route = createFileRoute("/")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "ItemList",
-          name: "Amare's Big Planet kids videos",
+          name: "Amare's kids videos from Amare's Big Planet",
           itemListElement: [
             "Learning ABCs I to L",
             "Ocean Animals Adventure",
@@ -900,10 +900,10 @@ function Index() {
           </span>
           <h1 className="font-display font-extrabold leading-[0.9] tracking-tight">
             <span className="sr-only">
-              Amare's Big Planet Kids Learning Songs and Videos
+              Amare's Big Planet and Amare's Kids Learning Songs and Videos
             </span>
             <span className="block text-2xl sm:text-3xl font-bold text-white mb-4 uppercase tracking-[0.3em]" style={{ textShadow: "0 4px 16px rgba(0,0,0,0.9), 0 2px 4px rgba(0,0,0,0.7)" }}>
-              Kids Learning Songs & Videos
+              Amare's Kids Learning Songs & Videos
             </span>
             <img
               src={amaresTitle}
@@ -912,8 +912,8 @@ function Index() {
             />
           </h1>
           <p className="mt-6 max-w-2xl mx-auto text-lg sm:text-xl text-white font-medium" style={{ textShadow: "0 2px 8px rgba(0,0,0,0.8)" }}>
-            Sing along, dance silly, and learn something new every day. A magical
-            world made for little explorers and the grown-ups who love them.
+            Welcome to Amare's, a magical world where little explorers sing along,
+            dance silly, and learn something new every day.
           </p>
 
           <div className="mt-8 pb-24 sm:pb-0 flex flex-wrap items-center justify-center gap-4">

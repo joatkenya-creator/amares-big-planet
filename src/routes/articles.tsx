@@ -8,10 +8,10 @@ export const Route = createFileRoute("/articles")({
   component: ArticlesPage,
   head: () => ({
     meta: [
-      { title: "Learning Hub | Amare's Big Planet" },
-      { name: "description", content: "Parent-friendly guides about inclusive learning, autism-friendly kids videos, ABC songs, music, space, ocean animals, and educational videos for children." },
-      { property: "og:title", content: "Learning Hub | Amare's Big Planet" },
-      { property: "og:description", content: "Helpful guides for parents, teachers, and little explorers." },
+      { title: "Amare's Learning Hub | Amare's Big Planet Articles" },
+      { name: "description", content: "Read Amare's Learning Hub for parent-friendly guides about inclusive learning, ABC songs, music, space, ocean animals, and educational videos for children." },
+      { property: "og:title", content: "Amare's Learning Hub | Amare's Big Planet" },
+      { property: "og:description", content: "Helpful Amare's guides for parents, teachers, and little explorers." },
       { property: "og:url", content: "https://amaresbigplanet.com/articles" },
     ],
     links: [
@@ -195,10 +195,10 @@ function ArticlesPage() {
         <div className="mx-auto max-w-6xl px-4 py-8 text-center">
           <p className="text-sm font-extrabold uppercase tracking-[0.22em] text-[#0f7c90]">Parent Guides</p>
           <h1 className="mx-auto mt-3 max-w-4xl text-3xl font-extrabold leading-tight sm:text-5xl">
-            Learning Hub for Every Little Explorer
+            Amare's Learning Hub for Every Little Explorer
           </h1>
           <p className="mx-auto mt-3 max-w-3xl text-base font-medium text-[#4b5f75] sm:text-lg">
-            Helpful guides about inclusive learning, autism-friendly kids videos, ABC songs, music, space, ocean animals, and joyful learning at home.
+            Helpful Amare's guides about inclusive learning, ABC songs, music, space, ocean animals, and joyful learning at home.
           </p>
         </div>
       </section>
