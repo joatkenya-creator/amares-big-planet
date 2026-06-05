@@ -5,25 +5,38 @@
 >
   <url>
     <loc>https://amaresbigplanet.com/</loc>
+    <lastmod>2026-06-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <video:video>
       <video:thumbnail_loc>https://img.youtube.com/vi/_ctNtUXel6Q/hqdefault.jpg</video:thumbnail_loc>
-      <video:title>Learning ABCs I to L</video:title>
-      <video:description>Learn the alphabet with Amare and friends!</video:description>
+      <video:title>Head Shoulders Knees &amp; Toes Song for Kids</video:title>
+      <video:description>Fun learning and dance-along song for kids from Amare's Big Planet.</video:description>
       <video:player_loc allow_embed="yes">https://www.youtube.com/embed/_ctNtUXel6Q</video:player_loc>
     </video:video>
     <video:video>
       <video:thumbnail_loc>https://img.youtube.com/vi/Ga_sef8vcIA/hqdefault.jpg</video:thumbnail_loc>
-      <video:title>Ocean Animals Adventure</video:title>
-      <video:description>Discover amazing creatures under the sea!</video:description>
+      <video:title>Ocean Animals ABC Song A to Z</video:title>
+      <video:description>Alphabet, phonics and sea animals for kids.</video:description>
       <video:player_loc allow_embed="yes">https://www.youtube.com/embed/Ga_sef8vcIA</video:player_loc>
     </video:video>
     <video:video>
       <video:thumbnail_loc>https://img.youtube.com/vi/8jCfqeT6iNc/hqdefault.jpg</video:thumbnail_loc>
-      <video:title>BLAST OFF! Solar System Song</video:title>
-      <video:description>Explore all the planets in our solar system!</video:description>
+      <video:title>BLAST OFF! Solar System Train Song</video:title>
+      <video:description>Learn the planets aboard the Galaxy Train with Amare and friends.</video:description>
       <video:player_loc allow_embed="yes">https://www.youtube.com/embed/8jCfqeT6iNc</video:player_loc>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://img.youtube.com/vi/lq04hVUf0ng/hqdefault.jpg</video:thumbnail_loc>
+      <video:title>Learn the Alphabet A to T | ABC Phonics Songs for Toddlers</video:title>
+      <video:description>ABC phonics songs and toddler learning compilation.</video:description>
+      <video:player_loc allow_embed="yes">https://www.youtube.com/embed/lq04hVUf0ng</video:player_loc>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://img.youtube.com/vi/eyEmlXfgIoA/hqdefault.jpg</video:thumbnail_loc>
+      <video:title>ABC Song A to P Compilation</video:title>
+      <video:description>Learn letters and words with classic ABC nursery rhyme songs.</video:description>
+      <video:player_loc allow_embed="yes">https://www.youtube.com/embed/eyEmlXfgIoA</video:player_loc>
     </video:video>
     <video:video>
       <video:thumbnail_loc>https://img.youtube.com/vi/9ryVeXuqv-M/hqdefault.jpg</video:thumbnail_loc>
@@ -34,46 +47,79 @@
   </url>
   <url>
     <loc>https://amaresbigplanet.com/donate</loc>
+    <lastmod>2026-06-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://amaresbigplanet.com/articles</loc>
+    <lastmod>2026-06-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://amaresbigplanet.com/articles/autism-friendly-learning-videos-for-kids</loc>
+    <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://amaresbigplanet.com/articles/abc-songs-for-preschool-kids</loc>
+    <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://amaresbigplanet.com/articles/how-music-helps-kids-learn</loc>
+    <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://amaresbigplanet.com/articles/ocean-animal-videos-for-kids</loc>
+    <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://amaresbigplanet.com/articles/solar-system-song-for-kids</loc>
+    <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://amaresbigplanet.com/articles/screen-time-learning-activities-for-kids</loc>
+    <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://amaresbigplanet.com/articles/sensory-friendly-songs-for-preschool-kids</loc>
+    <lastmod>2026-05-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://amaresbigplanet.com/articles/how-phonics-songs-help-toddlers-learn-to-read</loc>
+    <lastmod>2026-06-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://amaresbigplanet.com/articles/morning-routine-songs-for-toddlers</loc>
+    <lastmod>2026-06-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://amaresbigplanet.com/articles/meet-the-galaxy-train-crew</loc>
+    <lastmod>2026-06-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://amaresbigplanet.com/articles/nursery-rhymes-why-they-matter</loc>
+    <lastmod>2026-06-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

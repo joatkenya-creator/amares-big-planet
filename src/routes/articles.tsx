@@ -7,14 +7,19 @@ export const Route = createFileRoute("/articles")({
   head: () => ({
     meta: [
       { title: "Learning Hub | Amare's Big Planet" },
-      { name: "description", content: "Parent-friendly guides about inclusive learning, autism-friendly kids videos, ABC songs, music, space, ocean animals, and educational videos for children." },
+      {
+        name: "description",
+        content:
+          "Parent-friendly guides about inclusive learning, autism-friendly kids videos, ABC songs, music, space, ocean animals, and educational videos for children.",
+      },
       { property: "og:title", content: "Learning Hub | Amare's Big Planet" },
-      { property: "og:description", content: "Helpful guides for parents, teachers, and little explorers." },
+      {
+        property: "og:description",
+        content: "Helpful guides for parents, teachers, and little explorers.",
+      },
       { property: "og:url", content: "https://amaresbigplanet.com/articles" },
     ],
-    links: [
-      { rel: "canonical", href: "https://amaresbigplanet.com/articles" },
-    ],
+    links: [{ rel: "canonical", href: "https://amaresbigplanet.com/articles" }],
   }),
 });
 
@@ -31,12 +36,15 @@ function ArticlesPage() {
 
       <section className="bg-[#dff5ff]">
         <div className="mx-auto max-w-6xl px-4 py-16 text-center">
-          <p className="text-sm font-extrabold uppercase tracking-[0.22em] text-[#0f7c90]">Parent Guides</p>
+          <p className="text-sm font-extrabold uppercase tracking-[0.22em] text-[#0f7c90]">
+            Parent Guides
+          </p>
           <h1 className="mx-auto mt-4 max-w-4xl text-4xl font-extrabold leading-tight sm:text-6xl">
             Learning Hub for Every Little Explorer
           </h1>
           <p className="mx-auto mt-5 max-w-3xl text-lg font-medium text-[#4b5f75]">
-            Helpful guides about inclusive learning, autism-friendly kids videos, ABC songs, music, space, ocean animals, and joyful learning at home.
+            Helpful guides about inclusive learning, autism-friendly kids videos, ABC songs, music,
+            space, ocean animals, and joyful learning at home.
           </p>
         </div>
       </section>
@@ -58,7 +66,9 @@ function ArticlesPage() {
                   <span>{article.category}</span>
                   <span>{article.readingTime}</span>
                 </div>
-                <h2 className="mt-3 text-xl font-extrabold leading-snug text-[#10172a]">{article.title}</h2>
+                <h2 className="mt-3 text-xl font-extrabold leading-snug text-[#10172a]">
+                  {article.title}
+                </h2>
                 <p className="mt-3 text-sm leading-6 text-[#5b6f82]">{article.description}</p>
                 <Link
                   to="/articles/$slug"
