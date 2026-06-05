@@ -35,29 +35,36 @@ const articleDrafts = [
   {
     slug: "autism-friendly-learning-videos-for-kids",
     title: "Autism-Friendly Learning Videos for Kids",
-    description: "A parent-friendly guide to choosing gentle, visual, repetitive learning videos for autistic and neurodiverse children.",
+    description: "A parent-friendly guide to autism-friendly learning videos, gentle visuals, repetition, and sensory-aware educational songs for autistic and neurodiverse children.",
     category: "Inclusive Learning",
     videoId: "_ctNtUXel6Q",
     videoTitle: "Learning ABCs I to L",
     readingTime: "4 min read",
-    keywords: ["autism-friendly learning videos", "educational videos for autistic children", "inclusive kids learning"],
-    intro: "Many children learn best when lessons are calm, visual, repetitive, and joyful. Amare's Big Planet uses music, bright characters, simple words, and repeated ideas to support different learning styles.",
+    keywords: [
+      "autism-friendly learning videos",
+      "educational videos for autistic children",
+      "autism learning videos for kids",
+      "sensory-friendly videos for autistic children",
+      "neurodiverse kids learning",
+      "inclusive kids learning",
+    ],
+    intro: "Many autistic and neurodiverse children learn best when lessons are calm, visual, repetitive, and joyful. Amare's Big Planet uses music, bright characters, simple words, and repeated ideas to support different learning styles without pressure.",
     sections: [
       {
         heading: "What makes a learning video autism-friendly?",
-        body: "Helpful videos often use clear routines, predictable repetition, simple language, and visuals that match the words being sung or spoken. These choices can make learning feel less overwhelming and easier to follow.",
+        body: "Helpful autism-friendly videos often use clear routines, predictable repetition, simple language, and visuals that match the words being sung or spoken. These choices can make learning feel less overwhelming and easier to follow for children who prefer structure.",
       },
       {
-        heading: "How ABP supports different learners",
-        body: "ABP songs are built around familiar learning topics such as letters, animals, planets, and music. Children can watch, listen, sing, move, or simply enjoy the characters at their own pace.",
+        heading: "How Amare's supports different learners",
+        body: "Amare's songs are built around familiar learning topics such as letters, animals, planets, and music. Children can watch, listen, sing, move, or simply enjoy the characters at their own pace, which can be helpful for autistic children and sensory-sensitive learners.",
       },
       {
-        heading: "Use videos as a shared activity",
-        body: "A parent or teacher can pause the video, repeat a favorite part, point to letters or pictures, and celebrate small moments of recognition. The goal is connection, confidence, and fun.",
+        heading: "Use autism learning videos as a shared activity",
+        body: "A parent, caregiver, or teacher can pause the video, repeat a favorite part, point to letters or pictures, and celebrate small moments of recognition. The goal is connection, confidence, and fun, not forcing a child to perform.",
       },
     ],
-    learningGoals: ["Letter recognition", "Listening practice", "Visual learning", "Confidence through repetition"],
-    parentTip: "Start with one short video, then replay the same song another day. Familiarity can help children feel more confident.",
+    learningGoals: ["Letter recognition", "Listening practice", "Visual learning", "Sensory-aware repetition"],
+    parentTip: "Start with one short autism-friendly video, then replay the same song another day. Familiarity can help children feel more confident.",
   },
   {
     slug: "abc-songs-for-preschool-kids",
@@ -197,13 +204,13 @@ const articleDrafts = [
   {
     slug: "sensory-friendly-songs-for-preschool-kids",
     title: "Sensory-Friendly Songs for Preschool Kids",
-    description: "A guide to using gentle songs, simple visuals, and predictable routines for preschool learning at home.",
+    description: "A guide to sensory-friendly songs, gentle visuals, predictable routines, and calm learning videos for preschoolers, autistic children, and sensory-sensitive kids.",
     category: "Inclusive Learning",
     videoId: "AfPHinD_Xn0",
     videoTitle: "LIVE: Study With Me | Lofi Focus Music for Kids & Homework Time",
     readingTime: "3 min read",
-    keywords: ["sensory-friendly songs", "preschool learning songs", "gentle kids videos"],
-    intro: "Sensory-friendly learning is about making a child feel safe, interested, and supported. Songs with simple patterns, clear visuals, and a steady pace can help children engage without pressure.",
+    keywords: ["sensory-friendly songs", "preschool learning songs", "gentle kids videos", "sensory-friendly videos for autistic children", "calm learning videos for kids", "autism-friendly songs"],
+    intro: "Sensory-friendly learning is about making a child feel safe, interested, and supported. Songs with simple patterns, clear visuals, and a steady pace can help preschoolers, autistic children, and sensory-sensitive kids engage without pressure.",
     sections: [
       {
         heading: "Choose simple, predictable songs",

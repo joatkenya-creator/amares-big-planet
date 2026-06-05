@@ -9,9 +9,10 @@ export const Route = createFileRoute("/articles")({
   head: () => ({
     meta: [
       { title: "Amare's Learning Hub | Amare's Big Planet Articles" },
-      { name: "description", content: "Read Amare's Learning Hub for parent-friendly guides about inclusive learning, ABC songs, music, space, ocean animals, and educational videos for children." },
+      { name: "description", content: "Read Amare's Learning Hub for parent-friendly guides about autism-friendly learning videos, sensory-friendly songs, inclusive learning, ABC songs, music, space, and educational videos for children." },
+      { name: "keywords", content: "autism-friendly learning videos, sensory-friendly songs, educational videos for autistic children, inclusive kids learning, Amare's Big Planet articles" },
       { property: "og:title", content: "Amare's Learning Hub | Amare's Big Planet" },
-      { property: "og:description", content: "Helpful Amare's guides for parents, teachers, and little explorers." },
+      { property: "og:description", content: "Helpful Amare's guides for autism-friendly learning, sensory-friendly songs, ABCs, music, space, and little explorers." },
       { property: "og:url", content: "https://amaresbigplanet.com/articles" },
     ],
     links: [
@@ -36,9 +37,9 @@ const TOPIC_PATHWAYS = [
     description: "Start with alphabet songs, phonics, and early literacy.",
   },
   {
-    label: "Gentle Learning",
-    slug: "sensory-friendly-songs-for-preschool-kids",
-    description: "Explore calm songs, routines, and inclusive learning ideas.",
+    label: "Autism & Sensory",
+    slug: "autism-friendly-learning-videos-for-kids",
+    description: "Explore autism-friendly videos, sensory-aware songs, and calm learning ideas.",
   },
   {
     label: "Space Adventures",
@@ -198,7 +199,7 @@ function ArticlesPage() {
             Amare's Learning Hub for Every Little Explorer
           </h1>
           <p className="mx-auto mt-3 max-w-3xl text-base font-medium text-[#4b5f75] sm:text-lg">
-            Helpful Amare's guides about inclusive learning, ABC songs, music, space, ocean animals, and joyful learning at home.
+            Helpful Amare's guides about autism-friendly learning videos, sensory-friendly songs, ABC songs, music, space, ocean animals, and joyful learning at home.
           </p>
         </div>
       </section>

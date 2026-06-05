@@ -29,6 +29,7 @@ export const Route = createFileRoute("/articles/$slug")({
     meta: [
       { title: `${loaderData.title} | Amare's Learning Hub` },
       { name: "description", content: loaderData.description },
+      { name: "keywords", content: loaderData.keywords.join(", ") },
       { property: "og:title", content: `${loaderData.title} | Amare's Learning Hub` },
       { property: "og:description", content: loaderData.description },
       { property: "og:url", content: `https://amaresbigplanet.com/articles/${loaderData.slug}` },
@@ -45,6 +46,7 @@ export const Route = createFileRoute("/articles/$slug")({
           "@type": "Article",
           headline: loaderData.title,
           description: loaderData.description,
+          keywords: loaderData.keywords,
           image: `https://img.youtube.com/vi/${loaderData.videoId}/hqdefault.jpg`,
           author: {
             "@type": "Organization",

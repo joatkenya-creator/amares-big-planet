@@ -12,7 +12,7 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Amare's Big Planet | Amare's Kids Songs, ABCs & Space Videos" },
-      { name: "description", content: "Sing along with Amare's: ABC songs, nursery rhymes, ocean animals, solar system songs, and fun educational videos from Amare's Big Planet." },
+      { name: "description", content: "Sing along with Amare's: ABC songs, nursery rhymes, autism-friendly learning videos, sensory-friendly songs, ocean animals, solar system songs, and fun educational videos from Amare's Big Planet." },
       { property: "og:title", content: "Amare's Big Planet | Amare's Kids Songs & Videos" },
       { property: "og:description", content: "Amare's Big Planet shares ABC songs, nursery rhymes, space adventures, ocean animals, and fun educational videos for children." },
       { property: "og:url", content: "https://amaresbigplanet.com/" },
@@ -1291,6 +1291,7 @@ function Index() {
                   { icon: "\u{1F3B5}", text: "Nursery rhymes & original songs" },
                   { icon: "\u{1FA90}", text: "Planet facts & space exploration" },
                   { icon: "\u{1F9E9}", text: "Fun animations that build confidence" },
+                  { icon: "\u{1F499}", text: "Autism-friendly and sensory-aware learning" },
                   { icon: "\u{1F4FA}", text: "New educational videos every week" },
                   { icon: "\u{1F6E1}\u{FE0F}", text: "Safe, ad-free content for kids" },
                 ].map((item) => (
@@ -1322,6 +1323,13 @@ function Index() {
                   No spam — just updates on new episodes and songs.
                 </p>
                 <div className="mt-5 flex flex-wrap gap-3">
+                  <Link
+                    to="/articles/$slug"
+                    params={{ slug: "autism-friendly-learning-videos-for-kids" }}
+                    className="rounded-full bg-white px-5 py-2.5 text-sm font-extrabold text-[#102a56] shadow-soft transition hover:-translate-y-0.5 hover:text-[#e02020]"
+                  >
+                    Autism-friendly videos
+                  </Link>
                   <Link
                     to="/articles/$slug"
                     params={{ slug: "screen-time-learning-activities-for-kids" }}
