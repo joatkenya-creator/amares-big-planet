@@ -88,6 +88,15 @@ export const Route = createFileRoute("/")({
             },
             {
               "@type": "VideoObject",
+              name: "Sayari Zote za Mfumo wa Jua 🌍🚀",
+              description: "Wimbo wa Sayari kwa Watoto | Jifunze Sayari kwa Kiswahili",
+              thumbnailUrl: "https://img.youtube.com/vi/hic5LyxRj2U/hqdefault.jpg",
+              embedUrl: "https://www.youtube.com/embed/hic5LyxRj2U",
+              url: "https://amaresbigplanet.com/#music",
+              uploadDate: "2026-06-06T00:00:00+03:00",
+            },
+            {
+              "@type": "VideoObject",
               name: "Live - Lofi Study Music for Kids",
               description: "Relaxing lofi study music for kids from Amare's Big Planet.",
               thumbnailUrl: "https://img.youtube.com/vi/9ryVeXuqv-M/hqdefault.jpg",
@@ -1036,11 +1045,12 @@ function Index() {
               Sing Along with Amare! 🎵
             </h2>
           </div>
-          <div className="grid sm:grid-cols-3" style={{ gap: "16px" }}>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4" style={{ gap: "16px" }}>
             {[
               { id: "_ctNtUXel6Q", title: "Learning ABCs I to L", desc: "Learn the alphabet with Amaré and friends!" },
               { id: "Ga_sef8vcIA", title: "Ocean Animals Adventure", desc: "Discover amazing creatures under the sea!" },
               { id: "8jCfqeT6iNc", title: "BLAST OFF! Solar System Song", desc: "Explore all the planets in our solar system!" },
+              { id: "hic5LyxRj2U", title: "Sayari Zote za Mfumo wa Jua 🌍🚀", desc: "Wimbo wa Sayari kwa Watoto | Jifunze Sayari kwa Kiswahili" },
             ].map((video) => (
               <div
                 key={video.id}
