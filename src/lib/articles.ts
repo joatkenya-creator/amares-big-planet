@@ -446,13 +446,48 @@ const articleDrafts = [
   },
 ] satisfies Array<Omit<Article, "excerpt" | "readTime" | "publishDate" | "body">>;
 
-export const articles: Article[] = articleDrafts.map((article) => ({
-  ...article,
-  excerpt: article.description,
-  readTime: article.readingTime,
-  publishDate: "May 26, 2026",
-  body: articleBody(article),
-}));
+const swahiliPlanetSongArticle: Article = {
+  slug: "sayari-zote-za-mfumo-wa-jua",
+  title: "Sayari Zote za Mfumo wa Jua 🌍🚀 — Learn Planets in Swahili!",
+  description: "Amaré and the Gear Crew are now teaching kids about the solar system in Swahili! Watch our new planet song and explore the universe in a whole new language.",
+  excerpt: "Amaré and the Gear Crew are now teaching kids about the solar system in Swahili! Watch our new planet song and explore the universe in a whole new language.",
+  category: "Activities",
+  videoId: "hic5LyxRj2U",
+  videoTitle: "Sayari Zote za Mfumo wa Jua — Swahili Planet Song",
+  readingTime: "2 min read",
+  readTime: "2 min read",
+  publishDate: "2026-05-25",
+  keywords: [
+    "swahili planet song",
+    "learn planets in swahili",
+    "solar system in kiswahili",
+    "african language learning for kids",
+    "multilingual kids songs",
+  ],
+  intro: "",
+  sections: [],
+  learningGoals: [],
+  parentTip: "",
+  body: [
+    `<p>We've been dreaming about this one for a while. Amaré's Big Planet is officially expanding into Swahili — and we're starting with the solar system.</p>`,
+    `<p>Our brand-new song, <em>Sayari Zote za Mfumo wa Jua</em>, teaches kids every planet in our solar system in Kiswahili. From Utaridi (Mercury) all the way out to Neptuni (Neptune), children can sing along, hear the names, and start building a connection to space science in a language spoken by over 100 million people across East Africa and beyond.</p>`,
+    `<iframe src="https://www.youtube.com/embed/hic5LyxRj2U" title="Sayari Zote za Mfumo wa Jua — Swahili Planet Song" style="width:100%;aspect-ratio:16/9;border-radius:12px;border:none;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`,
+    `<p>This matters to us personally. Our team is based in both Kenya and the United States, so Swahili is close to our hearts. It's the language of home for some of us, and a bridge between cultures for all of us. Making learning content available in African languages isn't just a nice idea — it's something we believe every child deserves. This song is our first step, and we have so much more planned.</p>`,
+    `<p>For families already raising bilingual or multilingual kids, this is a fun new tool. For families discovering Swahili for the first time, it's an invitation to explore the world through a different lens. Either way, the Gear Crew is right there with your child, making the journey playful and musical.</p>`,
+    `<p>We're just getting started with multilingual content. If you want to follow along as we add more languages and more songs, <a href="https://www.youtube.com/@AmaresBigPlanet?sub_confirmation=1" target="_blank" rel="noopener noreferrer">subscribe to Amaré's Big Planet on YouTube</a> so you never miss a new release. The universe sounds even bigger when you can explore it in more than one language.</p>`,
+  ].join(""),
+};
+
+export const articles: Article[] = [
+  swahiliPlanetSongArticle,
+  ...articleDrafts.map((article) => ({
+    ...article,
+    excerpt: article.description,
+    readTime: article.readingTime,
+    publishDate: "May 26, 2026",
+    body: articleBody(article),
+  })),
+];
 
 export function getArticle(slug: string) {
   return articles.find((article) => article.slug === slug);
