@@ -11,10 +11,10 @@ export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "Amare's Big Planet | Kids Learning Songs, ABCs & Space Videos" },
-      { name: "description", content: "Sing along with Amare's Big Planet: ABC songs, nursery rhymes, ocean animals, solar system songs, and fun educational videos for kids." },
-      { property: "og:title", content: "Amare's Big Planet | Kids Learning Songs & Videos" },
-      { property: "og:description", content: "ABC songs, nursery rhymes, space adventures, ocean animals, and fun educational videos for children." },
+      { title: "Amare's Big Planet | Amare's Kids Songs, ABCs & Space Videos" },
+      { name: "description", content: "Sing along with Amare's: ABC songs, nursery rhymes, autism-friendly learning videos, sensory-friendly songs, ocean animals, solar system songs, and fun educational videos from Amare's Big Planet." },
+      { property: "og:title", content: "Amare's Big Planet | Amare's Kids Songs & Videos" },
+      { property: "og:description", content: "Amare's Big Planet shares ABC songs, nursery rhymes, space adventures, ocean animals, and fun educational videos for children." },
       { property: "og:url", content: "https://amaresbigplanet.com/" },
     ],
     links: [
@@ -41,7 +41,7 @@ export const Route = createFileRoute("/")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "ItemList",
-          name: "Amare's Big Planet kids videos",
+          name: "Amare's kids videos from Amare's Big Planet",
           itemListElement: [
             "Learning ABCs I to L",
             "Ocean Animals Adventure",
@@ -909,10 +909,10 @@ function Index() {
           </span>
           <h1 className="font-display font-extrabold leading-[0.9] tracking-tight">
             <span className="sr-only">
-              Amare's Big Planet Kids Learning Songs and Videos
+              Amare's Big Planet and Amare's Kids Learning Songs and Videos
             </span>
             <span className="block text-2xl sm:text-3xl font-bold text-white mb-4 uppercase tracking-[0.3em]" style={{ textShadow: "0 4px 16px rgba(0,0,0,0.9), 0 2px 4px rgba(0,0,0,0.7)" }}>
-              Kids Learning Songs & Videos
+              Amare's Kids Learning Songs & Videos
             </span>
             <img
               src={amaresTitle}
@@ -921,8 +921,8 @@ function Index() {
             />
           </h1>
           <p className="mt-6 max-w-2xl mx-auto text-lg sm:text-xl text-white font-medium" style={{ textShadow: "0 2px 8px rgba(0,0,0,0.8)" }}>
-            Sing along, dance silly, and learn something new every day. A magical
-            world made for little explorers and the grown-ups who love them.
+            Welcome to Amare's, a magical world where little explorers sing along,
+            dance silly, and learn something new every day.
           </p>
 
           <div className="mt-8 pb-24 sm:pb-0 flex flex-wrap items-center justify-center gap-4">
@@ -1301,6 +1301,7 @@ function Index() {
                   { icon: "\u{1F3B5}", text: "Nursery rhymes & original songs" },
                   { icon: "\u{1FA90}", text: "Planet facts & space exploration" },
                   { icon: "\u{1F9E9}", text: "Fun animations that build confidence" },
+                  { icon: "\u{1F499}", text: "Autism-friendly and sensory-aware learning" },
                   { icon: "\u{1F4FA}", text: "New educational videos every week" },
                   { icon: "\u{1F6E1}\u{FE0F}", text: "Safe, ad-free content for kids" },
                 ].map((item) => (
@@ -1332,6 +1333,13 @@ function Index() {
                   No spam — just updates on new episodes and songs.
                 </p>
                 <div className="mt-5 flex flex-wrap gap-3">
+                  <Link
+                    to="/articles/$slug"
+                    params={{ slug: "autism-friendly-learning-videos-for-kids" }}
+                    className="rounded-full bg-white px-5 py-2.5 text-sm font-extrabold text-[#102a56] shadow-soft transition hover:-translate-y-0.5 hover:text-[#e02020]"
+                  >
+                    Autism-friendly videos
+                  </Link>
                   <Link
                     to="/articles/$slug"
                     params={{ slug: "screen-time-learning-activities-for-kids" }}

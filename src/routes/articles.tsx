@@ -8,15 +8,14 @@ export const Route = createFileRoute("/articles")({
   component: ArticlesPage,
   head: () => ({
     meta: [
-      { title: "Learning Hub | Amare's Big Planet" },
-      { name: "description", content: "Parent-friendly guides about inclusive learning, autism-friendly kids videos, ABC songs, music, space, ocean animals, and educational videos for children." },
-      { property: "og:title", content: "Learning Hub | Amare's Big Planet" },
-      { property: "og:description", content: "Helpful guides for parents, teachers, and little explorers." },
+      { title: "Amare's Learning Hub | Amare's Big Planet Articles" },
+      { name: "description", content: "Read Amare's Learning Hub for parent-friendly guides about autism-friendly learning videos, sensory-friendly songs, inclusive learning, ABC songs, music, space, and educational videos for children." },
+      { name: "keywords", content: "autism-friendly learning videos, sensory-friendly songs, educational videos for autistic children, inclusive kids learning, Amare's Big Planet articles" },
+      { property: "og:title", content: "Amare's Learning Hub | Amare's Big Planet" },
+      { property: "og:description", content: "Helpful Amare's guides for autism-friendly learning, sensory-friendly songs, ABCs, music, space, and little explorers." },
       { property: "og:url", content: "https://amaresbigplanet.com/articles" },
     ],
-    links: [
-      { rel: "canonical", href: "https://amaresbigplanet.com/articles" },
-    ],
+    links: [{ rel: "canonical", href: "https://amaresbigplanet.com/articles" }],
   }),
 });
 
@@ -27,6 +26,29 @@ const NAV_LINKS = [
   { label: "Stories", href: "/#stories" },
   { label: "Articles", href: "/articles" },
   { label: "Contact", href: "/#contact" },
+];
+
+const TOPIC_PATHWAYS = [
+  {
+    label: "ABCs & Reading",
+    slug: "abc-songs-for-preschool-kids",
+    description: "Start with alphabet songs, phonics, and early literacy.",
+  },
+  {
+    label: "Autism & Sensory",
+    slug: "autism-friendly-learning-videos-for-kids",
+    description: "Explore autism-friendly videos, sensory-aware songs, and calm learning ideas.",
+  },
+  {
+    label: "Space Adventures",
+    slug: "solar-system-song-for-kids",
+    description: "Follow planet songs and the Galaxy Train learning world.",
+  },
+  {
+    label: "Parent Activities",
+    slug: "screen-time-learning-activities-for-kids",
+    description: "Turn videos into movement, conversation, and creative play.",
+  },
 ];
 
 function ArticlesPage() {
@@ -172,10 +194,10 @@ function ArticlesPage() {
         <div className="mx-auto max-w-6xl px-4 py-8 text-center">
           <p className="text-sm font-extrabold uppercase tracking-[0.22em] text-[#0f7c90]">Parent Guides</p>
           <h1 className="mx-auto mt-3 max-w-4xl text-3xl font-extrabold leading-tight sm:text-5xl">
-            Learning Hub for Every Little Explorer
+            Amare's Learning Hub for Every Little Explorer
           </h1>
           <p className="mx-auto mt-3 max-w-3xl text-base font-medium text-[#4b5f75] sm:text-lg">
-            Helpful guides about inclusive learning, autism-friendly kids videos, ABC songs, music, space, ocean animals, and joyful learning at home.
+            Helpful Amare's guides about autism-friendly learning videos, sensory-friendly songs, ABC songs, music, space, ocean animals, and joyful learning at home.
           </p>
         </div>
       </section>
@@ -224,6 +246,23 @@ function ArticlesPage() {
       `}</style>
 
       <section className="mx-auto max-w-6xl px-4 py-12">
+        <div className="mb-8 rounded-3xl border border-[#cce9f5] bg-white p-5 shadow-sm">
+          <h2 className="text-2xl font-extrabold text-[#102a56]">Explore learning paths</h2>
+          <div className="mt-5 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {TOPIC_PATHWAYS.map((pathway) => (
+              <Link
+                key={pathway.slug}
+                to="/articles/$slug"
+                params={{ slug: pathway.slug }}
+                className="rounded-2xl bg-[#f4fbff] p-4 transition hover:-translate-y-1 hover:bg-[#e8f8ff]"
+              >
+                <span className="block font-extrabold text-[#0f7c90]">{pathway.label}</span>
+                <span className="mt-2 block text-sm font-medium leading-6 text-[#5b6f82]">{pathway.description}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {articles.map((article) => (
             <article
@@ -240,7 +279,9 @@ function ArticlesPage() {
                   <span>{article.category}</span>
                   <span>{article.readingTime}</span>
                 </div>
-                <h2 className="mt-3 text-xl font-extrabold leading-snug text-[#10172a]">{article.title}</h2>
+                <h2 className="mt-3 text-xl font-extrabold leading-snug text-[#10172a]">
+                  {article.title}
+                </h2>
                 <p className="mt-3 text-sm leading-6 text-[#5b6f82]">{article.description}</p>
                 <Link
                   to="/articles/$slug"
