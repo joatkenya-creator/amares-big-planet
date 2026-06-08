@@ -262,7 +262,7 @@ function DonatePage() {
             pointerEvents: "none",
           }}
         >
-          <source src="https://res.cloudinary.com/dee2vqvzl/video/upload/v1779646039/Shape_the_Future_of_Learning__Sponsor_Amare_s_Big_Planet_1_dbmrgt.mp4" type="video/mp4" />
+          <source src="https://res.cloudinary.com/dee2vqvzl/video/upload/q_auto,f_auto,w_1280/v1780915760/support_page_spqt59.mp4" type="video/mp4" />
         </video>
         {/* Dark overlay — full width */}
         <div style={{
