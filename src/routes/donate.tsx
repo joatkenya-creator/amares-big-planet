@@ -89,6 +89,46 @@ function DonatePage() {
 
   return (
     <div style={{ minHeight: "100vh", fontFamily: "sans-serif", display: "flex", flexDirection: "column" }}>
+      {/* Fixed video background — stays behind all content */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        aria-hidden="true"
+        tabIndex={-1}
+        disablePictureInPicture
+        controls={false}
+        className="donate-fixed-video"
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          objectFit: "cover",
+          zIndex: 0,
+          pointerEvents: "none",
+        }}
+      >
+        <source src="https://res.cloudinary.com/dee2vqvzl/video/upload/q_auto,f_auto,w_1280/v1780915760/support_page_spqt59.mp4" type="video/mp4" />
+      </video>
+      {/* Fixed dark overlay */}
+      <div
+        className="donate-fixed-overlay"
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          background: "rgba(0,0,0,0.5)",
+          zIndex: 0,
+          pointerEvents: "none",
+        }}
+      />
+
       {/* NAVBAR */}
       <nav
         role="navigation"
@@ -234,46 +274,12 @@ function DonatePage() {
         style={{
           flex: 1,
           position: "relative",
-          overflow: "hidden",
           minHeight: "100vh",
-          background: "linear-gradient(135deg, #0d1b3e 0%, #172554 48%, #7c2d12 100%)",
         }}
       >
 
-        {/* Video Background — HTML5 video (autoplays on mobile with playsInline + muted) */}
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          aria-hidden="true"
-          tabIndex={-1}
-          disablePictureInPicture
-          controls={false}
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            zIndex: 0,
-            pointerEvents: "none",
-          }}
-        >
-          <source src="https://res.cloudinary.com/dee2vqvzl/video/upload/q_auto,f_auto,w_1280/v1780915760/support_page_spqt59.mp4" type="video/mp4" />
-        </video>
-        {/* Dark overlay — full width */}
-        <div style={{
-          position: "absolute", top: 0, left: 0,
-          width: "100%", height: "100%",
-          background: "rgba(0,0,0,0.5)",
-          zIndex: 1,
-        }} />
-
-        {/* Content layer — flex row above video + overlay */}
-        <div className="donate-content-row" style={{ position: "relative", zIndex: 2, display: "flex", minHeight: "100vh", paddingTop: "71px" }}>
+        {/* Hero section — transparent so fixed video shows through */}
+        <div className="donate-content-row" style={{ position: "relative", zIndex: 1, display: "flex", minHeight: "100vh", paddingTop: "71px" }}>
 
         {/* LEFT SIDE — Hero */}
         <div className="donate-hero" style={{
@@ -436,6 +442,9 @@ function DonatePage() {
         <div className="donate-card-wrapper" style={{
           width: "420px", flexShrink: 0, padding: "20px",
           display: "flex", alignItems: "center",
+          background: "rgba(13,27,62,0.85)",
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
         }}>
         <div id="donation-card" style={{
           width: "100%", background: "rgba(255,255,255,0.88)",
@@ -858,6 +867,17 @@ function DonatePage() {
         @media (min-width: 901px) {
           .donate-mobile-menu {
             display: none !important;
+          }
+        }
+
+        /* Mobile: iOS has issues with position:fixed inside scrollable containers.
+           Fall back to absolute positioning covering the full document. */
+        @supports (-webkit-touch-callout: none) {
+          .donate-fixed-video,
+          .donate-fixed-overlay {
+            position: absolute !important;
+            height: 100% !important;
+            width: 100% !important;
           }
         }
       `}</style>
