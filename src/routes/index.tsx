@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect, useRef } from "react";
+import type { FormEvent } from "react";
 import amaresLogo from "@/assets/amares-logo.jpeg";
 import amaresTitle from "@/assets/amares-title.png";
 import parentsSectionImg from "@/assets/parents-section.png";
@@ -205,6 +206,8 @@ function Index() {
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [donationPopupVisible, setDonationPopupVisible] = useState(false);
   const [donationPopupClosing, setDonationPopupClosing] = useState(false);
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [newsletterSubmitted, setNewsletterSubmitted] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
   const mobileSearchRef = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -232,6 +235,17 @@ function Index() {
     closeSearch();
     const el = document.querySelector(anchor);
     if (el) el.scrollIntoView({ behavior: "smooth" });
+  }
+
+  function handleNewsletterSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const email = newsletterEmail.trim();
+    if (!email) return;
+
+    const subject = encodeURIComponent("Amare's Big Planet newsletter signup");
+    const body = encodeURIComponent(`Please add this email to Amare's parent newsletter:\n\n${email}`);
+    window.location.href = `mailto:admin@amaresbigplanet.com?subject=${subject}&body=${body}`;
+    setNewsletterSubmitted(true);
   }
 
   // Close search on outside click
@@ -1260,6 +1274,41 @@ function Index() {
                     Subscribe on YouTube
                   </a>
                 </div>
+                <form
+                  onSubmit={handleNewsletterSubmit}
+                  className="mt-6 mx-auto flex max-w-2xl flex-col gap-3 rounded-[1.75rem] border-2 border-[#BDEAF2] bg-white/90 p-3 shadow-soft sm:flex-row"
+                >
+                  <label htmlFor="newsletter-email" className="sr-only">
+                    Email address
+                  </label>
+                  <input
+                    id="newsletter-email"
+                    type="email"
+                    required
+                    value={newsletterEmail}
+                    onChange={(event) => {
+                      setNewsletterEmail(event.target.value);
+                      setNewsletterSubmitted(false);
+                    }}
+                    placeholder="Parent email address"
+                    className="min-h-12 flex-1 rounded-full border-2 border-transparent bg-[#F3FBFD] px-5 text-base font-semibold text-[#071833] outline-none transition-all placeholder:text-[#6B7A90] focus:border-[#22B8CF] focus:bg-white"
+                  />
+                  <button
+                    type="submit"
+                    className="min-h-12 rounded-full bg-[#FF7A1A] px-7 text-base font-extrabold text-white shadow-bounce transition-all hover:translate-y-1 hover:shadow-none"
+                  >
+                    Join newsletter
+                  </button>
+                </form>
+                {newsletterSubmitted ? (
+                  <p className="mt-3 text-sm font-semibold text-[#0f7c90]">
+                    Your email app should open so we can add you to the parent newsletter.
+                  </p>
+                ) : (
+                  <p className="mt-3 text-sm font-medium text-muted-foreground">
+                    Monthly parent notes with new songs, learning ideas, and Amare's updates.
+                  </p>
+                )}
               </div>
               <div className="mt-8 flex flex-wrap justify-center gap-3">
                 <a href="https://www.youtube.com/@amaresbigplanet" target="_blank" rel="noopener noreferrer" className="rounded-full bg-red-600 text-white px-7 py-3.5 font-extrabold shadow-bounce hover:translate-y-1 hover:shadow-none transition-all">

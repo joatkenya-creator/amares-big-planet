@@ -388,6 +388,45 @@ const articleDrafts = [
     parentTip: "After an episode, ask which Galaxy Train crew member your child would sit next to — and why. That single question opens up more about how they think than any quiz ever will.",
   },
   {
+    slug: "nyimbo-za-watoto-kwa-kiswahili",
+    title: "ABC kwa Kiswahili: Nyimbo za Alfabeti kwa Watoto",
+    description: "How Swahili ABC songs can help children learn herufi za alfabeti, pronunciation, rhythm, and early language confidence.",
+    category: "Swahili Learning",
+    videoId: "OYwPeUPu078",
+    videoTitle: "ABC kwa Kiswahili",
+    readingTime: "4 min read",
+    keywords: [
+      "ABC kwa Kiswahili",
+      "herufi za alfabeti",
+      "alfabeti kwa watoto",
+      "nyimbo za alfabeti kwa watoto",
+      "nyimbo za watoto",
+      "nyimbo za watoto kwa Kiswahili",
+      "kujifunza Kiswahili kwa watoto",
+      "video za elimu kwa watoto",
+      "katuni za watoto kwa Kiswahili",
+      "Swahili alphabet song",
+      "Kiswahili learning videos for children",
+    ],
+    intro: "ABC kwa Kiswahili gives children a warm way to hear herufi za alfabeti through music, rhythm, and repetition. With Amare's Big Planet, kids can enjoy a Swahili alphabet song while building early language confidence.",
+    sections: [
+      {
+        heading: "Why ABC songs help children learn Kiswahili",
+        body: "Alphabet songs make letter names easier to remember because children hear the same sounds again and again. A short Swahili ABC song can help a child practice listening, pronunciation, rhythm, and early letter recognition without feeling like a lesson.",
+      },
+      {
+        heading: "Build language and cultural confidence",
+        body: "For families in Kenya, Tanzania, Uganda, and across the diaspora, Kiswahili alphabet content helps children feel connected to language and identity. Even when a child mostly speaks English, hearing ABC kwa Kiswahili in music can make the language feel friendly and familiar.",
+      },
+      {
+        heading: "Use the video as a shared activity",
+        body: "Parents can watch with their child, repeat one letter, clap to the rhythm, or ask the child to find a sound they recognize. Small moments like these turn screen time into Kiswahili alphabet practice and family connection.",
+      },
+    ],
+    learningGoals: ["Herufi za alfabeti", "Kiswahili pronunciation", "Listening practice", "Rhythm and memory"],
+    parentTip: "After watching, choose one letter from the song and look for a word that begins with that sound.",
+  },
+  {
     slug: "nursery-rhymes-why-they-matter",
     title: "Nursery Rhymes & Kids' Songs: Why They Matter and How to Use Them",
     description: "Why nursery rhymes still belong in every childhood — what they do for a young brain, and how to weave them into a normal day.",
@@ -548,10 +587,15 @@ const relatedArticleSlugs: Record<string, string[]> = {
     "ocean-animal-videos-for-kids",
     "screen-time-learning-activities-for-kids",
   ],
+  "nyimbo-za-watoto-kwa-kiswahili": [
+    "nursery-rhymes-why-they-matter",
+    "how-music-helps-kids-learn",
+    "abc-songs-for-preschool-kids",
+  ],
   "nursery-rhymes-why-they-matter": [
+    "nyimbo-za-watoto-kwa-kiswahili",
     "morning-routine-songs-for-toddlers",
     "how-phonics-songs-help-toddlers-learn-to-read",
-    "how-music-helps-kids-learn",
   ],
 };
 

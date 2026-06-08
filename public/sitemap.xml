@@ -123,4 +123,35 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://amaresbigplanet.com/articles/how-phonics-songs-help-toddlers-learn-to-read</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://amaresbigplanet.com/articles/morning-routine-songs-for-toddlers</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://amaresbigplanet.com/articles/meet-the-galaxy-train-crew</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://amaresbigplanet.com/articles/nyimbo-za-watoto-kwa-kiswahili</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <video:video>
+      <video:thumbnail_loc>https://img.youtube.com/vi/OYwPeUPu078/hqdefault.jpg</video:thumbnail_loc>
+      <video:title>ABC kwa Kiswahili</video:title>
+      <video:description>Swahili ABC song for children learning herufi za alfabeti with Amare's Big Planet.</video:description>
+      <video:player_loc allow_embed="yes">https://www.youtube.com/embed/OYwPeUPu078</video:player_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://amaresbigplanet.com/articles/nursery-rhymes-why-they-matter</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>
