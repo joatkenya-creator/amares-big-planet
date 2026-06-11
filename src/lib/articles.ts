@@ -576,7 +576,7 @@ const autismSupportArticle: Article = {
   parentTip: "",
   body: [
     `<p>At Amaré's Big Planet, we believe every child deserves to feel seen, safe, and celebrated. For children on the autism spectrum, learning through music, rhythm, and routine can open doors that traditional approaches sometimes can't.</p>`,
-    `<video autoplay muted loop playsinline controls style="width:100%;border-radius:12px;margin-top:20px;margin-bottom:20px;" src="https://res.cloudinary.com/dee2vqvzl/video/upload/q_auto,f_auto,w_720/v1781193881/how_days_goes_with_kid_autism_fgvbkd.mp4"></video>`,
+    `<video muted playsinline controls preload="auto" style="width:100%;border-radius:12px;margin-top:20px;margin-bottom:20px;" src="https://res.cloudinary.com/dee2vqvzl/video/upload/v1781193881/how_days_goes_with_kid_autism_fgvbkd.mp4"></video>`,
     `<p style="text-align:center;font-style:italic;margin-top:0;margin-bottom:20px;">A day with Amaré — learning through music, rhythm, and routine.</p>`,
     `<p>Our songs use repetition, predictable patterns, and gentle visuals designed to be sensory-friendly. Whether it's learning letters, exploring planets, or singing about animals, every episode is crafted so children can engage at their own pace — no pressure, no overwhelm.</p>`,
     `<p>Routine matters. Many children with autism thrive when they know what to expect. That's why our content follows familiar structures: a greeting, a song, a learning moment, and a joyful ending. These patterns help children feel secure and ready to explore.</p>`,
