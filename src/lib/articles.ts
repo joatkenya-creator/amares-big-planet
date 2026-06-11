@@ -552,7 +552,42 @@ const swahiliPlanetSongArticle: Article = {
   ].join(""),
 };
 
+const autismSupportArticle: Article = {
+  slug: "how-amares-big-planet-supports-children-with-autism",
+  title: "How Amaré's Big Planet Supports Children with Autism",
+  description: "Learn how Amaré's Big Planet uses music, rhythm, and routine to create a joyful, sensory-friendly learning experience for children with autism.",
+  excerpt: "Learn how Amaré's Big Planet uses music, rhythm, and routine to create a joyful, sensory-friendly learning experience for children with autism.",
+  category: "Inclusive Learning",
+  videoId: "",
+  videoTitle: "",
+  readingTime: "4 min read",
+  readTime: "4 min read",
+  publishDate: "2026-06-11",
+  keywords: [
+    "autism support for kids",
+    "music therapy for autistic children",
+    "sensory-friendly learning",
+    "inclusive kids content",
+    "rhythm and routine autism",
+  ],
+  intro: "",
+  sections: [],
+  learningGoals: [],
+  parentTip: "",
+  body: [
+    `<p>At Amaré's Big Planet, we believe every child deserves to feel seen, safe, and celebrated. For children on the autism spectrum, learning through music, rhythm, and routine can open doors that traditional approaches sometimes can't.</p>`,
+    `<video autoplay muted loop playsinline controls style="width:100%;border-radius:12px;margin-top:20px;margin-bottom:20px;" src="https://res.cloudinary.com/dee2vqvzl/video/upload/q_auto,f_auto,w_720/v1781193881/how_days_goes_with_kid_autism_fgvbkd.mp4"></video>`,
+    `<p style="text-align:center;font-style:italic;margin-top:0;margin-bottom:20px;">A day with Amaré — learning through music, rhythm, and routine.</p>`,
+    `<p>Our songs use repetition, predictable patterns, and gentle visuals designed to be sensory-friendly. Whether it's learning letters, exploring planets, or singing about animals, every episode is crafted so children can engage at their own pace — no pressure, no overwhelm.</p>`,
+    `<p>Routine matters. Many children with autism thrive when they know what to expect. That's why our content follows familiar structures: a greeting, a song, a learning moment, and a joyful ending. These patterns help children feel secure and ready to explore.</p>`,
+    `<p>Music is powerful. Research shows that music-based learning can support language development, social connection, and emotional regulation in autistic children. Amaré's Big Planet brings this to life with catchy melodies, bright characters, and stories that celebrate every kind of learner.</p>`,
+    `<p>If you're a parent, caregiver, or educator looking for autism-friendly content, we'd love for you to explore our videos. <a href="https://www.youtube.com/@AmaresBigPlanet?sub_confirmation=1" target="_blank" rel="noopener noreferrer">Subscribe to Amaré's Big Planet on YouTube</a> and join a community that believes in learning through joy.</p>`,
+    `<p><em>Note: Amaré's Big Planet creates songs, stories, and educational entertainment for families. This guide is not medical, diagnostic, or therapeutic advice.</em></p>`,
+  ].join(""),
+};
+
 export const articles: Article[] = [
+  autismSupportArticle,
   swahiliPlanetSongArticle,
   ...articleDrafts.map((article) => ({
     ...article,
