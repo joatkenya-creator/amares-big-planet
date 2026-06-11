@@ -135,6 +135,13 @@ function ArticlePage() {
           <p className="mt-2 leading-7 text-[#395167]">{article.parentTip}</p>
         </aside>
 
+        {article.body && (
+          <div
+            className="prose mt-10 max-w-none text-lg leading-8 text-[#26394d]"
+            dangerouslySetInnerHTML={{ __html: typeof article.body === "string" ? article.body : article.body.join("") }}
+          />
+        )}
+
         <p className="mt-8 rounded-2xl border border-[#d8eef7] bg-white p-4 text-sm leading-6 text-[#5b6f82]">
           Note: Amare's Big Planet creates educational entertainment for families. This guide is not medical, diagnostic, or therapeutic advice.
         </p>
