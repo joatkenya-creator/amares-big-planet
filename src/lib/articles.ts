@@ -33,6 +33,35 @@ function articleBody(article: Pick<Article, "intro" | "sections" | "learningGoal
 
 const articleDrafts = [
   {
+    slug: "a-day-with-amare",
+    title: "A Day with Amaré",
+    description: "Ever wondered what a day with Amaré and the Gear Crew looks like? Come along for the ride.",
+    category: "Behind the Scenes",
+    videoId: "",
+    videoTitle: "",
+    readingTime: "2 min read",
+    readTime: "2 min read",
+    keywords: [],
+    publishDate: "2026-06-08",
+    excerpt: "Ever wondered what a day with Amaré and the Gear Crew looks like? Come along for the ride.",
+    intro: "",
+    sections: [],
+    learningGoals: [],
+    parentTip: "",
+    body: `<p>Some days are loud. Some days are calm. Every day is an adventure.</p>
+
+<p>This is what a day with Amaré looks like — music, laughter, learning, and a whole lot of fun with the Gear Crew.</p>
+
+<p>Whether we're riding the Galaxy Train, singing about planets, or just being silly together — every moment is made for little explorers like yours.</p>
+
+<p>Hit play and come along for the ride. 🚀</p>
+
+<video controls playsinline muted preload="auto" style="width:100%;border-radius:12px;margin-top:20px;margin-bottom:20px">
+  <source src="https://res.cloudinary.com/dee2vqvzl/video/upload/q_auto,f_auto/v1782126987/vlog22_euajui.mp4" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>`,
+  },
+  {
     slug: "autism-friendly-learning-videos-for-kids",
     title: "Autism-Friendly Learning Videos for Kids",
     description: "A parent-friendly guide to autism-friendly learning videos, gentle visuals, repetition, and sensory-aware educational songs for autistic and neurodiverse children.",
