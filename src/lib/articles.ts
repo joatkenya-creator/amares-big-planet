@@ -545,6 +545,10 @@ const aDayWithAmareArticle: Article = {
     `  <source src="https://res.cloudinary.com/dee2vqvzl/video/upload/q_auto,f_auto/v1782126987/vlog22_euajui.mp4" type="video/mp4" />`,
     `  Your browser does not support the video tag.`,
     `</video>`,
+    `<video controls playsinline muted preload="auto" style="width:100%;border-radius:12px;margin-top:20px;margin-bottom:20px">`,
+    `  <source src="https://res.cloudinary.com/dslvdevwq/video/upload/q_auto,f_auto/v1782416494/vlog2_jlz5eq.mp4" type="video/mp4" />`,
+    `  Your browser does not support the video tag.`,
+    `</video>`,
   ].join(""),
 };
 
