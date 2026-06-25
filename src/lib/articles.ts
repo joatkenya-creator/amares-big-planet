@@ -33,35 +33,6 @@ function articleBody(article: Pick<Article, "intro" | "sections" | "learningGoal
 
 const articleDrafts = [
   {
-    slug: "a-day-with-amare",
-    title: "A Day with Amaré",
-    description: "Ever wondered what a day with Amaré and the Gear Crew looks like? Come along for the ride.",
-    category: "Behind the Scenes",
-    videoId: "",
-    videoTitle: "",
-    readingTime: "2 min read",
-    readTime: "2 min read",
-    keywords: [],
-    publishDate: "2026-06-08",
-    excerpt: "Ever wondered what a day with Amaré and the Gear Crew looks like? Come along for the ride.",
-    intro: "",
-    sections: [],
-    learningGoals: [],
-    parentTip: "",
-    body: `<p>Some days are loud. Some days are calm. Every day is an adventure.</p>
-
-<p>This is what a day with Amaré looks like — music, laughter, learning, and a whole lot of fun with the Gear Crew.</p>
-
-<p>Whether we're riding the Galaxy Train, singing about planets, or just being silly together — every moment is made for little explorers like yours.</p>
-
-<p>Hit play and come along for the ride. 🚀</p>
-
-<video controls playsinline muted preload="auto" style="width:100%;border-radius:12px;margin-top:20px;margin-bottom:20px">
-  <source src="https://res.cloudinary.com/dee2vqvzl/video/upload/q_auto,f_auto/v1782126987/vlog22_euajui.mp4" type="video/mp4" />
-  Your browser does not support the video tag.
-</video>`,
-  },
-  {
     slug: "autism-friendly-learning-videos-for-kids",
     title: "Autism-Friendly Learning Videos for Kids",
     description: "A parent-friendly guide to autism-friendly learning videos, gentle visuals, repetition, and sensory-aware educational songs for autistic and neurodiverse children.",
@@ -549,6 +520,39 @@ const articleDrafts = [
   },
 ] satisfies Array<Omit<Article, "excerpt" | "readTime" | "publishDate" | "body">>;
 
+const aDayWithAmareArticle: Article = {
+  slug: "a-day-with-amare",
+  title: "A Day with Amaré",
+  description: "Ever wondered what a day with Amaré and the Gear Crew looks like? Come along for the ride.",
+  excerpt: "Ever wondered what a day with Amaré and the Gear Crew looks like? Come along for the ride.",
+  category: "Behind the Scenes",
+  videoId: "fY6_epxkJQo",
+  videoTitle: "Shape the Future of Learning: Sponsor Amare's Big Planet",
+  readingTime: "2 min read",
+  readTime: "2 min read",
+  publishDate: "2026-06-08",
+  keywords: [],
+  intro: "",
+  sections: [],
+  learningGoals: [],
+  parentTip: "",
+  body: [
+    `<p>Some days are loud. Some days are calm. Every day is an adventure.</p>`,
+    `<p>This is what a day with Amaré looks like — music, laughter, learning, and a whole lot of fun with the Gear Crew.</p>`,
+    `<p>Whether we're riding the Galaxy Train, singing about planets, or just being silly together — every moment is made for little explorers like yours.</p>`,
+    `<p>Hit play and come along for the ride. 🚀</p>`,
+    `<iframe src="https://www.youtube.com/embed/AEvh5oJCkWM" title="A Day with Amaré" style="width:100%;aspect-ratio:16/9;border-radius:12px;border:none;margin-top:20px;margin-bottom:20px;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`,
+    `<video controls playsinline muted preload="auto" style="width:100%;border-radius:12px;margin-top:20px;margin-bottom:20px">`,
+    `  <source src="https://res.cloudinary.com/dee2vqvzl/video/upload/q_auto,f_auto/v1782126987/vlog22_euajui.mp4" type="video/mp4" />`,
+    `  Your browser does not support the video tag.`,
+    `</video>`,
+    `<video controls playsinline preload="auto" style="width:100%;border-radius:12px;margin-top:20px;margin-bottom:20px">`,
+    `  <source src="/videos/vlog2.mp4" type="video/mp4" />`,
+    `  Your browser does not support the video tag.`,
+    `</video>`,
+  ].join(""),
+};
+
 const swahiliPlanetSongArticle: Article = {
   slug: "sayari-zote-za-mfumo-wa-jua",
   title: "Sayari Zote za Mfumo wa Jua 🌍🚀 — Learn Planets in Swahili!",
@@ -587,8 +591,8 @@ const autismSupportArticle: Article = {
   description: "Learn how Amaré's Big Planet uses music, rhythm, and routine to create a joyful, sensory-friendly learning experience for children with autism.",
   excerpt: "Learn how Amaré's Big Planet uses music, rhythm, and routine to create a joyful, sensory-friendly learning experience for children with autism.",
   category: "Inclusive Learning",
-  videoId: "",
-  videoTitle: "",
+  videoId: "fY6_epxkJQo",
+  videoTitle: "Shape the Future of Learning: Sponsor Amare's Big Planet",
   readingTime: "4 min read",
   readTime: "4 min read",
   publishDate: "2026-06-11",
@@ -610,6 +614,7 @@ const autismSupportArticle: Article = {
     `<p>Our songs use repetition, predictable patterns, and gentle visuals designed to be sensory-friendly. Whether it's learning letters, exploring planets, or singing about animals, every episode is crafted so children can engage at their own pace — no pressure, no overwhelm.</p>`,
     `<p>Routine matters. Many children with autism thrive when they know what to expect. That's why our content follows familiar structures: a greeting, a song, a learning moment, and a joyful ending. These patterns help children feel secure and ready to explore.</p>`,
     `<p>Music is powerful. Research shows that music-based learning can support language development, social connection, and emotional regulation in autistic children. Amaré's Big Planet brings this to life with catchy melodies, bright characters, and stories that celebrate every kind of learner.</p>`,
+    `<iframe src="https://www.youtube.com/embed/Ye8ebNqBoYY" title="Amaré's Big Planet — Supporting Children with Autism" style="width:100%;aspect-ratio:16/9;border-radius:12px;border:none;margin-top:20px;margin-bottom:20px;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`,
     `<p>If you're a parent, caregiver, or educator looking for autism-friendly content, we'd love for you to explore our videos. <a href="https://www.youtube.com/@AmaresBigPlanet?sub_confirmation=1" target="_blank" rel="noopener noreferrer">Subscribe to Amaré's Big Planet on YouTube</a> and join a community that believes in learning through joy.</p>`,
     `<p><em>Note: Amaré's Big Planet creates songs, stories, and educational entertainment for families. This guide is not medical, diagnostic, or therapeutic advice.</em></p>`,
   ].join(""),
@@ -617,6 +622,7 @@ const autismSupportArticle: Article = {
 
 export const articles: Article[] = [
   autismSupportArticle,
+  aDayWithAmareArticle,
   swahiliPlanetSongArticle,
   ...articleDrafts.map((article) => ({
     ...article,
