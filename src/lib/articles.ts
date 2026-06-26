@@ -542,7 +542,7 @@ const aDayWithAmareArticle: Article = {
     `<p>Whether we're riding the Galaxy Train, singing about planets, or just being silly together — every moment is made for little explorers like yours.</p>`,
     `<p>Hit play and come along for the ride. 🚀</p>`,
     `<video controls playsinline muted preload="auto" style="width:100%;border-radius:12px;margin-top:20px;margin-bottom:20px">`,
-    `  <source src="https://res.cloudinary.com/dslvdevwq/video/upload/q_auto,f_auto/v1782416494/vlog2_jlz5eq.mp4" type="video/mp4" />`,
+    `  <source src="https://res.cloudinary.com/dslvdevwq/video/upload/q_auto,f_auto/v1782461612/VID-20260619-WA0000_phc5wg.mp4" type="video/mp4" />`,
     `  Your browser does not support the video tag.`,
     `</video>`,
   ].join(""),
