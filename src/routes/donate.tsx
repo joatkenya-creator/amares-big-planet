@@ -10,9 +10,28 @@ export const Route = createFileRoute("/donate")({
       { title: "Support — Amaré's Big Planet" },
       { name: "description", content: "Support Amaré's Big Planet — help create free, inclusive educational content for kids aged 1-10." },
     ],
-    scripts: [],
+    scripts: [
+      { src: "https://js.paystack.co/v1/inline.js" },
+    ],
   }),
 });
+
+declare global {
+  interface Window {
+    PaystackPop: {
+      setup(options: {
+        key: string;
+        email: string;
+        amount: number;
+        currency?: string;
+        ref?: string;
+        metadata?: object;
+        callback(response: { reference: string }): void;
+        onClose(): void;
+      }): { openIframe(): void };
+    };
+  }
+}
 
 const SUPPORTERS = [
   { name: "Catherine W.", initials: "CW", color: "#3B82F6", tier: "\u2B50 Star Creator", comment: "My kids love every episode!" },
@@ -45,6 +64,51 @@ function DonatePage() {
   const [mpesaLoading, setMpesaLoading] = useState(false);
   const [mpesaStatus, setMpesaStatus] = useState<"idle" | "sent" | "error">("idle");
   const [mpesaMessage, setMpesaMessage] = useState("");
+
+  const [paystackName, setPaystackName] = useState("");
+  const [paystackEmail, setPaystackEmail] = useState("");
+  const [paystackPhone, setPaystackPhone] = useState("");
+  const [paystackAmount, setPaystackAmount] = useState("");
+  const [selectedPreset, setSelectedPreset] = useState<number | null>(null);
+  const [paystackComment, setPaystackComment] = useState("");
+  const [paystackLoading, setPaystackLoading] = useState(false);
+  const [paystackStatus, setPaystackStatus] = useState<"idle" | "success" | "error">("idle");
+  const [paystackMessage, setPaystackMessage] = useState("");
+
+  function handlePaystackPay() {
+    if (!paystackEmail || !paystackAmount || !paystackName) return;
+    setPaystackLoading(true);
+    setPaystackStatus("idle");
+    try {
+      const handler = window.PaystackPop.setup({
+        key: "pk_live_3db3364e211e93d7d1fec40748a88cfc6edc8a7b",
+        email: paystackEmail,
+        amount: Math.round(parseFloat(paystackAmount) * 100),
+        currency: "USD",
+        ref: `amares_${Date.now()}_${Math.floor(Math.random() * 1000000)}`,
+        metadata: {
+          custom_fields: [
+            { display_name: "Full Name", variable_name: "full_name", value: paystackName },
+            { display_name: "Phone Number", variable_name: "phone", value: paystackPhone },
+            { display_name: "Comment", variable_name: "comment", value: paystackComment },
+          ],
+        },
+        callback(response: { reference: string }) {
+          setPaystackLoading(false);
+          setPaystackStatus("success");
+          setPaystackMessage(`Thank you ${paystackName}! Your support means the world to us 💙 Ref: ${response.reference}`);
+        },
+        onClose() {
+          setPaystackLoading(false);
+        },
+      });
+      handler.openIframe();
+    } catch {
+      setPaystackLoading(false);
+      setPaystackStatus("error");
+      setPaystackMessage("Something went wrong. Please try again.");
+    }
+  }
 
   async function handleMpesaPay() {
     if (!phoneNumber || !amount) return;
@@ -462,65 +526,153 @@ function DonatePage() {
             Make an impact today!
           </h2>
 
-          {/* Patreon Section */}
+          {/* Paystack Section */}
           <div style={{
-            background: "linear-gradient(135deg, #f5f5f5, #fafafa)", borderRadius: "12px",
-            border: "1.5px solid #222", padding: "20px", marginBottom: "0",
+            background: "linear-gradient(135deg, #f0f9ff, #e0f2fe)", borderRadius: "12px",
+            border: "1.5px solid #0ea5e9", padding: "20px", marginBottom: "0",
           }}>
-            <div style={{
-              display: "flex", alignItems: "center", gap: "10px",
-              marginBottom: "6px",
-            }}>
+            {/* Header */}
+            <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "6px" }}>
               <div style={{
                 width: "36px", height: "36px", borderRadius: "8px",
-                background: "#000", display: "flex", alignItems: "center", justifyContent: "center",
-                flexShrink: 0,
+                background: "#0ba4db", display: "flex", alignItems: "center",
+                justifyContent: "center", flexShrink: 0,
               }}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="15.5" cy="8.5" r="6.5" />
-                  <rect x="2" y="2" width="3" height="20" />
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                  <line x1="1" y1="10" x2="23" y2="10"/>
                 </svg>
               </div>
               <h3 style={{ fontSize: "17px", fontWeight: 700, color: "#1a1a2e", margin: 0 }}>
-                Support via Patreon
+                Support via Card / Bank
               </h3>
             </div>
             <p style={{ fontSize: "12px", color: "#666", margin: "0 0 14px 0", lineHeight: 1.4 }}>
-              For supporters worldwide — pay with card, PayPal, or Apple Pay
+              For supporters worldwide — pay with card or bank transfer
             </p>
 
-            <a
-              href="https://www.patreon.com/c/AmaresBigPlanet"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: "block", width: "100%", textAlign: "center",
-                background: "#000", color: "white", fontSize: "16px",
-                fontWeight: 700, padding: "14px 24px", borderRadius: "28px",
-                textDecoration: "none", transition: "all 0.2s",
-                marginBottom: "14px", boxSizing: "border-box",
-              }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = "#333"; e.currentTarget.style.transform = "translateY(-1px)"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = "#000"; e.currentTarget.style.transform = "translateY(0)"; }}
-            >
-              Become a Patron
-            </a>
+            {/* Preset amount grid */}
+            <div style={{ marginBottom: "12px" }}>
+              <div style={{ fontSize: "12px", fontWeight: 600, color: "#555", marginBottom: "8px" }}>
+                Select amount (USD)
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "6px", marginBottom: "8px" }}>
+                {[5, 10, 25, 50, 100, 250].map((amt) => (
+                  <button
+                    key={amt}
+                    onClick={() => { setSelectedPreset(amt); setPaystackAmount(String(amt)); }}
+                    style={{
+                      padding: "10px 4px", borderRadius: "8px", fontSize: "14px", fontWeight: 700,
+                      cursor: "pointer", transition: "all 0.15s", border: "none",
+                      background: selectedPreset === amt ? "#0ba4db" : "white",
+                      color: selectedPreset === amt ? "white" : "#333",
+                      boxShadow: selectedPreset === amt ? "0 2px 8px rgba(11,164,219,0.4)" : "0 1px 3px rgba(0,0,0,0.1)",
+                    }}
+                  >
+                    ${amt}
+                  </button>
+                ))}
+              </div>
+              <input
+                type="number"
+                placeholder="Or enter custom amount"
+                value={selectedPreset === null ? paystackAmount : ""}
+                onFocus={() => setSelectedPreset(null)}
+                onChange={(e) => { setSelectedPreset(null); setPaystackAmount(e.target.value); }}
+                min="1"
+                style={{
+                  width: "100%", padding: "10px 14px", borderRadius: "8px", fontSize: "14px",
+                  border: selectedPreset === null && paystackAmount ? "1.5px solid #0ba4db" : "1px solid #bae6fd",
+                  boxSizing: "border-box", outline: "none", background: "white",
+                }}
+              />
+            </div>
 
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
-              {[
-                { emoji: "🚀", name: "Explorer", price: "$10/mo" },
-                { emoji: "🌍", name: "Galaxy Builder", price: "$25/mo" },
-                { emoji: "⭐", name: "Star Creator", price: "$50/mo" },
-                { emoji: "🪐", name: "Planet Champion", price: "$100/mo" },
-              ].map((tier) => (
-                <span key={tier.name} style={{
-                  display: "inline-flex", alignItems: "center", gap: "4px",
-                  background: "white", border: "1px solid #ddd", borderRadius: "16px",
-                  padding: "4px 10px", fontSize: "11px", fontWeight: 600, color: "#444",
-                }}>
-                  {tier.emoji} {tier.name} — {tier.price}
-                </span>
-              ))}
+            {/* Form fields */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginBottom: "12px" }}>
+              <input
+                type="text"
+                placeholder="Full name"
+                value={paystackName}
+                onChange={(e) => setPaystackName(e.target.value)}
+                style={{
+                  width: "100%", padding: "12px 14px", borderRadius: "8px",
+                  border: "1px solid #bae6fd", fontSize: "14px",
+                  boxSizing: "border-box", outline: "none", background: "white",
+                }}
+              />
+              <input
+                type="email"
+                placeholder="Email address"
+                value={paystackEmail}
+                onChange={(e) => setPaystackEmail(e.target.value)}
+                style={{
+                  width: "100%", padding: "12px 14px", borderRadius: "8px",
+                  border: "1px solid #bae6fd", fontSize: "14px",
+                  boxSizing: "border-box", outline: "none", background: "white",
+                }}
+              />
+              <input
+                type="tel"
+                placeholder="Phone number"
+                value={paystackPhone}
+                onChange={(e) => setPaystackPhone(e.target.value)}
+                style={{
+                  width: "100%", padding: "12px 14px", borderRadius: "8px",
+                  border: "1px solid #bae6fd", fontSize: "14px",
+                  boxSizing: "border-box", outline: "none", background: "white",
+                }}
+              />
+              <textarea
+                placeholder="Leave a comment (optional)"
+                value={paystackComment}
+                onChange={(e) => setPaystackComment(e.target.value)}
+                rows={2}
+                style={{
+                  width: "100%", padding: "12px 14px", borderRadius: "8px",
+                  border: "1px solid #bae6fd", fontSize: "14px",
+                  boxSizing: "border-box", outline: "none", background: "white",
+                  resize: "none", fontFamily: "inherit",
+                }}
+              />
+            </div>
+
+            {/* Pay button */}
+            <button
+              onClick={handlePaystackPay}
+              disabled={paystackLoading || !paystackEmail || !paystackName || (!paystackAmount && selectedPreset === null)}
+              style={{
+                width: "100%", padding: "14px", borderRadius: "28px",
+                background: paystackLoading ? "#7dd3fc" : "#0ba4db",
+                color: "white", fontSize: "16px", fontWeight: 700,
+                border: "none", cursor: paystackLoading ? "not-allowed" : "pointer",
+                transition: "all 0.2s", marginBottom: "10px",
+                boxShadow: "0 4px 14px rgba(11,164,219,0.4)",
+              }}
+              onMouseEnter={(e) => { if (!paystackLoading) e.currentTarget.style.background = "#0284c7"; }}
+              onMouseLeave={(e) => { if (!paystackLoading) e.currentTarget.style.background = "#0ba4db"; }}
+            >
+              {paystackLoading
+                ? "Opening payment..."
+                : `Support Now${paystackAmount ? ` — $${paystackAmount}` : ""}`}
+            </button>
+
+            {/* Status message */}
+            {paystackStatus !== "idle" && (
+              <div style={{
+                padding: "10px 14px", borderRadius: "8px", fontSize: "13px",
+                fontWeight: 500, textAlign: "center", marginBottom: "8px",
+                background: paystackStatus === "success" ? "#E8F5E9" : "#FFEBEE",
+                color: paystackStatus === "success" ? "#2E7D32" : "#C62828",
+                border: `1px solid ${paystackStatus === "success" ? "#C8E6C9" : "#FFCDD2"}`,
+              }}>
+                {paystackMessage}
+              </div>
+            )}
+
+            {/* Trust badge */}
+            <div style={{ textAlign: "center", fontSize: "11px", color: "#888", fontWeight: 400 }}>
+              🔒 Payments secured by <strong style={{ color: "#0ba4db" }}>Paystack</strong>
             </div>
           </div>
 
