@@ -78,7 +78,7 @@ function DonatePage() {
         key: "pk_live_3db3364e211e93d7d1fec40748a88cfc6edc8a7b",
         email: paystackEmail,
         amount: Math.round(parseFloat(paystackAmount) * 100),
-        currency: "USD",
+        currency: "KES",
         ref: `amares_${Date.now()}_${Math.floor(Math.random() * 1000000)}`,
         metadata: {
           custom_fields: [
@@ -515,28 +515,28 @@ return (
             {/* Preset amount grid */}
             <div style={{ marginBottom: "12px" }}>
               <div style={{ fontSize: "12px", fontWeight: 600, color: "#555", marginBottom: "8px" }}>
-                Select amount (USD)
+                Select amount (KES)
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "6px", marginBottom: "8px" }}>
-                {[5, 10, 25, 50, 100, 250].map((amt) => (
+                {[500, 1000, 2500, 5000, 10000, 25000].map((amt) => (
                   <button
                     key={amt}
                     onClick={() => { setSelectedPreset(amt); setPaystackAmount(String(amt)); }}
                     style={{
-                      padding: "10px 4px", borderRadius: "8px", fontSize: "14px", fontWeight: 700,
+                      padding: "10px 4px", borderRadius: "8px", fontSize: "13px", fontWeight: 700,
                       cursor: "pointer", transition: "all 0.15s", border: "none",
                       background: selectedPreset === amt ? "#0ba4db" : "white",
                       color: selectedPreset === amt ? "white" : "#333",
                       boxShadow: selectedPreset === amt ? "0 2px 8px rgba(11,164,219,0.4)" : "0 1px 3px rgba(0,0,0,0.1)",
                     }}
                   >
-                    ${amt}
+                    KES {amt.toLocaleString()}
                   </button>
                 ))}
               </div>
               <input
                 type="number"
-                placeholder="Or enter custom amount"
+                placeholder="Or enter custom amount (KES)"
                 value={selectedPreset === null ? paystackAmount : ""}
                 onFocus={() => setSelectedPreset(null)}
                 onChange={(e) => { setSelectedPreset(null); setPaystackAmount(e.target.value); }}
