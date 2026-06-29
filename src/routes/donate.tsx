@@ -55,15 +55,9 @@ const DONATE_NAV_LINKS = [
 ];
 
 function DonatePage() {
-  const [copiedField, setCopiedField] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [amount, setAmount] = useState("");
-  const [mpesaLoading, setMpesaLoading] = useState(false);
-  const [mpesaStatus, setMpesaStatus] = useState<"idle" | "sent" | "error">("idle");
-  const [mpesaMessage, setMpesaMessage] = useState("");
 
   const [paystackName, setPaystackName] = useState("");
   const [paystackEmail, setPaystackEmail] = useState("");
@@ -110,33 +104,7 @@ function DonatePage() {
     }
   }
 
-  async function handleMpesaPay() {
-    if (!phoneNumber || !amount) return;
-    setMpesaLoading(true);
-    setMpesaStatus("idle");
-    try {
-      const res = await fetch("/api/mpesa-stk", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ phoneNumber, amount: Number(amount) }),
-      });
-      const data = await res.json();
-      if (data.ResponseCode === "0") {
-        setMpesaStatus("sent");
-        setMpesaMessage("Check your phone for the M-Pesa prompt and enter your PIN.");
-      } else {
-        setMpesaStatus("error");
-        setMpesaMessage(data.error || data.errorMessage || data.CustomerMessage || "Something went wrong. Try again.");
-      }
-    } catch (err) {
-      setMpesaStatus("error");
-      setMpesaMessage(`Network error: ${err instanceof Error ? err.message : "Please check your connection and try again."}`);
-    } finally {
-      setMpesaLoading(false);
-    }
-  }
-
-  useEffect(() => {
+useEffect(() => {
     function handleScroll() {
       setScrolled(window.scrollY > 0);
     }
@@ -144,14 +112,7 @@ function DonatePage() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  function copyToClipboard(text: string, field: string) {
-    navigator.clipboard.writeText(text).then(() => {
-      setCopiedField(field);
-      setTimeout(() => setCopiedField(null), 2000);
-    });
-  }
-
-  return (
+return (
     <div style={{ minHeight: "100vh", fontFamily: "sans-serif", display: "flex", flexDirection: "column" }}>
       {/* Fixed video background — stays behind all content */}
       <video
@@ -705,63 +666,7 @@ function DonatePage() {
               For supporters in Kenya
             </p>
 
-
-            {/* Phone + Amount inputs */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginBottom: "12px" }}>
-              <input
-                type="tel"
-                placeholder="Phone number (e.g. 0712345678)"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                style={{
-                  width: "100%", padding: "12px 14px", borderRadius: "8px",
-                  border: "1px solid #C8E6C9", fontSize: "15px", boxSizing: "border-box",
-                  outline: "none", background: "white",
-                }}
-              />
-              <input
-                type="number"
-                placeholder="Amount (KES)"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-                min="1"
-                style={{
-                  width: "100%", padding: "12px 14px", borderRadius: "8px",
-                  border: "1px solid #C8E6C9", fontSize: "15px", boxSizing: "border-box",
-                  outline: "none", background: "white",
-                }}
-              />
-            </div>
-
-            {/* Pay button */}
-            <button
-              onClick={handleMpesaPay}
-              disabled={mpesaLoading || !phoneNumber || !amount}
-              style={{
-                width: "100%", padding: "14px", borderRadius: "28px",
-                background: mpesaLoading ? "#81C784" : "#4CAF50",
-                color: "white", fontSize: "16px", fontWeight: 700,
-                border: "none", cursor: mpesaLoading ? "not-allowed" : "pointer",
-                transition: "all 0.2s", marginBottom: "10px",
-              }}
-            >
-              {mpesaLoading ? "Sending prompt..." : "Pay with M-Pesa"}
-            </button>
-
-            {/* Status message */}
-            {mpesaStatus !== "idle" && (
-              <div style={{
-                padding: "10px 14px", borderRadius: "8px", fontSize: "13px",
-                fontWeight: 500, textAlign: "center", marginBottom: "8px",
-                background: mpesaStatus === "sent" ? "#E8F5E9" : "#FFEBEE",
-                color: mpesaStatus === "sent" ? "#2E7D32" : "#C62828",
-                border: `1px solid ${mpesaStatus === "sent" ? "#C8E6C9" : "#FFCDD2"}`,
-              }}>
-                {mpesaMessage}
-              </div>
-            )}
-
-            {/* Manual fallback — compact */}
+            {/* Manual payment instructions */}
             <div style={{
               fontSize: "12px", color: "#555", lineHeight: 1.6,
               background: "white", borderRadius: "8px", padding: "10px 14px",
