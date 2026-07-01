@@ -514,11 +514,11 @@ return (
                 </svg>
               </div>
               <h3 style={{ fontSize: "17px", fontWeight: 700, color: "#1a1a2e", margin: 0 }}>
-                Support via Card / Bank
+                Support via Card / Bank / M-Pesa
               </h3>
             </div>
             <p style={{ fontSize: "12px", color: "#666", margin: "0 0 14px 0", lineHeight: 1.4 }}>
-              For supporters worldwide — pay with card or bank transfer
+              For supporters worldwide — pay with card, bank transfer, or M-Pesa
             </p>
 
             {/* Preset amount grid */}
