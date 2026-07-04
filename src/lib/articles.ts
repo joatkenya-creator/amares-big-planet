@@ -335,6 +335,59 @@ const articleDrafts = [
     parentTip: "Pick three songs and use the same three for two weeks straight. The repetition is the point — kids feel safer when they know exactly what's coming next.",
   },
   {
+    slug: "how-to-turn-screen-time-into-active-learning",
+    title: "How to Turn Screen Time Into Active Learning for Kids",
+    description: "Practical, parent-tested ways to transform passive screen time into active learning — with questions, movement, and pauses that turn any video into a shared lesson.",
+    category: "Parent Guides",
+    videoId: "k2ggk22FE_Q",
+    videoTitle: "Transforming Screen Time Into Active Learning! | Amare's Big Planet",
+    readingTime: "6 min read",
+    keywords: [
+      "active learning screen time",
+      "turn screen time into learning",
+      "educational screen time for kids",
+      "interactive learning videos for children",
+      "screen time activities for toddlers",
+      "active viewing for kids",
+      "screen time tips for parents",
+    ],
+    intro: "Most advice about screen time focuses on the clock — thirty minutes, an hour, no more than twice a day. But the number on the timer matters less than what happens during those minutes. A child who sits and stares gets very little from a video. A child who points, answers, moves, and wonders out loud is doing something closer to learning than watching. The good news is that the shift from passive to active doesn't take extra time. It just takes a few small habits.",
+    sections: [
+      {
+        heading: "Active viewing matters more than the minutes on the clock",
+        body: "Two children can watch the exact same song for the exact same length of time and come away with completely different results. The difference isn't the video — it's what the child is doing while it plays. A child who is asked a question, invited to point at the screen, or encouraged to repeat a word is building memory and language skills in real time. A child who is simply parked in front of a screen is not. This is why 'how much' screen time is often the wrong question. 'How active' is the one that actually predicts learning.",
+      },
+      {
+        heading: "Turn watching into talking",
+        body: "The easiest way to make any video more active is to talk during it — not over it, just alongside it. Ask a simple question when a character appears: \"What color is that?\" or \"Where do you think they're going?\" You don't need a right answer. A pointed finger, a babble, or a one-word guess all count as participation. Over time, children start asking their own questions back, which is exactly the kind of two-way exchange that builds vocabulary faster than silent watching ever could.",
+      },
+      {
+        heading: "Add movement to the moment",
+        body: "Songs with a beat are an invitation, not just a soundtrack. Clapping on the chorus, marching in place during a counting song, or swimming like a fish during an ocean video gives a child's body something to do while their brain absorbs the words. Movement also burns off restlessness, which often means less fussing and more focus by the time the video ends. If a song has a motion built in — like touching your head, shoulders, knees, and toes — that's the clearest signal that it was made to be acted out, not just heard.",
+      },
+      {
+        heading: "Use the pause button as a superpower",
+        body: "A well-timed pause can do more for learning than the entire rest of the video. Pausing right after a new word or character gives a child a moment to repeat it, ask about it, or simply notice it before the scene moves on. It also puts the child back in control, which matters more than it sounds — a video that never stops can feel like it's happening to a child, while a video with pauses feels like something they're part of. Even three short pauses across a five-minute video can turn a passive watch into an active one.",
+      },
+      {
+        heading: "Extend the learning after the screen turns off",
+        body: "The video doesn't have to be where the learning ends. A quick activity afterward — drawing a favorite character, finding a letter from the song around the house, or retelling the story in a child's own words — locks in whatever was just watched. This doesn't need to be elaborate. Ninety seconds of drawing or one question at the dinner table (\"What was your favorite part?\") is enough to turn a five-minute video into a memory that lasts the whole day.",
+      },
+      {
+        heading: "Build a simple active-learning routine",
+        body: "None of this needs a plan or a schedule. The pattern is small enough to repeat every time: watch together when you can, ask one question, invite one movement, pause once or twice, and talk about it afterward. Once this becomes a habit, children start doing parts of it on their own — pausing to point something out, humming along, asking their own \"why\" questions. That's the real goal: not a child who watches less, but a child who engages more with whatever they watch.",
+      },
+    ],
+    learningGoals: [
+      "Active listening",
+      "Conversation skills",
+      "Movement and coordination",
+      "Memory through repetition",
+      "Independent curiosity",
+    ],
+    parentTip: "Pick just one question and one movement to try during your next video together. Small, repeatable habits do more than a big overhaul of screen time rules.",
+  },
+  {
     slug: "meet-the-galaxy-train-crew",
     title: "Meet the Galaxy Train Crew: Learning Through Space Adventures",
     description: "A friendly introduction to the Galaxy Train, the Gear Crew, and how character-led space adventures turn into real learning for kids.",
@@ -662,8 +715,13 @@ const relatedArticleSlugs: Record<string, string[]> = {
     "ocean-animal-videos-for-kids",
   ],
   "screen-time-learning-activities-for-kids": [
+    "how-to-turn-screen-time-into-active-learning",
     "autism-friendly-learning-videos-for-kids",
     "solar-system-song-for-kids",
+  ],
+  "how-to-turn-screen-time-into-active-learning": [
+    "screen-time-learning-activities-for-kids",
+    "how-music-helps-kids-learn",
     "morning-routine-songs-for-toddlers",
   ],
   "sensory-friendly-songs-for-preschool-kids": [
