@@ -37,8 +37,8 @@ const articleDrafts = [
     title: "Autism-Friendly Learning Videos for Kids",
     description: "A parent-friendly guide to autism-friendly learning videos, gentle visuals, repetition, and sensory-aware educational songs for autistic and neurodiverse children.",
     category: "Inclusive Learning",
-    videoId: "_ctNtUXel6Q",
-    videoTitle: "Learning ABCs I to L",
+    videoId: "cU47aRKBCGw",
+    videoTitle: "Autism-Friendly Learning Videos for Kids",
     readingTime: "4 min read",
     keywords: [
       "autism-friendly learning videos",
