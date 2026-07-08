@@ -1,0 +1,16 @@
+{
+  "name": "Amare's Big Planet",
+  "short_name": "Amare's Big Planet",
+  "description": "Kids learning songs, ABC phonics, nursery rhymes, space adventures and educational videos for children.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f4fbff",
+  "theme_color": "#0f7c90",
+  "icons": [
+    {
+      "src": "/favicon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

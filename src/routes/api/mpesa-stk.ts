@@ -19,6 +19,7 @@ export const APIRoute = createAPIFileRoute("/api/mpesa-stk")({
     const consumerSecret = process.env.MPESA_CONSUMER_SECRET;
     const passkey = process.env.MPESA_PASSKEY;
     const env = process.env.MPESA_ENV || "sandbox";
+    const shortcode = process.env.MPESA_SHORTCODE || "542542";
 
     if (!consumerKey || !consumerSecret || !passkey) {
       return new Response(
@@ -37,6 +38,7 @@ export const APIRoute = createAPIFileRoute("/api/mpesa-stk")({
       const result = await stkPush({
         token,
         passkey,
+        shortcode,
         phoneNumber: body.phoneNumber,
         amount: body.amount,
         callbackUrl,

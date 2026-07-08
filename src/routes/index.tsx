@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect, useRef } from "react";
+import type { FormEvent } from "react";
 import amaresLogo from "@/assets/amares-logo.jpeg";
 import amaresTitle from "@/assets/amares-title.png";
 import parentsSectionImg from "@/assets/parents-section.png";
@@ -11,10 +12,10 @@ export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "Amare's Big Planet | Kids Learning Songs, ABCs & Space Videos" },
-      { name: "description", content: "Sing along with Amare's Big Planet: ABC songs, nursery rhymes, ocean animals, solar system songs, and fun educational videos for kids." },
-      { property: "og:title", content: "Amare's Big Planet | Kids Learning Songs & Videos" },
-      { property: "og:description", content: "ABC songs, nursery rhymes, space adventures, ocean animals, and fun educational videos for children." },
+      { title: "Amare's Big Planet | Amare's Kids Songs, ABCs & Space Videos" },
+      { name: "description", content: "Sing along with Amare's: ABC songs, nursery rhymes, autism-friendly learning videos, sensory-friendly songs, ocean animals, solar system songs, and fun educational videos from Amare's Big Planet." },
+      { property: "og:title", content: "Amare's Big Planet | Amare's Kids Songs & Videos" },
+      { property: "og:description", content: "Amare's Big Planet shares ABC songs, nursery rhymes, space adventures, ocean animals, and fun educational videos for children." },
       { property: "og:url", content: "https://amaresbigplanet.com/" },
     ],
     links: [
@@ -41,7 +42,7 @@ export const Route = createFileRoute("/")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "ItemList",
-          name: "Amare's Big Planet kids videos",
+          name: "Amare's kids videos from Amare's Big Planet",
           itemListElement: [
             "Learning ABCs I to L",
             "Ocean Animals Adventure",
@@ -63,33 +64,46 @@ export const Route = createFileRoute("/")({
               "@type": "VideoObject",
               name: "Learning ABCs I to L",
               description: "Learn the alphabet with Amare and friends!",
-              thumbnailUrl: "https://img.youtube.com/vi/_ctNtUXel6Q/maxresdefault.jpg",
+              thumbnailUrl: "https://img.youtube.com/vi/_ctNtUXel6Q/hqdefault.jpg",
               embedUrl: "https://www.youtube.com/embed/_ctNtUXel6Q",
               url: "https://amaresbigplanet.com/#music",
+              uploadDate: "2026-05-16T00:00:00+03:00",
             },
             {
               "@type": "VideoObject",
               name: "Ocean Animals Adventure",
               description: "Discover amazing creatures under the sea!",
-              thumbnailUrl: "https://img.youtube.com/vi/Ga_sef8vcIA/maxresdefault.jpg",
+              thumbnailUrl: "https://img.youtube.com/vi/Ga_sef8vcIA/hqdefault.jpg",
               embedUrl: "https://www.youtube.com/embed/Ga_sef8vcIA",
               url: "https://amaresbigplanet.com/#music",
+              uploadDate: "2026-05-16T00:00:00+03:00",
             },
             {
               "@type": "VideoObject",
               name: "BLAST OFF! Solar System Song",
               description: "Explore all the planets in our solar system!",
-              thumbnailUrl: "https://img.youtube.com/vi/8jCfqeT6iNc/maxresdefault.jpg",
+              thumbnailUrl: "https://img.youtube.com/vi/8jCfqeT6iNc/hqdefault.jpg",
               embedUrl: "https://www.youtube.com/embed/8jCfqeT6iNc",
               url: "https://amaresbigplanet.com/#music",
+              uploadDate: "2026-05-16T00:00:00+03:00",
+            },
+            {
+              "@type": "VideoObject",
+              name: "Sayari Zote za Mfumo wa Jua 🌍🚀",
+              description: "Wimbo wa Sayari kwa Watoto | Jifunze Sayari kwa Kiswahili",
+              thumbnailUrl: "https://img.youtube.com/vi/hic5LyxRj2U/hqdefault.jpg",
+              embedUrl: "https://www.youtube.com/embed/hic5LyxRj2U",
+              url: "https://amaresbigplanet.com/#music",
+              uploadDate: "2026-06-06T00:00:00+03:00",
             },
             {
               "@type": "VideoObject",
               name: "Live - Lofi Study Music for Kids",
               description: "Relaxing lofi study music for kids from Amare's Big Planet.",
-              thumbnailUrl: "https://img.youtube.com/vi/9ryVeXuqv-M/maxresdefault.jpg",
+              thumbnailUrl: "https://img.youtube.com/vi/9ryVeXuqv-M/hqdefault.jpg",
               embedUrl: "https://www.youtube.com/embed/9ryVeXuqv-M",
               url: "https://amaresbigplanet.com/#watch",
+              uploadDate: "2026-05-16T00:00:00+03:00",
             },
           ],
         }),
@@ -98,7 +112,7 @@ export const Route = createFileRoute("/")({
   }),
 });
 
-const navLinks = ["Shows", "Music", "Characters", "Games", "Parents", "Blog"];
+const navLinks = ["Shows", "Music", "Characters", "Games", "Parents", "Articles"];
 
 const shows = [
   {
@@ -140,7 +154,7 @@ const characters = [
   },
   {
     name: "Trinity",
-    img: "https://res.cloudinary.com/dee2vqvzl/image/upload/v1778836745/1776066648018_Character_in_T_202604011430_1_jp2axc.jpg",
+    img: "https://res.cloudinary.com/dee2vqvzl/image/upload/v1779704810/WhatsApp_Image_2026-05-25_at_13.17.11_dirmsz.jpg",
     desc: "Nature lover. Grows plant barriers to protect friends.",
     color: "#22C55E",
   },
@@ -192,6 +206,8 @@ function Index() {
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [donationPopupVisible, setDonationPopupVisible] = useState(false);
   const [donationPopupClosing, setDonationPopupClosing] = useState(false);
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [newsletterSubmitted, setNewsletterSubmitted] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
   const mobileSearchRef = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -219,6 +235,17 @@ function Index() {
     closeSearch();
     const el = document.querySelector(anchor);
     if (el) el.scrollIntoView({ behavior: "smooth" });
+  }
+
+  function handleNewsletterSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const email = newsletterEmail.trim();
+    if (!email) return;
+
+    const subject = encodeURIComponent("Amare's Big Planet newsletter signup");
+    const body = encodeURIComponent(`Please add this email to Amare's parent newsletter:\n\n${email}`);
+    window.location.href = `mailto:admin@amaresbigplanet.com?subject=${subject}&body=${body}`;
+    setNewsletterSubmitted(true);
   }
 
   // Close search on outside click
@@ -579,8 +606,8 @@ function Index() {
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-1">
             {navLinks.map((l) =>
-              l === "Blog" ? (
-                <Link key={l} to="/blog" className="nav-link">
+              l === "Articles" ? (
+                <Link key={l} to="/articles" className="nav-link">
                   {l}
                 </Link>
               ) : (
@@ -797,10 +824,10 @@ function Index() {
       >
         <nav className="md:hidden">
           {navLinks.map((l) =>
-            l === "Blog" ? (
+            l === "Articles" ? (
               <Link
                 key={l}
-                to="/blog"
+                to="/articles"
                 className="mobile-nav-link"
                 onClick={() => setMenuOpen(false)}
               >
@@ -853,40 +880,49 @@ function Index() {
 
       {/* HERO */}
       <section className="relative bg-black pb-24 sm:pb-32 overflow-hidden min-h-[80vh]">
-        {/* Video background */}
+        {/* Decorative background video. Keep it hidden from assistive tech and out of video schema. */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <video
+            ref={(el) => {
+              if (el) {
+                el.muted = true;
+                el.play().catch((err) => console.error("Hero video play failed:", err));
+              }
+            }}
+            src="/videos/donation-bg.mp4"
             autoPlay
             muted
             loop
             playsInline
+            preload="auto"
+            onError={(e) => console.error("Hero video error:", e)}
+            aria-hidden="true"
+            tabIndex={-1}
+            disablePictureInPicture
+            controls={false}
             style={{
-              position: 'absolute',
-              top: '0',
-              left: '0',
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              pointerEvents: 'none',
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              pointerEvents: "none",
               zIndex: 0,
             }}
-          >
-            <source src="/videos/donation-bg.mp4" type="video/mp4" />
-          </video>
+          />
           <div className="absolute inset-0 bg-black/50" />
         </div>
         <div className="pt-20 sm:pt-28" />
         {/* floating decor */}
         <img
           src={sunMascot}
-          alt=""
-          aria-hidden
+          alt="Smiling sun mascot"
           className="absolute top-10 left-6 w-20 sm:w-32 animate-float-slow z-10"
         />
         <img
           src="https://res.cloudinary.com/dee2vqvzl/image/upload/v1778586253/train_nxikdm.png"
-          alt=""
-          aria-hidden
+          alt="Galaxy train illustration"
           className="absolute bottom-10 left-4"
           style={{ width: 150, opacity: 0.9, animation: "float 3s ease-in-out infinite" }}
         />
@@ -900,10 +936,10 @@ function Index() {
           </span>
           <h1 className="font-display font-extrabold leading-[0.9] tracking-tight">
             <span className="sr-only">
-              Amare's Big Planet Kids Learning Songs and Videos
+              Amare's Big Planet and Amare's Kids Learning Songs and Videos
             </span>
             <span className="block text-2xl sm:text-3xl font-bold text-white mb-4 uppercase tracking-[0.3em]" style={{ textShadow: "0 4px 16px rgba(0,0,0,0.9), 0 2px 4px rgba(0,0,0,0.7)" }}>
-              Kids Learning Songs & Videos
+              Amare's Kids Learning Songs & Videos
             </span>
             <img
               src={amaresTitle}
@@ -912,8 +948,8 @@ function Index() {
             />
           </h1>
           <p className="mt-6 max-w-2xl mx-auto text-lg sm:text-xl text-white font-medium" style={{ textShadow: "0 2px 8px rgba(0,0,0,0.8)" }}>
-            Sing along, dance silly, and learn something new every day. A magical
-            world made for little explorers and the grown-ups who love them.
+            Welcome to Amare's, a magical world where little explorers sing along,
+            dance silly, and learn something new every day.
           </p>
 
           <div className="mt-8 pb-24 sm:pb-0 flex flex-wrap items-center justify-center gap-4">
@@ -1036,7 +1072,7 @@ function Index() {
               Sing Along with Amare! 🎵
             </h2>
           </div>
-          <div className="grid sm:grid-cols-3" style={{ gap: "16px" }}>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4" style={{ gap: "16px" }}>
             {[
               { id: "_ctNtUXel6Q", title: "Learning ABCs I to L", desc: "Learn the alphabet with Amaré and friends!" },
               { id: "Ga_sef8vcIA", title: "Ocean Animals Adventure", desc: "Discover amazing creatures under the sea!" },
@@ -1092,6 +1128,22 @@ function Index() {
               <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
               More Songs on YouTube
             </a>
+          </div>
+          <div className="mt-8 grid gap-3 rounded-3xl bg-white/80 p-5 shadow-soft md:grid-cols-3">
+            {[
+              { title: "ABC Songs for Preschool Kids", slug: "abc-songs-for-preschool-kids" },
+              { title: "Ocean Animal Videos for Kids", slug: "ocean-animal-videos-for-kids" },
+              { title: "Solar System Song for Kids", slug: "solar-system-song-for-kids" },
+            ].map((guide) => (
+              <Link
+                key={guide.slug}
+                to="/articles/$slug"
+                params={{ slug: guide.slug }}
+                className="rounded-2xl border border-[#d8eef7] bg-[#f7fdff] px-4 py-3 text-sm font-extrabold text-[#102a56] transition hover:-translate-y-0.5 hover:text-[#e02020]"
+              >
+                Learn more: {guide.title}
+              </Link>
+            ))}
           </div>
         </div>
       </section>
@@ -1186,8 +1238,7 @@ function Index() {
             <div className="bg-background rounded-[2.25rem] p-10 sm:p-16 text-center relative overflow-hidden">
               <img
                 src={musicMascot}
-                alt=""
-                aria-hidden
+                alt="Music note mascot"
                 className="absolute -top-6 -right-6 w-32 sm:w-44 animate-wiggle"
               />
               <h2 className="font-display text-4xl sm:text-6xl font-extrabold text-foreground">
@@ -1236,6 +1287,41 @@ function Index() {
                     Subscribe on YouTube
                   </a>
                 </div>
+                <form
+                  onSubmit={handleNewsletterSubmit}
+                  className="mt-6 mx-auto flex max-w-2xl flex-col gap-3 rounded-[1.75rem] border-2 border-[#BDEAF2] bg-white/90 p-3 shadow-soft sm:flex-row"
+                >
+                  <label htmlFor="newsletter-email" className="sr-only">
+                    Email address
+                  </label>
+                  <input
+                    id="newsletter-email"
+                    type="email"
+                    required
+                    value={newsletterEmail}
+                    onChange={(event) => {
+                      setNewsletterEmail(event.target.value);
+                      setNewsletterSubmitted(false);
+                    }}
+                    placeholder="Parent email address"
+                    className="min-h-12 flex-1 rounded-full border-2 border-transparent bg-[#F3FBFD] px-5 text-base font-semibold text-[#071833] outline-none transition-all placeholder:text-[#6B7A90] focus:border-[#22B8CF] focus:bg-white"
+                  />
+                  <button
+                    type="submit"
+                    className="min-h-12 rounded-full bg-[#FF7A1A] px-7 text-base font-extrabold text-white shadow-bounce transition-all hover:translate-y-1 hover:shadow-none"
+                  >
+                    Join newsletter
+                  </button>
+                </form>
+                {newsletterSubmitted ? (
+                  <p className="mt-3 text-sm font-semibold text-[#0f7c90]">
+                    Your email app should open so we can add you to the parent newsletter.
+                  </p>
+                ) : (
+                  <p className="mt-3 text-sm font-medium text-muted-foreground">
+                    Monthly parent notes with new songs, learning ideas, and Amare's updates.
+                  </p>
+                )}
               </div>
               <div className="mt-8 flex flex-wrap justify-center gap-3">
                 <a href="https://www.youtube.com/@amaresbigplanet" target="_blank" rel="noopener noreferrer" className="rounded-full bg-red-600 text-white px-7 py-3.5 font-extrabold shadow-bounce hover:translate-y-1 hover:shadow-none transition-all">
@@ -1277,6 +1363,7 @@ function Index() {
                   { icon: "\u{1F3B5}", text: "Nursery rhymes & original songs" },
                   { icon: "\u{1FA90}", text: "Planet facts & space exploration" },
                   { icon: "\u{1F9E9}", text: "Fun animations that build confidence" },
+                  { icon: "\u{1F499}", text: "Autism-friendly and sensory-aware learning" },
                   { icon: "\u{1F4FA}", text: "New educational videos every week" },
                   { icon: "\u{1F6E1}\u{FE0F}", text: "Safe, ad-free content for kids" },
                 ].map((item) => (
@@ -1307,6 +1394,29 @@ function Index() {
                 <p style={{ fontSize: "12px", color: "#888", marginTop: "8px" }}>
                   No spam — just updates on new episodes and songs.
                 </p>
+                <div className="mt-5 flex flex-wrap gap-3">
+                  <Link
+                    to="/articles/$slug"
+                    params={{ slug: "autism-friendly-learning-videos-for-kids" }}
+                    className="rounded-full bg-white px-5 py-2.5 text-sm font-extrabold text-[#102a56] shadow-soft transition hover:-translate-y-0.5 hover:text-[#e02020]"
+                  >
+                    Autism-friendly videos
+                  </Link>
+                  <Link
+                    to="/articles/$slug"
+                    params={{ slug: "screen-time-learning-activities-for-kids" }}
+                    className="rounded-full bg-white px-5 py-2.5 text-sm font-extrabold text-[#102a56] shadow-soft transition hover:-translate-y-0.5 hover:text-[#e02020]"
+                  >
+                    Screen time learning ideas
+                  </Link>
+                  <Link
+                    to="/articles/$slug"
+                    params={{ slug: "sensory-friendly-songs-for-preschool-kids" }}
+                    className="rounded-full bg-white px-5 py-2.5 text-sm font-extrabold text-[#102a56] shadow-soft transition hover:-translate-y-0.5 hover:text-[#e02020]"
+                  >
+                    Sensory-friendly songs
+                  </Link>
+                </div>
               </div>
             </div>
             <div className="flex-shrink-0 flex flex-col items-center gap-4">
@@ -1374,7 +1484,8 @@ function Index() {
             </div>
             <nav className="flex flex-wrap gap-5 text-sm font-medium">
               <a href="https://www.youtube.com/@amaresbigplanet/about" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--sunshine)] transition-colors">About</a>
-              <a href="mailto:amareplanet8@gmail.com" className="hover:text-[var(--sunshine)] transition-colors">Contact</a>
+              <Link to="/articles" className="hover:text-[var(--sunshine)] transition-colors">Learning Hub</Link>
+              <a href="mailto:partnership@amaresbigplanet.com" className="hover:text-[var(--sunshine)] transition-colors">Contact</a>
               <a className="hover:text-[var(--sunshine)] transition-colors">Privacy</a>
               <a href="https://www.youtube.com/@amaresbigplanet?sub_confirmation=1" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--sunshine)] transition-colors">Subscribe</a>
             </nav>

@@ -32,11 +32,12 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Amare's Big Planet | Kids Learning Songs, ABCs & Space Videos" },
-      { name: "description", content: "Watch Amare's Big Planet for kids learning songs, ABC songs, nursery rhymes, space adventures, ocean animals, and fun educational videos for children." },
+      { title: "Amare's Big Planet | Amare's Kids Songs, ABCs & Space Videos" },
+      { name: "description", content: "Discover Amare's Big Planet, home of Amare's kids songs, ABC learning videos, nursery rhymes, space adventures, ocean animals, and fun educational videos for children." },
       { name: "author", content: "Amare's Big Planet" },
-      { property: "og:title", content: "Amare's Big Planet | Kids Learning Songs & Videos" },
-      { property: "og:description", content: "ABC songs, nursery rhymes, space adventures, ocean animals, and fun educational videos for kids." },
+      { name: "keywords", content: "Amare's, Amare's Big Planet, Amare's kids songs, Amare's ABC songs, Amare's learning videos, kids songs, educational videos for kids" },
+      { property: "og:title", content: "Amare's Big Planet | Amare's Kids Songs & Videos" },
+      { property: "og:description", content: "Amare's Big Planet brings kids ABC songs, nursery rhymes, space adventures, ocean animals, and fun educational videos." },
       { property: "og:type", content: "website" },
       { property: "og:image", content: SOCIAL_IMAGE },
       { name: "twitter:card", content: "summary_large_image" },
@@ -55,17 +56,62 @@ export const Route = createRootRoute({
         href: "/favicon-512.png",
       },
       {
+        rel: "preconnect",
+        href: "https://www.youtube.com",
+      },
+      {
+        rel: "preconnect",
+        href: "https://i.ytimg.com",
+      },
+      {
+        rel: "preconnect",
+        href: "https://img.youtube.com",
+      },
+      {
+        rel: "preconnect",
+        href: "https://res.cloudinary.com",
+      },
+      {
+        rel: "preconnect",
+        href: "https://fonts.googleapis.com",
+      },
+      {
+        rel: "preconnect",
+        href: "https://fonts.gstatic.com",
+        crossOrigin: "anonymous",
+      },
+      {
         rel: "stylesheet",
         href: appCss,
       },
     ],
     scripts: [
       {
+        src: "https://www.googletagmanager.com/gtag/js?id=G-QFWHS1F4BW",
+        async: true,
+      },
+      {
+        children: `window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-QFWHS1F4BW');`,
+      },
+      {
+        children: `
+          (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+          })(window, document, "clarity", "script", "x19l4waadv");
+        `,
+      },
+      {
         type: "application/ld+json",
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Organization",
           name: "Amare's Big Planet",
+          alternateName: ["Amare's", "Amares Big Planet"],
           url: SITE_URL,
           logo: SOCIAL_IMAGE,
           sameAs: [
@@ -81,8 +127,9 @@ export const Route = createRootRoute({
           "@context": "https://schema.org",
           "@type": "WebSite",
           name: "Amare's Big Planet",
+          alternateName: "Amare's",
           url: SITE_URL,
-          description: "Kids learning songs, nursery rhymes, ABC videos, space songs, and educational videos for children.",
+          description: "Amare's kids learning songs, nursery rhymes, ABC videos, space songs, and educational videos for children.",
         }),
       },
     ],

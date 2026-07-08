@@ -10,9 +10,28 @@ export const Route = createFileRoute("/donate")({
       { title: "Support — Amaré's Big Planet" },
       { name: "description", content: "Support Amaré's Big Planet — help create free, inclusive educational content for kids aged 1-10." },
     ],
-    scripts: [],
+    scripts: [
+      { src: "https://js.paystack.co/v1/inline.js" },
+    ],
   }),
 });
+
+declare global {
+  interface Window {
+    PaystackPop: {
+      setup(options: {
+        key: string;
+        email: string;
+        amount: number;
+        currency?: string;
+        ref?: string;
+        metadata?: object;
+        callback(response: { reference: string }): void;
+        onClose(): void;
+      }): { openIframe(): void };
+    };
+  }
+}
 
 const SUPPORTERS = [
   { name: "Catherine W.", initials: "CW", color: "#3B82F6", tier: "\u2B50 Star Creator", comment: "My kids love every episode!" },
@@ -30,49 +49,71 @@ const DONATE_NAV_LINKS = [
   { label: "Programs", href: "/#programs" },
   { label: "Impact", href: "/#impact" },
   { label: "Stories", href: "/#stories" },
-  { label: "Blog", href: "/blog" },
+  { label: "Articles", href: "/articles" },
   { label: "Support", href: "/donate" },
   { label: "Contact", href: "/#contact" },
 ];
 
 function DonatePage() {
-  const [copiedField, setCopiedField] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [amount, setAmount] = useState("");
-  const [mpesaLoading, setMpesaLoading] = useState(false);
-  const [mpesaStatus, setMpesaStatus] = useState<"idle" | "sent" | "error">("idle");
-  const [mpesaMessage, setMpesaMessage] = useState("");
 
-  async function handleMpesaPay() {
-    if (!phoneNumber || !amount) return;
-    setMpesaLoading(true);
-    setMpesaStatus("idle");
+  const [paystackName, setPaystackName] = useState("");
+  const [paystackEmail, setPaystackEmail] = useState("");
+  const [paystackPhone, setPaystackPhone] = useState("");
+  const [paystackAmount, setPaystackAmount] = useState("");
+  const [selectedPreset, setSelectedPreset] = useState<number | null>(null);
+  const [paystackComment, setPaystackComment] = useState("");
+  const [paystackLoading, setPaystackLoading] = useState(false);
+  const [paystackStatus, setPaystackStatus] = useState<"idle" | "success" | "error">("idle");
+  const [paystackMessage, setPaystackMessage] = useState("");
+  const [usdToKes, setUsdToKes] = useState<number>(130);
+
+  useEffect(() => {
+    fetch("https://open.er-api.com/v6/latest/USD")
+      .then((r) => r.json())
+      .then((data) => { if (data?.rates?.KES) setUsdToKes(data.rates.KES); })
+      .catch(() => {});
+  }, []);
+
+  function handlePaystackPay() {
+    if (!paystackEmail || !paystackAmount || !paystackName) return;
+    setPaystackLoading(true);
+    setPaystackStatus("idle");
+    const kesAmount = Math.round(parseFloat(paystackAmount) * usdToKes);
     try {
-      const res = await fetch("/api/mpesa-stk", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ phoneNumber, amount: Number(amount) }),
+      const handler = window.PaystackPop.setup({
+        key: "pk_live_3db3364e211e93d7d1fec40748a88cfc6edc8a7b",
+        email: paystackEmail,
+        amount: kesAmount * 100,
+        currency: "KES",
+        ref: `amares_${Date.now()}_${Math.floor(Math.random() * 1000000)}`,
+        metadata: {
+          custom_fields: [
+            { display_name: "Full Name", variable_name: "full_name", value: paystackName },
+            { display_name: "Phone Number", variable_name: "phone", value: paystackPhone },
+            { display_name: "Comment", variable_name: "comment", value: paystackComment },
+          ],
+        },
+        callback(response: { reference: string }) {
+          setPaystackLoading(false);
+          setPaystackStatus("success");
+          setPaystackMessage(`Thank you ${paystackName}! Your support means the world to us 💙 Ref: ${response.reference}`);
+        },
+        onClose() {
+          setPaystackLoading(false);
+        },
       });
-      const data = await res.json();
-      if (data.ResponseCode === "0") {
-        setMpesaStatus("sent");
-        setMpesaMessage("Check your phone for the M-Pesa prompt and enter your PIN.");
-      } else {
-        setMpesaStatus("error");
-        setMpesaMessage(data.errorMessage || data.CustomerMessage || "Something went wrong. Try again.");
-      }
+      handler.openIframe();
     } catch {
-      setMpesaStatus("error");
-      setMpesaMessage("Network error. Please try again.");
-    } finally {
-      setMpesaLoading(false);
+      setPaystackLoading(false);
+      setPaystackStatus("error");
+      setPaystackMessage("Something went wrong. Please try again.");
     }
   }
 
-  useEffect(() => {
+useEffect(() => {
     function handleScroll() {
       setScrolled(window.scrollY > 0);
     }
@@ -80,15 +121,48 @@ function DonatePage() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  function copyToClipboard(text: string, field: string) {
-    navigator.clipboard.writeText(text).then(() => {
-      setCopiedField(field);
-      setTimeout(() => setCopiedField(null), 2000);
-    });
-  }
-
-  return (
+return (
     <div style={{ minHeight: "100vh", fontFamily: "sans-serif", display: "flex", flexDirection: "column" }}>
+      {/* Fixed video background — stays behind all content */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        aria-hidden="true"
+        tabIndex={-1}
+        disablePictureInPicture
+        controls={false}
+        className="donate-fixed-video"
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          objectFit: "cover",
+          zIndex: 0,
+          pointerEvents: "none",
+        }}
+      >
+        <source src="https://res.cloudinary.com/dee2vqvzl/video/upload/q_auto,f_auto,w_1280/v1780915760/support_page_spqt59.mp4" type="video/mp4" />
+      </video>
+      {/* Fixed dark overlay */}
+      <div
+        className="donate-fixed-overlay"
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          background: "rgba(0,0,0,0.5)",
+          zIndex: 0,
+          pointerEvents: "none",
+        }}
+      />
+
       {/* NAVBAR */}
       <nav
         role="navigation"
@@ -111,7 +185,7 @@ function DonatePage() {
         }}>
           {/* Logo — links home */}
           <Link to="/" aria-label="Go to homepage" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none", flexShrink: 0 }}>
-            <img src={amaresLogo} alt="" style={{ width: "48px", height: "48px", borderRadius: "50%", objectFit: "cover", border: "2px solid #0d1b3e" }} />
+            <img src={amaresLogo} alt="Amare character" style={{ width: "48px", height: "48px", borderRadius: "50%", objectFit: "cover", border: "2px solid #0d1b3e" }} />
             <div style={{ display: "flex", flexDirection: "column" }}>
               <img src={amaresTitle} alt="Amare's Big Planet" className="donate-nav-title" style={{ height: "40px", width: "auto", filter: scrolled ? "none" : "drop-shadow(0 1px 3px rgba(0,0,0,0.7))", transition: "filter 0.3s ease" }} />
             </div>
@@ -230,36 +304,16 @@ function DonatePage() {
       </nav>
 
       {/* MAIN CONTENT — Split Screen */}
-      <div style={{ flex: 1, position: "relative", overflow: "hidden", minHeight: "100vh" }}>
+      <div
+        style={{
+          flex: 1,
+          position: "relative",
+          minHeight: "100vh",
+        }}
+      >
 
-        {/* Video Background — HTML5 video (autoplays on mobile with playsInline + muted) */}
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          style={{
-            position: "absolute",
-            top: 0, left: 0,
-            width: "100%", height: "100%",
-            objectFit: "cover",
-            zIndex: 0,
-            pointerEvents: "none",
-          }}
-        >
-          <source src="https://res.cloudinary.com/dee2vqvzl/video/upload/v1779646039/Shape_the_Future_of_Learning__Sponsor_Amare_s_Big_Planet_1_dbmrgt.mp4" type="video/mp4" />
-        </video>
-
-        {/* Dark overlay — full width */}
-        <div style={{
-          position: "absolute", top: 0, left: 0,
-          width: "100%", height: "100%",
-          background: "rgba(0,0,0,0.5)",
-          zIndex: 1,
-        }} />
-
-        {/* Content layer — flex row above video + overlay */}
-        <div className="donate-content-row" style={{ position: "relative", zIndex: 2, display: "flex", minHeight: "100vh", paddingTop: "71px" }}>
+        {/* Hero section — transparent so fixed video shows through */}
+        <div className="donate-content-row" style={{ position: "relative", zIndex: 1, display: "flex", minHeight: "100vh", paddingTop: "71px" }}>
 
         {/* LEFT SIDE — Hero */}
         <div className="donate-hero" style={{
@@ -422,6 +476,9 @@ function DonatePage() {
         <div className="donate-card-wrapper" style={{
           width: "420px", flexShrink: 0, padding: "20px",
           display: "flex", alignItems: "center",
+          background: "rgba(13,27,62,0.85)",
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
         }}>
         <div id="donation-card" style={{
           width: "100%", background: "rgba(255,255,255,0.88)",
@@ -439,65 +496,153 @@ function DonatePage() {
             Make an impact today!
           </h2>
 
-          {/* Patreon Section */}
+          {/* Paystack Section */}
           <div style={{
-            background: "linear-gradient(135deg, #f5f5f5, #fafafa)", borderRadius: "12px",
-            border: "1.5px solid #222", padding: "20px", marginBottom: "0",
+            background: "linear-gradient(135deg, #f0f9ff, #e0f2fe)", borderRadius: "12px",
+            border: "1.5px solid #0ea5e9", padding: "20px", marginBottom: "0",
           }}>
-            <div style={{
-              display: "flex", alignItems: "center", gap: "10px",
-              marginBottom: "6px",
-            }}>
+            {/* Header */}
+            <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "6px" }}>
               <div style={{
                 width: "36px", height: "36px", borderRadius: "8px",
-                background: "#000", display: "flex", alignItems: "center", justifyContent: "center",
-                flexShrink: 0,
+                background: "#0ba4db", display: "flex", alignItems: "center",
+                justifyContent: "center", flexShrink: 0,
               }}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="15.5" cy="8.5" r="6.5" />
-                  <rect x="2" y="2" width="3" height="20" />
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                  <line x1="1" y1="10" x2="23" y2="10"/>
                 </svg>
               </div>
               <h3 style={{ fontSize: "17px", fontWeight: 700, color: "#1a1a2e", margin: 0 }}>
-                Support via Patreon
+                Support via Card / Bank / M-Pesa
               </h3>
             </div>
             <p style={{ fontSize: "12px", color: "#666", margin: "0 0 14px 0", lineHeight: 1.4 }}>
-              For supporters worldwide — pay with card, PayPal, or Apple Pay
+              For supporters worldwide — pay with card, bank transfer, or M-Pesa
             </p>
 
-            <a
-              href="https://www.patreon.com/c/AmaresBigPlanet"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: "block", width: "100%", textAlign: "center",
-                background: "#000", color: "white", fontSize: "16px",
-                fontWeight: 700, padding: "14px 24px", borderRadius: "28px",
-                textDecoration: "none", transition: "all 0.2s",
-                marginBottom: "14px", boxSizing: "border-box",
-              }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = "#333"; e.currentTarget.style.transform = "translateY(-1px)"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = "#000"; e.currentTarget.style.transform = "translateY(0)"; }}
-            >
-              Become a Patron
-            </a>
+            {/* Preset amount grid */}
+            <div style={{ marginBottom: "12px" }}>
+              <div style={{ fontSize: "12px", fontWeight: 600, color: "#555", marginBottom: "8px" }}>
+                Select amount (USD) · charged in KES at live rate
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "6px", marginBottom: "8px" }}>
+                {[5, 10, 25, 50, 100, 250].map((amt) => (
+                  <button
+                    key={amt}
+                    onClick={() => { setSelectedPreset(amt); setPaystackAmount(String(amt)); }}
+                    style={{
+                      padding: "10px 4px", borderRadius: "8px", fontSize: "14px", fontWeight: 700,
+                      cursor: "pointer", transition: "all 0.15s", border: "none",
+                      background: selectedPreset === amt ? "#0ba4db" : "white",
+                      color: selectedPreset === amt ? "white" : "#333",
+                      boxShadow: selectedPreset === amt ? "0 2px 8px rgba(11,164,219,0.4)" : "0 1px 3px rgba(0,0,0,0.1)",
+                    }}
+                  >
+                    ${amt}
+                  </button>
+                ))}
+              </div>
+              <input
+                type="number"
+                placeholder="Or enter custom amount (USD)"
+                value={selectedPreset === null ? paystackAmount : ""}
+                onFocus={() => setSelectedPreset(null)}
+                onChange={(e) => { setSelectedPreset(null); setPaystackAmount(e.target.value); }}
+                min="1"
+                style={{
+                  width: "100%", padding: "10px 14px", borderRadius: "8px", fontSize: "14px",
+                  border: selectedPreset === null && paystackAmount ? "1.5px solid #0ba4db" : "1px solid #bae6fd",
+                  boxSizing: "border-box", outline: "none", background: "white",
+                }}
+              />
+            </div>
 
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
-              {[
-                { emoji: "🚀", name: "Explorer", price: "$10/mo" },
-                { emoji: "🌍", name: "Galaxy Builder", price: "$25/mo" },
-                { emoji: "⭐", name: "Star Creator", price: "$50/mo" },
-                { emoji: "🪐", name: "Planet Champion", price: "$100/mo" },
-              ].map((tier) => (
-                <span key={tier.name} style={{
-                  display: "inline-flex", alignItems: "center", gap: "4px",
-                  background: "white", border: "1px solid #ddd", borderRadius: "16px",
-                  padding: "4px 10px", fontSize: "11px", fontWeight: 600, color: "#444",
-                }}>
-                  {tier.emoji} {tier.name} — {tier.price}
-                </span>
-              ))}
+            {/* Form fields */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginBottom: "12px" }}>
+              <input
+                type="text"
+                placeholder="Full name"
+                value={paystackName}
+                onChange={(e) => setPaystackName(e.target.value)}
+                style={{
+                  width: "100%", padding: "12px 14px", borderRadius: "8px",
+                  border: "1px solid #bae6fd", fontSize: "14px",
+                  boxSizing: "border-box", outline: "none", background: "white",
+                }}
+              />
+              <input
+                type="email"
+                placeholder="Email address"
+                value={paystackEmail}
+                onChange={(e) => setPaystackEmail(e.target.value)}
+                style={{
+                  width: "100%", padding: "12px 14px", borderRadius: "8px",
+                  border: "1px solid #bae6fd", fontSize: "14px",
+                  boxSizing: "border-box", outline: "none", background: "white",
+                }}
+              />
+              <input
+                type="tel"
+                placeholder="Phone number"
+                value={paystackPhone}
+                onChange={(e) => setPaystackPhone(e.target.value)}
+                style={{
+                  width: "100%", padding: "12px 14px", borderRadius: "8px",
+                  border: "1px solid #bae6fd", fontSize: "14px",
+                  boxSizing: "border-box", outline: "none", background: "white",
+                }}
+              />
+              <textarea
+                placeholder="Leave a comment (optional)"
+                value={paystackComment}
+                onChange={(e) => setPaystackComment(e.target.value)}
+                rows={2}
+                style={{
+                  width: "100%", padding: "12px 14px", borderRadius: "8px",
+                  border: "1px solid #bae6fd", fontSize: "14px",
+                  boxSizing: "border-box", outline: "none", background: "white",
+                  resize: "none", fontFamily: "inherit",
+                }}
+              />
+            </div>
+
+            {/* Pay button */}
+            <button
+              onClick={handlePaystackPay}
+              disabled={paystackLoading || !paystackEmail || !paystackName || (!paystackAmount && selectedPreset === null)}
+              style={{
+                width: "100%", padding: "14px", borderRadius: "28px",
+                background: paystackLoading ? "#7dd3fc" : "#0ba4db",
+                color: "white", fontSize: "16px", fontWeight: 700,
+                border: "none", cursor: paystackLoading ? "not-allowed" : "pointer",
+                transition: "all 0.2s", marginBottom: "10px",
+                boxShadow: "0 4px 14px rgba(11,164,219,0.4)",
+              }}
+              onMouseEnter={(e) => { if (!paystackLoading) e.currentTarget.style.background = "#0284c7"; }}
+              onMouseLeave={(e) => { if (!paystackLoading) e.currentTarget.style.background = "#0ba4db"; }}
+            >
+              {paystackLoading
+                ? "Opening payment..."
+                : `Support Now${paystackAmount ? ` — $${paystackAmount}` : ""}`}
+            </button>
+
+            {/* Status message */}
+            {paystackStatus !== "idle" && (
+              <div style={{
+                padding: "10px 14px", borderRadius: "8px", fontSize: "13px",
+                fontWeight: 500, textAlign: "center", marginBottom: "8px",
+                background: paystackStatus === "success" ? "#E8F5E9" : "#FFEBEE",
+                color: paystackStatus === "success" ? "#2E7D32" : "#C62828",
+                border: `1px solid ${paystackStatus === "success" ? "#C8E6C9" : "#FFCDD2"}`,
+              }}>
+                {paystackMessage}
+              </div>
+            )}
+
+            {/* Trust badge */}
+            <div style={{ textAlign: "center", fontSize: "11px", color: "#888", fontWeight: 400 }}>
+              🔒 Payments secured by <strong style={{ color: "#0ba4db" }}>Paystack</strong>
             </div>
           </div>
 
@@ -530,63 +675,7 @@ function DonatePage() {
               For supporters in Kenya
             </p>
 
-
-            {/* Phone + Amount inputs */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginBottom: "12px" }}>
-              <input
-                type="tel"
-                placeholder="Phone number (e.g. 0712345678)"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                style={{
-                  width: "100%", padding: "12px 14px", borderRadius: "8px",
-                  border: "1px solid #C8E6C9", fontSize: "15px", boxSizing: "border-box",
-                  outline: "none", background: "white",
-                }}
-              />
-              <input
-                type="number"
-                placeholder="Amount (KES)"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-                min="1"
-                style={{
-                  width: "100%", padding: "12px 14px", borderRadius: "8px",
-                  border: "1px solid #C8E6C9", fontSize: "15px", boxSizing: "border-box",
-                  outline: "none", background: "white",
-                }}
-              />
-            </div>
-
-            {/* Pay button */}
-            <button
-              onClick={handleMpesaPay}
-              disabled={mpesaLoading || !phoneNumber || !amount}
-              style={{
-                width: "100%", padding: "14px", borderRadius: "28px",
-                background: mpesaLoading ? "#81C784" : "#4CAF50",
-                color: "white", fontSize: "16px", fontWeight: 700,
-                border: "none", cursor: mpesaLoading ? "not-allowed" : "pointer",
-                transition: "all 0.2s", marginBottom: "10px",
-              }}
-            >
-              {mpesaLoading ? "Sending prompt..." : "Pay with M-Pesa"}
-            </button>
-
-            {/* Status message */}
-            {mpesaStatus !== "idle" && (
-              <div style={{
-                padding: "10px 14px", borderRadius: "8px", fontSize: "13px",
-                fontWeight: 500, textAlign: "center", marginBottom: "8px",
-                background: mpesaStatus === "sent" ? "#E8F5E9" : "#FFEBEE",
-                color: mpesaStatus === "sent" ? "#2E7D32" : "#C62828",
-                border: `1px solid ${mpesaStatus === "sent" ? "#C8E6C9" : "#FFCDD2"}`,
-              }}>
-                {mpesaMessage}
-              </div>
-            )}
-
-            {/* Manual fallback — compact */}
+            {/* Manual payment instructions */}
             <div style={{
               fontSize: "12px", color: "#555", lineHeight: 1.6,
               background: "white", borderRadius: "8px", padding: "10px 14px",
@@ -844,6 +933,17 @@ function DonatePage() {
         @media (min-width: 901px) {
           .donate-mobile-menu {
             display: none !important;
+          }
+        }
+
+        /* Mobile: iOS has issues with position:fixed inside scrollable containers.
+           Fall back to absolute positioning covering the full document. */
+        @supports (-webkit-touch-callout: none) {
+          .donate-fixed-video,
+          .donate-fixed-overlay {
+            position: absolute !important;
+            height: 100% !important;
+            width: 100% !important;
           }
         }
       `}</style>

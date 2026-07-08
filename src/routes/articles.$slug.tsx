@@ -1,407 +1,179 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
-import { getArticleBySlug } from "@/lib/articles";
-import amaresLogo from "@/assets/amares-logo.jpeg";
-import amaresTitle from "@/assets/amares-title.png";
+import { createFileRoute, Link, notFound, redirect } from "@tanstack/react-router";
+import { getArticle, getRelatedArticles } from "@/lib/articles";
+import { SiteNav } from "@/components/SiteNav";
+
+const legacyArticleRedirects: Record<string, string> = {
+  "abc-songs-for-kids-with-autism": "abc-songs-for-preschool-kids",
+  "how-music-helps-autistic-children-learn": "how-music-helps-kids-learn",
+  "inclusive-kids-learning-videos": "screen-time-learning-activities-for-kids",
+  "visual-learning-activities-for-autistic-children": "screen-time-learning-activities-for-kids",
+};
 
 export const Route = createFileRoute("/articles/$slug")({
-  component: ArticleDetailPage,
-  head: ({ params }) => {
-    const article = getArticleBySlug(params.slug);
-    return {
-      meta: [
-        {
-          title: article
-            ? `${article.title} — Amaré's Big Planet`
-            : "Article — Amaré's Big Planet",
-        },
-        { name: "description", content: article?.excerpt ?? "" },
-      ],
-    };
+  component: ArticlePage,
+  loader: ({ params }) => {
+    const redirectSlug = legacyArticleRedirects[params.slug];
+    if (redirectSlug) {
+      throw redirect({
+        to: "/articles/$slug",
+        params: { slug: redirectSlug },
+        statusCode: 301,
+      });
+    }
+
+    const article = getArticle(params.slug);
+    if (!article) throw notFound();
+    return article;
   },
+  head: ({ loaderData }) => ({
+    meta: [
+      { title: `${loaderData.title} | Amare's Learning Hub` },
+      { name: "description", content: loaderData.description },
+      { name: "keywords", content: loaderData.keywords.join(", ") },
+      { property: "og:title", content: `${loaderData.title} | Amare's Learning Hub` },
+      { property: "og:description", content: loaderData.description },
+      { property: "og:url", content: `https://amaresbigplanet.com/articles/${loaderData.slug}` },
+      { property: "og:image", content: `https://img.youtube.com/vi/${loaderData.videoId}/hqdefault.jpg` },
+    ],
+    links: [
+      { rel: "canonical", href: `https://amaresbigplanet.com/articles/${loaderData.slug}` },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: loaderData.title,
+          description: loaderData.description,
+          keywords: loaderData.keywords,
+          image: `https://img.youtube.com/vi/${loaderData.videoId}/hqdefault.jpg`,
+          author: {
+            "@type": "Organization",
+            name: "Amare's Big Planet",
+          },
+          publisher: {
+            "@type": "Organization",
+            name: "Amare's Big Planet",
+          },
+          mainEntityOfPage: `https://amaresbigplanet.com/articles/${loaderData.slug}`,
+        }),
+      },
+    ],
+  }),
 });
 
-function ArticleDetailPage() {
-  const { slug } = Route.useParams();
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    function handleScroll() {
-      setScrolled(window.scrollY > 0);
-    }
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const article = getArticleBySlug(slug);
-
-  if (!article) {
-    return (
-      <div
-        style={{
-          minHeight: "100vh",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          fontFamily: "'Fredoka', sans-serif",
-          textAlign: "center",
-          gap: 16,
-          padding: 24,
-        }}
-      >
-        <div style={{ fontSize: 64 }}>🔭</div>
-        <h1
-          style={{
-            fontFamily: "'Baloo 2', sans-serif",
-            fontSize: 32,
-            fontWeight: 800,
-            color: "#1a1a2e",
-            margin: 0,
-          }}
-        >
-          Article not found
-        </h1>
-        <p style={{ color: "#888", fontSize: 16 }}>
-          This article may have moved or doesn&apos;t exist.
-        </p>
-        <Link
-          to="/articles"
-          style={{
-            background: "#3B82F6",
-            color: "white",
-            borderRadius: 20,
-            padding: "10px 24px",
-            fontWeight: 700,
-            textDecoration: "none",
-            fontSize: 15,
-          }}
-        >
-          ← Back to Articles
-        </Link>
-      </div>
-    );
-  }
+function ArticlePage() {
+  const article = Route.useLoaderData();
+  const related = getRelatedArticles(article.slug, 3);
+  const inlineRelated = related.slice(0, 2);
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        fontFamily: "'Fredoka', sans-serif",
-        backgroundColor: "#f8fcfe",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
-      <style>{`
-        .article-body p {
-          font-size: 17px;
-          line-height: 1.8;
-          color: #333;
-          margin: 0 0 20px;
-        }
-        .article-body h2 {
-          font-family: 'Baloo 2', sans-serif;
-          font-size: 24px;
-          font-weight: 800;
-          color: #1a1a2e;
-          margin: 36px 0 14px;
-        }
-        .article-body ul {
-          margin: 0 0 20px;
-          padding-left: 0;
-          list-style: none;
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-        }
-        .article-body ul li {
-          display: flex;
-          gap: 10px;
-          align-items: flex-start;
-          font-size: 16px;
-          color: #333;
-          line-height: 1.6;
-        }
-        .article-body ul li::before {
-          content: "✦";
-          color: #8B5CF6;
-          font-size: 12px;
-          margin-top: 4px;
-          flex-shrink: 0;
-        }
-        .article-tip {
-          background: linear-gradient(135deg, #fef9e7, #fef3c7);
-          border-left: 4px solid #FBBF24;
-          border-radius: 12px;
-          padding: 16px 20px;
-          margin: 24px 0;
-          font-size: 15px;
-          color: #7c5400;
-          line-height: 1.6;
-        }
-        .article-video {
-          border-radius: 16px;
-          overflow: hidden;
-          margin: 24px 0;
-          box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-          aspect-ratio: 16/9;
-        }
-        .article-video iframe {
-          display: block;
-          width: 100%;
-          height: 100%;
-          border: none;
-        }
-        .article-tip {
-          background: linear-gradient(135deg, #fef9e7, #fef3c7);
-          border-left: 4px solid #FBBF24;
-          border-radius: 12px;
-          padding: 16px 20px;
-          margin: 24px 0;
-          font-size: 15px;
-          color: #7c5400;
-          line-height: 1.6;
-        }
-      `}</style>
+    <main className="min-h-screen bg-[#fffdf7] text-[#10172a]">
+      <SiteNav active="Articles" />
 
-      {/* NAV */}
-      <nav
-        style={{
-          background: "rgba(255,255,255,0.97)",
-          backdropFilter: "blur(10px)",
-          boxShadow: scrolled ? "0 2px 12px rgba(0,0,0,0.1)" : "none",
-          transition: "box-shadow 0.3s",
-          position: "sticky",
-          top: 0,
-          zIndex: 1000,
-        }}
-      >
-        <div
-          style={{
-            maxWidth: 1280,
-            margin: "0 auto",
-            padding: "10px 24px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <Link
-            to="/"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-              textDecoration: "none",
-            }}
-          >
-            <img
-              src={amaresLogo}
-              alt=""
-              style={{
-                width: 48,
-                height: 48,
-                borderRadius: "50%",
-                objectFit: "cover",
-                border: "2px solid #2a2a6e",
-              }}
+      <article className="mx-auto max-w-4xl px-4 py-12">
+        <Link to="/articles" className="font-bold text-[#0f7c90]">Back to Learning Hub</Link>
+        <p className="mt-6 text-sm font-bold text-[#5b6f82]">Amare's Big Planet guide</p>
+        <p className="mt-8 text-sm font-extrabold uppercase tracking-[0.2em] text-[#0f7c90]">{article.category}</p>
+        <h1 className="mt-3 text-4xl font-extrabold leading-tight sm:text-6xl">{article.title}</h1>
+        <p className="mt-5 text-lg leading-8 text-[#4b5f75]">{article.description}</p>
+
+        {article.videoId && (
+          <div className="mt-8 overflow-hidden rounded-2xl border border-[#d8eef7] bg-black shadow-lg">
+            <iframe
+              src={`https://www.youtube.com/embed/${article.videoId}`}
+              title={article.videoTitle}
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="aspect-video w-full border-0"
             />
-            <img
-              src={amaresTitle}
-              alt="Amaré's Big Planet"
-              style={{ height: 44, width: "auto" }}
-            />
-          </Link>
-          <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-            <Link
-              to="/articles"
-              style={{
-                color: "#2a2a6e",
-                fontWeight: 600,
-                textDecoration: "none",
-                fontSize: 15,
-                padding: "8px 14px",
-                borderRadius: 8,
-                transition: "background 0.2s",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "rgba(42,42,110,0.06)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "transparent";
-              }}
-            >
-              ← Articles
-            </Link>
-            <Link
-              to="/donate"
-              style={{
-                background: "#e02020",
-                color: "white",
-                borderRadius: 20,
-                padding: "8px 18px",
-                fontWeight: 700,
-                fontSize: 14,
-                textDecoration: "none",
-                transition: "background 0.2s",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#c01010";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "#e02020";
-              }}
-            >
-              Donate 💙
-            </Link>
           </div>
-        </div>
-      </nav>
+        )}
 
-      {/* ARTICLE HEADER */}
-      <section
-        style={{
-          background: "linear-gradient(135deg, #dff0f5 0%, #e8f0fc 100%)",
-          padding: "52px 24px 44px",
-          textAlign: "center",
-        }}
-      >
-        <div style={{ fontSize: 64, marginBottom: 16 }}>{article.emoji}</div>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 10,
-            marginBottom: 16,
-          }}
-        >
-          <span
-            style={{
-              background: article.categoryColor + "18",
-              color: article.categoryColor,
-              fontWeight: 700,
-              fontSize: 12,
-              padding: "4px 12px",
-              borderRadius: 20,
-            }}
-          >
-            {article.category}
-          </span>
-          <span style={{ color: "#aaa", fontSize: 13 }}>{article.readTime}</span>
-        </div>
-        <h1
-          style={{
-            fontFamily: "'Baloo 2', sans-serif",
-            fontSize: "clamp(28px, 5vw, 46px)",
-            fontWeight: 800,
-            color: "#1a1a2e",
-            margin: "0 auto 16px",
-            lineHeight: 1.2,
-            maxWidth: 720,
-          }}
-        >
-          {article.title}
-        </h1>
-        <p
-          style={{
-            fontSize: 17,
-            color: "#555",
-            maxWidth: 600,
-            margin: "0 auto 12px",
-            lineHeight: 1.6,
-          }}
-        >
-          {article.excerpt}
+        {article.intro && (
+          <p className="mt-8 text-lg leading-8 text-[#26394d]">{article.intro}</p>
+        )}
+
+        {inlineRelated.length > 0 && (
+          <nav aria-label="Related article links" className="mt-8 rounded-2xl border border-[#d8eef7] bg-white p-5 shadow-sm">
+            <h2 className="text-xl font-extrabold">Keep exploring this topic</h2>
+            <div className="mt-4 flex flex-wrap gap-3">
+              {inlineRelated.map((item) => (
+                <Link
+                  key={item.slug}
+                  to="/articles/$slug"
+                  params={{ slug: item.slug }}
+                  className="rounded-full bg-[#e8f8ff] px-4 py-2 text-sm font-extrabold text-[#0f7c90] transition hover:bg-[#dff5ff] hover:text-[#e02020]"
+                >
+                  {item.title}
+                </Link>
+              ))}
+            </div>
+          </nav>
+        )}
+
+        {article.learningGoals && article.learningGoals.length > 0 && (
+          <div className="mt-8 rounded-2xl border border-[#f0dbad] bg-[#fff6df] p-5">
+            <h2 className="text-2xl font-extrabold">What kids can practice</h2>
+            <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+              {article.learningGoals.map((goal) => (
+                <li key={goal} className="rounded-xl bg-white px-4 py-3 font-semibold text-[#26394d]">
+                  {goal}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {article.sections && article.sections.length > 0 && (
+          <div className="mt-10 space-y-8">
+            {article.sections.map((section) => (
+              <section key={section.heading}>
+                <h2 className="text-2xl font-extrabold">{section.heading}</h2>
+                <p className="mt-3 text-lg leading-8 text-[#4b5f75]">{section.body}</p>
+              </section>
+            ))}
+          </div>
+        )}
+
+        {article.parentTip && (
+          <aside className="mt-10 rounded-2xl bg-[#e8f8ff] p-5">
+            <h2 className="text-xl font-extrabold">Parent tip</h2>
+            <p className="mt-2 leading-7 text-[#395167]">{article.parentTip}</p>
+          </aside>
+        )}
+
+        {article.body && (
+          <div
+            className="prose mt-10 max-w-none text-lg leading-8 text-[#26394d]"
+            dangerouslySetInnerHTML={{ __html: typeof article.body === "string" ? article.body : (article.body as string[]).join("") }}
+          />
+        )}
+
+        <p className="mt-8 rounded-2xl border border-[#d8eef7] bg-white p-4 text-sm leading-6 text-[#5b6f82]">
+          Note: Amare's Big Planet creates educational entertainment for families. This guide is not medical, diagnostic, or therapeutic advice.
         </p>
-        <p style={{ fontSize: 13, color: "#aaa", margin: 0 }}>
-          {new Date(article.publishDate).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
-        </p>
-      </section>
 
-      {/* ARTICLE BODY */}
-      <article
-        style={{
-          maxWidth: 740,
-          margin: "0 auto",
-          padding: "52px 24px 80px",
-          width: "100%",
-          boxSizing: "border-box",
-          flex: 1,
-        }}
-      >
-        <div
-          className="article-body"
-          dangerouslySetInnerHTML={{ __html: article.body }}
-        />
-
-        {/* Back link */}
-        <div
-          style={{
-            marginTop: 48,
-            paddingTop: 32,
-            borderTop: "1px solid #e5e7eb",
-          }}
-        >
-          <Link
-            to="/articles"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 8,
-              color: "#3B82F6",
-              fontWeight: 700,
-              textDecoration: "none",
-              fontSize: 15,
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.color = "#1d4ed8";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.color = "#3B82F6";
-            }}
-          >
-            ← Back to all articles
-          </Link>
-        </div>
+        <section className="mt-12 border-t border-[#f1dfb8] pt-8">
+          <h2 className="text-2xl font-extrabold">Related guides</h2>
+          <div className="mt-5 grid gap-4 md:grid-cols-3">
+            {related.map((item) => (
+              <Link
+                key={item.slug}
+                to="/articles/$slug"
+                params={{ slug: item.slug }}
+                className="rounded-2xl border border-[#d8eef7] bg-white p-4 transition hover:-translate-y-1 hover:shadow-md"
+              >
+                <span className="text-xs font-extrabold uppercase tracking-wide text-[#0f7c90]">{item.category}</span>
+                <span className="mt-2 block font-extrabold text-[#102a56]">{item.title}</span>
+                <span className="mt-2 block text-sm font-medium leading-6 text-[#5b6f82]">{item.description}</span>
+              </Link>
+            ))}
+          </div>
+        </section>
       </article>
-
-      {/* FOOTER */}
-      <footer
-        style={{
-          background: "#1a1a2e",
-          color: "white",
-          padding: "32px 24px",
-          textAlign: "center",
-        }}
-      >
-        <Link
-          to="/"
-          style={{
-            color: "rgba(255,255,255,0.7)",
-            textDecoration: "none",
-            fontSize: 14,
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.color = "white";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.color = "rgba(255,255,255,0.7)";
-          }}
-        >
-          ← Back to Amaré&apos;s Big Planet
-        </Link>
-        <p
-          style={{
-            marginTop: 12,
-            fontSize: 12,
-            color: "rgba(255,255,255,0.4)",
-          }}
-        >
-          © 2026 Amaré Big Planet. All rights reserved.
-        </p>
-      </footer>
-    </div>
+    </main>
   );
 }
