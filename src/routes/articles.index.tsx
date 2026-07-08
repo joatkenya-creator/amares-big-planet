@@ -11,7 +11,7 @@ const CATEGORY_COLORS: Record<string, string> = {
 import amaresLogo from "@/assets/amares-logo.jpeg";
 import amaresTitle from "@/assets/amares-title.png";
 
-export const Route = createFileRoute("/articles/")({
+export const Route = createFileRoute("/articles")({
   component: ArticlesPage,
   head: () => ({
     meta: [

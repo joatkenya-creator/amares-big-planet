@@ -9,7 +9,6 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ArticlesRouteImport } from './routes/articles'
 import { Route as ArticlesIndexRouteImport } from './routes/articles.index'
 import { Route as ArticlesSlugRouteImport } from './routes/articles.$slug'
 import { Route as DonateRouteImport } from './routes/donate'
@@ -37,26 +36,16 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ArticlesRoute = ArticlesRouteImport.update({
+const ArticlesIndexRoute = ArticlesIndexRouteImport.update({
   id: '/articles',
   path: '/articles',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ArticlesIndexRoute = ArticlesIndexRouteImport.update({
-  id: '/articles/',
-  path: '/',
-  getParentRoute: () => ArticlesRoute,
-} as any)
 const ArticlesSlugRoute = ArticlesSlugRouteImport.update({
   id: '/articles/$slug',
-  path: '$slug',
-  getParentRoute: () => ArticlesRoute,
+  path: '/articles/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const ArticlesRouteWithChildren = ArticlesRoute._addFileChildren({
-  ArticlesIndexRoute,
-  ArticlesSlugRoute,
-})
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -80,8 +69,7 @@ export interface FileRoutesById {
   '/donate': typeof DonateRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
-  '/articles': typeof ArticlesRoute
-  '/articles/': typeof ArticlesIndexRoute
+  '/articles': typeof ArticlesIndexRoute
   '/articles/$slug': typeof ArticlesSlugRoute
 }
 export interface FileRouteTypes {
@@ -89,19 +77,16 @@ export interface FileRouteTypes {
   fullPaths: '/' | '/donate' | '/blog/$slug' | '/blog/' | '/articles' | '/articles/$slug'
   fileRoutesByTo: FileRoutesByTo
   to: '/' | '/donate' | '/blog/$slug' | '/blog' | '/articles' | '/articles/$slug'
-  id: '__root__' | '/' | '/donate' | '/blog/$slug' | '/blog/' | '/articles' | '/articles/' | '/articles/$slug'
+  id: '__root__' | '/' | '/donate' | '/blog/$slug' | '/blog/' | '/articles' | '/articles/$slug'
   fileRoutesById: FileRoutesById
-}
-export interface ArticlesRouteChildren {
-  ArticlesIndexRoute: typeof ArticlesIndexRoute
-  ArticlesSlugRoute: typeof ArticlesSlugRoute
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DonateRoute: typeof DonateRoute
   BlogSlugRoute: typeof BlogSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
-  ArticlesRoute: typeof ArticlesRouteWithChildren
+  ArticlesIndexRoute: typeof ArticlesIndexRoute
+  ArticlesSlugRoute: typeof ArticlesSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -138,22 +123,15 @@ declare module '@tanstack/react-router' {
       id: '/articles'
       path: '/articles'
       fullPath: '/articles'
-      preLoaderRoute: typeof ArticlesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/articles/': {
-      id: '/articles/'
-      path: '/'
-      fullPath: '/articles/'
       preLoaderRoute: typeof ArticlesIndexRouteImport
-      parentRoute: typeof ArticlesRoute
+      parentRoute: typeof rootRouteImport
     }
     '/articles/$slug': {
       id: '/articles/$slug'
-      path: '$slug'
+      path: '/articles/$slug'
       fullPath: '/articles/$slug'
       preLoaderRoute: typeof ArticlesSlugRouteImport
-      parentRoute: typeof ArticlesRoute
+      parentRoute: typeof rootRouteImport
     }
   }
 }
@@ -163,7 +141,8 @@ const rootRouteChildren: RootRouteChildren = {
   DonateRoute: DonateRoute,
   BlogSlugRoute: BlogSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
-  ArticlesRoute: ArticlesRouteWithChildren,
+  ArticlesIndexRoute: ArticlesIndexRoute,
+  ArticlesSlugRoute: ArticlesSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -594,7 +594,7 @@ function Index() {
               )
             )}
             <Link
-              to="/articles/"
+              to="/articles"
               className="nav-link"
             >
               Articles
@@ -818,7 +818,7 @@ function Index() {
             )
           )}
           <Link
-            to="/articles/"
+            to="/articles"
             className="mobile-nav-link"
             onClick={() => setMenuOpen(false)}
           >

@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { getArticleBySlug, getRelatedArticles } from "@/lib/articles";
+import { getArticleBySlug } from "@/lib/articles";
 import amaresLogo from "@/assets/amares-logo.jpeg";
 import amaresTitle from "@/assets/amares-title.png";
 
@@ -66,7 +66,7 @@ function ArticleDetailPage() {
           This article may have moved or doesn&apos;t exist.
         </p>
         <Link
-          to="/articles/"
+          to="/articles"
           style={{
             background: "#3B82F6",
             color: "white",
@@ -215,7 +215,7 @@ function ArticleDetailPage() {
           </Link>
           <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
             <Link
-              to="/articles/"
+              to="/articles"
               style={{
                 color: "#2a2a6e",
                 fontWeight: 600,
@@ -345,7 +345,7 @@ function ArticleDetailPage() {
           }}
         >
           <Link
-            to="/articles/"
+            to="/articles"
             style={{
               display: "inline-flex",
               alignItems: "center",
