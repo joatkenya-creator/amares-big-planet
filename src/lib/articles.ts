@@ -669,6 +669,53 @@ const autismSupportArticle: Article = {
   ].join(""),
 };
 
+const countingArticle: Article = {
+  slug: "learn-to-count-21-to-30",
+  title: "Learn to Count 21 to 30",
+  description: "Join Amar\u00e9 and the Gear Crew as they make counting from 21 to 30 fun, musical, and easy to remember for young learners.",
+  excerpt: "Join Amar\u00e9 and the Gear Crew as they make counting from 21 to 30 fun, musical, and easy to remember for young learners.",
+  category: "Numbers & Counting",
+  videoId: "shPqebD2NVg",
+  videoTitle: "Learn to Count 21 to 30 | Amar\u00e9's Big Planet",
+  readingTime: "4 min read",
+  readTime: "4 min read",
+  publishDate: "2026-07-08",
+  emoji: "\uD83D\uDD22",
+  categoryColor: "#22C55E",
+  keywords: [
+    "counting 21 to 30 for kids",
+    "numbers 21 to 30 song",
+    "learn to count for toddlers",
+    "counting song for preschoolers",
+    "number recognition for kids",
+    "counting beyond 20 for children",
+  ],
+  intro: "Counting beyond 20 is a big milestone for young learners. Once children reach 21, they begin to see the repeating pattern in numbers \u2014 and that\u2019s when counting really starts to click. Amar\u00e9\u2019s Big Planet makes this leap feel exciting and completely natural.",
+  sections: [
+    {
+      heading: "Why counting beyond 20 matters",
+      body: "Numbers 21 to 30 are where children discover the logic behind the counting system. They start to understand that 21 is \u201ctwenty-one\u201d, 22 is \u201ctwenty-two\u201d, and so on. This pattern recognition is a foundational maths skill that will carry them through addition, subtraction, and beyond.",
+    },
+    {
+      heading: "How songs make number learning stick",
+      body: "Music gives children a rhythm to anchor numbers to. When a number is sung the same way every time, the brain creates a strong memory path for it. A child who has heard \u201ctwenty-one, twenty-two, twenty-three\u201d in a song dozens of times will recall those numbers far faster than one who has only seen them on a page.",
+    },
+    {
+      heading: "Simple ways to practise at home",
+      body: "Count stairs, steps on a walk, grapes at snack time, or jumps on a trampoline \u2014 starting from 21. Pause the video after each number and let your child say the next one. Once they know the song, challenge them to count to 30 with their eyes closed. Every small win builds real confidence.",
+    },
+  ],
+  learningGoals: [
+    "Counting 21 to 30",
+    "Number recognition",
+    "Pattern in the number system",
+    "Counting confidence",
+    "Early maths skills",
+  ],
+  parentTip: "After watching, count 30 small objects together \u2014 raisins, blocks, coins \u2014 and let your child do the last ten (21 to 30) on their own. Hearing themselves count out loud is one of the fastest ways to make it stick.",
+  body: "",
+};
+
 const mondayToSundayArticle: Article = {
   slug: "magical-monday-to-sunday-adventure",
   title: "A Magical Monday to Sunday Adventure",
@@ -717,6 +764,7 @@ const mondayToSundayArticle: Article = {
 };
 
 export const articles: Article[] = [
+  countingArticle,
   mondayToSundayArticle,
   autismSupportArticle,
   aDayWithAmareArticle,
@@ -739,6 +787,11 @@ export function getArticleBySlug(slug: string) {
 }
 
 const relatedArticleSlugs: Record<string, string[]> = {
+  "learn-to-count-21-to-30": [
+    "abc-songs-for-preschool-kids",
+    "how-music-helps-kids-learn",
+    "magical-monday-to-sunday-adventure",
+  ],
   "magical-monday-to-sunday-adventure": [
     "morning-routine-songs-for-toddlers",
     "how-music-helps-kids-learn",
