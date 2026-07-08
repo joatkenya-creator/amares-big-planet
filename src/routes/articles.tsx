@@ -267,14 +267,14 @@ function ArticlesPage() {
           {articles.map((article) => (
             <article
               key={article.slug}
-              className="overflow-hidden rounded-2xl border border-[#cce9f5] bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+              className="flex flex-col overflow-hidden rounded-2xl border border-[#cce9f5] bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
             >
               <img
                 src={`https://img.youtube.com/vi/${article.videoId}/hqdefault.jpg`}
                 alt={`${article.videoTitle} video thumbnail`}
                 className="aspect-video w-full object-cover"
               />
-              <div className="p-5">
+              <div className="flex flex-1 flex-col p-5">
                 <div className="flex items-center justify-between gap-3 text-xs font-bold uppercase tracking-wide text-[#0f7c90]">
                   <span>{article.category}</span>
                   <span>{article.readingTime}</span>
@@ -282,11 +282,11 @@ function ArticlesPage() {
                 <h2 className="mt-3 text-xl font-extrabold leading-snug text-[#10172a]">
                   {article.title}
                 </h2>
-                <p className="mt-3 text-sm leading-6 text-[#5b6f82]">{article.description}</p>
+                <p className="mt-3 flex-1 text-sm leading-6 text-[#5b6f82]">{article.description}</p>
                 <Link
                   to="/articles/$slug"
                   params={{ slug: article.slug }}
-                  className="mt-5 inline-flex rounded-full bg-[#e02020] px-5 py-2.5 text-sm font-extrabold text-white shadow-sm transition hover:bg-[#b91c1c] focus:outline-none focus:ring-4 focus:ring-[#fca5a5]"
+                  className="mt-5 inline-flex self-start rounded-full bg-[#e02020] px-5 py-2.5 text-sm font-extrabold text-white shadow-sm transition hover:bg-[#b91c1c] focus:outline-none focus:ring-4 focus:ring-[#fca5a5]"
                 >
                   Learn more
                 </Link>
