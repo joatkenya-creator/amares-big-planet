@@ -1,6 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { articles } from "@/lib/articles";
+
+const CATEGORY_COLORS: Record<string, string> = {
+  "Music & Learning": "#8B5CF6",
+  "Parenting Tips": "#3B82F6",
+  "Behind the Scenes": "#F59E0B",
+  Activities: "#22C55E",
+};
 import amaresLogo from "@/assets/amares-logo.jpeg";
 import amaresTitle from "@/assets/amares-title.png";
 
@@ -243,7 +250,7 @@ function ArticlesPage() {
                     textAlign: "center",
                   }}
                 >
-                  <div style={{ fontSize: 56 }}>{article.emoji}</div>
+                  <div style={{ fontSize: 56 }}>{article.emoji ?? "📄"}</div>
                 </div>
 
                 {/* Card body */}
@@ -265,8 +272,8 @@ function ArticlesPage() {
                   >
                     <span
                       style={{
-                        background: article.categoryColor + "18",
-                        color: article.categoryColor,
+                        background: (article.categoryColor ?? CATEGORY_COLORS[article.category] ?? "#3B82F6") + "18",
+                        color: article.categoryColor ?? CATEGORY_COLORS[article.category] ?? "#3B82F6",
                         fontWeight: 700,
                         fontSize: 11,
                         padding: "3px 10px",
@@ -313,7 +320,7 @@ function ArticlesPage() {
                     }}
                   >
                     <span style={{ fontSize: 12, color: "#aaa" }}>
-                      {article.date}
+                      {new Date(article.publishDate).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
                     </span>
                     <span
                       style={{

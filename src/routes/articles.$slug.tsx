@@ -1,13 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { articles } from "@/lib/articles";
+import { getArticleBySlug, getRelatedArticles } from "@/lib/articles";
 import amaresLogo from "@/assets/amares-logo.jpeg";
 import amaresTitle from "@/assets/amares-title.png";
 
 export const Route = createFileRoute("/articles/$slug")({
   component: ArticleDetailPage,
   head: ({ params }) => {
-    const article = articles.find((a) => a.slug === params.slug);
+    const article = getArticleBySlug(params.slug);
     return {
       meta: [
         {
@@ -33,7 +33,7 @@ function ArticleDetailPage() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const article = articles.find((a) => a.slug === slug);
+  const article = getArticleBySlug(slug);
 
   if (!article) {
     return (
@@ -145,12 +145,23 @@ function ArticleDetailPage() {
           overflow: hidden;
           margin: 24px 0;
           box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+          aspect-ratio: 16/9;
         }
         .article-video iframe {
           display: block;
           width: 100%;
-          aspect-ratio: 16/9;
+          height: 100%;
           border: none;
+        }
+        .article-tip {
+          background: linear-gradient(135deg, #fef9e7, #fef3c7);
+          border-left: 4px solid #FBBF24;
+          border-radius: 12px;
+          padding: 16px 20px;
+          margin: 24px 0;
+          font-size: 15px;
+          color: #7c5400;
+          line-height: 1.6;
         }
       `}</style>
 
@@ -304,7 +315,9 @@ function ArticleDetailPage() {
         >
           {article.excerpt}
         </p>
-        <p style={{ fontSize: 13, color: "#aaa", margin: 0 }}>{article.date}</p>
+        <p style={{ fontSize: 13, color: "#aaa", margin: 0 }}>
+          {new Date(article.publishDate).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
+        </p>
       </section>
 
       {/* ARTICLE BODY */}
@@ -318,50 +331,10 @@ function ArticleDetailPage() {
           flex: 1,
         }}
       >
-        <div className="article-body">
-          {article.content.map((section, i) => {
-            if (section.type === "paragraph") {
-              return <p key={i}>{section.text}</p>;
-            }
-
-            if (section.type === "heading") {
-              return <h2 key={i}>{section.text}</h2>;
-            }
-
-            if (section.type === "list") {
-              return (
-                <ul key={i}>
-                  {section.items?.map((item, j) => (
-                    <li key={j}>{item}</li>
-                  ))}
-                </ul>
-              );
-            }
-
-            if (section.type === "tip") {
-              return (
-                <div key={i} className="article-tip">
-                  💡 <strong>Tip:</strong> {section.text}
-                </div>
-              );
-            }
-
-            if (section.type === "video" && section.videoId) {
-              return (
-                <div key={i} className="article-video">
-                  <iframe
-                    src={`https://www.youtube.com/embed/${section.videoId}`}
-                    title={section.videoTitle ?? "Video"}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
-                </div>
-              );
-            }
-
-            return null;
-          })}
-        </div>
+        <div
+          className="article-body"
+          dangerouslySetInnerHTML={{ __html: article.body }}
+        />
 
         {/* Back link */}
         <div

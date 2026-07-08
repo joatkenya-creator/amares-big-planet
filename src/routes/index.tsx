@@ -9,9 +9,96 @@ import musicMascot from "@/assets/music-mascot.png";
 
 export const Route = createFileRoute("/")({
   component: Index,
+  head: () => ({
+    meta: [
+      { title: "Amare's Big Planet | Kids Learning Songs, ABCs & Space Videos" },
+      { name: "description", content: "Sing along with Amare's Big Planet: ABC songs, nursery rhymes, ocean animals, solar system songs, and fun educational videos for kids." },
+      { property: "og:title", content: "Amare's Big Planet | Kids Learning Songs & Videos" },
+      { property: "og:description", content: "ABC songs, nursery rhymes, space adventures, ocean animals, and fun educational videos for children." },
+      { property: "og:url", content: "https://amaresbigplanet.com/" },
+    ],
+    links: [
+      { rel: "canonical", href: "https://amaresbigplanet.com/" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: "Home",
+              item: "https://amaresbigplanet.com/",
+            },
+          ],
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "Amare's Big Planet kids videos",
+          itemListElement: [
+            "Learning ABCs I to L",
+            "Ocean Animals Adventure",
+            "BLAST OFF! Solar System Song",
+            "Live - Lofi Study Music for Kids",
+          ].map((name, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            name,
+          })),
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "VideoObject",
+              name: "Learning ABCs I to L",
+              description: "Learn the alphabet with Amare and friends!",
+              thumbnailUrl: "https://img.youtube.com/vi/_ctNtUXel6Q/maxresdefault.jpg",
+              embedUrl: "https://www.youtube.com/embed/_ctNtUXel6Q",
+              url: "https://amaresbigplanet.com/#music",
+            },
+            {
+              "@type": "VideoObject",
+              name: "Ocean Animals Adventure",
+              description: "Discover amazing creatures under the sea!",
+              thumbnailUrl: "https://img.youtube.com/vi/Ga_sef8vcIA/maxresdefault.jpg",
+              embedUrl: "https://www.youtube.com/embed/Ga_sef8vcIA",
+              url: "https://amaresbigplanet.com/#music",
+            },
+            {
+              "@type": "VideoObject",
+              name: "BLAST OFF! Solar System Song",
+              description: "Explore all the planets in our solar system!",
+              thumbnailUrl: "https://img.youtube.com/vi/8jCfqeT6iNc/maxresdefault.jpg",
+              embedUrl: "https://www.youtube.com/embed/8jCfqeT6iNc",
+              url: "https://amaresbigplanet.com/#music",
+            },
+            {
+              "@type": "VideoObject",
+              name: "Live - Lofi Study Music for Kids",
+              description: "Relaxing lofi study music for kids from Amare's Big Planet.",
+              thumbnailUrl: "https://img.youtube.com/vi/9ryVeXuqv-M/maxresdefault.jpg",
+              embedUrl: "https://www.youtube.com/embed/9ryVeXuqv-M",
+              url: "https://amaresbigplanet.com/#watch",
+            },
+          ],
+        }),
+      },
+    ],
+  }),
 });
 
-const navLinks = ["Shows", "Music", "Characters", "Games", "Parents"];
+const navLinks = ["Shows", "Music", "Characters", "Games", "Parents", "Blog"];
 
 const shows = [
   {
@@ -52,6 +139,12 @@ const characters = [
     desc: "Brave, energetic & loyal.",
   },
   {
+    name: "Trinity",
+    img: "https://res.cloudinary.com/dee2vqvzl/image/upload/v1778836745/1776066648018_Character_in_T_202604011430_1_jp2axc.jpg",
+    desc: "Nature lover. Grows plant barriers to protect friends.",
+    color: "#22C55E",
+  },
+  {
     name: "Dee",
     img: "https://res.cloudinary.com/dee2vqvzl/image/upload/v1778073916/1776066659252_Character_in_T_202604011430_1_1_ut0asi.jpg",
     desc: "Funny, smart & creative. Engineer & inventor.",
@@ -78,11 +171,12 @@ const SEARCH_DATA = [
   { title: "Galaxy Train Adventures", category: "Shows", emoji: "\u{1F682}", anchor: "#shows" },
   { title: "Ocean Animals ABC", category: "Shows", emoji: "\u{1F419}", anchor: "#shows" },
   { title: "BLAST OFF! Solar System", category: "Shows", emoji: "\u{1F680}", anchor: "#shows" },
-  { title: "ABC Song A to P", category: "Music", emoji: "\u{1F3B5}", anchor: "#music" },
+  { title: "Learning ABCs I to L", category: "Music", emoji: "\u{1F3B5}", anchor: "#music" },
   { title: "Numbers & Counting Song", category: "Music", emoji: "\u{1F522}", anchor: "#music" },
   { title: "Nursery Rhymes Collection", category: "Music", emoji: "\u{1F3B6}", anchor: "#music" },
   { title: "Amare", category: "Characters", emoji: "\u{2B50}", anchor: "#characters" },
   { title: "Xavier", category: "Characters", emoji: "\u{1F4AA}", anchor: "#characters" },
+  { title: "Trinity", category: "Characters", emoji: "\u{1F33F}", anchor: "#characters" },
   { title: "Dee", category: "Characters", emoji: "\u{1F9E9}", anchor: "#characters" },
   { title: "Neebah", category: "Characters", emoji: "\u{1F4A1}", anchor: "#characters" },
   { title: "Liz", category: "Characters", emoji: "\u{1F49C}", anchor: "#characters" },
@@ -188,10 +282,10 @@ function Index() {
     return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
 
-  // Donation popup: show after 3s, once per session
+  // Donation popup: delay it so mobile visitors can see the hero first.
   useEffect(() => {
     if (sessionStorage.getItem("donationPopupClosed")) return;
-    const timer = setTimeout(() => setDonationPopupVisible(true), 3000);
+    const timer = setTimeout(() => setDonationPopupVisible(true), 12000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -484,15 +578,21 @@ function Index() {
 
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-1">
-            {navLinks.map((l) => (
-              <a
-                key={l}
-                href={`#${l.toLowerCase()}`}
-                className={`nav-link${activeSection === l.toLowerCase() ? " active" : ""}`}
-              >
-                {l}
-              </a>
-            ))}
+            {navLinks.map((l) =>
+              l === "Blog" ? (
+                <Link key={l} to="/blog" className="nav-link">
+                  {l}
+                </Link>
+              ) : (
+                <a
+                  key={l}
+                  href={`#${l.toLowerCase()}`}
+                  className={`nav-link${activeSection === l.toLowerCase() ? " active" : ""}`}
+                >
+                  {l}
+                </a>
+              )
+            )}
             <Link
               to="/articles/"
               className="nav-link"
@@ -503,7 +603,7 @@ function Index() {
               to="/donate"
               className="nav-link-donate"
             >
-              Donate {"\u{1F499}"}
+              Support {"\u{1F499}"}
             </Link>
           </nav>
 
@@ -696,16 +796,27 @@ function Index() {
         }}
       >
         <nav className="md:hidden">
-          {navLinks.map((l) => (
-            <a
-              key={l}
-              href={`#${l.toLowerCase()}`}
-              className={`mobile-nav-link${activeSection === l.toLowerCase() ? " active" : ""}`}
-              onClick={() => setMenuOpen(false)}
-            >
-              {l}
-            </a>
-          ))}
+          {navLinks.map((l) =>
+            l === "Blog" ? (
+              <Link
+                key={l}
+                to="/blog"
+                className="mobile-nav-link"
+                onClick={() => setMenuOpen(false)}
+              >
+                {l}
+              </Link>
+            ) : (
+              <a
+                key={l}
+                href={`#${l.toLowerCase()}`}
+                className={`mobile-nav-link${activeSection === l.toLowerCase() ? " active" : ""}`}
+                onClick={() => setMenuOpen(false)}
+              >
+                {l}
+              </a>
+            )
+          )}
           <Link
             to="/articles/"
             className="mobile-nav-link"
@@ -719,7 +830,7 @@ function Index() {
             style={{ color: "#3B82F6" }}
             onClick={() => setMenuOpen(false)}
           >
-            Donate {"\u{1F499}"}
+            Support {"\u{1F499}"}
           </Link>
           <div style={{ padding: "16px 24px" }}>
             <a
@@ -788,8 +899,11 @@ function Index() {
           🎵 New songs every week!
           </span>
           <h1 className="font-display font-extrabold leading-[0.9] tracking-tight">
+            <span className="sr-only">
+              Amare's Big Planet Kids Learning Songs and Videos
+            </span>
             <span className="block text-2xl sm:text-3xl font-bold text-white mb-4 uppercase tracking-[0.3em]" style={{ textShadow: "0 4px 16px rgba(0,0,0,0.9), 0 2px 4px rgba(0,0,0,0.7)" }}>
-              Welcome to
+              Kids Learning Songs & Videos
             </span>
             <img
               src={amaresTitle}
@@ -802,7 +916,7 @@ function Index() {
             world made for little explorers and the grown-ups who love them.
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <div className="mt-8 pb-24 sm:pb-0 flex flex-wrap items-center justify-center gap-4">
             <a
               href="https://www.youtube.com/@amaresbigplanet"
               target="_blank"
@@ -842,7 +956,7 @@ function Index() {
             animation: "pulse-dot 2s infinite",
           }} />
           <p style={{ fontSize: 13, color: "rgba(255,255,255,0.9)", fontWeight: 500, margin: 0 }}>
-            💙 <strong style={{ color: "#fff" }}>Help Amaré reach more kids!</strong> Your donation brings free adventures to children all over the world.
+            💙 <strong style={{ color: "#fff" }}>Help Amaré reach more kids!</strong> Your support brings free adventures to children all over the world.
           </p>
           <Link to="/donate" style={{
             background: "#e02020", color: "white", borderRadius: 16,
@@ -853,7 +967,7 @@ function Index() {
             onMouseEnter={e => { e.currentTarget.style.background = "#c01010"; e.currentTarget.style.transform = "scale(1.05)"; }}
             onMouseLeave={e => { e.currentTarget.style.background = "#e02020"; e.currentTarget.style.transform = "scale(1)"; }}
           >
-            Donate Now →
+            Support Now →
           </Link>
           <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
             <div style={{ display: "flex" }}>
@@ -871,7 +985,7 @@ function Index() {
                 }}>{a.initials}</span>
               ))}
             </div>
-            <span style={{ fontSize: 11, color: "rgba(255,255,255,0.6)" }}>127 donated</span>
+            <span style={{ fontSize: 11, color: "rgba(255,255,255,0.6)" }}>127 supporters</span>
           </div>
         </div>
       </section>
@@ -924,7 +1038,7 @@ function Index() {
           </div>
           <div className="grid sm:grid-cols-3" style={{ gap: "16px" }}>
             {[
-              { id: "eyEmlXfgIoA", title: "ABC Song A to P", desc: "Learn the alphabet with Amaré and friends!" },
+              { id: "_ctNtUXel6Q", title: "Learning ABCs I to L", desc: "Learn the alphabet with Amaré and friends!" },
               { id: "Ga_sef8vcIA", title: "Ocean Animals Adventure", desc: "Discover amazing creatures under the sea!" },
               { id: "8jCfqeT6iNc", title: "BLAST OFF! Solar System Song", desc: "Explore all the planets in our solar system!" },
               { id: "hic5LyxRj2U", title: "Sayari Zote za Mfumo wa Jua 🌍🚀", desc: "Wimbo wa Sayari kwa Watoto | Jifunze Sayari kwa Kiswahili" },
@@ -945,6 +1059,7 @@ function Index() {
                   <iframe
                     src={`https://www.youtube.com/embed/${video.id}`}
                     title={video.title}
+                    loading="lazy"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                     className="w-full h-full border-0"
@@ -1101,6 +1216,7 @@ function Index() {
                   <iframe
                     src="https://www.youtube.com/embed/9ryVeXuqv-M"
                     title="Live - Lofi Study Music for Kids"
+                    loading="lazy"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                     className="w-full h-full border-0"
@@ -1228,7 +1344,7 @@ function Index() {
               </div>
               <div className="flex gap-2">
                 <span className="rounded-xl text-white font-bold" style={{ fontSize: "11px", padding: "4px 10px", background: "#00BFB3" }}>
-                  Ages 3-13
+                  Ages 1-10
                 </span>
                 <span className="rounded-xl text-white font-bold" style={{ fontSize: "11px", padding: "4px 10px", background: "#7c3aed" }}>
                   Kid Safe
@@ -1263,18 +1379,22 @@ function Index() {
               <a href="https://www.youtube.com/@amaresbigplanet?sub_confirmation=1" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--sunshine)] transition-colors">Subscribe</a>
             </nav>
           </div>
-          <div className="mt-6 flex justify-center gap-3.5">
-            <a href="https://www.youtube.com/@amaresbigplanet" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[#FF0000] text-white text-sm font-semibold px-5 py-2.5 hover:opacity-90 transition-all">
+          <div className="mt-6 grid grid-cols-2 sm:flex sm:flex-wrap justify-center gap-3 max-w-sm sm:max-w-none mx-auto">
+            <a href="https://www.youtube.com/@amaresbigplanet" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full bg-[#FF0000] text-white text-sm font-semibold px-5 py-2.5 hover:opacity-90 transition-all">
               <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
               YouTube
             </a>
-            <a href="https://www.instagram.com/_amaresbigplanet" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full text-white text-sm font-semibold px-5 py-2.5 hover:opacity-90 transition-all" style={{ background: "linear-gradient(135deg, #833AB4, #E1306C, #F77737)" }}>
+            <a href="https://www.instagram.com/_amaresbigplanet" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full text-white text-sm font-semibold px-5 py-2.5 hover:opacity-90 transition-all" style={{ background: "linear-gradient(135deg, #833AB4, #E1306C, #F77737)" }}>
               <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
               Instagram
             </a>
-            <a href="https://www.tiktok.com/@amaresbigplanet" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[#010101] text-white text-sm font-semibold px-5 py-2.5 hover:opacity-90 transition-all">
+            <a href="https://www.tiktok.com/@amaresbigplanet" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full bg-[#010101] text-white text-sm font-semibold px-5 py-2.5 hover:opacity-90 transition-all">
               <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
               TikTok
+            </a>
+            <a href="https://www.roblox.com/share?code=c2c98ee6659b1c48aaffb9f3efb3fe87&type=ExperienceDetails&stamp=1778764599349" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0066FF] text-white text-sm font-semibold px-5 py-2.5 hover:opacity-90 transition-all">
+              <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M5.164 0L0 18.627 18.836 24 24 5.373 5.164 0zM10.291 15.073l-1.364-4.782 4.782 1.364-3.418 3.418z"/></svg>
+              Roblox
             </a>
           </div>
           <div className="mt-8 border-t pt-4" style={{ borderColor: "rgba(255,255,255,0.2)" }}>
@@ -1316,7 +1436,7 @@ function Index() {
           }}>
             <button
               onClick={closeDonationPopup}
-              aria-label="Close donation popup"
+              aria-label="Close support popup"
               style={{
                 position: "absolute",
                 top: 8,
@@ -1335,7 +1455,7 @@ function Index() {
               💙 Help Amaré reach more kids!
             </p>
             <p style={{ fontSize: 13, color: "#555", margin: "0 0 12px", lineHeight: 1.4 }}>
-              Your donation brings free learning adventures to children all over the world.
+              Your support brings free learning adventures to children all over the world.
             </p>
             <Link
               to="/donate"
@@ -1353,7 +1473,7 @@ function Index() {
               onMouseEnter={e => { e.currentTarget.style.background = "#c01010"; e.currentTarget.style.transform = "scale(1.05)"; }}
               onMouseLeave={e => { e.currentTarget.style.background = "#e02020"; e.currentTarget.style.transform = "scale(1)"; }}
             >
-              Donate Now →
+              Support Now →
             </Link>
             <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 10 }}>
               <div style={{ display: "flex" }}>
@@ -1371,7 +1491,7 @@ function Index() {
                   }}>{a.initials}</span>
                 ))}
               </div>
-              <span style={{ fontSize: 11, color: "#888" }}>127 people donated this month</span>
+              <span style={{ fontSize: 11, color: "#888" }}>127 supporters this month</span>
             </div>
           </div>
         </>

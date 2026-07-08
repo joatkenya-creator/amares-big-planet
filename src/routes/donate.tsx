@@ -7,45 +7,22 @@ export const Route = createFileRoute("/donate")({
   component: DonatePage,
   head: () => ({
     meta: [
-      { title: "Donate — Amaré's Big Planet" },
-      { name: "description", content: "Support Amaré's Big Planet — help create free, inclusive educational content for kids aged 3-13." },
+      { title: "Support — Amaré's Big Planet" },
+      { name: "description", content: "Support Amaré's Big Planet — help create free, inclusive educational content for kids aged 1-10." },
     ],
-    scripts: [
-      { src: "https://js.paystack.co/v1/inline.js" },
-    ],
+    scripts: [],
   }),
 });
 
-const FALLBACK_RATES: Record<string, number> = {
-  USD: 1, GBP: 0.79, EUR: 0.92, CAD: 1.36,
-  AUD: 1.53, KES: 129, NGN: 1550, ZAR: 18.5, GHS: 15.2,
-};
-
-const CURRENCY_META = [
-  { code: "USD", flag: "🇺🇸", label: "US Dollar", symbol: "$" },
-  { code: "GBP", flag: "🇬🇧", label: "British Pound", symbol: "£" },
-  { code: "EUR", flag: "🇪🇺", label: "Euro", symbol: "€" },
-  { code: "CAD", flag: "🇨🇦", label: "Canadian Dollar", symbol: "C$" },
-  { code: "AUD", flag: "🇦🇺", label: "Australian Dollar", symbol: "A$" },
-  { code: "KES", flag: "🇰🇪", label: "Kenyan Shilling", symbol: "KSh" },
-  { code: "NGN", flag: "🇳🇬", label: "Nigerian Naira", symbol: "₦" },
-  { code: "ZAR", flag: "🇿🇦", label: "South African Rand", symbol: "R" },
-  { code: "GHS", flag: "🇬🇭", label: "Ghanaian Cedi", symbol: "GH₵" },
-];
-
-const ONE_TIME_AMOUNTS = [55, 75, 100, 150];
-
-const RECURRING_TIERS = [
-  { name: "Bronze", amount: 100, perk: "Name in video credits" },
-  { name: "Silver", amount: 250, perk: "Early access + credits" },
-  { name: "Gold", amount: 500, perk: "Your child in a song" },
-  { name: "Platinum", amount: 1000, perk: "Custom character cameo" },
-];
-
 const SUPPORTERS = [
-  { name: "Catherine W.", initials: "CW", color: "#3B82F6", tier: "Gold", comment: "My kids love every episode!" },
+  { name: "Catherine W.", initials: "CW", color: "#3B82F6", tier: "\u2B50 Star Creator", comment: "My kids love every episode!" },
   { name: "Keziah K.", initials: "KK", color: "#22C55E", tier: "$100", comment: "Representation matters. Thank you!" },
-  { name: "Amina K.", initials: "AK", color: "#E24B4A", tier: "Silver", comment: "Educational AND fun!" },
+  { name: "Amina K.", initials: "AK", color: "#E24B4A", tier: "\u{1F30D} Galaxy Builder", comment: "Educational AND fun!" },
+  { name: "James M.", initials: "JM", color: "#F59E0B", tier: "\u{1F680} Explorer · $25", comment: "Love what you're doing for kids!" },
+  { name: "Sarah O.", initials: "SO", color: "#8B5CF6", tier: "\u2B50 Star Creator · $100", comment: "My daughter watches every episode!" },
+  { name: "David N.", initials: "DN", color: "#06B6D4", tier: "\u{1F30D} Galaxy Builder · $50", comment: "Keep up the amazing work!" },
+  { name: "Lisa W.", initials: "LW", color: "#EC4899", tier: "\u{1F680} Explorer · $30", comment: "Amaré is my son's favorite!" },
+  { name: "Peter K.", initials: "PK", color: "#10B981", tier: "\u2B50 Star Creator · $150", comment: "Education through fun, brilliant!" },
 ];
 
 const DONATE_NAV_LINKS = [
@@ -53,24 +30,47 @@ const DONATE_NAV_LINKS = [
   { label: "Programs", href: "/#programs" },
   { label: "Impact", href: "/#impact" },
   { label: "Stories", href: "/#stories" },
-  { label: "Donate", href: "/donate" },
+  { label: "Blog", href: "/blog" },
+  { label: "Support", href: "/donate" },
   { label: "Contact", href: "/#contact" },
 ];
 
 function DonatePage() {
-  const [mode, setMode] = useState<"once" | "recurring">("once");
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [customAmount, setCustomAmount] = useState("0");
-  const [dedicate, setDedicate] = useState(false);
-  const [showComment, setShowComment] = useState(false);
-  const [comment, setComment] = useState("");
-  const [email, setEmail] = useState("");
-  const [emailError, setEmailError] = useState(false);
+  const [copiedField, setCopiedField] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [currencyCode, setCurrencyCode] = useState("USD");
-  const [rates, setRates] = useState<Record<string, number>>(FALLBACK_RATES);
   const [scrolled, setScrolled] = useState(false);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [amount, setAmount] = useState("");
+  const [mpesaLoading, setMpesaLoading] = useState(false);
+  const [mpesaStatus, setMpesaStatus] = useState<"idle" | "sent" | "error">("idle");
+  const [mpesaMessage, setMpesaMessage] = useState("");
+
+  async function handleMpesaPay() {
+    if (!phoneNumber || !amount) return;
+    setMpesaLoading(true);
+    setMpesaStatus("idle");
+    try {
+      const res = await fetch("/api/mpesa-stk", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phoneNumber, amount: Number(amount) }),
+      });
+      const data = await res.json();
+      if (data.ResponseCode === "0") {
+        setMpesaStatus("sent");
+        setMpesaMessage("Check your phone for the M-Pesa prompt and enter your PIN.");
+      } else {
+        setMpesaStatus("error");
+        setMpesaMessage(data.errorMessage || data.CustomerMessage || "Something went wrong. Try again.");
+      }
+    } catch {
+      setMpesaStatus("error");
+      setMpesaMessage("Network error. Please try again.");
+    } finally {
+      setMpesaLoading(false);
+    }
+  }
 
   useEffect(() => {
     function handleScroll() {
@@ -80,127 +80,28 @@ function DonatePage() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    const fetchRates = async () => {
-      try {
-        const API_KEY = import.meta.env.VITE_EXCHANGE_RATE_API_KEY;
-        const response = await fetch(
-          `https://v6.exchangerate-api.com/v6/${API_KEY}/latest/USD`
-        );
-        const data = await response.json();
-        if (data.result === 'success') {
-          setRates(data.conversion_rates);
-        }
-      } catch (error) {
-        setRates(FALLBACK_RATES);
-      }
-    };
-    fetchRates();
-  }, []);
-
-  const meta = CURRENCY_META.find((c) => c.code === currencyCode) ?? CURRENCY_META[0];
-  const currency = { ...meta, rate: rates[currencyCode] ?? 1 };
-
-  // Single source of truth: always read from customAmount
-  const inputValue = parseFloat(customAmount) || 0;
-
-  const formatNumber = (n: number) =>
-    n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-
-  const isCustom = selectedIndex === -1;
-
-  const conversionText = (() => {
-    if (inputValue === 0) return "";
-    const kesRate = rates.KES ?? 129;
-    if (!isCustom) {
-      // Tier selected — amount is always USD
-      const kshAmount = inputValue * kesRate;
-      return `≈ KSh ${formatNumber(kshAmount)}`;
-    }
-    // Custom amount — in selected currency
-    const usdAmount = inputValue / currency.rate;
-    const kshAmount = usdAmount * kesRate;
-    if (currency.code === "USD") return `≈ KSh ${formatNumber(kshAmount)}`;
-    if (currency.code === "KES") return `≈ $${formatNumber(usdAmount)} USD`;
-    return `≈ $${formatNumber(usdAmount)} USD · KSh ${formatNumber(kshAmount)}`;
-  })();
-
-  const buttonText = (() => {
-    const suffix = mode === "recurring" ? "/month" : "";
-    const sym = isCustom ? currency.symbol : "$";
-    return `\u{1F499} Donate ${sym}${formatNumber(inputValue)}${suffix}`;
-  })();
-
-  // Reset to 0 when mode changes
-  useEffect(() => {
-    setCustomAmount("0");
-    setSelectedIndex(0);
-  }, [mode]);
-
-  // When a tier is selected, write the converted amount into the input
-  function selectTier(i: number) {
-    setSelectedIndex(i);
-    const amt = mode === "once" ? ONE_TIME_AMOUNTS[i] : RECURRING_TIERS[i].amount;
-    setCustomAmount(String(amt));
-  }
-
-  function handleDonate() {
-    if (!email) {
-      setEmailError(true);
-      return;
-    }
-    setEmailError(false);
-    initiatePaystack();
-  }
-
-  function initiatePaystack() {
-    const amountInSmallestUnit = Math.round(inputValue * 100);
-
-    const ref = `ABP-${Date.now()}-${Math.random().toString(36).substring(2, 8)}`;
-
-    const PaystackPop = (window as any).PaystackPop;
-    if (!PaystackPop) {
-      alert("Payment system is loading. Please try again in a moment.");
-      return;
-    }
-
-    const handler = PaystackPop.setup({
-      key: "pk_test_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-      email: email,
-      amount: amountInSmallestUnit,
-      currency: isCustom ? currencyCode : "USD",
-      ref: ref,
-      metadata: {
-        custom_fields: [
-          { display_name: "Donation Type", variable_name: "donation_type", value: mode },
-          ...(mode === "recurring" ? [{ display_name: "Tier", variable_name: "tier", value: RECURRING_TIERS[selectedIndex].name }] : []),
-          ...(dedicate ? [{ display_name: "Dedicated", variable_name: "dedicated", value: "yes" }] : []),
-          ...(comment ? [{ display_name: "Comment", variable_name: "comment", value: comment }] : []),
-        ],
-      },
-      callback: (response: any) => {
-        alert(`Thank you for your donation! Reference: ${response.reference}`);
-      },
-      onClose: () => {},
+  function copyToClipboard(text: string, field: string) {
+    navigator.clipboard.writeText(text).then(() => {
+      setCopiedField(field);
+      setTimeout(() => setCopiedField(null), 2000);
     });
-    handler.openIframe();
   }
-
-  const youtubeVideoId = "gGeTgljHdA4";
 
   return (
     <div style={{ minHeight: "100vh", fontFamily: "sans-serif", display: "flex", flexDirection: "column" }}>
       {/* NAVBAR */}
       <nav
         role="navigation"
-        aria-label="Donation page navigation"
+        aria-label="Support page navigation"
         style={{
-          background: "rgba(255,255,255,0.97)",
-          backdropFilter: "blur(10px)",
+          background: scrolled ? "rgba(255,255,255,0.97)" : "transparent",
+          backdropFilter: scrolled ? "blur(10px)" : "none",
           boxShadow: scrolled ? "0 2px 12px rgba(0,0,0,0.1)" : "none",
-          transition: "box-shadow 0.3s ease",
-          position: "sticky",
+          transition: "background 0.3s ease, box-shadow 0.3s ease",
+          position: "fixed",
           top: 0,
+          left: 0,
+          right: 0,
           zIndex: 1000,
         }}
       >
@@ -212,18 +113,18 @@ function DonatePage() {
           <Link to="/" aria-label="Go to homepage" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none", flexShrink: 0 }}>
             <img src={amaresLogo} alt="" style={{ width: "48px", height: "48px", borderRadius: "50%", objectFit: "cover", border: "2px solid #0d1b3e" }} />
             <div style={{ display: "flex", flexDirection: "column" }}>
-              <img src={amaresTitle} alt="Amare's Big Planet" className="donate-nav-title" style={{ height: "40px", width: "auto" }} />
+              <img src={amaresTitle} alt="Amare's Big Planet" className="donate-nav-title" style={{ height: "40px", width: "auto", filter: scrolled ? "none" : "drop-shadow(0 1px 3px rgba(0,0,0,0.7))", transition: "filter 0.3s ease" }} />
             </div>
           </Link>
 
           {/* Center nav links — desktop only */}
-          <div className="donate-nav-links" style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+          <div className={`donate-nav-links${scrolled ? "" : " donate-nav-links--transparent"}`} style={{ display: "flex", alignItems: "center", gap: "4px" }}>
             {DONATE_NAV_LINKS.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
-                className={`donate-nav-link${link.label === "Donate" ? " donate-nav-link--active" : ""}`}
-                aria-current={link.label === "Donate" ? "page" : undefined}
+                className={`donate-nav-link${link.label === "Support" ? " donate-nav-link--active" : ""}`}
+                aria-current={link.label === "Support" ? "page" : undefined}
               >
                 {link.label}
               </a>
@@ -235,9 +136,11 @@ function DonatePage() {
             {/* Secure trust pill — desktop only */}
             <div className="donate-nav-trust" style={{
               display: "flex", alignItems: "center", gap: "6px",
-              background: "#f0fdf4", border: "1px solid #bbf7d0",
+              background: scrolled ? "#f0fdf4" : "rgba(255,255,255,0.15)",
+              border: scrolled ? "1px solid #bbf7d0" : "1px solid rgba(255,255,255,0.3)",
               borderRadius: "20px", padding: "5px 12px", fontSize: "12px",
-              fontWeight: 600, color: "#166534",
+              fontWeight: 600, color: scrolled ? "#166534" : "#fff",
+              transition: "all 0.3s ease",
             }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22C55E" strokeWidth="2" strokeLinecap="round" style={{ flexShrink: 0 }}>
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
@@ -246,11 +149,11 @@ function DonatePage() {
               Secure
             </div>
 
-            {/* Donate CTA button */}
+            {/* Support CTA button */}
             <a
               href="#donate-form"
               className="donate-nav-cta"
-              aria-label="Donate now"
+              aria-label="Support now"
               style={{
                 display: "inline-flex", alignItems: "center", gap: "6px",
                 background: "#e0001b", color: "white", fontSize: "14px",
@@ -260,7 +163,7 @@ function DonatePage() {
               onMouseEnter={(e) => { e.currentTarget.style.background = "#b80015"; e.currentTarget.style.transform = "translateY(-1px)"; }}
               onMouseLeave={(e) => { e.currentTarget.style.background = "#e0001b"; e.currentTarget.style.transform = "translateY(0)"; }}
             >
-              Donate
+              Support
             </a>
 
             {/* Hamburger — mobile only */}
@@ -276,17 +179,17 @@ function DonatePage() {
               }}
             >
               <span style={{
-                display: "block", width: "22px", height: "2px", background: "#0d1b3e",
+                display: "block", width: "22px", height: "2px", background: scrolled ? "#0d1b3e" : "#fff",
                 borderRadius: "2px", transition: "all 0.3s",
                 transform: mobileMenuOpen ? "rotate(45deg) translateY(6px)" : "none",
               }} />
               <span style={{
-                display: "block", width: "22px", height: "2px", background: "#0d1b3e",
+                display: "block", width: "22px", height: "2px", background: scrolled ? "#0d1b3e" : "#fff",
                 borderRadius: "2px", transition: "all 0.3s",
                 opacity: mobileMenuOpen ? 0 : 1,
               }} />
               <span style={{
-                display: "block", width: "22px", height: "2px", background: "#0d1b3e",
+                display: "block", width: "22px", height: "2px", background: scrolled ? "#0d1b3e" : "#fff",
                 borderRadius: "2px", transition: "all 0.3s",
                 transform: mobileMenuOpen ? "rotate(-45deg) translateY(-6px)" : "none",
               }} />
@@ -313,8 +216,8 @@ function DonatePage() {
                 onClick={() => setMobileMenuOpen(false)}
                 style={{
                   display: "block", padding: "12px 0",
-                  fontSize: "15px", fontWeight: link.label === "Donate" ? 700 : 500,
-                  color: link.label === "Donate" ? "#e85d04" : "#0d1b3e",
+                  fontSize: "15px", fontWeight: link.label === "Support" ? 700 : 500,
+                  color: link.label === "Support" ? "#e85d04" : "#0d1b3e",
                   textDecoration: "none",
                   borderBottom: "1px solid #f3f4f6",
                 }}
@@ -327,33 +230,36 @@ function DonatePage() {
       </nav>
 
       {/* MAIN CONTENT — Split Screen */}
-      <div style={{ flex: 1, position: "relative", overflow: "hidden", minHeight: "calc(100vh - 71px)" }}>
+      <div style={{ flex: 1, position: "relative", overflow: "hidden", minHeight: "100vh" }}>
 
-        {/* Video Background — Full Width (direct child of page wrapper) */}
+        {/* Video Background — HTML5 video (autoplays on mobile with playsInline + muted) */}
         <video
           autoPlay
           muted
           loop
           playsInline
           style={{
-            position: "absolute", top: 0, left: 0,
+            position: "absolute",
+            top: 0, left: 0,
             width: "100%", height: "100%",
-            objectFit: "cover", pointerEvents: "none", zIndex: 0,
+            objectFit: "cover",
+            zIndex: 0,
+            pointerEvents: "none",
           }}
         >
-          <source src="/videos/donation-bg.mp4" type="video/mp4" />
+          <source src="https://res.cloudinary.com/dee2vqvzl/video/upload/v1779646039/Shape_the_Future_of_Learning__Sponsor_Amare_s_Big_Planet_1_dbmrgt.mp4" type="video/mp4" />
         </video>
 
         {/* Dark overlay — full width */}
         <div style={{
           position: "absolute", top: 0, left: 0,
           width: "100%", height: "100%",
-          background: "linear-gradient(to right, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.15) 100%)",
+          background: "rgba(0,0,0,0.5)",
           zIndex: 1,
         }} />
 
         {/* Content layer — flex row above video + overlay */}
-        <div className="donate-content-row" style={{ position: "relative", zIndex: 2, display: "flex", minHeight: "calc(100vh - 71px)" }}>
+        <div className="donate-content-row" style={{ position: "relative", zIndex: 2, display: "flex", minHeight: "100vh", paddingTop: "71px" }}>
 
         {/* LEFT SIDE — Hero */}
         <div className="donate-hero" style={{
@@ -378,7 +284,7 @@ function DonatePage() {
             }}>CW</div>
             <div>
               <div style={{ fontSize: "12px", fontWeight: 600, color: "#0d1b3e" }}>
-                Catherine W. just donated $50{" "}
+                Catherine W. just contributed $50{" "}
                 <span style={{ color: "#22c55e", fontSize: "8px" }}>{"\u25CF"}</span>
               </div>
             </div>
@@ -413,7 +319,7 @@ function DonatePage() {
               fontSize: "19px", color: "rgba(255,255,255,0.92)",
               maxWidth: "560px", lineHeight: 1.6, marginBottom: "32px",
             }}>
-              Your donation brings free songs, stories, and learning adventures to kids aged 3&ndash;13 around the world. Every dollar helps Amar&eacute; and the Gear Crew reach more little explorers.
+              Your support brings free songs, stories, and learning adventures to kids aged 1&ndash;10 around the world. Every dollar helps Amar&eacute; and the Gear Crew reach more little explorers.
             </p>
 
             {/* Dual CTAs */}
@@ -443,7 +349,7 @@ function DonatePage() {
                 onMouseEnter={(e) => { e.currentTarget.style.background = "#ff8c42"; e.currentTarget.style.transform = "translateY(-2px)"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = "#e85d04"; e.currentTarget.style.transform = "translateY(0)"; }}
               >
-                {"\u2764"} Donate Now {"\u2192"}
+                {"\u2764"} Support Now {"\u2192"}
               </button>
               <a
                 href="https://www.youtube.com/@AmaresBigPlanet"
@@ -483,6 +389,31 @@ function DonatePage() {
                 </div>
               ))}
             </div>
+
+            {/* Social Proof Bar */}
+            <div className="donate-social-proof-bar" style={{
+              display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "10px",
+              marginTop: "24px", paddingTop: "20px",
+            }}>
+              {[
+                { icon: <svg width="26" height="26" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="5" width="24" height="18" rx="5" fill="#FF0000"/><polygon points="11.5,9.5 11.5,18.5 19.5,14" fill="#FFFFFF"/></svg>, number: "16,400+", label: "YouTube subscribers" },
+                { icon: "\uD83C\uDF0D", number: "50+", label: "Countries watching" },
+                { icon: "\uD83C\uDFAC", number: "191", label: "Episodes created" },
+                { icon: "\u2B50", number: "4.9\u2605", label: "Parent rating" },
+              ].map((stat) => (
+                <div key={stat.label} style={{
+                  display: "flex", flexDirection: "column", alignItems: "center",
+                  gap: "4px", padding: "10px 6px",
+                  background: "rgba(255,255,255,0.08)", backdropFilter: "blur(4px)",
+                  border: "1px solid rgba(255,255,255,0.12)",
+                  borderRadius: "10px", textAlign: "center",
+                }}>
+                  <span style={{ fontSize: "18px", lineHeight: 1 }}>{stat.icon}</span>
+                  <span style={{ fontSize: "15px", fontWeight: 700, color: "#ffd166", lineHeight: 1.2 }}>{stat.number}</span>
+                  <span style={{ fontSize: "10px", color: "rgba(255,255,255,0.8)", fontWeight: 500, lineHeight: 1.2 }}>{stat.label}</span>
+                </div>
+              ))}
+            </div>
           </div>
 
         </div>
@@ -500,212 +431,188 @@ function DonatePage() {
           display: "flex", flexDirection: "column", justifyContent: "center",
           position: "relative",
         }}>
-          {/* Heading */}
+          {/* Mission Statement + Heading */}
+          <p style={{ textAlign: "center", fontSize: "12px", color: "#777", lineHeight: 1.5, marginBottom: "8px", fontWeight: 400 }}>
+            Help us build educational adventures that inspire children around the world through music, storytelling, animation, and imagination.
+          </p>
           <h2 style={{ textAlign: "center", fontSize: "16px", fontWeight: 700, color: "#1a1a2e", marginBottom: "16px" }}>
             Make an impact today!
           </h2>
 
-          {/* Toggle */}
+          {/* Patreon Section */}
           <div style={{
-            display: "flex", background: "#f0f0f0", borderRadius: "24px", padding: "3px", marginBottom: "16px",
+            background: "linear-gradient(135deg, #f5f5f5, #fafafa)", borderRadius: "12px",
+            border: "1.5px solid #222", padding: "20px", marginBottom: "0",
           }}>
-            {(["once", "recurring"] as const).map((m) => (
-              <button
-                key={m}
-                onClick={() => setMode(m)}
+            <div style={{
+              display: "flex", alignItems: "center", gap: "10px",
+              marginBottom: "6px",
+            }}>
+              <div style={{
+                width: "36px", height: "36px", borderRadius: "8px",
+                background: "#000", display: "flex", alignItems: "center", justifyContent: "center",
+                flexShrink: 0,
+              }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="15.5" cy="8.5" r="6.5" />
+                  <rect x="2" y="2" width="3" height="20" />
+                </svg>
+              </div>
+              <h3 style={{ fontSize: "17px", fontWeight: 700, color: "#1a1a2e", margin: 0 }}>
+                Support via Patreon
+              </h3>
+            </div>
+            <p style={{ fontSize: "12px", color: "#666", margin: "0 0 14px 0", lineHeight: 1.4 }}>
+              For supporters worldwide — pay with card, PayPal, or Apple Pay
+            </p>
+
+            <a
+              href="https://www.patreon.com/c/AmaresBigPlanet"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "block", width: "100%", textAlign: "center",
+                background: "#000", color: "white", fontSize: "16px",
+                fontWeight: 700, padding: "14px 24px", borderRadius: "28px",
+                textDecoration: "none", transition: "all 0.2s",
+                marginBottom: "14px", boxSizing: "border-box",
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = "#333"; e.currentTarget.style.transform = "translateY(-1px)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = "#000"; e.currentTarget.style.transform = "translateY(0)"; }}
+            >
+              Become a Patron
+            </a>
+
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
+              {[
+                { emoji: "🚀", name: "Explorer", price: "$10/mo" },
+                { emoji: "🌍", name: "Galaxy Builder", price: "$25/mo" },
+                { emoji: "⭐", name: "Star Creator", price: "$50/mo" },
+                { emoji: "🪐", name: "Planet Champion", price: "$100/mo" },
+              ].map((tier) => (
+                <span key={tier.name} style={{
+                  display: "inline-flex", alignItems: "center", gap: "4px",
+                  background: "white", border: "1px solid #ddd", borderRadius: "16px",
+                  padding: "4px 10px", fontSize: "11px", fontWeight: 600, color: "#444",
+                }}>
+                  {tier.emoji} {tier.name} — {tier.price}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Divider with "or" */}
+          <div style={{
+            display: "flex", alignItems: "center", gap: "12px",
+            margin: "16px 0",
+          }}>
+            <div style={{ flex: 1, height: "1px", background: "#ddd" }} />
+            <span style={{ fontSize: "13px", color: "#999", fontWeight: 500 }}>or</span>
+            <div style={{ flex: 1, height: "1px", background: "#ddd" }} />
+          </div>
+
+          {/* M-Pesa Payment Section */}
+          <div style={{
+            background: "linear-gradient(135deg, #e8f5e9, #f1f8e9)", borderRadius: "12px",
+            border: "1.5px solid #4CAF50", padding: "20px", marginBottom: "16px",
+          }}>
+            <div style={{
+              display: "flex", alignItems: "center", gap: "10px",
+              background: "#4CAF50", borderRadius: "10px",
+              padding: "12px 16px", marginBottom: "6px",
+            }}>
+              <img src="/safcom.png" alt="M-Pesa" style={{ height: "40px", width: "auto", flexShrink: 0 }} />
+              <h3 style={{ fontSize: "17px", fontWeight: 700, color: "white", margin: 0 }}>
+                Support via M-Pesa
+              </h3>
+            </div>
+            <p style={{ fontSize: "12px", color: "#666", margin: "0 0 14px 0", lineHeight: 1.4 }}>
+              For supporters in Kenya
+            </p>
+
+
+            {/* Phone + Amount inputs */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginBottom: "12px" }}>
+              <input
+                type="tel"
+                placeholder="Phone number (e.g. 0712345678)"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
                 style={{
-                  flex: 1, padding: "8px 0", borderRadius: "22px", border: "none", cursor: "pointer",
-                  fontSize: "13px", fontWeight: 600, transition: "all 0.2s",
-                  background: mode === m ? "#1a1a2e" : "transparent",
-                  color: mode === m ? "white" : "#555",
+                  width: "100%", padding: "12px 14px", borderRadius: "8px",
+                  border: "1px solid #C8E6C9", fontSize: "15px", boxSizing: "border-box",
+                  outline: "none", background: "white",
                 }}
-              >
-                {m === "once" ? "Give once" : "Recurring \u{1F499}"}
-              </button>
-            ))}
-          </div>
-
-          {/* Tier Grid */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", marginBottom: "16px" }}>
-            {mode === "once"
-              ? ONE_TIME_AMOUNTS.map((amt, i) => {
-                  const isActive = selectedIndex === i && inputValue === amt;
-                  return (
-                    <button
-                      key={amt}
-                      onClick={() => selectTier(i)}
-                      style={{
-                        padding: "12px 8px", borderRadius: "10px", cursor: "pointer",
-                        border: isActive ? "1.5px solid #3B82F6" : "1.5px solid #e0e0e0",
-                        background: isActive ? "#f0f6ff" : "white",
-                        textAlign: "center", transition: "all 0.15s",
-                      }}
-                    >
-                      <div style={{ fontSize: "16px", fontWeight: 700, color: "#1a1a2e" }}>${amt}</div>
-                    </button>
-                  );
-                })
-              : RECURRING_TIERS.map((tier, i) => {
-                  const isActive = selectedIndex === i && inputValue === tier.amount;
-                  return (
-                    <button
-                      key={tier.name}
-                      onClick={() => selectTier(i)}
-                      style={{
-                        padding: "10px 8px", borderRadius: "10px", cursor: "pointer",
-                        border: isActive ? "1.5px solid #3B82F6" : "1.5px solid #e0e0e0",
-                        background: isActive ? "#f0f6ff" : "white",
-                        textAlign: "center", transition: "all 0.15s",
-                      }}
-                    >
-                      <div style={{ fontSize: "11px", fontWeight: 700, color: "#3B82F6" }}>{tier.name}</div>
-                      <div style={{ fontSize: "15px", fontWeight: 700, color: "#1a1a2e" }}>${tier.amount}/mo</div>
-                      <div style={{ fontSize: "10px", color: "#888", marginTop: "2px" }}>{tier.perk}</div>
-                    </button>
-                  );
-                })}
-          </div>
-
-          {/* Custom Amount with Currency Dropdown */}
-          <div style={{
-            border: "1.5px solid #e0e0e0", borderRadius: "10px", padding: "10px", marginBottom: "4px",
-            transition: "border-color 0.2s", background: "white",
-          }}>
-            <div style={{ fontSize: "11px", color: "#888", marginBottom: "6px" }}>Or enter custom amount</div>
-            <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-              <span style={{ fontSize: "15px", color: "#1a1a2e", fontWeight: 600 }}>{currency.symbol}</span>
+              />
               <input
                 type="number"
-                min="0"
-                placeholder="0.00"
-                value={customAmount}
-                onChange={(e) => {
-                  setCustomAmount(e.target.value);
-                  setSelectedIndex(-1);
-                }}
-                onFocus={(e) => {
-                  const parent = e.target.parentElement?.parentElement;
-                  if (parent) parent.style.borderColor = "#3B82F6";
-                }}
-                onBlur={(e) => {
-                  const parent = e.target.parentElement?.parentElement;
-                  if (parent) parent.style.borderColor = "#e0e0e0";
-                }}
+                placeholder="Amount (KES)"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                min="1"
                 style={{
-                  flex: 1, border: "none", outline: "none", fontSize: "15px", fontWeight: 600,
-                  background: "transparent", minWidth: 0,
+                  width: "100%", padding: "12px 14px", borderRadius: "8px",
+                  border: "1px solid #C8E6C9", fontSize: "15px", boxSizing: "border-box",
+                  outline: "none", background: "white",
                 }}
               />
-              <select
-                value={currencyCode}
-                onChange={(e) => {
-                  setCurrencyCode(e.target.value);
-                  setSelectedIndex(-1);
-                }}
-                style={{
-                  padding: "4px 6px", borderRadius: "6px",
-                  border: "1px solid #e0e0e0", fontSize: "13px", fontWeight: 600,
-                  color: "#1a1a2e", background: "#f5f5f5", outline: "none",
-                  cursor: "pointer", flexShrink: 0,
-                }}
-              >
-                {CURRENCY_META.map((c) => (
-                  <option key={c.code} value={c.code}>
-                    {c.flag} {c.code}
-                  </option>
-                ))}
-              </select>
             </div>
-          </div>
 
-          {/* Conversion Display */}
-          {conversionText && (
-            <div style={{ fontSize: "11px", color: "#3B82F6", marginBottom: "12px", paddingLeft: "2px" }}>
-              {conversionText}
-            </div>
-          )}
-          {!conversionText && <div style={{ marginBottom: "12px" }} />}
-
-          {/* Email */}
-          <div style={{ marginBottom: "12px" }}>
-            <input
-              type="email"
-              placeholder="Enter your email address"
-              value={email}
-              onChange={(e) => { setEmail(e.target.value); if (e.target.value) setEmailError(false); }}
-              style={{
-                width: "100%", padding: "10px",
-                border: emailError ? "1.5px solid #e02020" : "1.5px solid #e0e0e0",
-                borderRadius: "10px", fontSize: "14px", outline: "none", boxSizing: "border-box",
-                transition: "border-color 0.2s",
-              }}
-              onFocus={(e) => { if (!emailError) e.target.style.borderColor = "#3B82F6"; }}
-              onBlur={(e) => { if (!emailError) e.target.style.borderColor = "#e0e0e0"; }}
-            />
-          </div>
-
-          {/* Dedicate */}
-          <label style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "10px", cursor: "pointer" }}>
-            <input
-              type="checkbox"
-              checked={dedicate}
-              onChange={(e) => setDedicate(e.target.checked)}
-              style={{ accentColor: "#3B82F6", width: "15px", height: "15px" }}
-            />
-            <span style={{ fontSize: "12px", color: "#555" }}>Dedicate my donation</span>
-          </label>
-
-          {/* Add Comment */}
-          <div style={{ marginBottom: "14px" }}>
+            {/* Pay button */}
             <button
-              onClick={() => setShowComment(!showComment)}
+              onClick={handleMpesaPay}
+              disabled={mpesaLoading || !phoneNumber || !amount}
               style={{
-                background: "none", border: "none", cursor: "pointer",
-                fontSize: "13px", color: "#555", padding: 0, display: "flex", alignItems: "center", gap: "4px",
+                width: "100%", padding: "14px", borderRadius: "28px",
+                background: mpesaLoading ? "#81C784" : "#4CAF50",
+                color: "white", fontSize: "16px", fontWeight: 700,
+                border: "none", cursor: mpesaLoading ? "not-allowed" : "pointer",
+                transition: "all 0.2s", marginBottom: "10px",
               }}
             >
-              {"\u{1F4AC}"} Add a comment
+              {mpesaLoading ? "Sending prompt..." : "Pay with M-Pesa"}
             </button>
-            {showComment && (
-              <textarea
-                placeholder="Share why you support Amar&#233;'s Big Planet..."
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-                style={{
-                  width: "100%", marginTop: "8px", padding: "10px", border: "1.5px solid #e0e0e0",
-                  borderRadius: "8px", fontSize: "12px", resize: "vertical", minHeight: "60px",
-                  outline: "none", boxSizing: "border-box", fontFamily: "sans-serif",
-                  transition: "border-color 0.2s",
-                }}
-                onFocus={(e) => { e.target.style.borderColor = "#3B82F6"; }}
-                onBlur={(e) => { e.target.style.borderColor = "#e0e0e0"; }}
-              />
+
+            {/* Status message */}
+            {mpesaStatus !== "idle" && (
+              <div style={{
+                padding: "10px 14px", borderRadius: "8px", fontSize: "13px",
+                fontWeight: 500, textAlign: "center", marginBottom: "8px",
+                background: mpesaStatus === "sent" ? "#E8F5E9" : "#FFEBEE",
+                color: mpesaStatus === "sent" ? "#2E7D32" : "#C62828",
+                border: `1px solid ${mpesaStatus === "sent" ? "#C8E6C9" : "#FFCDD2"}`,
+              }}>
+                {mpesaMessage}
+              </div>
             )}
+
+            {/* Manual fallback — compact */}
+            <div style={{
+              fontSize: "12px", color: "#555", lineHeight: 1.6,
+              background: "white", borderRadius: "8px", padding: "10px 14px",
+              border: "1px solid #C8E6C9",
+            }}>
+              <span style={{ fontWeight: 600, color: "#2E7D32" }}>Or manually:</span>{" "}
+              M-Pesa {"\u2192"} Lipa Na M-Pesa {"\u2192"} Pay Bill {"\u2192"}{" "}
+              <strong>542542</strong> {"\u2192"} Account <strong>120129</strong> {"\u2192"} Amount {"\u2192"} Confirm
+            </div>
           </div>
 
-          {/* Donate Button */}
-          <button
-            onClick={handleDonate}
-            style={{
-              width: "100%", padding: "12px", borderRadius: "10px", border: "none",
-              background: "#e02020", color: "white", fontWeight: 700, fontSize: "15px",
-              cursor: "pointer", transition: "all 0.2s", marginBottom: "10px",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = "#c01010";
-              e.currentTarget.style.transform = "scale(1.02)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = "#e02020";
-              e.currentTarget.style.transform = "scale(1)";
-            }}
-          >
-            {buttonText}
-          </button>
+          {/* Confirmation Note — subtle */}
+          <div style={{
+            textAlign: "center", fontSize: "11px", color: "#4CAF50",
+            background: "#f0fdf4", borderRadius: "6px", padding: "8px 12px",
+            marginBottom: "6px", fontWeight: 500, lineHeight: 1.5,
+          }}>
+            Once you've sent your M-Pesa payment, you're all set! Thank you for supporting Amar&eacute;'s Big Planet 💚
+          </div>
 
-          {/* Secure Payment */}
-          <div style={{ textAlign: "center", fontSize: "10px", color: "#888", marginBottom: "16px" }}>
-            {"\u{1F512}"} Secure payment via <span style={{ color: "#00C3F7", fontWeight: 700 }}>Paystack</span>
+          {/* Trust element */}
+          <div style={{
+            textAlign: "center", fontSize: "11px", color: "#888",
+            marginBottom: "16px", fontWeight: 400,
+          }}>
+            🔒 M-Pesa payments are processed securely by Safaricom
           </div>
 
           {/* Recent Supporters */}
@@ -728,6 +635,32 @@ function DonatePage() {
                     </div>
                     <div style={{ fontSize: "11px", color: "#555", fontStyle: "italic" }}>"{s.comment}"</div>
                   </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Where Your Support Goes */}
+          <div style={{
+            background: "#f9fafb", borderRadius: "12px", padding: "16px",
+            marginTop: "16px",
+          }}>
+            <div style={{ fontSize: "13px", fontWeight: 700, color: "#1a1a2e", marginBottom: "12px" }}>
+              Where Your Support Goes
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
+              {[
+                { icon: "\u{1F3AC}", label: "Animation production" },
+                { icon: "\u{1F3B5}", label: "Educational music" },
+                { icon: "\u{1F3AE}", label: "Roblox/game development" },
+                { icon: "\u{1F30D}", label: "Global children\u2019s content" },
+              ].map((item) => (
+                <div key={item.label} style={{
+                  display: "flex", alignItems: "center", gap: "8px",
+                  background: "white", borderRadius: "8px", padding: "10px 12px",
+                }}>
+                  <span style={{ fontSize: "18px", lineHeight: 1 }}>{item.icon}</span>
+                  <span style={{ fontSize: "12px", fontWeight: 600, color: "#444" }}>{item.label}</span>
                 </div>
               ))}
             </div>
@@ -793,6 +726,26 @@ function DonatePage() {
           background: #e85d04;
         }
 
+        /* Transparent navbar state — links turn white */
+        .donate-nav-links--transparent .donate-nav-link {
+          color: rgba(255,255,255,0.9);
+          text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+        }
+        .donate-nav-links--transparent .donate-nav-link:hover {
+          color: #fff;
+          background: rgba(255,255,255,0.1);
+        }
+        .donate-nav-links--transparent .donate-nav-link--active {
+          color: #ffd166 !important;
+          text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+        }
+        .donate-nav-links--transparent .donate-nav-link--active::after {
+          background: #ffd166;
+        }
+        .donate-nav-links--transparent .donate-nav-link::after {
+          background: #ffd166;
+        }
+
         /* Secure dot pulse */
         @keyframes securePulse {
           0%, 100% { opacity: 1; transform: scale(1); }
@@ -839,6 +792,13 @@ function DonatePage() {
           .donate-card-wrapper {
             width: 100% !important;
             flex-shrink: unset !important;
+          }
+        }
+
+        /* Social proof bar — 2x2 on mobile */
+        @media (max-width: 600px) {
+          .donate-social-proof-bar {
+            grid-template-columns: repeat(2, 1fr) !important;
           }
         }
 

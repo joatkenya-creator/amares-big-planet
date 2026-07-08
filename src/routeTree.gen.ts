@@ -14,6 +14,8 @@ import { Route as ArticlesIndexRouteImport } from './routes/articles.index'
 import { Route as ArticlesSlugRouteImport } from './routes/articles.$slug'
 import { Route as DonateRouteImport } from './routes/donate'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 
 const DonateRoute = DonateRouteImport.update({
   id: '/donate',
@@ -23,6 +25,16 @@ const DonateRoute = DonateRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/blog/$slug',
+  path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ArticlesRoute = ArticlesRouteImport.update({
@@ -49,12 +61,16 @@ const ArticlesRouteWithChildren = ArticlesRoute._addFileChildren({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/donate': typeof DonateRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/blog/': typeof BlogIndexRoute
   '/articles': typeof ArticlesIndexRoute
   '/articles/$slug': typeof ArticlesSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/donate': typeof DonateRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/blog': typeof BlogIndexRoute
   '/articles': typeof ArticlesIndexRoute
   '/articles/$slug': typeof ArticlesSlugRoute
 }
@@ -62,16 +78,18 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/donate': typeof DonateRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/blog/': typeof BlogIndexRoute
   '/articles': typeof ArticlesRoute
   '/articles/': typeof ArticlesIndexRoute
   '/articles/$slug': typeof ArticlesSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/donate' | '/articles' | '/articles/$slug'
+  fullPaths: '/' | '/donate' | '/blog/$slug' | '/blog/' | '/articles' | '/articles/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/donate' | '/articles' | '/articles/$slug'
-  id: '__root__' | '/' | '/donate' | '/articles' | '/articles/' | '/articles/$slug'
+  to: '/' | '/donate' | '/blog/$slug' | '/blog' | '/articles' | '/articles/$slug'
+  id: '__root__' | '/' | '/donate' | '/blog/$slug' | '/blog/' | '/articles' | '/articles/' | '/articles/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface ArticlesRouteChildren {
@@ -81,6 +99,8 @@ export interface ArticlesRouteChildren {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DonateRoute: typeof DonateRoute
+  BlogSlugRoute: typeof BlogSlugRoute
+  BlogIndexRoute: typeof BlogIndexRoute
   ArticlesRoute: typeof ArticlesRouteWithChildren
 }
 
@@ -98,6 +118,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/articles': {
@@ -127,6 +161,8 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DonateRoute: DonateRoute,
+  BlogSlugRoute: BlogSlugRoute,
+  BlogIndexRoute: BlogIndexRoute,
   ArticlesRoute: ArticlesRouteWithChildren,
 }
 export const routeTree = rootRouteImport
