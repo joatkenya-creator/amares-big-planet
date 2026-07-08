@@ -494,6 +494,12 @@ function Index() {
               </a>
             ))}
             <Link
+              to="/articles/"
+              className="nav-link"
+            >
+              Articles
+            </Link>
+            <Link
               to="/donate"
               className="nav-link-donate"
             >
@@ -700,6 +706,13 @@ function Index() {
               {l}
             </a>
           ))}
+          <Link
+            to="/articles/"
+            className="mobile-nav-link"
+            onClick={() => setMenuOpen(false)}
+          >
+            Articles 📚
+          </Link>
           <Link
             to="/donate"
             className="mobile-nav-link"
@@ -914,6 +927,7 @@ function Index() {
               { id: "eyEmlXfgIoA", title: "ABC Song A to P", desc: "Learn the alphabet with Amaré and friends!" },
               { id: "Ga_sef8vcIA", title: "Ocean Animals Adventure", desc: "Discover amazing creatures under the sea!" },
               { id: "8jCfqeT6iNc", title: "BLAST OFF! Solar System Song", desc: "Explore all the planets in our solar system!" },
+              { id: "hic5LyxRj2U", title: "Sayari Zote za Mfumo wa Jua 🌍🚀", desc: "Wimbo wa Sayari kwa Watoto | Jifunze Sayari kwa Kiswahili" },
             ].map((video) => (
               <div
                 key={video.id}
