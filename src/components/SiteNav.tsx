@@ -124,12 +124,6 @@ export function SiteNav({ active }: SiteNavProps) {
 
         <div className="flex items-center gap-2 md:hidden">
           <Link
-            to="/articles"
-            className="rounded-full px-3 py-2 text-sm font-extrabold text-[#2a2a6e]"
-          >
-            Articles
-          </Link>
-          <Link
             to="/donate"
             className="rounded-full px-3 py-2 text-sm font-extrabold text-[#3B82F6]"
           >
