@@ -621,12 +621,6 @@ function Index() {
               )
             )}
             <Link
-              to="/articles"
-              className="nav-link"
-            >
-              Articles
-            </Link>
-            <Link
               to="/donate"
               className="nav-link-donate"
             >
