@@ -7,6 +7,7 @@ import parentsSectionImg from "@/assets/parents-section.png";
 import planetMascot from "@/assets/planet-mascot.png";
 import sunMascot from "@/assets/sun-mascot.png";
 import musicMascot from "@/assets/music-mascot.png";
+import { subscribeToNewsletter } from "@/lib/newsletter-server";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -208,6 +209,8 @@ function Index() {
   const [donationPopupClosing, setDonationPopupClosing] = useState(false);
   const [newsletterEmail, setNewsletterEmail] = useState("");
   const [newsletterSubmitted, setNewsletterSubmitted] = useState(false);
+  const [newsletterSubmitting, setNewsletterSubmitting] = useState(false);
+  const [newsletterError, setNewsletterError] = useState("");
   const searchRef = useRef<HTMLDivElement>(null);
   const mobileSearchRef = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -237,15 +240,25 @@ function Index() {
     if (el) el.scrollIntoView({ behavior: "smooth" });
   }
 
-  function handleNewsletterSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleNewsletterSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const email = newsletterEmail.trim();
-    if (!email) return;
+    if (!email || newsletterSubmitting) return;
 
-    const subject = encodeURIComponent("Amare's Big Planet newsletter signup");
-    const body = encodeURIComponent(`Please add this email to Amare's parent newsletter:\n\n${email}`);
-    window.location.href = `mailto:admin@amaresbigplanet.com?subject=${subject}&body=${body}`;
-    setNewsletterSubmitted(true);
+    setNewsletterSubmitting(true);
+    setNewsletterError("");
+
+    try {
+      await subscribeToNewsletter({ data: { email } });
+      setNewsletterSubmitted(true);
+      setNewsletterEmail("");
+    } catch (err) {
+      setNewsletterError(
+        err instanceof Error ? err.message : "Something went wrong. Please try again.",
+      );
+    } finally {
+      setNewsletterSubmitting(false);
+    }
   }
 
   // Close search on outside click
@@ -1296,24 +1309,30 @@ function Index() {
                     onChange={(event) => {
                       setNewsletterEmail(event.target.value);
                       setNewsletterSubmitted(false);
+                      setNewsletterError("");
                     }}
                     placeholder="Parent email address"
                     className="min-h-12 flex-1 rounded-full border-2 border-transparent bg-[#F3FBFD] px-5 text-base font-semibold text-[#071833] outline-none transition-all placeholder:text-[#6B7A90] focus:border-[#22B8CF] focus:bg-white"
                   />
                   <button
                     type="submit"
-                    className="min-h-12 rounded-full bg-[#FF7A1A] px-7 text-base font-extrabold text-white shadow-bounce transition-all hover:translate-y-1 hover:shadow-none"
+                    disabled={newsletterSubmitting}
+                    className="min-h-12 rounded-full bg-[#FF7A1A] px-7 text-base font-extrabold text-white shadow-bounce transition-all hover:translate-y-1 hover:shadow-none disabled:opacity-60 disabled:hover:translate-y-0"
                   >
-                    Join newsletter
+                    {newsletterSubmitting ? "Joining..." : "Join newsletter"}
                   </button>
                 </form>
-                {newsletterSubmitted ? (
+                {newsletterError ? (
+                  <p className="mt-3 text-sm font-semibold text-red-600">
+                    {newsletterError}
+                  </p>
+                ) : newsletterSubmitted ? (
                   <p className="mt-3 text-sm font-semibold text-[#0f7c90]">
-                    Your email app should open so we can add you to the parent newsletter.
+                    Almost there! Check your inbox and click the link to confirm your subscription.
                   </p>
                 ) : (
                   <p className="mt-3 text-sm font-medium text-muted-foreground">
-                    Monthly parent notes with new songs, learning ideas, and Amare's updates.
+                    Monthly parent notes with new songs, learning ideas, and Amare's updates. Parents only — unsubscribe anytime.
                   </p>
                 )}
               </div>
@@ -1375,13 +1394,16 @@ function Index() {
               </ul>
               <div className="mt-8">
                 <a
-                  href="https://www.youtube.com/@amaresbigplanet"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="#watch"
                   className="inline-block rounded-full text-white px-7 py-3 text-base font-bold"
                   style={{ background: "#e02020", transition: "all 0.3s ease" }}
                   onMouseEnter={(e) => { e.currentTarget.style.background = "#cc0000"; e.currentTarget.style.transform = "scale(1.03)"; }}
                   onMouseLeave={(e) => { e.currentTarget.style.background = "#e02020"; e.currentTarget.style.transform = "scale(1)"; }}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.querySelector("#watch")?.scrollIntoView({ behavior: "smooth" });
+                    document.getElementById("newsletter-email")?.focus();
+                  }}
                 >
                   👉 Join the Parent Newsletter
                 </a>
