@@ -1328,7 +1328,7 @@ function Index() {
                   </p>
                 ) : newsletterSubmitted ? (
                   <p className="mt-3 text-sm font-semibold text-[#0f7c90]">
-                    Almost there! Check your inbox and click the link to confirm your subscription.
+                    You're on the list! Check your inbox for a welcome email.
                   </p>
                 ) : (
                   <p className="mt-3 text-sm font-medium text-muted-foreground">
