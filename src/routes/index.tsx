@@ -1253,7 +1253,7 @@ function Index() {
               </h2>
               <p className="mt-4 text-lg text-muted-foreground font-medium max-w-2xl mx-auto">
                 Watch new episodes on YouTube, stream songs everywhere, and join
-                Amare's newsletter for parents.
+                Amare's newsletter.
               </p>
               <div className="mt-8 max-w-3xl mx-auto">
                 <p className="font-bold text-lg mb-3 flex items-center justify-center gap-2">
@@ -1311,7 +1311,7 @@ function Index() {
                       setNewsletterSubmitted(false);
                       setNewsletterError("");
                     }}
-                    placeholder="Parent email address"
+                    placeholder="Email address"
                     className="min-h-12 flex-1 rounded-full border-2 border-transparent bg-[#F3FBFD] px-5 text-base font-semibold text-[#071833] outline-none transition-all placeholder:text-[#6B7A90] focus:border-[#22B8CF] focus:bg-white"
                   />
                   <button
@@ -1332,7 +1332,7 @@ function Index() {
                   </p>
                 ) : (
                   <p className="mt-3 text-sm font-medium text-muted-foreground">
-                    Monthly parent notes with new songs, learning ideas, and Amare's updates. Parents only — unsubscribe anytime.
+                    Monthly notes with new songs, learning ideas, and Amare's updates. Unsubscribe anytime.
                   </p>
                 )}
               </div>
