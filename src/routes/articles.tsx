@@ -1,8 +1,8 @@
 import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { articles } from "@/lib/articles";
-import amaresLogo from "@/assets/amares-logo.jpeg";
-import amaresTitle from "@/assets/amares-title.png";
+import amaresLogo from "@/assets/amares-logo.webp";
+import amaresTitle from "@/assets/amares-title.webp";
 
 export const Route = createFileRoute("/articles")({
   component: ArticlesPage,

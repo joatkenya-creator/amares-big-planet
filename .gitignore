@@ -33,3 +33,11 @@ dist-ssr
 
 # Environment variables
 .env
+.env.*
+!.env.example
+
+# Stray media at the repo root — large assets belong in public/videos or a CDN
+/*.mp4
+
+# Accidental Windows redirect artifacts
+nul/

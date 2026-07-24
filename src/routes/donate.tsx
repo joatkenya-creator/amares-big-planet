@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect, useRef } from "react";
-import amaresLogo from "@/assets/amares-logo.jpeg";
-import amaresTitle from "@/assets/amares-title.png";
+import amaresLogo from "@/assets/amares-logo.webp";
+import amaresTitle from "@/assets/amares-title.webp";
 
 export const Route = createFileRoute("/donate")({
   component: DonatePage,
@@ -10,15 +10,46 @@ export const Route = createFileRoute("/donate")({
       { title: "Support — Amaré's Big Planet" },
       { name: "description", content: "Support Amaré's Big Planet — help create free, inclusive educational content for kids aged 1-10." },
     ],
-    scripts: [
-      { src: "https://js.paystack.co/v1/inline.js" },
-    ],
   }),
 });
 
+const PAYSTACK_SRC = "https://js.paystack.co/v1/inline.js";
+
+// Paystack is only needed once someone actually opens the checkout, so it is
+// loaded on demand instead of blocking the initial render of the page.
+type PaystackSdk = NonNullable<Window["PaystackPop"]>;
+
+let paystackPromise: Promise<PaystackSdk> | null = null;
+
+function loadPaystack(): Promise<PaystackSdk> {
+  if (window.PaystackPop) return Promise.resolve(window.PaystackPop);
+  if (paystackPromise) return paystackPromise;
+
+  paystackPromise = new Promise<PaystackSdk>((resolve, reject) => {
+    const selector = `script[src="${PAYSTACK_SRC}"]`;
+    const existing = document.querySelector<HTMLScriptElement>(selector);
+    const script = existing ?? document.createElement("script");
+    script.addEventListener("load", () => {
+      if (window.PaystackPop) resolve(window.PaystackPop);
+      else reject(new Error("Paystack loaded but PaystackPop is missing"));
+    });
+    script.addEventListener("error", () => {
+      paystackPromise = null;
+      reject(new Error("Failed to load Paystack"));
+    });
+    if (!existing) {
+      script.src = PAYSTACK_SRC;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  });
+
+  return paystackPromise;
+}
+
 declare global {
   interface Window {
-    PaystackPop: {
+    PaystackPop?: {
       setup(options: {
         key: string;
         email: string;
@@ -77,13 +108,14 @@ function DonatePage() {
       .catch(() => {});
   }, []);
 
-  function handlePaystackPay() {
+  async function handlePaystackPay() {
     if (!paystackEmail || !paystackAmount || !paystackName) return;
     setPaystackLoading(true);
     setPaystackStatus("idle");
     const kesAmount = Math.round(parseFloat(paystackAmount) * usdToKes);
     try {
-      const handler = window.PaystackPop.setup({
+      const paystack = await loadPaystack();
+      const handler = paystack.setup({
         key: "pk_live_3db3364e211e93d7d1fec40748a88cfc6edc8a7b",
         email: paystackEmail,
         amount: kesAmount * 100,

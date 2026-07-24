@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import amaresLogo from "@/assets/amares-logo.jpeg";
-import amaresTitle from "@/assets/amares-title.png";
+import amaresLogo from "@/assets/amares-logo.webp";
+import amaresTitle from "@/assets/amares-title.webp";
 
 const sectionLinks = [
   { label: "Shows", href: "/#shows" },

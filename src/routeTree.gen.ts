@@ -9,10 +9,10 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ArticlesSlugRouteImport } from './routes/articles.$slug'
 import { Route as DonateRouteImport } from './routes/donate'
 import { Route as ArticlesRouteImport } from './routes/articles'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ArticlesSlugRouteImport } from './routes/articles.$slug'
 
 const DonateRoute = DonateRouteImport.update({
   id: '/donate',
@@ -30,7 +30,7 @@ const IndexRoute = IndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const ArticlesSlugRoute = ArticlesSlugRouteImport.update({
-  id: '/articles/$slug',
+  id: '/$slug',
   path: '/$slug',
   getParentRoute: () => ArticlesRoute,
 } as any)
@@ -123,10 +123,11 @@ export const routeTree = rootRouteImport
   ._addFileTypes<FileRouteTypes>()
 
 import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
+import type { startInstance } from './start.ts'
 declare module '@tanstack/react-start' {
   interface Register {
     ssr: true
     router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
   }
 }

@@ -1,12 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect, useRef } from "react";
 import type { FormEvent } from "react";
-import amaresLogo from "@/assets/amares-logo.jpeg";
-import amaresTitle from "@/assets/amares-title.png";
-import parentsSectionImg from "@/assets/parents-section.png";
-import planetMascot from "@/assets/planet-mascot.png";
-import sunMascot from "@/assets/sun-mascot.png";
-import musicMascot from "@/assets/music-mascot.png";
+import amaresLogo from "@/assets/amares-logo.webp";
+import amaresTitle from "@/assets/amares-title.webp";
+import sunMascot from "@/assets/sun-mascot.webp";
+import musicMascot from "@/assets/music-mascot.webp";
 import { subscribeToNewsletter } from "@/lib/newsletter-server";
 
 export const Route = createFileRoute("/")({
