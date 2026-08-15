@@ -1351,7 +1351,7 @@ function Index() {
                 <a href="https://www.youtube.com/@amaresbigplanet" target="_blank" rel="noopener noreferrer" className="rounded-full bg-red-600 text-white px-7 py-3.5 font-extrabold shadow-bounce hover:translate-y-1 hover:shadow-none transition-all">
                   ▶ YouTube
                 </a>
-                <a className="rounded-full bg-[var(--leaf)] text-[var(--leaf-foreground)] px-7 py-3.5 font-extrabold shadow-bounce hover:translate-y-1 hover:shadow-none transition-all">
+                <a href="https://open.spotify.com/artist/6iFlqHjMr7LDP0C5LsKksa" target="_blank" rel="noopener noreferrer" className="rounded-full bg-[var(--leaf)] text-[var(--leaf-foreground)] px-7 py-3.5 font-extrabold shadow-bounce hover:translate-y-1 hover:shadow-none transition-all">
                   🎧 Spotify
                 </a>
                 <a className="rounded-full bg-[var(--grape)] text-[var(--grape-foreground)] px-7 py-3.5 font-extrabold shadow-bounce hover:translate-y-1 hover:shadow-none transition-all">
