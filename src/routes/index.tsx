@@ -1134,6 +1134,19 @@ function Index() {
               More Songs on YouTube
             </a>
           </div>
+          <div className="mt-8 rounded-3xl bg-white/80 p-5 shadow-soft">
+            <iframe
+              data-testid="embed-iframe"
+              style={{ borderRadius: "12px" }}
+              src="https://open.spotify.com/embed/artist/6iFlqHjMr7LDP0C5LsKksa?utm_source=generator&si=f5e9fda74cc945b6"
+              width="100%"
+              height="352"
+              frameBorder={0}
+              allowFullScreen
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"
+            />
+          </div>
           <div className="mt-8 grid gap-3 rounded-3xl bg-white/80 p-5 shadow-soft md:grid-cols-3">
             {[
               { title: "ABC Songs for Preschool Kids", slug: "abc-songs-for-preschool-kids" },
