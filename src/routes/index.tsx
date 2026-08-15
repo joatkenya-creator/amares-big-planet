@@ -967,7 +967,7 @@ function Index() {
               ▶ Start Watching
             </a>
             <a
-              href="#music"
+              href="#spotify-player"
               className="rounded-full bg-green-500 text-white px-8 py-4 text-lg font-extrabold shadow-pop hover:translate-y-1 transition-all"
             >
               🎵 Listen to Songs
@@ -1134,7 +1134,7 @@ function Index() {
               More Songs on YouTube
             </a>
           </div>
-          <div className="mt-8 rounded-3xl bg-white/80 p-5 shadow-soft">
+          <div id="spotify-player" className="mt-8 rounded-3xl bg-white/80 p-5 shadow-soft">
             <iframe
               data-testid="embed-iframe"
               style={{ borderRadius: "12px" }}
