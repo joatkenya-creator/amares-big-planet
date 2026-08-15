@@ -51,7 +51,7 @@ function buildCsp(nonce: string): string {
     // can't exfiltrate anything.
     "connect-src 'self' https://open.er-api.com https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://*.clarity.ms",
 
-    "frame-src https://www.youtube.com https://www.youtube-nocookie.com https://checkout.paystack.com https://js.paystack.co",
+    "frame-src https://www.youtube.com https://www.youtube-nocookie.com https://open.spotify.com https://checkout.paystack.com https://js.paystack.co",
     "frame-ancestors 'self'",
     "base-uri 'self'",
     "form-action 'self' https://checkout.paystack.com",
