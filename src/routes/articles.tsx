@@ -9,11 +9,13 @@ export const Route = createFileRoute("/articles")({
   head: () => ({
     meta: [
       { title: "Amare's Learning Hub | Amare's Big Planet Articles" },
-      { name: "description", content: "Read Amare's Learning Hub for parent-friendly guides about autism-friendly learning videos, sensory-friendly songs, inclusive learning, ABC songs, music, space, and educational videos for children." },
+      { name: "description", content: "Parent guides on autism-friendly learning videos, sensory songs, ABC activities, space songs, and educational content from Amare's Big Planet." },
       { name: "keywords", content: "autism-friendly learning videos, sensory-friendly songs, educational videos for autistic children, inclusive kids learning, Amare's Big Planet articles" },
       { property: "og:title", content: "Amare's Learning Hub | Amare's Big Planet" },
-      { property: "og:description", content: "Helpful Amare's guides for autism-friendly learning, sensory-friendly songs, ABCs, music, space, and little explorers." },
+      { property: "og:description", content: "Parent guides on autism-friendly learning videos, sensory songs, ABC activities, space songs, and educational content from Amare's Big Planet." },
       { property: "og:url", content: "https://amaresbigplanet.com/articles" },
+      { property: "og:image", content: "https://res.cloudinary.com/dee2vqvzl/image/upload/v1778073832/1775135225431_1_zxvc1e.png" },
+      { property: "og:type", content: "website" },
     ],
     links: [{ rel: "canonical", href: "https://amaresbigplanet.com/articles" }],
   }),

@@ -11,11 +11,13 @@ export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "Amare's Big Planet | Amare's Kids Songs, ABCs & Space Videos" },
-      { name: "description", content: "Sing along with Amare's: ABC songs, nursery rhymes, autism-friendly learning videos, sensory-friendly songs, ocean animals, solar system songs, and fun educational videos from Amare's Big Planet." },
-      { property: "og:title", content: "Amare's Big Planet | Amare's Kids Songs & Videos" },
-      { property: "og:description", content: "Amare's Big Planet shares ABC songs, nursery rhymes, space adventures, ocean animals, and fun educational videos for children." },
+      { title: "Amare's Big Planet | Kids Songs & Educational Videos" },
+      { name: "description", content: "Sing along with Amare's Big Planet — ABC songs, nursery rhymes, ocean animals, and space adventures. Fun, free educational videos for kids aged 1–10." },
+      { property: "og:title", content: "Amare's Big Planet | Kids Songs & Educational Videos" },
+      { property: "og:description", content: "Sing along with Amare's Big Planet — ABC songs, nursery rhymes, ocean animals, and space adventures. Fun, free educational videos for kids aged 1–10." },
       { property: "og:url", content: "https://amaresbigplanet.com/" },
+      { property: "og:image", content: "https://res.cloudinary.com/dee2vqvzl/image/upload/v1778073832/1775135225431_1_zxvc1e.png" },
+      { property: "og:type", content: "website" },
     ],
     links: [
       { rel: "canonical", href: "https://amaresbigplanet.com/" },

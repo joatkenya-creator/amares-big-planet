@@ -286,7 +286,7 @@ const articleDrafts = [
   },
   {
     slug: "morning-routine-songs-for-toddlers",
-    title: "Morning Routine Songs That Make Getting Ready Fun",
+    title: "Morning Routine Songs for Kids",
     description: "A practical guide to using morning songs to make getting dressed, eating breakfast, and leaving the house easier with toddlers.",
     category: "Routines & Music",
     videoId: "_ctNtUXel6Q",
@@ -338,7 +338,7 @@ const articleDrafts = [
   },
   {
     slug: "how-to-turn-screen-time-into-active-learning",
-    title: "How to Turn Screen Time Into Active Learning for Kids",
+    title: "Turn Screen Time Into Active Learning",
     description: "Practical, parent-tested ways to transform passive screen time into active learning — with questions, movement, and pauses that turn any video into a shared lesson.",
     category: "Parent Guides",
     videoId: "k2ggk22FE_Q",
@@ -391,7 +391,7 @@ const articleDrafts = [
   },
   {
     slug: "meet-the-galaxy-train-crew",
-    title: "Meet the Galaxy Train Crew: Learning Through Space Adventures",
+    title: "Meet the Galaxy Train Crew",
     description: "A friendly introduction to the Galaxy Train, the Gear Crew, and how character-led space adventures turn into real learning for kids.",
     category: "Galaxy Train",
     videoId: "8jCfqeT6iNc",
@@ -483,7 +483,7 @@ const articleDrafts = [
   },
   {
     slug: "body-parts-in-swahili-for-kids",
-    title: "Learn Body Parts in Swahili: Kichwa, Mabega, Magoti na Vidole",
+    title: "Learn Body Parts in Swahili for Kids",
     description: "A parent-friendly guide to using Swahili body parts songs to help children learn kichwa, mabega, magoti, vidole, movement, rhythm, and vocabulary.",
     category: "Swahili Learning",
     videoId: "HpYqNfyCPKk",
@@ -518,7 +518,7 @@ const articleDrafts = [
   },
   {
     slug: "nursery-rhymes-why-they-matter",
-    title: "Nursery Rhymes & Kids' Songs: Why They Matter and How to Use Them",
+    title: "Nursery Rhymes & Kids' Songs: Why They Matter",
     description: "Why nursery rhymes still belong in every childhood — what they do for a young brain, and how to weave them into a normal day.",
     category: "Nursery Rhymes",
     videoId: "eyEmlXfgIoA",
@@ -605,7 +605,7 @@ const aDayWithAmareArticle: Article = {
 
 const swahiliPlanetSongArticle: Article = {
   slug: "sayari-zote-za-mfumo-wa-jua",
-  title: "Sayari Zote za Mfumo wa Jua 🌍🚀 — Learn Planets in Swahili!",
+  title: "Learn Planets in Swahili: Sayari za Jua",
   description: "Amaré and the Gear Crew are now teaching kids about the solar system in Swahili! Watch our new planet song and explore the universe in a whole new language.",
   excerpt: "Amaré and the Gear Crew are now teaching kids about the solar system in Swahili! Watch our new planet song and explore the universe in a whole new language.",
   category: "Activities",
@@ -637,7 +637,7 @@ const swahiliPlanetSongArticle: Article = {
 
 const autismSupportArticle: Article = {
   slug: "how-amares-big-planet-supports-children-with-autism",
-  title: "How Amaré's Big Planet Supports Children with Autism",
+  title: "How Amare's Big Planet Supports Kids with Autism",
   description: "Learn how Amaré's Big Planet uses music, rhythm, and routine to create a joyful, sensory-friendly learning experience for children with autism.",
   excerpt: "Learn how Amaré's Big Planet uses music, rhythm, and routine to create a joyful, sensory-friendly learning experience for children with autism.",
   category: "Inclusive Learning",

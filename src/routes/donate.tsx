@@ -7,8 +7,16 @@ export const Route = createFileRoute("/donate")({
   component: DonatePage,
   head: () => ({
     meta: [
-      { title: "Support — Amaré's Big Planet" },
-      { name: "description", content: "Support Amaré's Big Planet — help create free, inclusive educational content for kids aged 1-10." },
+      { title: "Support Amare's Big Planet | Help Kids Learn" },
+      { name: "description", content: "Support Amare's Big Planet and bring free kids learning songs, ABC videos, and space adventures to children worldwide. Every gift counts." },
+      { property: "og:title", content: "Support Amare's Big Planet | Help Kids Learn" },
+      { property: "og:description", content: "Support Amare's Big Planet and bring free kids learning songs, ABC videos, and space adventures to children worldwide. Every gift counts." },
+      { property: "og:url", content: "https://amaresbigplanet.com/donate" },
+      { property: "og:image", content: "https://res.cloudinary.com/dee2vqvzl/image/upload/v1778073832/1775135225431_1_zxvc1e.png" },
+      { property: "og:type", content: "website" },
+    ],
+    links: [
+      { rel: "canonical", href: "https://amaresbigplanet.com/donate" },
     ],
   }),
 });

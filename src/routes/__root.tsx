@@ -32,8 +32,8 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Amare's Big Planet | Amare's Kids Songs, ABCs & Space Videos" },
-      { name: "description", content: "Discover Amare's Big Planet, home of Amare's kids songs, ABC learning videos, nursery rhymes, space adventures, ocean animals, and fun educational videos for children." },
+      { title: "Amare's Big Planet | Kids Learning Songs & Videos" },
+      { name: "description", content: "Amare's Big Planet — free kids learning songs, ABC videos, nursery rhymes, space adventures, and educational videos for children aged 1–10." },
       { name: "author", content: "Amare's Big Planet" },
       { name: "keywords", content: "Amare's, Amare's Big Planet, Amare's kids songs, Amare's ABC songs, Amare's learning videos, kids songs, educational videos for kids" },
       { property: "og:title", content: "Amare's Big Planet | Amare's Kids Songs & Videos" },

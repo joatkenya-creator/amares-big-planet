@@ -27,13 +27,14 @@ export const Route = createFileRoute("/articles/$slug")({
   },
   head: ({ loaderData }) => ({
     meta: [
-      { title: `${loaderData.title} | Amare's Learning Hub` },
+      { title: `${loaderData.title} | Amare's` },
       { name: "description", content: loaderData.description },
       { name: "keywords", content: loaderData.keywords.join(", ") },
-      { property: "og:title", content: `${loaderData.title} | Amare's Learning Hub` },
+      { property: "og:title", content: `${loaderData.title} | Amare's Big Planet` },
       { property: "og:description", content: loaderData.description },
       { property: "og:url", content: `https://amaresbigplanet.com/articles/${loaderData.slug}` },
       { property: "og:image", content: `https://img.youtube.com/vi/${loaderData.videoId}/hqdefault.jpg` },
+      { property: "og:type", content: "article" },
     ],
     links: [
       { rel: "canonical", href: `https://amaresbigplanet.com/articles/${loaderData.slug}` },
