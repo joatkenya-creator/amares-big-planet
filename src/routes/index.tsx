@@ -6,6 +6,7 @@ import amaresTitle from "@/assets/amares-title.webp";
 import sunMascot from "@/assets/sun-mascot.webp";
 import musicMascot from "@/assets/music-mascot.webp";
 import { subscribeToNewsletter } from "@/lib/newsletter-server";
+import { SdvosbBadge, SdvosbLogo } from "@/components/SdvosbBadge";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -642,6 +643,9 @@ function Index() {
           </nav>
 
           <div className="flex items-center gap-3">
+            {/* SDVOSB credential — hidden where the tablet nav has no spare room */}
+            <SdvosbBadge className="flex md:hidden xl:flex" labelClassName="xl:flex" />
+
             {/* Desktop search */}
             <div ref={searchRef} className="hidden md:flex items-center gap-2" style={{ position: "relative" }}>
               <input
@@ -1537,6 +1541,29 @@ function Index() {
               Roblox
             </a>
           </div>
+          <section
+            aria-labelledby="footer-credentials-heading"
+            className="mt-8 flex flex-col items-center gap-3"
+          >
+            <h2
+              id="footer-credentials-heading"
+              className="font-body text-xs font-bold uppercase tracking-widest"
+              style={{ color: "rgba(255,255,255,0.9)" }}
+            >
+              Certifications &amp; Credentials
+            </h2>
+            <div className="flex w-full max-w-md flex-col items-center gap-4 rounded-2xl bg-white px-5 py-4 text-center shadow-soft sm:flex-row sm:text-left">
+              <SdvosbLogo loading="lazy" className="h-24 w-auto shrink-0 sm:h-28" />
+              <div>
+                <p className="font-display text-lg font-bold leading-tight text-[#2a2a6e]">
+                  Service-Disabled Veteran-Owned Small Business
+                </p>
+                <p className="mt-1 text-sm font-semibold uppercase tracking-wider text-[#e02020]">
+                  SDVOSB
+                </p>
+              </div>
+            </div>
+          </section>
           <div className="mt-8 border-t pt-4" style={{ borderColor: "rgba(255,255,255,0.2)" }}>
             <p className="text-center text-xs" style={{ color: "rgba(255,255,255,0.7)" }}>
               © 2026 Amaré Big Planet. All rights reserved.

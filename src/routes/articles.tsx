@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { articles } from "@/lib/articles";
 import amaresLogo from "@/assets/amares-logo.webp";
 import amaresTitle from "@/assets/amares-title.webp";
+import { SdvosbBadge } from "@/components/SdvosbBadge";
 
 export const Route = createFileRoute("/articles")({
   component: ArticlesPage,
@@ -111,6 +112,7 @@ function ArticlesPage() {
 
           {/* Right side: YouTube + Support + Hamburger */}
           <div style={{ display: "flex", alignItems: "center", gap: "10px", flexShrink: 0 }}>
+            <SdvosbBadge className="hidden lg:flex" labelClassName="xl:flex" />
             <a
               href="https://www.youtube.com/@amaresbigplanet"
               target="_blank"

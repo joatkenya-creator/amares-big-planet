@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import amaresLogo from "@/assets/amares-logo.webp";
 import amaresTitle from "@/assets/amares-title.webp";
+import { SdvosbBadge } from "@/components/SdvosbBadge";
 
 const sectionLinks = [
   { label: "Shows", href: "/#shows" },
@@ -122,10 +123,11 @@ export function SiteNav({ active }: SiteNavProps) {
           </Link>
         </nav>
 
-        <div className="flex items-center gap-2 md:hidden">
+        <div className="flex items-center gap-2">
+          <SdvosbBadge className="flex md:hidden lg:flex" labelClassName="xl:flex" />
           <Link
             to="/donate"
-            className="rounded-full px-3 py-2 text-sm font-extrabold text-[#3B82F6]"
+            className="rounded-full px-3 py-2 text-sm font-extrabold text-[#3B82F6] md:hidden"
           >
             Support {"\u{1F499}"}
           </Link>

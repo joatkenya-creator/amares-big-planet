@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect, useRef } from "react";
 import amaresLogo from "@/assets/amares-logo.webp";
 import amaresTitle from "@/assets/amares-title.webp";
+import { SdvosbBadge } from "@/components/SdvosbBadge";
 
 export const Route = createFileRoute("/donate")({
   component: DonatePage,
@@ -247,6 +248,8 @@ return (
 
           {/* Right side actions */}
           <div style={{ display: "flex", alignItems: "center", gap: "12px", flexShrink: 0 }}>
+            <SdvosbBadge className="hidden min-[1100px]:flex" labelClassName="xl:flex" />
+
             {/* Secure trust pill — desktop only */}
             <div className="donate-nav-trust" style={{
               display: "flex", alignItems: "center", gap: "6px",
