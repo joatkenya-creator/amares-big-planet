@@ -8,7 +8,6 @@ import musicMascot from "@/assets/music-mascot.webp";
 import { subscribeToNewsletter } from "@/lib/newsletter-server";
 import { SdvosbBadge, SdvosbLogo } from "@/components/SdvosbBadge";
 import { SpecialHolidaysNavLabel } from "@/components/holidays/SpecialHolidaysNavLabel";
-import { HolidayTeaser } from "@/components/holidays/HolidayTeaser";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -906,8 +905,6 @@ function Index() {
           </div>
         </nav>
       </div>
-
-      <HolidayTeaser />
 
       {/* HERO */}
       <section className="relative bg-black pb-24 sm:pb-32 overflow-hidden min-h-[80vh]">
