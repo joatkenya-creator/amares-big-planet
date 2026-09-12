@@ -4,6 +4,8 @@ import { articles } from "@/lib/articles";
 import amaresLogo from "@/assets/amares-logo.webp";
 import amaresTitle from "@/assets/amares-title.webp";
 import { SdvosbBadge } from "@/components/SdvosbBadge";
+import { SpecialHolidaysNavLabel } from "@/components/holidays/SpecialHolidaysNavLabel";
+import { SPECIAL_HOLIDAYS_PATH } from "@/lib/holidays";
 
 export const Route = createFileRoute("/articles")({
   component: ArticlesPage,
@@ -28,6 +30,7 @@ const NAV_LINKS = [
   { label: "Impact", href: "/#impact" },
   { label: "Stories", href: "/#stories" },
   { label: "Articles", href: "/articles" },
+  { label: "Special Holidays", href: SPECIAL_HOLIDAYS_PATH },
   { label: "Contact", href: "/#contact" },
 ];
 
@@ -105,14 +108,18 @@ function ArticlesPage() {
                 className={`articles-nav-link${link.label === "Articles" ? " articles-nav-link--active" : ""}`}
                 aria-current={link.label === "Articles" ? "page" : undefined}
               >
-                {link.label}
+                {link.href === SPECIAL_HOLIDAYS_PATH ? (
+                  <SpecialHolidaysNavLabel specialClassName="sr-only xl:not-sr-only" />
+                ) : (
+                  link.label
+                )}
               </a>
             ))}
           </div>
 
           {/* Right side: YouTube + Support + Hamburger */}
           <div style={{ display: "flex", alignItems: "center", gap: "10px", flexShrink: 0 }}>
-            <SdvosbBadge className="hidden lg:flex" labelClassName="xl:flex" />
+            <SdvosbBadge className="hidden min-[1100px]:flex" labelClassName="xl:flex" />
             <a
               href="https://www.youtube.com/@amaresbigplanet"
               target="_blank"
@@ -186,7 +193,7 @@ function ArticlesPage() {
                   textDecoration: "none", borderBottom: "1px solid #f3f4f6",
                 }}
               >
-                {link.label}
+                {link.href === SPECIAL_HOLIDAYS_PATH ? <SpecialHolidaysNavLabel /> : link.label}
               </a>
             ))}
           </div>
@@ -238,13 +245,16 @@ function ArticlesPage() {
         .articles-nav-link--active { color: #e85d04 !important; font-weight: 700; }
         .articles-nav-link--active::after { width: 60% !important; background: #e85d04; }
 
-        @media (max-width: 900px) {
+        .articles-nav-link { white-space: nowrap; }
+        @media (max-width: 1023px) {
           .articles-nav-links { display: none !important; }
           .articles-nav-hamburger { display: flex !important; }
+        }
+        @media (max-width: 900px) {
           .articles-nav-title { height: 32px !important; }
           .articles-nav-yt { padding: 5px 10px !important; font-size: 12px !important; }
         }
-        @media (min-width: 901px) {
+        @media (min-width: 1024px) {
           .articles-mobile-menu { display: none !important; }
         }
       `}</style>

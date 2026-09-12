@@ -3,6 +3,8 @@ import { useState, useEffect, useRef } from "react";
 import amaresLogo from "@/assets/amares-logo.webp";
 import amaresTitle from "@/assets/amares-title.webp";
 import { SdvosbBadge } from "@/components/SdvosbBadge";
+import { SpecialHolidaysNavLabel } from "@/components/holidays/SpecialHolidaysNavLabel";
+import { SPECIAL_HOLIDAYS_PATH } from "@/lib/holidays";
 
 export const Route = createFileRoute("/donate")({
   component: DonatePage,
@@ -90,6 +92,7 @@ const DONATE_NAV_LINKS = [
   { label: "Impact", href: "/#impact" },
   { label: "Stories", href: "/#stories" },
   { label: "Articles", href: "/articles" },
+  { label: "Special Holidays", href: SPECIAL_HOLIDAYS_PATH },
   { label: "Support", href: "/donate" },
   { label: "Contact", href: "/#contact" },
 ];
@@ -241,14 +244,18 @@ return (
                 className={`donate-nav-link${link.label === "Support" ? " donate-nav-link--active" : ""}`}
                 aria-current={link.label === "Support" ? "page" : undefined}
               >
-                {link.label}
+                {link.href === SPECIAL_HOLIDAYS_PATH ? (
+                  <SpecialHolidaysNavLabel specialClassName="sr-only xl:not-sr-only" />
+                ) : (
+                  link.label
+                )}
               </a>
             ))}
           </div>
 
           {/* Right side actions */}
           <div style={{ display: "flex", alignItems: "center", gap: "12px", flexShrink: 0 }}>
-            <SdvosbBadge className="hidden min-[1100px]:flex" labelClassName="xl:flex" />
+            <SdvosbBadge className="hidden min-[1180px]:flex" />
 
             {/* Secure trust pill — desktop only */}
             <div className="donate-nav-trust" style={{
@@ -339,7 +346,7 @@ return (
                   borderBottom: "1px solid #f3f4f6",
                 }}
               >
-                {link.label}
+                {link.href === SPECIAL_HOLIDAYS_PATH ? <SpecialHolidaysNavLabel /> : link.label}
               </a>
             ))}
           </div>
@@ -957,23 +964,30 @@ return (
           }
         }
 
-        /* Navbar responsive — under 900px */
-        @media (max-width: 900px) {
-          .donate-nav-links {
+        /* Navbar responsive */
+        .donate-nav-link {
+          white-space: nowrap;
+        }
+        @media (max-width: 1179px) {
+          .donate-nav-trust {
             display: none !important;
           }
-          .donate-nav-trust {
+        }
+        @media (max-width: 1023px) {
+          .donate-nav-links {
             display: none !important;
           }
           .donate-nav-hamburger {
             display: flex !important;
           }
+        }
+        @media (max-width: 900px) {
           .donate-nav-title {
             height: 32px !important;
           }
         }
 
-        @media (min-width: 901px) {
+        @media (min-width: 1024px) {
           .donate-mobile-menu {
             display: none !important;
           }

@@ -9,11 +9,17 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SpecialHolidaysRouteImport } from './routes/special-holidays'
 import { Route as DonateRouteImport } from './routes/donate'
 import { Route as ArticlesRouteImport } from './routes/articles'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ArticlesSlugRouteImport } from './routes/articles.$slug'
 
+const SpecialHolidaysRoute = SpecialHolidaysRouteImport.update({
+  id: '/special-holidays',
+  path: '/special-holidays',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DonateRoute = DonateRouteImport.update({
   id: '/donate',
   path: '/donate',
@@ -39,12 +45,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/articles': typeof ArticlesRouteWithChildren
   '/donate': typeof DonateRoute
+  '/special-holidays': typeof SpecialHolidaysRoute
   '/articles/$slug': typeof ArticlesSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/articles': typeof ArticlesRouteWithChildren
   '/donate': typeof DonateRoute
+  '/special-holidays': typeof SpecialHolidaysRoute
   '/articles/$slug': typeof ArticlesSlugRoute
 }
 export interface FileRoutesById {
@@ -52,24 +60,44 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/articles': typeof ArticlesRouteWithChildren
   '/donate': typeof DonateRoute
+  '/special-holidays': typeof SpecialHolidaysRoute
   '/articles/$slug': typeof ArticlesSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/articles' | '/donate' | '/articles/$slug'
+  fullPaths:
+    | '/'
+    | '/articles'
+    | '/donate'
+    | '/special-holidays'
+    | '/articles/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/articles' | '/donate' | '/articles/$slug'
-  id: '__root__' | '/' | '/articles' | '/donate' | '/articles/$slug'
+  to: '/' | '/articles' | '/donate' | '/special-holidays' | '/articles/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/articles'
+    | '/donate'
+    | '/special-holidays'
+    | '/articles/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ArticlesRoute: typeof ArticlesRouteWithChildren
   DonateRoute: typeof DonateRoute
+  SpecialHolidaysRoute: typeof SpecialHolidaysRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/special-holidays': {
+      id: '/special-holidays'
+      path: '/special-holidays'
+      fullPath: '/special-holidays'
+      preLoaderRoute: typeof SpecialHolidaysRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/donate': {
       id: '/donate'
       path: '/donate'
@@ -117,6 +145,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ArticlesRoute: ArticlesRouteWithChildren,
   DonateRoute: DonateRoute,
+  SpecialHolidaysRoute: SpecialHolidaysRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

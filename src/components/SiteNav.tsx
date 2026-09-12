@@ -1,7 +1,9 @@
+import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import amaresLogo from "@/assets/amares-logo.webp";
 import amaresTitle from "@/assets/amares-title.webp";
 import { SdvosbBadge } from "@/components/SdvosbBadge";
+import { SpecialHolidaysNavLabel } from "@/components/holidays/SpecialHolidaysNavLabel";
 
 const sectionLinks = [
   { label: "Shows", href: "/#shows" },
@@ -12,10 +14,23 @@ const sectionLinks = [
 ];
 
 type SiteNavProps = {
-  active?: "Articles" | "Support";
+  active?: "Articles" | "Special Holidays" | "Support";
 };
 
+const mobileLinkClass =
+  "block py-3 text-base font-semibold text-[#1a1a2e] hover:text-[#2a2a6e] aria-[current=page]:font-extrabold aria-[current=page]:text-[#2a2a6e]";
+
 export function SiteNav({ active }: SiteNavProps) {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const closeMenu = () => setMenuOpen(false);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKeyDown = (event: KeyboardEvent) => event.key === "Escape" && setMenuOpen(false);
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [menuOpen]);
+
   return (
     <header className="sticky top-0 z-[1000] border-b-4 border-[var(--primary)]/20 bg-background/80 backdrop-blur-md">
       <style>{`
@@ -77,12 +92,16 @@ export function SiteNav({ active }: SiteNavProps) {
         .site-nav-donate.active::after {
           width: 60%;
         }
-        @media (max-width: 1024px) {
+        @media (max-width: 1279px) {
           .site-nav-link,
           .site-nav-donate {
             padding: 8px 10px;
             font-size: 13px;
           }
+        }
+        .site-nav-link,
+        .site-nav-donate {
+          white-space: nowrap;
         }
       `}</style>
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
@@ -99,7 +118,7 @@ export function SiteNav({ active }: SiteNavProps) {
           />
         </Link>
 
-        <nav className="hidden items-center gap-1 md:flex">
+        <nav className="hidden items-center gap-1 lg:flex">
           {sectionLinks.map((link) => (
             <a
               key={link.label}
@@ -116,6 +135,13 @@ export function SiteNav({ active }: SiteNavProps) {
             Articles
           </Link>
           <Link
+            to="/special-holidays"
+            className={`site-nav-link${active === "Special Holidays" ? " active" : ""}`}
+            aria-current={active === "Special Holidays" ? "page" : undefined}
+          >
+            <SpecialHolidaysNavLabel />
+          </Link>
+          <Link
             to="/donate"
             className={`site-nav-donate${active === "Support" ? " active" : ""}`}
           >
@@ -124,15 +150,82 @@ export function SiteNav({ active }: SiteNavProps) {
         </nav>
 
         <div className="flex items-center gap-2">
-          <SdvosbBadge className="flex md:hidden lg:flex" labelClassName="xl:flex" />
+          <SdvosbBadge className="flex" labelClassName="xl:flex" />
           <Link
             to="/donate"
-            className="rounded-full px-3 py-2 text-sm font-extrabold text-[#3B82F6] md:hidden"
+            className="rounded-full px-3 py-2 text-sm font-extrabold text-[#3B82F6] max-[389px]:hidden lg:hidden"
           >
             Support {"\u{1F499}"}
           </Link>
+          <button
+            type="button"
+            className="flex h-10 w-10 items-center justify-center rounded-full text-[#2a2a6e] transition-colors hover:bg-[#2a2a6e]/5 focus-visible:outline-2 focus-visible:outline-[#2a2a6e] lg:hidden"
+            aria-expanded={menuOpen}
+            aria-controls="site-nav-menu"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            <svg
+              viewBox="0 0 24 24"
+              className="h-6 w-6"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              aria-hidden="true"
+            >
+              {menuOpen ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
+            </svg>
+          </button>
         </div>
       </div>
+
+      {menuOpen && (
+        <nav
+          id="site-nav-menu"
+          aria-label="Site menu"
+          className="border-t border-[#2a2a6e]/10 lg:hidden"
+        >
+          <ul className="mx-auto max-w-7xl divide-y divide-[#2a2a6e]/10 px-4 pt-1 pb-3 sm:px-6">
+            {sectionLinks.map((link) => (
+              <li key={link.label}>
+                <a href={link.href} className={mobileLinkClass} onClick={closeMenu}>
+                  {link.label}
+                </a>
+              </li>
+            ))}
+            <li>
+              <Link
+                to="/articles"
+                className={mobileLinkClass}
+                onClick={closeMenu}
+                aria-current={active === "Articles" ? "page" : undefined}
+              >
+                Articles
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/special-holidays"
+                className={mobileLinkClass}
+                onClick={closeMenu}
+                aria-current={active === "Special Holidays" ? "page" : undefined}
+              >
+                <SpecialHolidaysNavLabel />
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/donate"
+                className={`${mobileLinkClass} text-[#3B82F6]`}
+                onClick={closeMenu}
+              >
+                Support {"\u{1F499}"}
+              </Link>
+            </li>
+          </ul>
+        </nav>
+      )}
     </header>
   );
 }

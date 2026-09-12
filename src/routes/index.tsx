@@ -7,6 +7,8 @@ import sunMascot from "@/assets/sun-mascot.webp";
 import musicMascot from "@/assets/music-mascot.webp";
 import { subscribeToNewsletter } from "@/lib/newsletter-server";
 import { SdvosbBadge, SdvosbLogo } from "@/components/SdvosbBadge";
+import { SpecialHolidaysNavLabel } from "@/components/holidays/SpecialHolidaysNavLabel";
+import { HolidayTeaser } from "@/components/holidays/HolidayTeaser";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -443,12 +445,18 @@ function Index() {
         }
 
         /* Tablet: tighter nav */
-        @media (min-width: 769px) and (max-width: 1024px) {
-          .nav-link { padding: 8px 10px; font-size: 13px; }
-          .nav-link-donate { padding: 8px 10px; font-size: 13px; }
+        @media (min-width: 768px) and (max-width: 1024px) {
           .navbar-logo-img { height: 40px !important; }
           .navbar-avatar { width: 40px !important; height: 40px !important; }
+        }
+        /* Small laptops: compact nav so all links (incl. Special Holidays) stay on one line */
+        @media (min-width: 769px) and (max-width: 1279px) {
+          .nav-link { padding: 8px 10px; font-size: 13px; }
+          .nav-link-donate { padding: 8px 10px; font-size: 13px; }
           .navbar-watch-btn { padding: 8px 16px !important; font-size: 13px !important; }
+        }
+        @media (min-width: 1280px) {
+          .nav-link, .nav-link-donate { padding: 8px 12px; white-space: nowrap; }
         }
 
         /* Search */
@@ -618,7 +626,7 @@ function Index() {
           </a>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-1">
+          <nav className="hidden lg:flex items-center gap-1">
             {navLinks.map((l) =>
               l === "Articles" ? (
                 <Link key={l} to="/articles" className="nav-link">
@@ -634,6 +642,9 @@ function Index() {
                 </a>
               )
             )}
+            <Link to="/special-holidays" className="nav-link">
+              <SpecialHolidaysNavLabel />
+            </Link>
             <Link
               to="/donate"
               className="nav-link-donate"
@@ -644,10 +655,10 @@ function Index() {
 
           <div className="flex items-center gap-3">
             {/* SDVOSB credential — hidden where the tablet nav has no spare room */}
-            <SdvosbBadge className="flex md:hidden xl:flex" labelClassName="xl:flex" />
+            <SdvosbBadge className="flex lg:hidden xl:flex" />
 
             {/* Desktop search */}
-            <div ref={searchRef} className="hidden md:flex items-center gap-2" style={{ position: "relative" }}>
+            <div ref={searchRef} className="hidden lg:flex items-center gap-2" style={{ position: "relative" }}>
               <input
                 ref={searchInputRef}
                 className={`search-input-desktop${searchOpen ? " open" : ""}`}
@@ -709,13 +720,13 @@ function Index() {
               href="https://www.youtube.com/@amaresbigplanet"
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden md:inline-flex rounded-full bg-red-600 text-white px-5 py-2.5 font-bold shadow-bounce hover:translate-y-1 hover:shadow-none transition-all navbar-watch-btn"
+              className="hidden lg:inline-flex rounded-full bg-red-600 text-white px-5 py-2.5 font-bold shadow-bounce hover:translate-y-1 hover:shadow-none transition-all navbar-watch-btn"
             >
               ▶ Watch
             </a>
 
             {/* Mobile: search icon + hamburger */}
-            <div className="md:hidden flex items-center gap-1">
+            <div className="lg:hidden flex items-center gap-1">
               <button
                 className="search-icon-btn"
                 onClick={() => { setMobileSearchOpen(!mobileSearchOpen); setMenuOpen(false); }}
@@ -746,7 +757,7 @@ function Index() {
       {/* Mobile search bar — slides below navbar */}
       <div
         ref={mobileSearchRef}
-        className={`mobile-search-bar md:hidden${mobileSearchOpen ? " open" : ""}`}
+        className={`mobile-search-bar lg:hidden${mobileSearchOpen ? " open" : ""}`}
         style={{ position: "sticky", top: "68px", zIndex: 1000 }}
       >
         <div style={{ position: "relative" }}>
@@ -833,7 +844,7 @@ function Index() {
           maxHeight: "100vh", overflowY: "auto",
         }}
       >
-        <nav className="md:hidden">
+        <nav className="lg:hidden">
           {navLinks.map((l) =>
             l === "Articles" ? (
               <Link
@@ -863,6 +874,13 @@ function Index() {
             Articles 📚
           </Link>
           <Link
+            to="/special-holidays"
+            className="mobile-nav-link"
+            onClick={() => setMenuOpen(false)}
+          >
+            <SpecialHolidaysNavLabel />
+          </Link>
+          <Link
             to="/donate"
             className="mobile-nav-link"
             style={{ color: "#3B82F6" }}
@@ -888,6 +906,8 @@ function Index() {
           </div>
         </nav>
       </div>
+
+      <HolidayTeaser />
 
       {/* HERO */}
       <section className="relative bg-black pb-24 sm:pb-32 overflow-hidden min-h-[80vh]">
