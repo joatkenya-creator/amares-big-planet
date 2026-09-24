@@ -13,8 +13,8 @@ export function SdvosbLogo({ className = "", loading = "eager" }: SdvosbLogoProp
     <img
       src={sdvosbLogo}
       alt={SDVOSB_ALT}
-      width={320}
-      height={329}
+      width={500}
+      height={375}
       loading={loading}
       decoding="async"
       className={`object-contain ${className}`}
