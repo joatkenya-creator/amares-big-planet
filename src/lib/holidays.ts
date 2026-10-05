@@ -10,7 +10,15 @@
  * `releaseDate`; nobody has to edit the page when the countdown finishes.
  */
 
-export type HolidayDecoration = "pumpkin" | "ghost" | "bat" | "star" | "moon" | "candy" | "sparkle";
+export type HolidayDecoration =
+  | "pumpkin"
+  | "ghost"
+  | "bat"
+  | "star"
+  | "moon"
+  | "candy"
+  | "sparkle"
+  | "note";
 
 export type HolidayTheme = {
   /** Shown in the nav tab and headings, e.g. "🎃". */

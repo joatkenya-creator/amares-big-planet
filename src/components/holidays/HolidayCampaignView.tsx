@@ -12,7 +12,7 @@ import { DecorationScatter, type DecorationSlot } from "@/components/holidays/Ho
 import { HolidayCountdown } from "@/components/holidays/HolidayCountdown";
 import { HolidayVideoPlaceholder, HolidayVideoPlayer } from "@/components/holidays/HolidayVideo";
 
-const YOUTUBE_SUBSCRIBE_URL = "https://www.youtube.com/@amaresbigplanet?sub_confirmation=1";
+export const YOUTUBE_SUBSCRIBE_URL = "https://www.youtube.com/@amaresbigplanet?sub_confirmation=1";
 const FALLBACK_MESSAGE = "Video coming soon. Check back later!";
 
 // Big illustration beside the hero copy; filled from the theme's decoration list in order.
@@ -56,7 +56,8 @@ const MESSAGE_SLOTS: DecorationSlot[] = [
   { className: "holiday-float right-10 bottom-4 hidden w-16 sm:block [animation-delay:-2s]" },
 ];
 
-const PAGE_CSS = `
+/** Shared animations and theme helpers for themed pages (also used by Midnight Rhythm). */
+export const PAGE_CSS = `
   .holiday-page {
     --h-accent-soft-shadow: color-mix(in srgb, var(--h-accent) 30%, transparent);
     --h-accent-shadow: color-mix(in srgb, var(--h-accent-strong) 55%, #000);
@@ -80,14 +81,20 @@ const PAGE_CSS = `
   }
 `;
 
-const primaryButton =
+export const primaryButton =
   "holiday-btn inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--h-accent-strong)] px-7 py-3 text-lg font-extrabold text-white shadow-[0_6px_0_var(--h-accent-shadow)] hover:translate-y-1 hover:shadow-[0_2px_0_var(--h-accent-shadow)] focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-[var(--h-secondary)] active:translate-y-1.5 active:shadow-none";
-const secondaryButton =
+export const secondaryButton =
   "holiday-btn inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-base font-extrabold text-[var(--h-ink)] shadow-[0_5px_0_var(--h-secondary-soft)] ring-2 ring-[var(--h-secondary-soft)] hover:translate-y-1 hover:shadow-[0_1px_0_var(--h-secondary-soft)] focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-[var(--h-secondary)]";
 
 type Phase = "upcoming" | "released" | "unscheduled";
 
-export function HolidayCampaignView({ campaign }: { campaign: HolidayCampaign }) {
+type HolidayCampaignViewProps = {
+  campaign: HolidayCampaign;
+  /** Extra sections (e.g. links to other specials), shown between the video and the message. */
+  children?: React.ReactNode;
+};
+
+export function HolidayCampaignView({ campaign, children }: HolidayCampaignViewProps) {
   const { theme } = campaign;
   const releaseTime = parseReleaseDate(campaign.releaseDate);
   const { parts, isComplete } = useCountdown(releaseTime);
@@ -350,6 +357,8 @@ export function HolidayCampaignView({ campaign }: { campaign: HolidayCampaign })
           )}
         </div>
       </section>
+
+      {children}
 
       {/* HOLIDAY MESSAGE */}
       <section aria-labelledby="holiday-message-heading" className="pb-20 sm:pb-28">
