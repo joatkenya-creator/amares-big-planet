@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteNav } from "@/components/SiteNav";
 import { HolidayCampaignView } from "@/components/holidays/HolidayCampaignView";
+import { MidnightRhythmCard } from "@/components/midnight-rhythm/MidnightRhythmCard";
 import {
   getActiveHoliday,
   getYouTubeVideoId,
@@ -113,22 +114,27 @@ function SpecialHolidaysPage() {
       <SiteNav active="Special Holidays" />
       <main>
         {campaign ? (
-          <HolidayCampaignView campaign={campaign} />
+          <HolidayCampaignView campaign={campaign}>
+            <MidnightRhythmCard />
+          </HolidayCampaignView>
         ) : (
-          <section className="mx-auto max-w-3xl px-4 py-24 text-center">
-            <h1 className="font-display text-4xl font-extrabold text-foreground sm:text-5xl">
-              Special Holidays
-            </h1>
-            <p className="mt-4 text-lg font-medium text-muted-foreground">
-              Our next holiday adventure is on its way. Check back soon!
-            </p>
-            <Link
-              to="/"
-              className="mt-8 inline-flex rounded-full bg-[#e02020] px-7 py-3 font-bold text-white transition hover:bg-[#cc0000]"
-            >
-              Back to Amare's Big Planet
-            </Link>
-          </section>
+          <>
+            <section className="mx-auto max-w-3xl px-4 py-24 text-center">
+              <h1 className="font-display text-4xl font-extrabold text-foreground sm:text-5xl">
+                Special Holidays
+              </h1>
+              <p className="mt-4 text-lg font-medium text-muted-foreground">
+                Our next holiday adventure is on its way. Check back soon!
+              </p>
+              <Link
+                to="/"
+                className="mt-8 inline-flex rounded-full bg-[#e02020] px-7 py-3 font-bold text-white transition hover:bg-[#cc0000]"
+              >
+                Back to Amare's Big Planet
+              </Link>
+            </section>
+            <MidnightRhythmCard />
+          </>
         )}
       </main>
     </div>

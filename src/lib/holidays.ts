@@ -10,7 +10,15 @@
  * `releaseDate`; nobody has to edit the page when the countdown finishes.
  */
 
-export type HolidayDecoration = "pumpkin" | "ghost" | "bat" | "star" | "moon" | "candy" | "sparkle";
+export type HolidayDecoration =
+  | "pumpkin"
+  | "ghost"
+  | "bat"
+  | "star"
+  | "moon"
+  | "candy"
+  | "sparkle"
+  | "note";
 
 export type HolidayTheme = {
   /** Shown in the nav tab and headings, e.g. "🎃". */
@@ -44,7 +52,7 @@ export type HolidayCampaign = {
   description: string;
   /**
    * ISO 8601 date-time WITH a UTC offset, so every visitor counts down to the same moment.
-   * Example: "2026-10-25T18:00:00+03:00" is 6:00 PM East Africa Time.
+   * Example: "2026-10-31T18:00:00+03:00" is 6:00 PM East Africa Time.
    */
   releaseDate: string;
   /** IANA time zone used to display the release date, plus a short human label. */
@@ -78,7 +86,7 @@ export const holidayCampaigns: HolidayCampaign[] = [
     status: "active",
     title: "Something Spooky Is Coming!",
     description: "Get ready for a special Halloween adventure from Amare's Big Planet!",
-    releaseDate: "2026-10-25T18:00:00+03:00",
+    releaseDate: "2026-10-31T18:00:00+03:00",
     releaseTimeZone: "Africa/Nairobi",
     releaseTimeZoneLabel: "EAT",
     videoUrl: "",
@@ -158,7 +166,7 @@ export function getYouTubeVideoId(url: string): string | null {
   }
 }
 
-/** Formats the release date in the campaign's time zone, e.g. "Sunday, October 25, 2026 · 6:00 PM EAT". */
+/** Formats the release date in the campaign's time zone, e.g. "Saturday, October 31, 2026 · 6:00 PM EAT". */
 export function formatReleaseDate(campaign: HolidayCampaign): string | null {
   const time = parseReleaseDate(campaign.releaseDate);
   if (time === null) return null;

@@ -191,6 +191,26 @@ export function Candy({ className, style }: ArtProps) {
   );
 }
 
+export function MusicNote({ className, style }: ArtProps) {
+  return (
+    <svg
+      viewBox="0 0 64 72"
+      className={className}
+      style={style}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d="M21 16L55 6v10L21 26z" fill="#a78bfa" />
+      <rect x="20" y="16" width="5" height="42" rx="2.5" fill="#a78bfa" />
+      <rect x="51" y="6" width="5" height="44" rx="2.5" fill="#a78bfa" />
+      <ellipse cx="14" cy="58" rx="11" ry="8.5" transform="rotate(-20 14 58)" fill="#f472b6" />
+      <ellipse cx="45" cy="50" rx="11" ry="8.5" transform="rotate(-20 45 50)" fill="#f472b6" />
+      <circle cx="10" cy="55" r="2.5" fill="#fff" opacity=".8" />
+      <circle cx="41" cy="47" r="2.5" fill="#fff" opacity=".8" />
+    </svg>
+  );
+}
+
 const DECORATIONS: Record<HolidayDecoration, (props: ArtProps) => React.JSX.Element> = {
   pumpkin: Pumpkin,
   ghost: Ghost,
@@ -199,6 +219,7 @@ const DECORATIONS: Record<HolidayDecoration, (props: ArtProps) => React.JSX.Elem
   moon: Moon,
   candy: Candy,
   sparkle: Sparkle,
+  note: MusicNote,
 };
 
 export function HolidayDecorationArt({ type, ...props }: ArtProps & { type: HolidayDecoration }) {
