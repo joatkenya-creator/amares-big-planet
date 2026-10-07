@@ -8,6 +8,8 @@ import musicMascot from "@/assets/music-mascot.webp";
 import { subscribeToNewsletter } from "@/lib/newsletter-server";
 import { SdvosbBadge, SdvosbLogo } from "@/components/SdvosbBadge";
 import { SpecialHolidaysNavLabel } from "@/components/holidays/SpecialHolidaysNavLabel";
+import { HeroBackgroundVideo } from "@/components/HeroBackgroundVideo";
+import { candleStreetHeroVideo } from "@/lib/hero-video";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -908,38 +910,11 @@ function Index() {
 
       {/* HERO */}
       <section className="relative bg-black pb-24 sm:pb-32 overflow-hidden min-h-[80vh]">
-        {/* Decorative background video. Keep it hidden from assistive tech and out of video schema. */}
+        {/* Decorative background video (still poster first, video after load, none for reduced motion).
+            Hidden from assistive tech and kept out of video schema. */}
         <div className="absolute inset-0 z-0 overflow-hidden">
-          <video
-            ref={(el) => {
-              if (el) {
-                el.muted = true;
-                el.play().catch((err) => console.error("Hero video play failed:", err));
-              }
-            }}
-            src="/videos/donation-bg.mp4"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            onError={(e) => console.error("Hero video error:", e)}
-            aria-hidden="true"
-            tabIndex={-1}
-            disablePictureInPicture
-            controls={false}
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              pointerEvents: "none",
-              zIndex: 0,
-            }}
-          />
-          <div className="absolute inset-0 bg-black/50" />
+          <HeroBackgroundVideo {...candleStreetHeroVideo} />
+          <div className="absolute inset-0 bg-black/35" />
         </div>
         <div className="pt-20 sm:pt-28" />
         {/* floating decor */}
