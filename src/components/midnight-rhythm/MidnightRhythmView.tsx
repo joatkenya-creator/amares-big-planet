@@ -4,6 +4,7 @@ import { getYouTubeVideoId } from "@/lib/holidays";
 import {
   MIDNIGHT_RHYTHM_DECORATIONS as DECORATIONS,
   MIDNIGHT_RHYTHM_THEME_VARS as THEME_VARS,
+  midnightRhythmHeroVideo,
   midnightRhythmVideos,
 } from "@/lib/midnight-rhythm";
 import { DecorationScatter, type DecorationSlot } from "@/components/holidays/HolidayArt";
@@ -14,6 +15,7 @@ import {
   YOUTUBE_SUBSCRIBE_URL,
 } from "@/components/holidays/HolidayCampaignView";
 import { HolidayVideoPlayer } from "@/components/holidays/HolidayVideo";
+import { HeroBackgroundVideo } from "@/components/HeroBackgroundVideo";
 
 // Big illustration beside the hero copy; the moon takes the first (largest) slot.
 const HERO_ART_SLOTS: DecorationSlot[] = [
@@ -72,6 +74,16 @@ export function MidnightRhythmView() {
           background: "linear-gradient(180deg, var(--h-sky-from) 0%, var(--h-sky-to) 100%)",
         }}
       >
+        <HeroBackgroundVideo {...midnightRhythmHeroVideo} />
+        {/* Night-tinted dark overlay keeps the heading and buttons readable over the video. */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(30,27,75,0.72) 0%, rgba(30,27,75,0.5) 45%, rgba(76,29,149,0.7) 100%)",
+          }}
+        />
         <DecorationScatter decorations={DECORATIONS} slots={HERO_BACKGROUND_SLOTS} />
 
         <div className="relative mx-auto max-w-7xl px-4 pt-5 pb-20 sm:px-6 sm:pb-28">
