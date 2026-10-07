@@ -1020,7 +1020,7 @@ function Index() {
             animation: "pulse-dot 2s infinite",
           }} />
           <p style={{ fontSize: 13, color: "rgba(255,255,255,0.9)", fontWeight: 500, margin: 0 }}>
-            💙 <strong style={{ color: "#fff" }}>Help Amaré reach more kids!</strong> Your support brings free adventures to children all over the world.
+            💙 <strong style={{ color: "#fff" }}>Help Amaré’s Big Planet grow!</strong> Your support goes into creating more free adventures for families all over the world.
           </p>
           <Link to="/donate" style={{
             background: "#e02020", color: "white", borderRadius: 16,
@@ -1636,10 +1636,10 @@ function Index() {
               ✕
             </button>
             <p style={{ fontWeight: 700, fontSize: 15, margin: "0 0 6px", color: "#1a1a2e" }}>
-              💙 Help Amaré reach more kids!
+              💙 Help Amaré’s Big Planet grow!
             </p>
             <p style={{ fontSize: 13, color: "#555", margin: "0 0 12px", lineHeight: 1.4 }}>
-              Your support brings free learning adventures to children all over the world.
+              Your support goes into creating more free learning adventures for families all over the world.
             </p>
             <Link
               to="/donate"

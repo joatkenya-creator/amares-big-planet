@@ -10,10 +10,10 @@ export const Route = createFileRoute("/donate")({
   component: DonatePage,
   head: () => ({
     meta: [
-      { title: "Support Amare's Big Planet | Help Kids Learn" },
-      { name: "description", content: "Support Amare's Big Planet and bring free kids learning songs, ABC videos, and space adventures to children worldwide. Every gift counts." },
-      { property: "og:title", content: "Support Amare's Big Planet | Help Kids Learn" },
-      { property: "og:description", content: "Support Amare's Big Planet and bring free kids learning songs, ABC videos, and space adventures to children worldwide. Every gift counts." },
+      { title: "Support Amaré's Big Planet | Help Our Ecosystem Grow" },
+      { name: "description", content: "Support Amaré's Big Planet. 100% of every gift goes into the growth and development of our ecosystem of free kids learning songs, ABC videos, and space adventures." },
+      { property: "og:title", content: "Support Amaré's Big Planet | Help Our Ecosystem Grow" },
+      { property: "og:description", content: "Support Amaré's Big Planet. 100% of every gift goes into the growth and development of our ecosystem of free kids learning songs, ABC videos, and space adventures." },
       { property: "og:url", content: "https://amaresbigplanet.com/donate" },
       { property: "og:image", content: "https://res.cloudinary.com/dee2vqvzl/image/upload/v1778073832/1775135225431_1_zxvc1e.png" },
       { property: "og:type", content: "website" },
@@ -423,7 +423,7 @@ return (
               fontSize: "19px", color: "rgba(255,255,255,0.92)",
               maxWidth: "560px", lineHeight: 1.6, marginBottom: "32px",
             }}>
-              Your support brings free songs, stories, and learning adventures to kids aged 1&ndash;10 around the world. Every dollar helps Amar&eacute; and the Gear Crew reach more little explorers.
+              Your support powers the growth and development of Amar&eacute;&rsquo;s Big Planet &mdash; the songs, stories, and learning adventures enjoyed by kids aged 1&ndash;10 around the world. Every dollar helps Amar&eacute; and the Gear Crew create more.
             </p>
 
             {/* Dual CTAs */}
@@ -484,7 +484,7 @@ return (
               {[
                 { number: "12,400+", label: "Children reached" },
                 { number: "50", label: "Countries" },
-                { number: "100%", label: "Goes to kids" },
+                { number: "100%", label: "Into our ecosystem" },
                 { number: "4.9\u2605", label: "Parent rating" },
               ].map((stat) => (
                 <div key={stat.label}>
@@ -493,6 +493,9 @@ return (
                 </div>
               ))}
             </div>
+            <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.85)", lineHeight: 1.5, marginTop: "14px", marginBottom: 0 }}>
+              100% goes into the growth and development of the Amar&eacute;&rsquo;s Big Planet ecosystem.
+            </p>
 
             {/* Social Proof Bar */}
             <div className="donate-social-proof-bar" style={{
