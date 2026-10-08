@@ -49,7 +49,13 @@ export type HolidayCampaign = {
   /** "active" campaigns are featured on /special-holidays. Release state is automatic. */
   status: "active" | "archived";
   title: string;
+  /** Optional hero headline once the video is out; defaults to "Watch Our {videoTitle}". */
+  releasedTitle?: string;
+  /** Optional hero badge once the video is out; defaults to "It's here!". */
+  releasedBadge?: string;
   description: string;
+  /** Optional hero subtitle once the video is out; defaults to a generic "video is ready" line. */
+  releasedDescription?: string;
   /**
    * ISO 8601 date-time WITH a UTC offset, so every visitor counts down to the same moment.
    * Example: "2026-10-31T18:00:00+03:00" is 6:00 PM East Africa Time.
@@ -63,6 +69,14 @@ export type HolidayCampaign = {
   releaseTimeZoneLabel: string;
   /** Full YouTube URL (watch, youtu.be, shorts or embed). Leave "" until the video exists. */
   videoUrl: string;
+  /**
+   * For a video hosted outside YouTube (e.g. TIDAL): the page to open from the "Watch" button,
+   * its label, and an optional official embed URL for the on-page player. Used when `videoUrl` is "".
+   * Embed hosts must also be allowed in `frame-src` in `src/start.ts`.
+   */
+  watchUrl?: string;
+  watchLabel?: string;
+  embedUrl?: string;
   videoTitle: string;
   /** Optional custom thumbnail (imported asset or /public path). Falls back to an illustration / the YouTube thumbnail. */
   thumbnail?: string;
@@ -88,23 +102,30 @@ export const holidayCampaigns: HolidayCampaign[] = [
     year: 2026,
     status: "active",
     title: "Midnight Rhythm Exe Is Coming!",
+    releasedTitle: "The Time of Excitement Is Here!",
+    releasedBadge: "Midnight Rhythm Exe · Out now",
     description:
       "Get ready for Midnight Rhythm Exe, a brand-new music adventure from Amaré's Big Planet!",
-    releaseDate: "2026-10-09T00:00:00+03:00",
+    releasedDescription:
+      "Midnight Rhythm Exe, a brand-new music adventure from Amaré's Big Planet, is out now! Watch it today.",
+    releaseDate: "2026-10-08T17:00:00+03:00",
     releaseTimeZone: "Africa/Nairobi",
     releaseTimeZoneLabel: "EAT",
-    // Paste the new YouTube link here; the page switches to "Watch now" at the release time.
+    // Released on TIDAL, not YouTube.
     videoUrl: "",
+    watchUrl: "https://tidal.com/video/561473985",
+    watchLabel: "Watch on TIDAL",
+    embedUrl: "https://embed.tidal.com/videos/561473985",
     videoTitle: "Midnight Rhythm Exe",
     thumbnail: undefined,
     message: {
-      heading: "Get Ready for Midnight Rhythm Exe!",
+      heading: "Midnight Rhythm Exe Is Out Now!",
       body: "When the stars come out, the music turns on! Join Amaré and the Gear Crew for a brand-new night of songs, dancing and fun made for curious young learners and families.",
     },
     seo: {
       title: "Midnight Rhythm Exe for Kids | Amaré's Big Planet",
       description:
-        "Midnight Rhythm Exe premieres Thursday, October 8 at midnight EAT. Join the countdown to a brand-new music adventure for kids from Amaré's Big Planet!",
+        "Midnight Rhythm Exe, a brand-new music adventure from Amaré's Big Planet, is out now! Watch it today on TIDAL.",
       image: "/favicon-512.png",
       imageAlt: "Amaré's Big Planet Midnight Rhythm Exe",
       keywords: [
