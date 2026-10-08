@@ -31,6 +31,7 @@ const NAV_LINKS = [
   { label: "Stories", href: "/#stories" },
   { label: "Articles", href: "/articles" },
   { label: "Special Holidays", href: SPECIAL_HOLIDAYS_PATH },
+  { label: "Shop \u{1F6CD}\u{FE0F}", href: "https://amares-big-planet.myshopify.com/", external: true },
   { label: "Contact", href: "/#contact" },
 ];
 
@@ -105,6 +106,8 @@ function ArticlesPage() {
               <a
                 key={link.label}
                 href={link.href}
+                target={link.external ? "_blank" : undefined}
+                rel={link.external ? "noopener noreferrer" : undefined}
                 className={`articles-nav-link${link.label === "Articles" ? " articles-nav-link--active" : ""}`}
                 aria-current={link.label === "Articles" ? "page" : undefined}
               >
@@ -185,6 +188,8 @@ function ArticlesPage() {
               <a
                 key={link.label}
                 href={link.href}
+                target={link.external ? "_blank" : undefined}
+                rel={link.external ? "noopener noreferrer" : undefined}
                 onClick={() => setMobileMenuOpen(false)}
                 style={{
                   display: "block", padding: "12px 0", fontSize: "15px",
@@ -216,7 +221,7 @@ function ArticlesPage() {
       {/* NAV STYLES */}
       <style>{`
         .articles-nav-link {
-          padding: 8px 14px;
+          padding: 8px 12px;
           font-size: 14px;
           font-weight: 500;
           color: #0d1b3e;
@@ -246,6 +251,9 @@ function ArticlesPage() {
         .articles-nav-link--active::after { width: 60% !important; background: #e85d04; }
 
         .articles-nav-link { white-space: nowrap; }
+        @media (max-width: 1279px) {
+          .articles-nav-link { padding: 8px 10px; }
+        }
         @media (max-width: 1023px) {
           .articles-nav-links { display: none !important; }
           .articles-nav-hamburger { display: flex !important; }
