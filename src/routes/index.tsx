@@ -452,12 +452,12 @@ function Index() {
         }
         /* Small laptops: compact nav so all links (incl. Special Holidays) stay on one line */
         @media (min-width: 769px) and (max-width: 1279px) {
-          .nav-link { padding: 8px 10px; font-size: 13px; }
-          .nav-link-donate { padding: 8px 10px; font-size: 13px; }
+          .nav-link { padding: 8px 8px; font-size: 13px; }
+          .nav-link-donate { padding: 8px 8px; font-size: 13px; }
           .navbar-watch-btn { padding: 8px 16px !important; font-size: 13px !important; }
         }
         @media (min-width: 1280px) {
-          .nav-link, .nav-link-donate { padding: 8px 12px; white-space: nowrap; }
+          .nav-link, .nav-link-donate { padding: 8px 8px; white-space: nowrap; }
         }
 
         /* Search */
@@ -646,6 +646,14 @@ function Index() {
             <Link to="/special-holidays" className="nav-link">
               <SpecialHolidaysNavLabel />
             </Link>
+            <a
+              href="https://amares-big-planet.myshopify.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="nav-link"
+            >
+              Shop {"\u{1F6CD}\u{FE0F}"}
+            </a>
             <Link
               to="/donate"
               className="nav-link-donate"
@@ -881,6 +889,15 @@ function Index() {
           >
             <SpecialHolidaysNavLabel />
           </Link>
+          <a
+            href="https://amares-big-planet.myshopify.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mobile-nav-link"
+            onClick={() => setMenuOpen(false)}
+          >
+            Shop {"\u{1F6CD}\u{FE0F}"}
+          </a>
           <Link
             to="/donate"
             className="mobile-nav-link"
@@ -1510,6 +1527,7 @@ function Index() {
             <nav className="flex flex-wrap gap-5 text-sm font-medium">
               <a href="https://www.youtube.com/@amaresbigplanet/about" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--sunshine)] transition-colors">About</a>
               <Link to="/articles" className="hover:text-[var(--sunshine)] transition-colors">Learning Hub</Link>
+              <a href="https://amares-big-planet.myshopify.com/" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--sunshine)] transition-colors">Shop</a>
               <a href="mailto:partnership@amaresbigplanet.com" className="hover:text-[var(--sunshine)] transition-colors">Contact</a>
               <a className="hover:text-[var(--sunshine)] transition-colors">Privacy</a>
               <a href="https://www.youtube.com/@amaresbigplanet?sub_confirmation=1" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--sunshine)] transition-colors">Subscribe</a>

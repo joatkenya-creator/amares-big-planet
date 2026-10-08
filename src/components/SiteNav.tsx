@@ -36,7 +36,7 @@ export function SiteNav({ active }: SiteNavProps) {
       <style>{`
         .site-nav-link {
           position: relative;
-          padding: 8px 16px;
+          padding: 8px 10px;
           border-radius: 9999px;
           font-weight: 600;
           color: var(--foreground);
@@ -68,7 +68,7 @@ export function SiteNav({ active }: SiteNavProps) {
         }
         .site-nav-donate {
           position: relative;
-          padding: 8px 16px;
+          padding: 8px 10px;
           border-radius: 9999px;
           font-weight: 600;
           font-size: 15px;
@@ -95,7 +95,7 @@ export function SiteNav({ active }: SiteNavProps) {
         @media (max-width: 1279px) {
           .site-nav-link,
           .site-nav-donate {
-            padding: 8px 10px;
+            padding: 8px 8px;
             font-size: 13px;
           }
         }
@@ -141,6 +141,14 @@ export function SiteNav({ active }: SiteNavProps) {
           >
             <SpecialHolidaysNavLabel />
           </Link>
+          <a
+            href="https://amares-big-planet.myshopify.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="site-nav-link"
+          >
+            Shop {"\u{1F6CD}\u{FE0F}"}
+          </a>
           <Link
             to="/donate"
             className={`site-nav-donate${active === "Support" ? " active" : ""}`}
@@ -213,6 +221,17 @@ export function SiteNav({ active }: SiteNavProps) {
               >
                 <SpecialHolidaysNavLabel />
               </Link>
+            </li>
+            <li>
+              <a
+                href="https://amares-big-planet.myshopify.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={mobileLinkClass}
+                onClick={closeMenu}
+              >
+                Shop {"\u{1F6CD}\u{FE0F}"}
+              </a>
             </li>
             <li>
               <Link
