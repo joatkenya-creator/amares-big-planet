@@ -100,7 +100,11 @@ export function HolidayCampaignView({ campaign, children }: HolidayCampaignViewP
   const { parts, isComplete } = useCountdown(releaseTime);
   const phase: Phase = releaseTime === null ? "unscheduled" : isComplete ? "released" : "upcoming";
   const videoId = getYouTubeVideoId(campaign.videoUrl);
-  const watchUrl = videoId ? `https://www.youtube.com/watch?v=${videoId}` : null;
+  const watchUrl = videoId
+    ? `https://www.youtube.com/watch?v=${videoId}`
+    : (campaign.watchUrl ?? null);
+  // A YouTube video plays through the click-to-play player; other hosts need an official embed.
+  const canPlayOnPage = videoId !== null || Boolean(campaign.embedUrl);
   const releaseLabel = formatReleaseDate(campaign);
   const campaignLabel = `${campaign.holidayName} ${campaign.year}`;
   const videoReady = phase === "released" && watchUrl !== null;
@@ -174,7 +178,7 @@ export function HolidayCampaignView({ campaign, children }: HolidayCampaignViewP
               <p className="inline-flex items-center gap-2 rounded-full bg-white/80 px-4 py-1.5 text-sm font-extrabold tracking-wider text-[var(--h-secondary)] uppercase shadow-sm ring-1 ring-white sm:text-base">
                 {videoReady ? (
                   <>
-                    <span aria-hidden="true">🎉</span> It's here!
+                    <span aria-hidden="true">🎉</span> {campaign.releasedBadge ?? "It's here!"}
                   </>
                 ) : (
                   <>
@@ -187,7 +191,12 @@ export function HolidayCampaignView({ campaign, children }: HolidayCampaignViewP
                 id="holiday-hero-heading"
                 className="mt-4 font-display text-[clamp(2.4rem,7vw,4.5rem)] leading-[1.02] font-extrabold text-balance lg:text-[clamp(3rem,4.4vw,3.9rem)]"
               >
-                {videoReady ? (
+                {videoReady && campaign.releasedTitle ? (
+                  <>
+                    <span aria-hidden="true">{theme.emoji} </span>
+                    {campaign.releasedTitle}
+                  </>
+                ) : videoReady ? (
                   `Watch Our ${campaign.videoTitle}`
                 ) : (
                   <>
@@ -198,7 +207,8 @@ export function HolidayCampaignView({ campaign, children }: HolidayCampaignViewP
               </h1>
               <p className="mx-auto mt-4 max-w-xl text-lg font-medium text-[var(--h-ink)]/85 sm:text-xl lg:mx-0">
                 {videoReady
-                  ? `Our special ${campaign.holidayName} video is ready. Grab a cozy spot and enjoy the fun with Amare!`
+                  ? (campaign.releasedDescription ??
+                    `Our special ${campaign.holidayName} video is ready. Grab a cozy spot and enjoy the fun with Amare!`)
                   : campaign.description}
               </p>
             </div>
@@ -253,17 +263,20 @@ export function HolidayCampaignView({ campaign, children }: HolidayCampaignViewP
                     rel="noopener noreferrer"
                     className={`${primaryButton} holiday-pop px-10 py-4 text-2xl`}
                   >
-                    <span aria-hidden="true">▶</span> WATCH NOW
+                    <span aria-hidden="true">▶</span> {videoId ? "WATCH NOW" : (campaign.watchLabel ?? "WATCH NOW")}
                     <span className="sr-only">
-                      : {campaign.videoTitle} on YouTube (opens in a new tab)
+                      : {campaign.videoTitle}
+                      {videoId ? " on YouTube" : ""} (opens in a new tab)
                     </span>
                   </a>
-                  <a
-                    href="#holiday-video"
-                    className="font-bold text-[var(--h-secondary)] underline underline-offset-4"
-                  >
-                    Or watch it right here on this page
-                  </a>
+                  {canPlayOnPage && (
+                    <a
+                      href="#holiday-video"
+                      className="font-bold text-[var(--h-secondary)] underline underline-offset-4"
+                    >
+                      Or watch it right here on this page
+                    </a>
+                  )}
                 </div>
               )}
 
@@ -332,10 +345,27 @@ export function HolidayCampaignView({ campaign, children }: HolidayCampaignViewP
                   title={campaign.videoTitle}
                   thumbnail={campaign.thumbnail}
                 />
+              ) : videoReady && campaign.embedUrl ? (
+                // Attributes follow TIDAL's official oEmbed iframe.
+                <iframe
+                  src={campaign.embedUrl}
+                  title={campaign.videoTitle}
+                  allow="encrypted-media; fullscreen; clipboard-write; web-share"
+                  sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox"
+                  allowFullScreen
+                  loading="lazy"
+                  className="aspect-video w-full rounded-[1.75rem] border-0 bg-black"
+                />
               ) : (
                 <HolidayVideoPlaceholder
-                  badge={phase === "upcoming" ? "Coming Soon" : "Check back later"}
-                  headline={phase === "upcoming" ? "Premieres Soon" : "Video coming soon"}
+                  badge={phase === "upcoming" ? "Coming Soon" : videoReady ? "Out now" : "Check back later"}
+                  headline={
+                    phase === "upcoming"
+                      ? "Premieres Soon"
+                      : videoReady
+                        ? (campaign.watchLabel ?? "Watch now")
+                        : "Video coming soon"
+                  }
                   detail={phase === "upcoming" ? releaseLabel : null}
                   thumbnail={campaign.thumbnail}
                   decorations={theme.decorations}
@@ -351,7 +381,8 @@ export function HolidayCampaignView({ campaign, children }: HolidayCampaignViewP
               rel="noopener noreferrer"
               className={`${primaryButton} mt-8`}
             >
-              <span aria-hidden="true">▶</span> Watch on YouTube
+              <span aria-hidden="true">▶</span>{" "}
+              {videoId ? "Watch on YouTube" : (campaign.watchLabel ?? "Watch now")}
               <span className="sr-only">(opens in a new tab)</span>
             </a>
           )}
