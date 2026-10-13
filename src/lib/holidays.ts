@@ -70,13 +70,19 @@ export type HolidayCampaign = {
   /** Full YouTube URL (watch, youtu.be, shorts or embed). Leave "" until the video exists. */
   videoUrl: string;
   /**
-   * For a video hosted outside YouTube (e.g. TIDAL): the page to open from the "Watch" button,
-   * its label, and an optional official embed URL for the on-page player. Used when `videoUrl` is "".
+   * Optional page and label for the hero "Watch" button (e.g. "Watch on Vevo"); defaults to the
+   * YouTube video and "WATCH NOW". For a video hosted outside YouTube, leave `videoUrl` "" and set
+   * `embedUrl` to the host's official embed for the on-page player.
    * Embed hosts must also be allowed in `frame-src` in `src/start.ts`.
    */
   watchUrl?: string;
   watchLabel?: string;
   embedUrl?: string;
+  /** Optional heading of the video section once the video is out; defaults to "Watch Our {videoTitle}". */
+  releasedVideoHeading?: string;
+  /** Optional small link under the video to another place it can be watched. */
+  alsoAvailableUrl?: string;
+  alsoAvailableLabel?: string;
   videoTitle: string;
   /** Optional custom thumbnail (imported asset or /public path). Falls back to an illustration / the YouTube thumbnail. */
   thumbnail?: string;
@@ -111,11 +117,12 @@ export const holidayCampaigns: HolidayCampaign[] = [
     releaseDate: "2026-10-08T17:00:00+03:00",
     releaseTimeZone: "Africa/Nairobi",
     releaseTimeZoneLabel: "EAT",
-    // Released on TIDAL, not YouTube.
-    videoUrl: "",
-    watchUrl: "https://tidal.com/video/561473985",
-    watchLabel: "Watch on TIDAL",
-    embedUrl: "https://embed.tidal.com/videos/561473985",
+    videoUrl: "https://youtu.be/0c9I47g2wxQ",
+    watchUrl: "https://youtu.be/0c9I47g2wxQ",
+    watchLabel: "Watch on Vevo",
+    releasedVideoHeading: "Watch Midnight Rhythm Exe – Version 2",
+    alsoAvailableUrl: "https://tidal.com/video/561473985",
+    alsoAvailableLabel: "Also available on TIDAL",
     videoTitle: "Midnight Rhythm Exe",
     thumbnail: undefined,
     message: {
@@ -125,7 +132,7 @@ export const holidayCampaigns: HolidayCampaign[] = [
     seo: {
       title: "Midnight Rhythm Exe for Kids | Amaré's Big Planet",
       description:
-        "Midnight Rhythm Exe, a brand-new music adventure from Amaré's Big Planet, is out now! Watch it today on TIDAL.",
+        "Midnight Rhythm Exe, a brand-new music adventure from Amaré's Big Planet, is out now! Watch it today.",
       image: "/favicon-512.png",
       imageAlt: "Amaré's Big Planet Midnight Rhythm Exe",
       keywords: [
