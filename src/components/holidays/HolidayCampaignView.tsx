@@ -100,9 +100,8 @@ export function HolidayCampaignView({ campaign, children }: HolidayCampaignViewP
   const { parts, isComplete } = useCountdown(releaseTime);
   const phase: Phase = releaseTime === null ? "unscheduled" : isComplete ? "released" : "upcoming";
   const videoId = getYouTubeVideoId(campaign.videoUrl);
-  const watchUrl = videoId
-    ? `https://www.youtube.com/watch?v=${videoId}`
-    : (campaign.watchUrl ?? null);
+  const watchUrl =
+    campaign.watchUrl ?? (videoId ? `https://www.youtube.com/watch?v=${videoId}` : null);
   // A YouTube video plays through the click-to-play player; other hosts need an official embed.
   const canPlayOnPage = videoId !== null || Boolean(campaign.embedUrl);
   const releaseLabel = formatReleaseDate(campaign);
@@ -263,7 +262,7 @@ export function HolidayCampaignView({ campaign, children }: HolidayCampaignViewP
                     rel="noopener noreferrer"
                     className={`${primaryButton} holiday-pop px-10 py-4 text-2xl`}
                   >
-                    <span aria-hidden="true">▶</span> {videoId ? "WATCH NOW" : (campaign.watchLabel ?? "WATCH NOW")}
+                    <span aria-hidden="true">▶</span> {campaign.watchLabel ?? "WATCH NOW"}
                     <span className="sr-only">
                       : {campaign.videoTitle}
                       {videoId ? " on YouTube" : ""} (opens in a new tab)
@@ -321,11 +320,11 @@ export function HolidayCampaignView({ campaign, children }: HolidayCampaignViewP
         <div className="mx-auto max-w-5xl px-4 text-center sm:px-6">
           <h2
             id="holiday-video-heading"
-            className="font-display text-3xl font-extrabold sm:text-5xl"
+            className="font-display text-3xl font-extrabold text-balance sm:text-5xl"
           >
             <span aria-hidden="true">🎬 </span>
             {videoReady
-              ? `Watch Our ${campaign.videoTitle}`
+              ? (campaign.releasedVideoHeading ?? `Watch Our ${campaign.videoTitle}`)
               : `${campaign.holidayName} Video Coming Soon`}
           </h2>
           <p className="mx-auto mt-3 max-w-2xl text-lg font-medium text-[var(--h-ink)]/80">
@@ -374,7 +373,19 @@ export function HolidayCampaignView({ campaign, children }: HolidayCampaignViewP
             </div>
           </div>
 
-          {videoReady && (
+          {videoReady && campaign.alsoAvailableUrl && (
+            <a
+              href={campaign.alsoAvailableUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 inline-block font-bold text-[var(--h-secondary)] underline underline-offset-4"
+            >
+              {campaign.alsoAvailableLabel ?? "Also available here"}
+              <span className="sr-only"> (opens in a new tab)</span>
+            </a>
+          )}
+
+          {videoReady && !campaign.alsoAvailableUrl && (
             <a
               href={watchUrl}
               target="_blank"
