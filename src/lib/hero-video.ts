@@ -1,6 +1,6 @@
 import type { HeroBackgroundVideoSources } from "@/components/HeroBackgroundVideo";
 
-// Looping hero background (Cloudinary), used on the homepage and Midnight Rhythm heroes.
+// Looping hero background (Cloudinary), used on the Midnight Rhythm hero.
 // Posters are the frame at 2s — the first frame is black.
 const BASE = "https://res.cloudinary.com/dee2vqvzl/video/upload";
 const ID = "v1791391483/videoplayback_hn669f";
@@ -10,4 +10,13 @@ export const candleStreetHeroVideo: HeroBackgroundVideoSources = {
   mobileSrc: `${BASE}/so_0,eo_15,ac_none,q_auto,w_720/${ID}.mp4`,
   desktopPoster: `${BASE}/so_2,q_auto,f_auto,w_1280/${ID}.jpg`,
   mobilePoster: `${BASE}/so_2,q_auto,f_auto,w_720/${ID}.jpg`,
+};
+
+// Homepage hero: the original planet-window clip, served from public/videos.
+// It has no lighter cut, so phones get the same file; posters are its frame at 2s.
+export const planetWindowHeroVideo: HeroBackgroundVideoSources = {
+  desktopSrc: "/videos/donation-bg.mp4",
+  mobileSrc: "/videos/donation-bg.mp4",
+  desktopPoster: "/videos/donation-bg-poster-1280.jpg",
+  mobilePoster: "/videos/donation-bg-poster-720.jpg",
 };
