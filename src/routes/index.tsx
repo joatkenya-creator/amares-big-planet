@@ -9,7 +9,7 @@ import { subscribeToNewsletter } from "@/lib/newsletter-server";
 import { SdvosbBadge, SdvosbLogo } from "@/components/SdvosbBadge";
 import { SpecialHolidaysNavLabel } from "@/components/holidays/SpecialHolidaysNavLabel";
 import { HeroBackgroundVideo } from "@/components/HeroBackgroundVideo";
-import { candleStreetHeroVideo } from "@/lib/hero-video";
+import { planetWindowHeroVideo } from "@/lib/hero-video";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -930,7 +930,7 @@ function Index() {
         {/* Decorative background video (still poster first, video after load, none for reduced motion).
             Hidden from assistive tech and kept out of video schema. */}
         <div className="absolute inset-0 z-0 overflow-hidden">
-          <HeroBackgroundVideo {...candleStreetHeroVideo} />
+          <HeroBackgroundVideo {...planetWindowHeroVideo} />
           <div className="absolute inset-0 bg-black/35" />
         </div>
         <div className="pt-20 sm:pt-28" />
