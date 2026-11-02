@@ -211,6 +211,123 @@ export function MusicNote({ className, style }: ArtProps) {
   );
 }
 
+export function ChristmasTree({ className, style }: ArtProps) {
+  return (
+    <svg
+      viewBox="0 0 100 114"
+      className={className}
+      style={style}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <rect x="43" y="98" width="14" height="14" rx="3" fill="#92400e" />
+      <path d="M50 50L94 102H6z" fill="#15803d" />
+      <path d="M50 30L84 74H16z" fill="#16a34a" />
+      <path d="M50 14L74 48H26z" fill="#22c55e" />
+      <polygon
+        points="50,0 52.4,6.8 59.5,6.9 53.8,11.2 55.9,18.1 50,14 44.1,18.1 46.2,11.2 40.5,6.9 47.6,6.8"
+        fill="#facc15"
+        stroke="#f59e0b"
+        strokeWidth="1.2"
+        strokeLinejoin="round"
+      />
+      <circle cx="41" cy="42" r="4" fill="#ef4444" />
+      <circle cx="64" cy="62" r="4.5" fill="#facc15" />
+      <circle cx="22" cy="94" r="4.5" fill="#60a5fa" />
+      <circle cx="78" cy="94" r="4.5" fill="#ef4444" />
+      <circle cx="42" cy="80" r="3" fill="#14532d" />
+      <circle cx="58" cy="80" r="3" fill="#14532d" />
+      <circle cx="36" cy="87" r="3.5" fill="#fda4af" opacity=".75" />
+      <circle cx="64" cy="87" r="3.5" fill="#fda4af" opacity=".75" />
+      <path
+        d="M43 88q7 6 14 0"
+        stroke="#14532d"
+        strokeWidth="3"
+        strokeLinecap="round"
+        fill="none"
+      />
+    </svg>
+  );
+}
+
+export function Snowflake({ className, style }: ArtProps) {
+  const arm = (
+    <path
+      d="M20 3v34M15 7l5 4 5-4M15 33l5-4 5 4"
+      stroke="#60a5fa"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      fill="none"
+    />
+  );
+  return (
+    <svg
+      viewBox="0 0 40 40"
+      className={className}
+      style={style}
+      aria-hidden="true"
+      focusable="false"
+    >
+      {arm}
+      <g transform="rotate(60 20 20)">{arm}</g>
+      <g transform="rotate(120 20 20)">{arm}</g>
+      <circle cx="20" cy="20" r="3" fill="#e0f2fe" stroke="#60a5fa" strokeWidth="1.5" />
+    </svg>
+  );
+}
+
+export function Gift({ className, style }: ArtProps) {
+  return (
+    <svg
+      viewBox="0 0 80 80"
+      className={className}
+      style={style}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <ellipse cx="29" cy="17" rx="11" ry="7" transform="rotate(-25 29 17)" fill="#facc15" stroke="#f59e0b" strokeWidth="2" />
+      <ellipse cx="51" cy="17" rx="11" ry="7" transform="rotate(25 51 17)" fill="#facc15" stroke="#f59e0b" strokeWidth="2" />
+      <rect x="8" y="34" width="64" height="40" rx="6" fill="#ef4444" />
+      <rect x="4" y="24" width="72" height="14" rx="5" fill="#f87171" />
+      <rect x="35" y="24" width="10" height="50" fill="#facc15" />
+      <circle cx="40" cy="22" r="5.5" fill="#f59e0b" />
+    </svg>
+  );
+}
+
+export function Bell({ className, style }: ArtProps) {
+  return (
+    <svg
+      viewBox="0 0 70 80"
+      className={className}
+      style={style}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        d="M35 12C21 12 15 25 15 40v11l-8 10h56l-8-10V40c0-15-6-28-20-28z"
+        fill="#facc15"
+        stroke="#f59e0b"
+        strokeWidth="2.5"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M25 26q-4 10-3 22"
+        stroke="#fff"
+        strokeWidth="3"
+        strokeLinecap="round"
+        fill="none"
+        opacity=".6"
+      />
+      <circle cx="35" cy="68" r="7" fill="#f59e0b" />
+      <ellipse cx="26" cy="11" rx="9" ry="4.5" transform="rotate(-25 26 11)" fill="#16a34a" />
+      <ellipse cx="44" cy="11" rx="9" ry="4.5" transform="rotate(25 44 11)" fill="#16a34a" />
+      <circle cx="35" cy="11" r="4" fill="#ef4444" />
+    </svg>
+  );
+}
+
 const DECORATIONS: Record<HolidayDecoration, (props: ArtProps) => React.JSX.Element> = {
   pumpkin: Pumpkin,
   ghost: Ghost,
@@ -220,6 +337,10 @@ const DECORATIONS: Record<HolidayDecoration, (props: ArtProps) => React.JSX.Elem
   candy: Candy,
   sparkle: Sparkle,
   note: MusicNote,
+  tree: ChristmasTree,
+  snowflake: Snowflake,
+  gift: Gift,
+  bell: Bell,
 };
 
 export function HolidayDecorationArt({ type, ...props }: ArtProps & { type: HolidayDecoration }) {

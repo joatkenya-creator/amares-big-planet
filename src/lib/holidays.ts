@@ -18,7 +18,11 @@ export type HolidayDecoration =
   | "moon"
   | "candy"
   | "sparkle"
-  | "note";
+  | "note"
+  | "tree"
+  | "snowflake"
+  | "gift"
+  | "bell";
 
 export type HolidayTheme = {
   /** Shown in the nav tab and headings, e.g. "🎃". */
@@ -90,6 +94,13 @@ export type HolidayCampaign = {
     heading: string;
     body: string;
   };
+  /** Optional shop section between the video and the message, e.g. a Shopify collection. */
+  shop?: {
+    url: string;
+    heading: string;
+    body: string;
+    buttonLabel: string;
+  };
   seo: {
     title: string;
     description: string;
@@ -103,10 +114,65 @@ export type HolidayCampaign = {
 
 export const holidayCampaigns: HolidayCampaign[] = [
   {
+    slug: "christmas-2026",
+    holidayName: "Christmas",
+    year: 2026,
+    status: "active",
+    title: "Christmas Is Coming to Amaré's Big Planet!",
+    releasedTitle: "Merry Christmas!",
+    description:
+      "Get ready for a merry, musical Christmas adventure with Amaré and the Gear Crew!",
+    releaseDate: "2026-12-24T18:00:00+03:00",
+    releaseTimeZone: "Africa/Nairobi",
+    releaseTimeZoneLabel: "EAT",
+    // Paste the YouTube link here once the video is out; the page switches to "Watch now" at the release time.
+    videoUrl: "",
+    videoTitle: "Christmas Adventure",
+    thumbnail: undefined,
+    message: {
+      heading: "Merry Christmas from Amaré & the Gear Crew!",
+      body: "Amaré's Big Planet is getting ready for a cosy, sparkly Christmas adventure! Join us for a special holiday video made for curious young learners and families.",
+    },
+    shop: {
+      url: "https://amares-big-planet.myshopify.com/collections/christmas-collection",
+      heading: "Christmas Gifts from Amaré's Big Planet",
+      body: "Cosy holiday hoodies and sweatshirts for the whole family, celebrating kindness, inclusion and being yourself.",
+      buttonLabel: "Shop the Christmas Collection",
+    },
+    seo: {
+      title: "Christmas 2026 for Kids | Amaré's Big Planet",
+      description:
+        "Get ready for a merry Christmas music adventure for kids from Amaré's Big Planet. Join the countdown!",
+      image: "/favicon-512.png",
+      imageAlt: "Amaré's Big Planet Christmas 2026",
+      keywords: [
+        "Christmas for kids",
+        "Christmas video for kids",
+        "kids Christmas song",
+        "Amare's Big Planet Christmas",
+        "Christmas music videos for kids",
+      ],
+    },
+    theme: {
+      emoji: "🎄",
+      skyFrom: "#e0f2fe",
+      skyTo: "#fff7ed",
+      surface: "#fffbf5",
+      ink: "#2a2a6e",
+      accent: "#f87171",
+      accentSoft: "#fee2e2",
+      accentStrong: "#b91c1c",
+      secondary: "#15803d",
+      secondarySoft: "#dcfce7",
+      decorations: ["tree", "snowflake", "star", "gift", "sparkle", "bell", "snowflake"],
+    },
+  },
+  {
     slug: "midnight-rhythm-exe-2026",
     holidayName: "Midnight Rhythm Exe",
     year: 2026,
-    status: "active",
+    // Archived while Christmas is featured; set back to "active" (and archive the other) to restore.
+    status: "archived",
     title: "Midnight Rhythm Exe Is Coming!",
     releasedTitle: "The Time of Excitement Is Here!",
     releasedBadge: "Midnight Rhythm Exe · Out now",

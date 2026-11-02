@@ -400,6 +400,34 @@ export function HolidayCampaignView({ campaign, children }: HolidayCampaignViewP
         </div>
       </section>
 
+      {campaign.shop && (
+        <section aria-labelledby="holiday-shop-heading" className="pb-14 sm:pb-20">
+          <div className="mx-auto max-w-4xl px-4 sm:px-6">
+            <div className="rounded-[2rem] bg-[var(--h-secondary-soft)] px-6 py-10 text-center shadow-soft sm:px-14 sm:py-12">
+              <h2
+                id="holiday-shop-heading"
+                className="font-display text-3xl font-extrabold text-balance sm:text-4xl"
+              >
+                <span aria-hidden="true">🎁 </span>
+                {campaign.shop.heading}
+              </h2>
+              <p className="mx-auto mt-4 max-w-2xl text-lg leading-8 font-medium sm:text-xl">
+                {campaign.shop.body}
+              </p>
+              <a
+                href={campaign.shop.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${primaryButton} mt-7`}
+              >
+                <span aria-hidden="true">🛍️</span> {campaign.shop.buttonLabel}
+                <span className="sr-only">(opens in a new tab)</span>
+              </a>
+            </div>
+          </div>
+        </section>
+      )}
+
       {children}
 
       {/* HOLIDAY MESSAGE */}
