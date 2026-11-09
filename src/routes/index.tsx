@@ -20,7 +20,8 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "Amare's Big Planet | Kids Songs & Educational Videos" },
       { property: "og:description", content: "Sing along with Amare's Big Planet — ABC songs, nursery rhymes, ocean animals, and space adventures. Fun, free educational videos for kids aged 1–10." },
       { property: "og:url", content: "https://amaresbigplanet.com/" },
-      { property: "og:image", content: "https://res.cloudinary.com/dee2vqvzl/image/upload/v1778073832/1775135225431_1_zxvc1e.png" },
+      { property: "og:image", content: "https://res.cloudinary.com/dee2vqvzl/image/upload/w_1200,q_auto/v1794221256/abp-logo.jpg_uhy0zp.jpg" },
+      { property: "og:image:type", content: "image/jpeg" },
       { property: "og:type", content: "website" },
     ],
     links: [
