@@ -3,7 +3,7 @@ import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/r
 import appCss from "../styles.css?url";
 
 const SITE_URL = "https://amaresbigplanet.com";
-const SOCIAL_IMAGE = "https://res.cloudinary.com/dee2vqvzl/image/upload/v1778073832/1775135225431_1_zxvc1e.png";
+const SOCIAL_IMAGE = "https://res.cloudinary.com/dee2vqvzl/image/upload/w_1200,q_auto/v1794221256/abp-logo.jpg_uhy0zp.jpg";
 
 function NotFoundComponent() {
   return (
@@ -40,6 +40,7 @@ export const Route = createRootRoute({
       { property: "og:description", content: "Amare's Big Planet brings kids ABC songs, nursery rhymes, space adventures, ocean animals, and fun educational videos." },
       { property: "og:type", content: "website" },
       { property: "og:image", content: SOCIAL_IMAGE },
+      { property: "og:image:type", content: "image/jpeg" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@AmaresBigPlanet" },
       { name: "twitter:image", content: SOCIAL_IMAGE },
