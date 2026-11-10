@@ -9,6 +9,7 @@ import { subscribeToNewsletter } from "@/lib/newsletter-server";
 import { SdvosbBadge, SdvosbLogo } from "@/components/SdvosbBadge";
 import { SpecialHolidaysNavLabel } from "@/components/holidays/SpecialHolidaysNavLabel";
 import { HeroBackgroundVideo } from "@/components/HeroBackgroundVideo";
+import { AppPromoPopup, APP_PROMO_CLOSED_KEY } from "@/components/AppPromoPopup";
 import { planetWindowHeroVideo } from "@/lib/hero-video";
 
 export const Route = createFileRoute("/")({
@@ -212,6 +213,7 @@ function Index() {
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [donationPopupVisible, setDonationPopupVisible] = useState(false);
   const [donationPopupClosing, setDonationPopupClosing] = useState(false);
+  const [appPromoVisible, setAppPromoVisible] = useState(false);
   const [newsletterEmail, setNewsletterEmail] = useState("");
   const [newsletterSubmitted, setNewsletterSubmitted] = useState(false);
   const [newsletterSubmitting, setNewsletterSubmitting] = useState(false);
@@ -327,12 +329,32 @@ function Index() {
     return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
 
-  // Donation popup: delay it so mobile visitors can see the hero first.
-  useEffect(() => {
+  // Popups, one at a time: game/shop popup at 12s, then the donation popup 20s after it is closed.
+  // If the game popup was already closed this session, the donation popup comes at 12s as before.
+  const donationTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  function scheduleDonationPopup(delay: number) {
     if (sessionStorage.getItem("donationPopupClosed")) return;
-    const timer = setTimeout(() => setDonationPopupVisible(true), 12000);
-    return () => clearTimeout(timer);
+    donationTimerRef.current = setTimeout(() => setDonationPopupVisible(true), delay);
+  }
+
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    if (sessionStorage.getItem(APP_PROMO_CLOSED_KEY)) {
+      scheduleDonationPopup(12000);
+    } else {
+      timer = setTimeout(() => setAppPromoVisible(true), 12000);
+    }
+    return () => {
+      if (timer) clearTimeout(timer);
+      if (donationTimerRef.current) clearTimeout(donationTimerRef.current);
+    };
   }, []);
+
+  function handleAppPromoClosed() {
+    setAppPromoVisible(false);
+    scheduleDonationPopup(20000);
+  }
 
   function closeDonationPopup() {
     setDonationPopupClosing(true);
@@ -1582,6 +1604,9 @@ function Index() {
           </div>
         </div>
       </footer>
+
+      {/* Game + Shop Popup (shown before the donation popup) */}
+      {appPromoVisible && <AppPromoPopup onClose={handleAppPromoClosed} />}
 
       {/* Donation Popup Banner */}
       {donationPopupVisible && (
