@@ -3,7 +3,7 @@ import type { CSSProperties, MouseEvent } from "react";
 
 const GAME_TITLE = "Amare's Big Planet: ABCs";
 const GAME_ICON =
-  "https://play-lh.googleusercontent.com/6z2xbeSPGo7rSACOfWlD2tkkFNWjBLe0N_lbrKJwiZh_92woC1S4H1T8y2tMz-0acPoyP_6snx8ti4wJvGUI1w=s128-rw";
+  "https://res.cloudinary.com/dee2vqvzl/image/upload/w_128,h_128,c_fill,g_south,q_auto,f_auto/v1794317595/WhatsApp_Image_2026-11-10_at_16.19.26_z15p6o.jpg";
 const PLAY_STORE_URL =
   "https://play.google.com/store/apps/details?id=com.drawalet.app&referrer=utm_source%3Damaresbigplanet%26utm_medium%3Dpopup";
 const APP_STORE_URL = "https://apps.apple.com/app/id6819274996";
