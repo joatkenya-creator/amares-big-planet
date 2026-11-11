@@ -50,11 +50,11 @@ export const Route = createRootRoute({
         rel: "icon",
         type: "image/png",
         sizes: "512x512",
-        href: "/favicon-512.png",
+        href: "/favicon-512.png?v=2",
       },
       {
         rel: "apple-touch-icon",
-        href: "/favicon-512.png",
+        href: "/favicon-512.png?v=2",
       },
       {
         rel: "preconnect",
