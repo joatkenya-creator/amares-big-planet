@@ -15,7 +15,7 @@ export const Route = createFileRoute("/donate")({
       { property: "og:title", content: "Support Amaré's Big Planet | Help Our Ecosystem Grow" },
       { property: "og:description", content: "Support Amaré's Big Planet. 100% of every gift goes into the growth and development of our ecosystem of free kids learning songs, ABC videos, and space adventures." },
       { property: "og:url", content: "https://amaresbigplanet.com/donate" },
-      { property: "og:image", content: "https://res.cloudinary.com/dee2vqvzl/image/upload/w_1200,q_auto/v1794221256/abp-logo.jpg_uhy0zp.jpg" },
+      { property: "og:image", content: "https://res.cloudinary.com/dee2vqvzl/image/upload/w_1200,h_630,c_pad,b_auto,q_auto/v1794480046/WhatsApp_Image_2026-11-11_at_18.51.03_vkzfa0.jpg" },
       { property: "og:image:type", content: "image/jpeg" },
       { property: "og:type", content: "website" },
     ],
