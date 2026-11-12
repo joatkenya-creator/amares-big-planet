@@ -14,7 +14,9 @@ import { HolidayVideoPlaceholder, HolidayVideoPlayer } from "@/components/holida
 import {
   HolidayCalendarButtons,
   HolidayEmailSignup,
+  HolidayLocalReleaseTime,
   HolidayWhatsAppShare,
+  withShopTracking,
 } from "@/components/holidays/HolidayReminders";
 
 export const YOUTUBE_SUBSCRIBE_URL = "https://www.youtube.com/@amaresbigplanet?sub_confirmation=1";
@@ -243,6 +245,9 @@ export function HolidayCampaignView({ campaign, children }: HolidayCampaignViewP
                     </p>
                   )}
                   {releaseTime !== null && (
+                    <HolidayLocalReleaseTime campaign={campaign} releaseTime={releaseTime} />
+                  )}
+                  {releaseTime !== null && (
                     <HolidayCalendarButtons campaign={campaign} releaseTime={releaseTime} />
                   )}
                   <div className="mt-5 flex flex-col flex-wrap justify-center gap-3 sm:flex-row">
@@ -436,7 +441,7 @@ export function HolidayCampaignView({ campaign, children }: HolidayCampaignViewP
                 {campaign.shop.body}
               </p>
               <a
-                href={campaign.shop.url}
+                href={withShopTracking(campaign.shop.url, campaign)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`${primaryButton} mt-7`}
