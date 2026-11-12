@@ -33,7 +33,7 @@ export const Route = createFileRoute("/special-holidays")({
     }
 
     const { seo } = campaign;
-    const imageUrl = `${SITE_URL}${seo.image}`;
+    const imageUrl = /^https?:\/\//.test(seo.image) ? seo.image : `${SITE_URL}${seo.image}`;
     const campaignLabel = `${campaign.holidayName} ${campaign.year}`;
     const releaseTime = parseReleaseDate(campaign.releaseDate);
     const videoId = getYouTubeVideoId(campaign.videoUrl);

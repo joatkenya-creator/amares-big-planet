@@ -104,7 +104,7 @@ export type HolidayCampaign = {
   seo: {
     title: string;
     description: string;
-    /** Absolute path under /public, used for Open Graph / Twitter previews. */
+    /** Path under /public or a full https URL (e.g. Cloudinary), used for Open Graph / Twitter previews. Use 1200x630. */
     image: string;
     imageAlt: string;
     keywords: string[];
@@ -143,8 +143,9 @@ export const holidayCampaigns: HolidayCampaign[] = [
       title: "Christmas 2026 for Kids | Amaré's Big Planet",
       description:
         "Get ready for a merry Christmas music adventure for kids from Amaré's Big Planet. Join the countdown!",
-      image: "/favicon-512.png",
-      imageAlt: "Amaré's Big Planet Christmas 2026",
+      image:
+        "https://res.cloudinary.com/dee2vqvzl/image/upload/c_fill,w_560,h_560/b_auto,c_pad,g_west,w_1200,h_630/l_text:Arial_62_bold:Christmas,co_white,g_west,x_620,y_-115/l_text:Arial_62_bold:Adventure,co_white,g_west,x_620,y_-40/l_text:Arial_38_bold:Premieres%20Dec%2024,co_rgb:fde68a,g_west,x_620,y_45/l_text:Arial_38_bold:6%20PM%20EAT,co_rgb:fde68a,g_west,x_620,y_100/q_auto/v1794480046/WhatsApp_Image_2026-11-11_at_18.51.03_vkzfa0.jpg",
+      imageAlt: "Amaré's Big Planet badge with the text Christmas Adventure, premieres Dec 24, 6 PM EAT",
       keywords: [
         "Christmas for kids",
         "Christmas video for kids",
