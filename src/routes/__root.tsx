@@ -3,7 +3,7 @@ import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/r
 import appCss from "../styles.css?url";
 
 const SITE_URL = "https://amaresbigplanet.com";
-const SOCIAL_IMAGE = "https://res.cloudinary.com/dee2vqvzl/image/upload/w_1200,q_auto/v1794221256/abp-logo.jpg_uhy0zp.jpg";
+const SOCIAL_IMAGE = "https://res.cloudinary.com/dee2vqvzl/image/upload/w_1200,h_630,c_pad,b_auto,q_auto/v1794480046/WhatsApp_Image_2026-11-11_at_18.51.03_vkzfa0.jpg";
 
 function NotFoundComponent() {
   return (
@@ -50,11 +50,11 @@ export const Route = createRootRoute({
         rel: "icon",
         type: "image/png",
         sizes: "512x512",
-        href: "/favicon-512.png?v=2",
+        href: "/favicon-512.png?v=3",
       },
       {
         rel: "apple-touch-icon",
-        href: "/favicon-512.png?v=2",
+        href: "/favicon-512.png?v=3",
       },
       {
         rel: "preconnect",

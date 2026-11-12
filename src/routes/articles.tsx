@@ -17,7 +17,7 @@ export const Route = createFileRoute("/articles")({
       { property: "og:title", content: "Amare's Learning Hub | Amare's Big Planet" },
       { property: "og:description", content: "Parent guides on autism-friendly learning videos, sensory songs, ABC activities, space songs, and educational content from Amare's Big Planet." },
       { property: "og:url", content: "https://amaresbigplanet.com/articles" },
-      { property: "og:image", content: "https://res.cloudinary.com/dee2vqvzl/image/upload/w_1200,q_auto/v1794221256/abp-logo.jpg_uhy0zp.jpg" },
+      { property: "og:image", content: "https://res.cloudinary.com/dee2vqvzl/image/upload/w_1200,h_630,c_pad,b_auto,q_auto/v1794480046/WhatsApp_Image_2026-11-11_at_18.51.03_vkzfa0.jpg" },
       { property: "og:image:type", content: "image/jpeg" },
       { property: "og:type", content: "website" },
     ],
