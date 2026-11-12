@@ -11,6 +11,11 @@ import {
 import { DecorationScatter, type DecorationSlot } from "@/components/holidays/HolidayArt";
 import { HolidayCountdown } from "@/components/holidays/HolidayCountdown";
 import { HolidayVideoPlaceholder, HolidayVideoPlayer } from "@/components/holidays/HolidayVideo";
+import {
+  HolidayCalendarButtons,
+  HolidayEmailSignup,
+  HolidayWhatsAppShare,
+} from "@/components/holidays/HolidayReminders";
 
 export const YOUTUBE_SUBSCRIBE_URL = "https://www.youtube.com/@amaresbigplanet?sub_confirmation=1";
 const FALLBACK_MESSAGE = "Video coming soon. Check back later!";
@@ -237,7 +242,10 @@ export function HolidayCampaignView({ campaign, children }: HolidayCampaignViewP
                       Premieres <time dateTime={campaign.releaseDate}>{releaseLabel}</time>
                     </p>
                   )}
-                  <div className="mt-5 flex flex-col justify-center gap-3 sm:flex-row">
+                  {releaseTime !== null && (
+                    <HolidayCalendarButtons campaign={campaign} releaseTime={releaseTime} />
+                  )}
+                  <div className="mt-5 flex flex-col flex-wrap justify-center gap-3 sm:flex-row">
                     <a href="#holiday-video" className={primaryButton}>
                       <span aria-hidden="true">🎬</span> See the video
                     </a>
@@ -250,7 +258,14 @@ export function HolidayCampaignView({ campaign, children }: HolidayCampaignViewP
                       <span aria-hidden="true">🔔</span> Subscribe on YouTube
                       <span className="sr-only">(opens in a new tab)</span>
                     </a>
+                    <HolidayWhatsAppShare
+                      campaign={campaign}
+                      releaseTime={releaseTime}
+                      released={false}
+                      className={secondaryButton}
+                    />
                   </div>
+                  <HolidayEmailSignup />
                 </div>
               )}
 
@@ -276,6 +291,12 @@ export function HolidayCampaignView({ campaign, children }: HolidayCampaignViewP
                       Or watch it right here on this page
                     </a>
                   )}
+                  <HolidayWhatsAppShare
+                    campaign={campaign}
+                    releaseTime={releaseTime}
+                    released
+                    className={secondaryButton}
+                  />
                 </div>
               )}
 
