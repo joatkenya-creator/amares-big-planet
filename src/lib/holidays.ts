@@ -118,10 +118,10 @@ export const holidayCampaigns: HolidayCampaign[] = [
     holidayName: "Christmas",
     year: 2026,
     status: "active",
-    title: "Christmas Is Coming to Amaré's Big Planet!",
+    title: "Christmas Is Coming to Amare's Big Planet!",
     releasedTitle: "Merry Christmas!",
     description:
-      "Get ready for a merry, musical Christmas adventure with Amaré and the Gear Crew!",
+      "Get ready for a merry, musical Christmas adventure with Amare and the Gear Crew!",
     releaseDate: "2026-12-24T18:00:00+03:00",
     releaseTimeZone: "Africa/Nairobi",
     releaseTimeZoneLabel: "EAT",
@@ -130,22 +130,22 @@ export const holidayCampaigns: HolidayCampaign[] = [
     videoTitle: "Christmas Adventure",
     thumbnail: undefined,
     message: {
-      heading: "Merry Christmas from Amaré & the Gear Crew!",
-      body: "Amaré's Big Planet is getting ready for a cosy, sparkly Christmas adventure! Join us for a special holiday video made for curious young learners and families.",
+      heading: "Merry Christmas from Amare & the Gear Crew!",
+      body: "Amare's Big Planet is getting ready for a cosy, sparkly Christmas adventure! Join us for a special holiday video made for curious young learners and families.",
     },
     shop: {
       url: "https://amares-big-planet.myshopify.com/collections/christmas-collection",
-      heading: "Christmas Gifts from Amaré's Big Planet",
+      heading: "Christmas Gifts from Amare's Big Planet",
       body: "Cosy holiday hoodies and sweatshirts for the whole family, celebrating kindness, inclusion and being yourself.",
       buttonLabel: "Shop the Christmas Collection",
     },
     seo: {
-      title: "Christmas 2026 for Kids | Amaré's Big Planet",
+      title: "Christmas 2026 for Kids | Amare's Big Planet",
       description:
-        "Get ready for a merry Christmas music adventure for kids from Amaré's Big Planet. Join the countdown!",
+        "Get ready for a merry Christmas music adventure for kids from Amare's Big Planet. Join the countdown!",
       image:
         "https://res.cloudinary.com/dee2vqvzl/image/upload/c_fill,w_560,h_560/b_auto,c_pad,g_west,w_1200,h_630/l_text:Arial_62_bold:Christmas,co_white,g_west,x_620,y_-115/l_text:Arial_62_bold:Adventure,co_white,g_west,x_620,y_-40/l_text:Arial_38_bold:Premieres%20Dec%2024,co_rgb:fde68a,g_west,x_620,y_45/l_text:Arial_38_bold:6%20PM%20EAT,co_rgb:fde68a,g_west,x_620,y_100/q_auto/v1794480046/WhatsApp_Image_2026-11-11_at_18.51.03_vkzfa0.jpg",
-      imageAlt: "Amaré's Big Planet badge with the text Christmas Adventure, premieres Dec 24, 6 PM EAT",
+      imageAlt: "Amare's Big Planet badge with the text Christmas Adventure, premieres Dec 24, 6 PM EAT",
       keywords: [
         "Christmas for kids",
         "Christmas video for kids",
@@ -178,9 +178,9 @@ export const holidayCampaigns: HolidayCampaign[] = [
     releasedTitle: "The Time of Excitement Is Here!",
     releasedBadge: "Midnight Rhythm Exe · Out now",
     description:
-      "Get ready for Midnight Rhythm Exe, a brand-new music adventure from Amaré's Big Planet!",
+      "Get ready for Midnight Rhythm Exe, a brand-new music adventure from Amare's Big Planet!",
     releasedDescription:
-      "Midnight Rhythm Exe, a brand-new music adventure from Amaré's Big Planet, is out now! Watch it today.",
+      "Midnight Rhythm Exe, a brand-new music adventure from Amare's Big Planet, is out now! Watch it today.",
     releaseDate: "2026-10-08T17:00:00+03:00",
     releaseTimeZone: "Africa/Nairobi",
     releaseTimeZoneLabel: "EAT",
@@ -194,14 +194,14 @@ export const holidayCampaigns: HolidayCampaign[] = [
     thumbnail: undefined,
     message: {
       heading: "Midnight Rhythm Exe Is Out Now!",
-      body: "When the stars come out, the music turns on! Join Amaré and the Gear Crew for a brand-new night of songs, dancing and fun made for curious young learners and families.",
+      body: "When the stars come out, the music turns on! Join Amare and the Gear Crew for a brand-new night of songs, dancing and fun made for curious young learners and families.",
     },
     seo: {
-      title: "Midnight Rhythm Exe for Kids | Amaré's Big Planet",
+      title: "Midnight Rhythm Exe for Kids | Amare's Big Planet",
       description:
-        "Midnight Rhythm Exe, a brand-new music adventure from Amaré's Big Planet, is out now! Watch it today.",
+        "Midnight Rhythm Exe, a brand-new music adventure from Amare's Big Planet, is out now! Watch it today.",
       image: "/favicon-512.png",
-      imageAlt: "Amaré's Big Planet Midnight Rhythm Exe",
+      imageAlt: "Amare's Big Planet Midnight Rhythm Exe",
       keywords: [
         "Midnight Rhythm Exe",
         "Amare's Big Planet Midnight Rhythm",

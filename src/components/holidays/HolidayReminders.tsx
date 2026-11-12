@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { FormEvent } from "react";
 import { subscribeToNewsletter } from "@/lib/newsletter-server";
 import { SPECIAL_HOLIDAYS_PATH, type HolidayCampaign } from "@/lib/holidays";
@@ -10,7 +10,7 @@ const smallButton =
   "holiday-btn inline-flex min-h-10 items-center justify-center gap-1.5 rounded-full bg-white px-4 py-2 text-sm font-extrabold text-[var(--h-ink)] ring-2 ring-[var(--h-secondary-soft)] hover:bg-[var(--h-secondary-soft)] focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-[var(--h-secondary)]";
 
 function eventTitle(campaign: HolidayCampaign) {
-  return `Amaré's Big Planet: ${campaign.videoTitle}`;
+  return `Amare's Big Planet: ${campaign.videoTitle}`;
 }
 
 /** 20261224T150000Z — the UTC format both Google Calendar and .ics files expect. */
@@ -119,8 +119,8 @@ export function HolidayWhatsAppShare({
   const emoji = campaign.theme.emoji;
   const date = releaseTime !== null ? shortReleaseDate(campaign, releaseTime) : null;
   const text = released
-    ? `${emoji} Amaré's ${campaign.videoTitle} is out! Watch it here: ${PAGE_URL}`
-    : `${emoji} Amaré's Big Planet ${campaign.videoTitle} premieres${date ? ` ${date}` : " soon"}! Join the countdown: ${PAGE_URL}`;
+    ? `${emoji} Amare's ${campaign.videoTitle} is out! Watch it here: ${PAGE_URL}`
+    : `${emoji} Amare's Big Planet ${campaign.videoTitle} premieres${date ? ` ${date}` : " soon"}! Join the countdown: ${PAGE_URL}`;
 
   return (
     <a
@@ -202,4 +202,74 @@ export function HolidayEmailSignup() {
       )}
     </form>
   );
+}
+
+function timeZoneOffsetMinutes(timeZone: string, at: number) {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone,
+    hourCycle: "h23",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).formatToParts(new Date(at));
+  const get = (type: Intl.DateTimeFormatPartTypes) => Number(parts.find((p) => p.type === type)?.value);
+  const asUtc = Date.UTC(get("year"), get("month") - 1, get("day"), get("hour"), get("minute"));
+  return Math.round((asUtc - Math.floor(at / 60_000) * 60_000) / 60_000);
+}
+
+/**
+ * "That's 4:00 PM where you are (Thu, Dec 24)" — only for visitors whose time zone
+ * differs from the campaign's. Computed after load so server and browser HTML match.
+ */
+export function HolidayLocalReleaseTime({
+  campaign,
+  releaseTime,
+}: {
+  campaign: HolidayCampaign;
+  releaseTime: number;
+}) {
+  const [localLabel, setLocalLabel] = useState<string | null>(null);
+
+  useEffect(() => {
+    try {
+      const visitorZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      if (
+        !visitorZone ||
+        timeZoneOffsetMinutes(visitorZone, releaseTime) ===
+          timeZoneOffsetMinutes(campaign.releaseTimeZone, releaseTime)
+      ) {
+        return;
+      }
+      const date = new Date(releaseTime);
+      const time = new Intl.DateTimeFormat("en-US", { hour: "numeric", minute: "2-digit" }).format(date);
+      const day = new Intl.DateTimeFormat("en-US", { weekday: "short", month: "short", day: "numeric" }).format(date);
+      setLocalLabel(`${time}|${day}`);
+    } catch {
+      /* unknown time zone: just show the EAT time */
+    }
+  }, [campaign.releaseTimeZone, releaseTime]);
+
+  if (!localLabel) return null;
+  const [time, day] = localLabel.split("|");
+  return (
+    <p className="mt-1 text-sm font-medium text-[var(--h-ink)]/75">
+      <span aria-hidden="true">🕕 </span>
+      That's <strong>{time}</strong> where you are ({day})
+    </p>
+  );
+}
+
+/** Adds UTM tags so Shopify can report visits and sales from this page. */
+export function withShopTracking(url: string, campaign: HolidayCampaign) {
+  try {
+    const parsed = new URL(url);
+    parsed.searchParams.set("utm_source", "amaresbigplanet");
+    parsed.searchParams.set("utm_medium", "special-holidays");
+    parsed.searchParams.set("utm_campaign", campaign.slug);
+    return parsed.toString();
+  } catch {
+    return url;
+  }
 }
