@@ -978,9 +978,6 @@ function Index() {
           🎵 New songs every week!
           </span>
           <h1 className="font-display font-extrabold leading-[0.9] tracking-tight">
-            <span className="sr-only">
-              Amare's Big Planet and Amare's Kids Learning Songs and Videos
-            </span>
             <span className="block text-2xl sm:text-3xl font-bold text-white mb-4 uppercase tracking-[0.3em]" style={{ textShadow: "0 4px 16px rgba(0,0,0,0.9), 0 2px 4px rgba(0,0,0,0.7)" }}>
               Amare's Kids Learning Songs & Videos
             </span>
