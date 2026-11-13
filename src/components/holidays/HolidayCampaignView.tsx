@@ -399,6 +399,15 @@ export function HolidayCampaignView({ campaign, children }: HolidayCampaignViewP
             </div>
           </div>
 
+          {campaign.about && (
+            <div className="mx-auto mt-10 max-w-2xl rounded-[2rem] bg-white/80 px-6 py-6 text-left shadow-soft ring-1 ring-[var(--h-secondary-soft)] sm:px-8">
+              <h3 className="font-display text-xl font-extrabold text-[var(--h-accent-strong)] sm:text-2xl">
+                <span aria-hidden="true">{theme.emoji} </span>What to expect
+              </h3>
+              <p className="mt-2 text-base leading-7 font-medium sm:text-lg">{campaign.about}</p>
+            </div>
+          )}
+
           {videoReady && campaign.alsoAvailableUrl && (
             <a
               href={campaign.alsoAvailableUrl}

@@ -9,7 +9,7 @@ import { SPECIAL_HOLIDAYS_PATH } from "@/lib/holidays";
 
 export const Route = createFileRoute("/articles")({
   component: ArticlesPage,
-  head: () => ({
+  head: ({ matches }) => ({
     meta: [
       { title: "Amare's Learning Hub | Amare's Big Planet Articles" },
       { name: "description", content: "Parent guides on autism-friendly learning videos, sensory songs, ABC activities, space songs, and educational content from Amare's Big Planet." },
@@ -21,7 +21,11 @@ export const Route = createFileRoute("/articles")({
       { property: "og:image:type", content: "image/jpeg" },
       { property: "og:type", content: "website" },
     ],
-    links: [{ rel: "canonical", href: "https://amaresbigplanet.com/articles" }],
+    // Only the list page itself: article pages (children of this route) set their own canonical.
+    links:
+      matches[matches.length - 1]?.routeId === "/articles"
+        ? [{ rel: "canonical", href: "https://amaresbigplanet.com/articles" }]
+        : [],
   }),
 });
 

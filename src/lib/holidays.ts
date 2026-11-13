@@ -90,6 +90,8 @@ export type HolidayCampaign = {
   videoTitle: string;
   /** Optional custom thumbnail (imported asset or /public path). Falls back to an illustration / the YouTube thumbnail. */
   thumbnail?: string;
+  /** Optional "What to expect" paragraph under the video, giving search engines and parents more detail. */
+  about?: string;
   message: {
     heading: string;
     body: string;
@@ -129,6 +131,8 @@ export const holidayCampaigns: HolidayCampaign[] = [
     videoUrl: "",
     videoTitle: "Christmas Adventure",
     thumbnail: undefined,
+    about:
+      "Our Christmas Adventure is a free, family-friendly music video for children aged 1–10. Sing along with Amare and the Gear Crew as they celebrate the season with festive songs, kindness and plenty of holiday cheer. Watch it together on Christmas Eve, then explore more learning songs on our YouTube channel.",
     message: {
       heading: "Merry Christmas from Amare & the Gear Crew!",
       body: "Amare's Big Planet is getting ready for a cosy, sparkly Christmas adventure! Join us for a special holiday video made for curious young learners and families.",

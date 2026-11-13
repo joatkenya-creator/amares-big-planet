@@ -5,7 +5,7 @@
 >
   <url>
     <loc>https://amaresbigplanet.com/</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <video:video>
@@ -47,97 +47,97 @@
   </url>
   <url>
     <loc>https://amaresbigplanet.com/donate</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://amaresbigplanet.com/articles</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://amaresbigplanet.com/special-holidays</loc>
-    <lastmod>2026-09-11</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://amaresbigplanet.com/midnight-rhythm</loc>
-    <lastmod>2026-10-05</lastmod>
+    <lastmod>2026-10-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://amaresbigplanet.com/articles/autism-friendly-learning-videos-for-kids</loc>
-    <lastmod>2026-05-26</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://amaresbigplanet.com/articles/abc-songs-for-preschool-kids</loc>
-    <lastmod>2026-05-26</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://amaresbigplanet.com/articles/how-music-helps-kids-learn</loc>
-    <lastmod>2026-05-26</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://amaresbigplanet.com/articles/ocean-animal-videos-for-kids</loc>
-    <lastmod>2026-05-26</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://amaresbigplanet.com/articles/solar-system-song-for-kids</loc>
-    <lastmod>2026-05-26</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://amaresbigplanet.com/articles/screen-time-learning-activities-for-kids</loc>
-    <lastmod>2026-05-26</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://amaresbigplanet.com/articles/sensory-friendly-songs-for-preschool-kids</loc>
-    <lastmod>2026-05-26</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://amaresbigplanet.com/articles/how-phonics-songs-help-toddlers-learn-to-read</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://amaresbigplanet.com/articles/morning-routine-songs-for-toddlers</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://amaresbigplanet.com/articles/meet-the-galaxy-train-crew</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://amaresbigplanet.com/articles/nursery-rhymes-why-they-matter</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://amaresbigplanet.com/articles/nyimbo-za-watoto-kwa-kiswahili</loc>
-    <lastmod>2026-06-08</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <video:video>
@@ -149,7 +149,7 @@
   </url>
   <url>
     <loc>https://amaresbigplanet.com/articles/body-parts-in-swahili-for-kids</loc>
-    <lastmod>2026-06-08</lastmod>
+    <lastmod>2026-11-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <video:video>
@@ -157,6 +157,78 @@
       <video:title>Learn Body Parts in Swahili | Kichwa, Mabega, Magoti na Vidole</video:title>
       <video:description>Swahili body parts song for children learning kichwa, mabega, magoti, and vidole with Amare's Big Planet.</video:description>
       <video:player_loc allow_embed="yes">https://www.youtube.com/embed/HpYqNfyCPKk</video:player_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://amaresbigplanet.com/articles/a-day-with-amare</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <video:video>
+      <video:thumbnail_loc>https://img.youtube.com/vi/fY6_epxkJQo/hqdefault.jpg</video:thumbnail_loc>
+      <video:title>Shape the Future of Learning: Sponsor Amare's Big Planet</video:title>
+      <video:description>Ever wondered what a day with Amaré and the Gear Crew looks like? Come along for the ride.</video:description>
+      <video:player_loc allow_embed="yes">https://www.youtube.com/embed/fY6_epxkJQo</video:player_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://amaresbigplanet.com/articles/how-amares-big-planet-supports-children-with-autism</loc>
+    <lastmod>2026-06-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <video:video>
+      <video:thumbnail_loc>https://img.youtube.com/vi/fY6_epxkJQo/hqdefault.jpg</video:thumbnail_loc>
+      <video:title>Shape the Future of Learning: Sponsor Amare's Big Planet</video:title>
+      <video:description>Learn how Amaré's Big Planet uses music, rhythm, and routine to create a joyful, sensory-friendly learning experience for children with autism.</video:description>
+      <video:player_loc allow_embed="yes">https://www.youtube.com/embed/fY6_epxkJQo</video:player_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://amaresbigplanet.com/articles/how-to-turn-screen-time-into-active-learning</loc>
+    <lastmod>2026-05-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <video:video>
+      <video:thumbnail_loc>https://img.youtube.com/vi/k2ggk22FE_Q/hqdefault.jpg</video:thumbnail_loc>
+      <video:title>Transforming Screen Time Into Active Learning! | Amare's Big Planet</video:title>
+      <video:description>Practical, parent-tested ways to transform passive screen time into active learning — with questions, movement, and pauses that turn any video into a shared lesson.</video:description>
+      <video:player_loc allow_embed="yes">https://www.youtube.com/embed/k2ggk22FE_Q</video:player_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://amaresbigplanet.com/articles/learn-to-count-21-to-30</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <video:video>
+      <video:thumbnail_loc>https://img.youtube.com/vi/shPqebD2NVg/hqdefault.jpg</video:thumbnail_loc>
+      <video:title>Learn to Count 21 to 30 | Amar\u00e9's Big Planet</video:title>
+      <video:description>Join Amar\u00e9 and the Gear Crew as they make counting from 21 to 30 fun, musical, and easy to remember for young learners.</video:description>
+      <video:player_loc allow_embed="yes">https://www.youtube.com/embed/shPqebD2NVg</video:player_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://amaresbigplanet.com/articles/magical-monday-to-sunday-adventure</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <video:video>
+      <video:thumbnail_loc>https://img.youtube.com/vi/L-ggtCPoRjM/hqdefault.jpg</video:thumbnail_loc>
+      <video:title>A Magical Monday to Sunday Adventure | Days of the Week Song</video:title>
+      <video:description>Hop aboard the Galaxy Train and sing your way through every day of the week! Amar\u00e9 and the Gear Crew make learning Monday to Sunday an unforgettable adventure.</video:description>
+      <video:player_loc allow_embed="yes">https://www.youtube.com/embed/L-ggtCPoRjM</video:player_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://amaresbigplanet.com/articles/sayari-zote-za-mfumo-wa-jua</loc>
+    <lastmod>2026-05-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <video:video>
+      <video:thumbnail_loc>https://img.youtube.com/vi/hic5LyxRj2U/hqdefault.jpg</video:thumbnail_loc>
+      <video:title>Sayari Zote za Mfumo wa Jua — Swahili Planet Song</video:title>
+      <video:description>Amaré and the Gear Crew are now teaching kids about the solar system in Swahili! Watch our new planet song and explore the universe in a whole new language.</video:description>
+      <video:player_loc allow_embed="yes">https://www.youtube.com/embed/hic5LyxRj2U</video:player_loc>
     </video:video>
   </url>
 </urlset>

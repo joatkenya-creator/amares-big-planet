@@ -9,6 +9,16 @@ const legacyArticleRedirects: Record<string, string> = {
   "visual-learning-activities-for-autistic-children": "screen-time-learning-activities-for-kids",
 };
 
+/** Article dates are stored as "2026-06-08" or "May 26, 2026"; schema.org needs YYYY-MM-DD. */
+function toIsoDate(value: string | undefined) {
+  if (!value) return null;
+  if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return value;
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return null;
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+}
+
 export const Route = createFileRoute("/articles/$slug")({
   component: ArticlePage,
   loader: ({ params }) => {
@@ -27,7 +37,7 @@ export const Route = createFileRoute("/articles/$slug")({
   },
   head: ({ loaderData }) => ({
     meta: [
-      { title: `${loaderData.title} | Amare's` },
+      { title: `${loaderData.title} | Amare's Big Planet` },
       { name: "description", content: loaderData.description },
       { name: "keywords", content: loaderData.keywords.join(", ") },
       { property: "og:title", content: `${loaderData.title} | Amare's Big Planet` },
@@ -57,6 +67,7 @@ export const Route = createFileRoute("/articles/$slug")({
             "@type": "Organization",
             name: "Amare's Big Planet",
           },
+          ...(toIsoDate(loaderData?.publishDate) ? { datePublished: toIsoDate(loaderData?.publishDate) } : {}),
           mainEntityOfPage: `https://amaresbigplanet.com/articles/${loaderData.slug}`,
         }),
       },
