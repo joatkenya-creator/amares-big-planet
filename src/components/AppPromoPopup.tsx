@@ -126,7 +126,7 @@ export function AppPromoPopup({ onClose }: { onClose: () => void }) {
           />
           <div>
             <p style={{ fontSize: 11, fontWeight: 700, color: "#3B82F6", margin: 0, letterSpacing: 0.5 }}>
-              NEW GAME 🎮 · FOR PARENTS
+              FREE GAME 🎮 · FOR PARENTS
             </p>
             <p style={{ fontWeight: 700, fontSize: 15, margin: "2px 0 0", color: "#1a1a2e", lineHeight: 1.25 }}>
               {GAME_TITLE}
@@ -134,7 +134,7 @@ export function AppPromoPopup({ onClose }: { onClose: () => void }) {
           </div>
         </div>
         <p style={{ fontSize: 13, color: "#555", margin: "0 0 12px", lineHeight: 1.4 }}>
-          Trace letters, explore space and sing along with original ABP music.
+          Trace letters, explore space and sing along with original ABP music. Free to download!
         </p>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
@@ -147,7 +147,7 @@ export function AppPromoPopup({ onClose }: { onClose: () => void }) {
               onMouseEnter={hoverOn}
               onMouseLeave={hoverOff}
             >
-              Download on the App Store
+              Download free on the App Store
             </a>
           )}
           {showPlay && (
@@ -159,7 +159,7 @@ export function AppPromoPopup({ onClose }: { onClose: () => void }) {
               onMouseEnter={hoverOn}
               onMouseLeave={hoverOff}
             >
-              ▶ Get it on Google Play
+              ▶ Get it free on Google Play
             </a>
           )}
           <a
