@@ -20,3 +20,15 @@ export const planetWindowHeroVideo: HeroBackgroundVideoSources = {
   desktopPoster: "/videos/donation-bg-poster-1280.jpg",
   mobilePoster: "/videos/donation-bg-poster-720.jpg",
 };
+
+// Homepage hero: "This Year" months song, 0:17–0:34, silent (Cloudinary).
+// Posters are the 0:17 frame so the fade-in from still image to video is seamless.
+const MONTHS_ID =
+  "v1794822407/This_Year___Learn_the_Months_of_the_Year_Song_for_Kids___Amare_s_Big_Planet_mj3sti";
+
+export const monthsSongHeroVideo: HeroBackgroundVideoSources = {
+  desktopSrc: `${BASE}/so_17,eo_34,ac_none,q_auto,w_1280/${MONTHS_ID}.mp4`,
+  mobileSrc: `${BASE}/so_17,eo_34,ac_none,q_auto,w_720/${MONTHS_ID}.mp4`,
+  desktopPoster: `${BASE}/so_17,q_auto,f_auto,w_1280/${MONTHS_ID}.jpg`,
+  mobilePoster: `${BASE}/so_17,q_auto,f_auto,w_720/${MONTHS_ID}.jpg`,
+};
