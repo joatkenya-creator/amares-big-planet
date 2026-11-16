@@ -151,38 +151,38 @@ const shows = [
 const characters = [
   {
     name: "Amare",
-    img: "https://res.cloudinary.com/dee2vqvzl/image/upload/v1778073832/1775135225431_1_zxvc1e.png",
+    img: "https://res.cloudinary.com/dee2vqvzl/image/upload/e_background_removal/c_pad,ar_1:1,w_600/f_auto,q_auto/v1794824138/d97df0bf-af8a-4b1f-9c65-70dce1b14314_ege7vb.png",
     desc: "Calm, thoughtful & unique thinker. Leader & visionary.",
   },
   {
     name: "Xavier",
-    img: "https://res.cloudinary.com/dee2vqvzl/image/upload/v1778138548/1776066645169_Character_isolated_T_202604011429_2_wxxplo.jpg",
+    img: "https://res.cloudinary.com/dee2vqvzl/image/upload/e_background_removal/c_pad,ar_1:1,w_600/f_auto,q_auto/v1794824458/7c241b65-c225-4530-add0-1aee43e7e9d8_btcncv.png",
     desc: "Brave, energetic & loyal.",
   },
   {
     name: "Trinity",
-    img: "https://res.cloudinary.com/dee2vqvzl/image/upload/v1779704810/WhatsApp_Image_2026-05-25_at_13.17.11_dirmsz.jpg",
+    img: "https://res.cloudinary.com/dee2vqvzl/image/upload/e_background_removal/c_pad,ar_1:1,w_600/f_auto,q_auto/v1794824594/c3903977-4b2b-4680-9a31-a11072c4d25a_kltlmy.png",
     desc: "Nature lover. Grows plant barriers to protect friends.",
     color: "#22C55E",
   },
   {
     name: "Dee",
-    img: "https://res.cloudinary.com/dee2vqvzl/image/upload/v1778073916/1776066659252_Character_in_T_202604011430_1_1_ut0asi.jpg",
+    img: "https://res.cloudinary.com/dee2vqvzl/image/upload/e_background_removal/c_pad,ar_1:1,w_600/f_auto,q_auto/v1794824681/e3f9aaa8-203c-431c-8fd0-3e0ade54daaf_1_inehk5.png",
     desc: "Funny, smart & creative. Engineer & inventor.",
   },
   {
     name: "Neebah",
-    img: "https://res.cloudinary.com/dee2vqvzl/image/upload/v1778137425/1776066655773_1776066651609_Character_isolated_T_202604011429_1_1_rtk5zg.jpg",
+    img: "https://res.cloudinary.com/dee2vqvzl/image/upload/e_background_removal/c_pad,ar_1:1,w_600/f_auto,q_auto/v1794824786/5ee63f43-799f-4f62-8e70-109a29b1eca8_etxkxm.png",
     desc: "Logical, focused & fast thinker.",
   },
   {
     name: "Liz",
-    img: "https://res.cloudinary.com/dee2vqvzl/image/upload/v1778137804/1776066524117_1_mgfdwz.png",
+    img: "https://res.cloudinary.com/dee2vqvzl/image/upload/e_background_removal/c_pad,ar_1:1,w_600/f_auto,q_auto/v1794824883/1b6ebf22-4933-4556-98b7-8fc8b1800b4b_ei22r7.png",
     desc: "Smart, calm & nurturing.",
   },
   {
     name: "Bruce",
-    img: "https://res.cloudinary.com/dee2vqvzl/image/upload/v1778576697/1775649748215_2_crfvcf.png",
+    img: "https://res.cloudinary.com/dee2vqvzl/image/upload/e_background_removal/c_pad,ar_1:1,w_600/f_auto,q_auto/v1794824991/967839ee-da96-4787-bc5a-1502121519ea_fs2a2p.png",
     desc: "Logical, analytical & strategic thinker.",
     color: "#3B82F6",
   },
@@ -1492,7 +1492,7 @@ function Index() {
                 }}
               >
                 <img
-                  src="https://res.cloudinary.com/dee2vqvzl/image/upload/v1778073832/1775135225431_1_zxvc1e.png"
+                  src="https://res.cloudinary.com/dee2vqvzl/image/upload/e_background_removal/c_pad,ar_1:1,w_600/f_auto,q_auto/v1794824138/d97df0bf-af8a-4b1f-9c65-70dce1b14314_ege7vb.png"
                   alt="Amare character"
                   className="w-full h-full object-contain drop-shadow-2xl"
                 />
