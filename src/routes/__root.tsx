@@ -1,6 +1,9 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 
+import { useEffect } from "react";
 import appCss from "../styles.css?url";
+import { ConsentBanner } from "@/components/ConsentBanner";
+import { captureReferral, carryReferralToShop } from "@/lib/referral";
 
 const SITE_URL = "https://amaresbigplanet.com";
 const SOCIAL_IMAGE = "https://res.cloudinary.com/dee2vqvzl/image/upload/w_1200,h_630,c_pad,b_auto,q_auto/v1794480046/WhatsApp_Image_2026-11-11_at_18.51.03_vkzfa0.jpg";
@@ -88,23 +91,27 @@ export const Route = createRootRoute({
     ],
     scripts: [
       {
-        src: "https://www.googletagmanager.com/gtag/js?id=G-QFWHS1F4BW",
-        async: true,
-      },
-      {
+        // Analytics wait for cookie consent: they load only once a visitor has
+        // accepted (now or on an earlier visit). src/lib/referral.ts calls
+        // amareLoadAnalytics when someone clicks Accept.
         children: `window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-gtag('config', 'G-QFWHS1F4BW');`,
-      },
-      {
-        children: `
-          (function(c,l,a,r,i,t,y){
-            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-          })(window, document, "clarity", "script", "x19l4waadv");
-        `,
+gtag('config', 'G-QFWHS1F4BW');
+window.amareLoadAnalytics = function () {
+  if (window.__amareAnalytics) return;
+  window.__amareAnalytics = true;
+  var g = document.createElement('script');
+  g.async = true;
+  g.src = 'https://www.googletagmanager.com/gtag/js?id=G-QFWHS1F4BW';
+  document.head.appendChild(g);
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "x19l4waadv");
+};
+try { if (localStorage.getItem('abp_consent') === 'accepted') window.amareLoadAnalytics(); } catch (e) {}`,
       },
       {
         type: "application/ld+json",
@@ -158,5 +165,15 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
-  return <Outlet />;
+  // Browser only: count an ambassador visit and carry the referral to the shop.
+  useEffect(() => {
+    captureReferral();
+    carryReferralToShop();
+  }, []);
+  return (
+    <>
+      <Outlet />
+      <ConsentBanner />
+    </>
+  );
 }
