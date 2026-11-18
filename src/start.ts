@@ -49,7 +49,7 @@ function buildCsp(nonce: string): string {
 
     // Limits where a script may send data, so a successful injection still
     // can't exfiltrate anything.
-    "connect-src 'self' https://open.er-api.com https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://*.clarity.ms",
+    "connect-src 'self' https://prkdfkkhqncxkyehokop.supabase.co https://open.er-api.com https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://*.clarity.ms",
 
     "frame-src https://www.youtube.com https://www.youtube-nocookie.com https://open.spotify.com https://checkout.paystack.com https://js.paystack.co",
     "frame-ancestors 'self'",

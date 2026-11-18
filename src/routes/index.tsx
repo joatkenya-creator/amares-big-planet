@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { resetConsent } from "@/lib/referral";
 import { useState, useEffect, useRef } from "react";
 import type { FormEvent } from "react";
 import amaresLogo from "@/assets/amares-logo.webp";
@@ -1596,7 +1597,10 @@ function Index() {
           </section>
           <div className="mt-8 border-t pt-4" style={{ borderColor: "rgba(255,255,255,0.2)" }}>
             <p className="text-center text-xs" style={{ color: "rgba(255,255,255,0.7)" }}>
-              © 2026 Amaré Big Planet. All rights reserved.
+              © 2026 Amaré Big Planet. All rights reserved.{" "}
+              <button type="button" onClick={resetConsent} className="underline hover:text-[var(--sunshine)]">
+                Cookie settings
+              </button>
             </p>
           </div>
         </div>
