@@ -95,7 +95,11 @@ export const Route = createRootRoute({
         children: `window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-gtag('config', 'G-QFWHS1F4BW');`,
+// Adds _gl to shop links so the store's GA4 sees the same visitor.
+gtag('set', 'linker', { domains: ['amares-big-planet.myshopify.com'] });
+gtag('config', 'G-QFWHS1F4BW');
+// Store's GA4 property (set by Shopify's Google & YouTube app), so site visits and purchases share one journey.
+gtag('config', 'G-WQSJ1MHBE5');`,
       },
       {
         children: `
