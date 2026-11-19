@@ -14,7 +14,9 @@
  */
 
 const TRACK_URL = "https://prkdfkkhqncxkyehokop.supabase.co/functions/v1/track-click";
-const SHOP_HOST = "amares-big-planet.myshopify.com";
+// The shop answers on both; shop.amaresbigplanet.com is its own domain (D5).
+const SHOP_HOSTS = ["amares-big-planet.myshopify.com", "shop.amaresbigplanet.com"];
+const SITE_DOMAIN = "amaresbigplanet.com";
 const CONSENT_KEY = "abp_consent";
 const REF_COOKIE = "abp_ref";
 const PENDING_CLICK = "abp_pending_click";
@@ -66,10 +68,26 @@ function readCookie(name: string) {
     ?.slice(name.length + 1);
 }
 
+/**
+ * On amaresbigplanet.com the cookie is shared with its subdomains, so the shop
+ * at shop.amaresbigplanet.com can read the referral directly.
+ */
+function cookieScope() {
+  const host = window.location.hostname;
+  return host === SITE_DOMAIN || host.endsWith(`.${SITE_DOMAIN}`) ? `; Domain=${SITE_DOMAIN}` : "";
+}
+
+function clearToken() {
+  // Both the shared cookie and any older host-only one.
+  document.cookie = `${REF_COOKIE}=; Max-Age=0; Path=/; Secure; SameSite=Lax${cookieScope()}`;
+  document.cookie = `${REF_COOKIE}=; Max-Age=0; Path=/; Secure; SameSite=Lax`;
+}
+
 function keepToken(res: TrackResponse | null) {
   if (!res?.token || !res.max_age) return;
   if (res.model === "first_touch" && readCookie(REF_COOKIE)) return;
-  document.cookie = `${REF_COOKIE}=${res.token}; Max-Age=${res.max_age}; Path=/; Secure; SameSite=Lax`;
+  clearToken();
+  document.cookie = `${REF_COOKIE}=${res.token}; Max-Age=${res.max_age}; Path=/; Secure; SameSite=Lax${cookieScope()}`;
 }
 
 /** Run once in the browser on first load. */
@@ -111,7 +129,7 @@ export function carryReferralToShop() {
     if (!a) return;
     try {
       const url = new URL(a.href);
-      if (url.host !== SHOP_HOST) return;
+      if (!SHOP_HOSTS.includes(url.host)) return;
       url.searchParams.set("abp_ref", token);
       a.href = url.toString();
     } catch {
@@ -137,7 +155,7 @@ export async function setConsent(choice: "accepted" | "rejected") {
     window.amareLoadAnalytics?.();
     if (pending) keepToken(await track({ click_id: Number(pending), consent: true }));
   } else {
-    document.cookie = `${REF_COOKIE}=; Max-Age=0; Path=/; Secure; SameSite=Lax`;
+    clearToken();
   }
 }
 
