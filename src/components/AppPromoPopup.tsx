@@ -1,25 +1,21 @@
 import { useEffect, useState } from "react";
 import type { CSSProperties, MouseEvent } from "react";
+import {
+  APP_STORE_URL,
+  GAME_DESCRIPTION,
+  GAME_TITLE,
+  detectPlatform,
+  gameIconUrl,
+  playStoreUrl,
+  type Platform,
+} from "@/lib/game";
 
-const GAME_TITLE = "Amare's Big Planet: ABCs";
-const GAME_ICON =
-  "https://res.cloudinary.com/dee2vqvzl/image/upload/w_128,h_128,c_fill,g_south,q_auto,f_auto/v1794317595/WhatsApp_Image_2026-11-10_at_16.19.26_z15p6o.jpg";
-const PLAY_STORE_URL =
-  "https://play.google.com/store/apps/details?id=com.drawalet.app&referrer=utm_source%3Damaresbigplanet%26utm_medium%3Dpopup";
-const APP_STORE_URL = "https://apps.apple.com/app/id6819274996";
+const GAME_ICON = gameIconUrl(128);
+const PLAY_STORE_URL = playStoreUrl("popup");
+
 const SHOP_URL = "https://amares-big-planet.myshopify.com/?utm_source=amaresbigplanet&utm_medium=popup";
 
 export const APP_PROMO_CLOSED_KEY = "appPromoPopupClosed";
-
-type Platform = "ios" | "android" | "desktop";
-
-function detectPlatform(): Platform {
-  const ua = navigator.userAgent;
-  const isIOS = /iPhone|iPad|iPod/.test(ua) || (ua.includes("Macintosh") && navigator.maxTouchPoints > 1);
-  if (isIOS) return "ios";
-  if (/Android/.test(ua)) return "android";
-  return "desktop";
-}
 
 const buttonBase: CSSProperties = {
   display: "block",
@@ -134,7 +130,7 @@ export function AppPromoPopup({ onClose }: { onClose: () => void }) {
           </div>
         </div>
         <p style={{ fontSize: 13, color: "#555", margin: "0 0 12px", lineHeight: 1.4 }}>
-          Trace letters, explore space and sing along with original ABP music. Free to download!
+          {GAME_DESCRIPTION} Free to download!
         </p>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>

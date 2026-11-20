@@ -11,6 +11,7 @@ import { SdvosbBadge, SdvosbLogo } from "@/components/SdvosbBadge";
 import { SpecialHolidaysNavLabel } from "@/components/holidays/SpecialHolidaysNavLabel";
 import { HeroBackgroundVideo } from "@/components/HeroBackgroundVideo";
 import { AppPromoPopup, APP_PROMO_CLOSED_KEY } from "@/components/AppPromoPopup";
+import { GamesSection } from "@/components/GamesSection";
 import { monthsSongHeroVideo } from "@/lib/hero-video";
 
 export const Route = createFileRoute("/")({
@@ -1284,6 +1285,8 @@ function Index() {
           </div>
         </div>
       </section>
+
+      <GamesSection />
 
       {/* WATCH CTA */}
       <section id="watch" className="py-20 sm:py-28">
