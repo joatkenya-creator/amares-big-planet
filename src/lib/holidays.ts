@@ -174,8 +174,8 @@ export const holidayCampaigns: HolidayCampaign[] = [
       releasedDescription:
         "Watch Amare's Big Planet Christmas Adventure, a free music video for kids. Merry Christmas from Amare and the Gear Crew!",
       releasedImage:
-        "https://res.cloudinary.com/dee2vqvzl/image/upload/c_fill,w_560,h_560/b_auto,c_pad,g_west,w_1200,h_630/l_text:Arial_62_bold:Christmas,co_white,g_west,x_620,y_-115/l_text:Arial_62_bold:Adventure,co_white,g_west,x_620,y_-40/l_text:Arial_44_bold:Out%20now!,co_rgb:fde68a,g_west,x_620,y_45/l_text:Arial_34_bold:Watch%20free%20on%20YouTube,co_rgb:fde68a,g_west,x_620,y_105/q_auto/v1794480046/WhatsApp_Image_2026-11-11_at_18.51.03_vkzfa0.jpg",
-      releasedImageAlt: "Amare's Big Planet badge with the text Christmas Adventure, out now, watch free on YouTube",
+        "https://res.cloudinary.com/dee2vqvzl/image/upload/c_fill,w_560,h_560/b_auto,c_pad,g_west,w_1200,h_630/l_text:Arial_62_bold:Christmas,co_white,g_west,x_620,y_-115/l_text:Arial_62_bold:Adventure,co_white,g_west,x_620,y_-40/l_text:Arial_44_bold:Out%20now!,co_rgb:fde68a,g_west,x_620,y_45/l_text:Arial_34_bold:Watch%20free%20now,co_rgb:fde68a,g_west,x_620,y_105/q_auto/v1794480046/WhatsApp_Image_2026-11-11_at_18.51.03_vkzfa0.jpg",
+      releasedImageAlt: "Amare's Big Planet badge with the text Christmas Adventure, out now, watch free now",
       keywords: [
         "Christmas for kids",
         "Christmas video for kids",
