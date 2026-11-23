@@ -11,6 +11,8 @@ import {
 import { DecorationScatter, type DecorationSlot } from "@/components/holidays/HolidayArt";
 import { HolidayCountdown } from "@/components/holidays/HolidayCountdown";
 import { HolidayVideoPlaceholder, HolidayVideoPlayer } from "@/components/holidays/HolidayVideo";
+import { GameStoreButtons } from "@/components/GamesSection";
+import { GAME_DESCRIPTION, GAME_TITLE, gameIconUrl } from "@/lib/game";
 import {
   HolidayCalendarButtons,
   HolidayEmailSignup,
@@ -458,6 +460,44 @@ export function HolidayCampaignView({ campaign, children }: HolidayCampaignViewP
                 <span aria-hidden="true">🛍️</span> {campaign.shop.buttonLabel}
                 <span className="sr-only">(opens in a new tab)</span>
               </a>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {campaign.gameCard && (
+        <section aria-labelledby="holiday-game-heading" className="pb-14 sm:pb-20">
+          <div className="mx-auto max-w-4xl px-4 sm:px-6">
+            <div className="rounded-[2rem] bg-white px-6 py-10 shadow-soft ring-4 ring-[var(--h-accent-soft)] sm:px-12 sm:py-12">
+              <h2
+                id="holiday-game-heading"
+                className="text-center font-display text-3xl font-extrabold text-balance sm:text-4xl"
+              >
+                <span aria-hidden="true">🎁 </span>
+                {campaign.gameCard.heading}
+              </h2>
+              <div className="mt-8 flex flex-col items-center gap-6 text-center md:flex-row md:gap-8 md:text-left">
+                <img
+                  src={gameIconUrl(320)}
+                  alt={`${GAME_TITLE} game icon`}
+                  width={144}
+                  height={144}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-28 w-28 shrink-0 rounded-[1.75rem] shadow-pop sm:h-36 sm:w-36"
+                />
+                <div className="flex-1">
+                  <div className="flex flex-wrap items-center justify-center gap-3 md:justify-start">
+                    <h3 className="font-display text-2xl font-extrabold sm:text-3xl">{GAME_TITLE}</h3>
+                    <span className="rounded-full bg-[var(--h-secondary)] px-3 py-1 text-xs font-extrabold tracking-wider text-white uppercase">
+                      Free
+                    </span>
+                  </div>
+                  <p className="mt-3 text-lg font-medium text-[var(--h-ink)]/80">{GAME_DESCRIPTION}</p>
+                  <GameStoreButtons medium="special-holidays" className="mt-6 justify-center md:justify-start" />
+                  <p className="mt-5 text-sm font-semibold text-[var(--h-ink)]/70">{campaign.gameCard.note}</p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
