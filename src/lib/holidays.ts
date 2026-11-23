@@ -96,6 +96,12 @@ export type HolidayCampaign = {
     heading: string;
     body: string;
   };
+  /** Optional card promoting the free ABCs game, shown after the shop section. */
+  gameCard?: {
+    heading: string;
+    /** Short line under the store buttons, e.g. "Perfect for the holiday break · ages 2–10". */
+    note: string;
+  };
   /** Optional shop section between the video and the message, e.g. a Shopify collection. */
   shop?: {
     url: string;
@@ -142,6 +148,10 @@ export const holidayCampaigns: HolidayCampaign[] = [
       heading: "Christmas Gifts from Amare's Big Planet",
       body: "Cosy holiday hoodies and sweatshirts for the whole family, celebrating kindness, inclusion and being yourself.",
       buttonLabel: "Shop the Christmas Collection",
+    },
+    gameCard: {
+      heading: "A Free Gift for the Holidays",
+      note: "Perfect for the holiday break · ages 2–10",
     },
     seo: {
       title: "Christmas 2026 for Kids | Amare's Big Planet",
