@@ -92,6 +92,8 @@ export type HolidayCampaign = {
   thumbnail?: string;
   /** Optional "What to expect" paragraph under the video, giving search engines and parents more detail. */
   about?: string;
+  /** Optional "What to expect" text once the video is out; defaults to `about`. */
+  releasedAbout?: string;
   message: {
     heading: string;
     body: string;
@@ -115,6 +117,13 @@ export type HolidayCampaign = {
     /** Path under /public or a full https URL (e.g. Cloudinary), used for Open Graph / Twitter previews. Use 1200x630. */
     image: string;
     imageAlt: string;
+    /**
+     * Optional versions used once the video is out (release time passed AND a video link is set),
+     * so share previews and search snippets stop saying "coming soon". Each defaults to the field above.
+     */
+    releasedDescription?: string;
+    releasedImage?: string;
+    releasedImageAlt?: string;
     keywords: string[];
   };
   theme: HolidayTheme;
@@ -139,6 +148,8 @@ export const holidayCampaigns: HolidayCampaign[] = [
     thumbnail: undefined,
     about:
       "Our Christmas Adventure is a free, family-friendly music video for children aged 1–10. Sing along with Amare and the Gear Crew as they celebrate the season with festive songs, kindness and plenty of holiday cheer. Watch it together on Christmas Eve, then explore more learning songs on our YouTube channel.",
+    releasedAbout:
+      "Our Christmas Adventure is a free, family-friendly music video for children aged 1–10. Sing along with Amare and the Gear Crew as they celebrate the season with festive songs, kindness and plenty of holiday cheer. Press play above to watch together, then explore more learning songs on our YouTube channel.",
     message: {
       heading: "Merry Christmas from Amare & the Gear Crew!",
       body: "Amare's Big Planet is getting ready for a cosy, sparkly Christmas adventure! Join us for a special holiday video made for curious young learners and families.",
@@ -160,6 +171,11 @@ export const holidayCampaigns: HolidayCampaign[] = [
       image:
         "https://res.cloudinary.com/dee2vqvzl/image/upload/c_fill,w_560,h_560/b_auto,c_pad,g_west,w_1200,h_630/l_text:Arial_62_bold:Christmas,co_white,g_west,x_620,y_-115/l_text:Arial_62_bold:Adventure,co_white,g_west,x_620,y_-40/l_text:Arial_38_bold:Premieres%20Dec%2024,co_rgb:fde68a,g_west,x_620,y_45/l_text:Arial_38_bold:6%20PM%20EAT,co_rgb:fde68a,g_west,x_620,y_100/q_auto/v1794480046/WhatsApp_Image_2026-11-11_at_18.51.03_vkzfa0.jpg",
       imageAlt: "Amare's Big Planet badge with the text Christmas Adventure, premieres Dec 24, 6 PM EAT",
+      releasedDescription:
+        "Watch Amare's Big Planet Christmas Adventure, a free music video for kids. Merry Christmas from Amare and the Gear Crew!",
+      releasedImage:
+        "https://res.cloudinary.com/dee2vqvzl/image/upload/c_fill,w_560,h_560/b_auto,c_pad,g_west,w_1200,h_630/l_text:Arial_62_bold:Christmas,co_white,g_west,x_620,y_-115/l_text:Arial_62_bold:Adventure,co_white,g_west,x_620,y_-40/l_text:Arial_44_bold:Out%20now!,co_rgb:fde68a,g_west,x_620,y_45/l_text:Arial_34_bold:Watch%20free%20on%20YouTube,co_rgb:fde68a,g_west,x_620,y_105/q_auto/v1794480046/WhatsApp_Image_2026-11-11_at_18.51.03_vkzfa0.jpg",
+      releasedImageAlt: "Amare's Big Planet badge with the text Christmas Adventure, out now, watch free on YouTube",
       keywords: [
         "Christmas for kids",
         "Christmas video for kids",
