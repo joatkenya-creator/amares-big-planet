@@ -33,7 +33,16 @@ export const Route = createFileRoute("/special-holidays")({
     }
 
     const { seo } = campaign;
-    const imageUrl = /^https?:\/\//.test(seo.image) ? seo.image : `${SITE_URL}${seo.image}`;
+    const releaseTimeForSeo = parseReleaseDate(campaign.releaseDate);
+    // Same rule as the page's "Watch now" switch: release time has passed AND there is a video to watch.
+    const isOut =
+      releaseTimeForSeo !== null &&
+      Date.now() >= releaseTimeForSeo &&
+      (getYouTubeVideoId(campaign.videoUrl) !== null || Boolean(campaign.watchUrl));
+    const description = (isOut && seo.releasedDescription) || seo.description;
+    const image = (isOut && seo.releasedImage) || seo.image;
+    const imageAlt = (isOut && seo.releasedImageAlt) || seo.imageAlt;
+    const imageUrl = /^https?:\/\//.test(image) ? image : `${SITE_URL}${image}`;
     const campaignLabel = `${campaign.holidayName} ${campaign.year}`;
     const releaseTime = parseReleaseDate(campaign.releaseDate);
     const videoId = getYouTubeVideoId(campaign.videoUrl);
@@ -53,7 +62,7 @@ export const Route = createFileRoute("/special-holidays")({
         "@context": "https://schema.org",
         "@type": "WebPage",
         name: seo.title,
-        description: seo.description,
+        description,
         url: PAGE_URL,
         image: imageUrl,
         inLanguage: "en",
@@ -68,7 +77,7 @@ export const Route = createFileRoute("/special-holidays")({
         "@context": "https://schema.org",
         "@type": "VideoObject",
         name: campaign.videoTitle,
-        description: seo.description,
+        description,
         thumbnailUrl: `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
         uploadDate: campaign.releaseDate,
         embedUrl: `https://www.youtube.com/embed/${videoId}`,
@@ -79,22 +88,22 @@ export const Route = createFileRoute("/special-holidays")({
     return {
       meta: [
         { title: seo.title },
-        { name: "description", content: seo.description },
+        { name: "description", content: description },
         { name: "keywords", content: seo.keywords.join(", ") },
         { property: "og:title", content: seo.title },
-        { property: "og:description", content: seo.description },
+        { property: "og:description", content: description },
         { property: "og:url", content: PAGE_URL },
         { property: "og:type", content: "website" },
         { property: "og:site_name", content: "Amare's Big Planet" },
         { property: "og:image", content: imageUrl },
         { property: "og:image:width", content: "1200" },
         { property: "og:image:height", content: "630" },
-        { property: "og:image:alt", content: seo.imageAlt },
+        { property: "og:image:alt", content: imageAlt },
         { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:title", content: seo.title },
-        { name: "twitter:description", content: seo.description },
+        { name: "twitter:description", content: description },
         { name: "twitter:image", content: imageUrl },
-        { name: "twitter:image:alt", content: seo.imageAlt },
+        { name: "twitter:image:alt", content: imageAlt },
       ],
       links: [{ rel: "canonical", href: PAGE_URL }],
       scripts: structuredData.map((data) => ({
