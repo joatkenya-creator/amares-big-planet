@@ -9,6 +9,7 @@ import {
   playStoreUrl,
   type Platform,
 } from "@/lib/game";
+import { AmbassadorCodeBox } from "@/components/AmbassadorCodeBox";
 
 const GAME_ICON = gameIconUrl(128);
 const PLAY_STORE_URL = playStoreUrl("popup");
@@ -172,6 +173,9 @@ export function AppPromoPopup({ onClose }: { onClose: () => void }) {
         <p style={{ fontSize: 11, color: "#888", margin: "8px 0 0", textAlign: "center" }}>
           Christmas hoodies, sweatshirts &amp; tees for the whole family
         </p>
+        <div style={{ marginTop: 10, textAlign: "center" }}>
+          <AmbassadorCodeBox tone="light" />
+        </div>
       </div>
     </>
   );

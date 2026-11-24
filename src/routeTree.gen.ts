@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SpecialHolidaysRouteImport } from './routes/special-holidays'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as MidnightRhythmRouteImport } from './routes/midnight-rhythm'
 import { Route as DonateRouteImport } from './routes/donate'
 import { Route as ArticlesRouteImport } from './routes/articles'
@@ -19,6 +20,11 @@ import { Route as ArticlesSlugRouteImport } from './routes/articles.$slug'
 const SpecialHolidaysRoute = SpecialHolidaysRouteImport.update({
   id: '/special-holidays',
   path: '/special-holidays',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MidnightRhythmRoute = MidnightRhythmRouteImport.update({
@@ -52,6 +58,7 @@ export interface FileRoutesByFullPath {
   '/articles': typeof ArticlesRouteWithChildren
   '/donate': typeof DonateRoute
   '/midnight-rhythm': typeof MidnightRhythmRoute
+  '/privacy': typeof PrivacyRoute
   '/special-holidays': typeof SpecialHolidaysRoute
   '/articles/$slug': typeof ArticlesSlugRoute
 }
@@ -60,6 +67,7 @@ export interface FileRoutesByTo {
   '/articles': typeof ArticlesRouteWithChildren
   '/donate': typeof DonateRoute
   '/midnight-rhythm': typeof MidnightRhythmRoute
+  '/privacy': typeof PrivacyRoute
   '/special-holidays': typeof SpecialHolidaysRoute
   '/articles/$slug': typeof ArticlesSlugRoute
 }
@@ -69,6 +77,7 @@ export interface FileRoutesById {
   '/articles': typeof ArticlesRouteWithChildren
   '/donate': typeof DonateRoute
   '/midnight-rhythm': typeof MidnightRhythmRoute
+  '/privacy': typeof PrivacyRoute
   '/special-holidays': typeof SpecialHolidaysRoute
   '/articles/$slug': typeof ArticlesSlugRoute
 }
@@ -79,6 +88,7 @@ export interface FileRouteTypes {
     | '/articles'
     | '/donate'
     | '/midnight-rhythm'
+    | '/privacy'
     | '/special-holidays'
     | '/articles/$slug'
   fileRoutesByTo: FileRoutesByTo
@@ -87,6 +97,7 @@ export interface FileRouteTypes {
     | '/articles'
     | '/donate'
     | '/midnight-rhythm'
+    | '/privacy'
     | '/special-holidays'
     | '/articles/$slug'
   id:
@@ -95,6 +106,7 @@ export interface FileRouteTypes {
     | '/articles'
     | '/donate'
     | '/midnight-rhythm'
+    | '/privacy'
     | '/special-holidays'
     | '/articles/$slug'
   fileRoutesById: FileRoutesById
@@ -104,6 +116,7 @@ export interface RootRouteChildren {
   ArticlesRoute: typeof ArticlesRouteWithChildren
   DonateRoute: typeof DonateRoute
   MidnightRhythmRoute: typeof MidnightRhythmRoute
+  PrivacyRoute: typeof PrivacyRoute
   SpecialHolidaysRoute: typeof SpecialHolidaysRoute
 }
 
@@ -114,6 +127,13 @@ declare module '@tanstack/react-router' {
       path: '/special-holidays'
       fullPath: '/special-holidays'
       preLoaderRoute: typeof SpecialHolidaysRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/midnight-rhythm': {
@@ -171,6 +191,7 @@ const rootRouteChildren: RootRouteChildren = {
   ArticlesRoute: ArticlesRouteWithChildren,
   DonateRoute: DonateRoute,
   MidnightRhythmRoute: MidnightRhythmRoute,
+  PrivacyRoute: PrivacyRoute,
   SpecialHolidaysRoute: SpecialHolidaysRoute,
 }
 export const routeTree = rootRouteImport

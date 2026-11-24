@@ -11,14 +11,22 @@
  * - The token travels to the shop on outgoing Shop links, so a purchase can be
  *   credited (the Shopify side arrives in Phase 4).
  * - Google Analytics and Clarity also wait for Accept (see __root.tsx).
+ * - A visitor can also type an ambassador's code (AmbassadorCodeBox). That is
+ *   an explicit request to credit that ambassador, so a token is issued and
+ *   kept for this browser session only (sessionStorage), or in the 30-day
+ *   cookie if cookies were accepted. A typed code is the newest touch.
  */
 
-const TRACK_URL = "https://prkdfkkhqncxkyehokop.supabase.co/functions/v1/track-click";
+const FUNCTIONS = "https://prkdfkkhqncxkyehokop.supabase.co/functions/v1";
+const TRACK_URL = `${FUNCTIONS}/track-click`;
+const LOOKUP_URL = `${FUNCTIONS}/lookup-ambassador`;
 const SHOP_HOST = "amares-big-planet.myshopify.com";
 const CONSENT_KEY = "abp_consent";
 const REF_COOKIE = "abp_ref";
 const PENDING_CLICK = "abp_pending_click";
+const CODE_KEY = "abp_code"; // sessionStorage: { code, name, token }
 export const CONSENT_CHANGED = "abp:consent-changed";
+export const CODE_CHANGED = "abp:code-changed";
 
 export type Consent = "accepted" | "rejected" | null;
 
@@ -34,7 +42,10 @@ type TrackResponse = {
   token?: string;
   max_age?: number;
   model?: string;
+  display_name?: string;
 };
+
+export type AppliedCode = { code: string; name: string; token: string };
 
 export function getConsent(): Consent {
   try {
@@ -45,9 +56,12 @@ export function getConsent(): Consent {
   }
 }
 
-async function track(body: Record<string, unknown>): Promise<TrackResponse | null> {
+async function track(
+  body: Record<string, unknown>,
+  url = TRACK_URL,
+): Promise<TrackResponse | null> {
   try {
-    const res = await fetch(TRACK_URL, {
+    const res = await fetch(url, {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(body),
@@ -77,6 +91,7 @@ export function captureReferral() {
   const url = new URL(window.location.href);
   if (!url.searchParams.has("ref")) return;
   const landing = url.href;
+  removeCode(); // a newer link click beats an earlier typed code
   url.searchParams.delete("ref");
   url.searchParams.delete("ln");
   window.history.replaceState(window.history.state, "", url.pathname + url.search + url.hash);
@@ -105,7 +120,7 @@ export function captureReferral() {
  */
 export function carryReferralToShop() {
   const decorate = (e: MouseEvent) => {
-    const token = readCookie(REF_COOKIE);
+    const token = getAppliedCode()?.token ?? readCookie(REF_COOKIE);
     if (!token) return;
     const a = (e.target as Element | null)?.closest?.("a[href]") as HTMLAnchorElement | null;
     if (!a) return;
@@ -149,4 +164,52 @@ export function resetConsent() {
     /* ignore */
   }
   window.dispatchEvent(new Event(CONSENT_CHANGED));
+}
+
+export function getAppliedCode(): AppliedCode | null {
+  try {
+    const v = JSON.parse(sessionStorage.getItem(CODE_KEY) ?? "null");
+    return v?.token && v?.name && v?.code ? (v as AppliedCode) : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Looks up a typed code, then records it as a referral. Returns the
+ * ambassador's first name and last initial, or null ("couldn't find").
+ */
+export async function applyCode(input: string): Promise<AppliedCode | null> {
+  const lookup = (await track({ code: input }, LOOKUP_URL)) as
+    | (TrackResponse & { display_name?: string })
+    | null;
+  if (!lookup?.ok || !lookup.display_name) return null;
+  const res = await track({ code: input, source: "code_site", landing_url: window.location.href });
+  if (!res?.ok || !res.token) return null;
+  const applied = {
+    code: input.trim().toUpperCase(),
+    name: res.display_name ?? lookup.display_name,
+    token: res.token,
+  };
+  try {
+    sessionStorage.setItem(CODE_KEY, JSON.stringify(applied));
+  } catch {
+    /* storage blocked: the code applies to links clicked on this page only */
+  }
+  if (getConsent() === "accepted") keepToken(res);
+  window.dispatchEvent(new Event(CODE_CHANGED));
+  return applied;
+}
+
+export function removeCode() {
+  const applied = getAppliedCode();
+  try {
+    sessionStorage.removeItem(CODE_KEY);
+  } catch {
+    /* ignore */
+  }
+  if (!applied) return;
+  if (readCookie(REF_COOKIE) === applied.token)
+    document.cookie = `${REF_COOKIE}=; Max-Age=0; Path=/; Secure; SameSite=Lax`;
+  window.dispatchEvent(new Event(CODE_CHANGED));
 }
