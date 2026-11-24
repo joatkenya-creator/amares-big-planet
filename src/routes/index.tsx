@@ -11,6 +11,7 @@ import { SdvosbBadge, SdvosbLogo } from "@/components/SdvosbBadge";
 import { SpecialHolidaysNavLabel } from "@/components/holidays/SpecialHolidaysNavLabel";
 import { HeroBackgroundVideo } from "@/components/HeroBackgroundVideo";
 import { AppPromoPopup, APP_PROMO_CLOSED_KEY } from "@/components/AppPromoPopup";
+import { AmbassadorCodeBox } from "@/components/AmbassadorCodeBox";
 import { GamesSection } from "@/components/GamesSection";
 import { monthsSongHeroVideo } from "@/lib/hero-video";
 
@@ -1553,9 +1554,12 @@ function Index() {
               <Link to="/articles" className="hover:text-[var(--sunshine)] transition-colors">Learning Hub</Link>
               <a href="https://amares-big-planet.myshopify.com/" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--sunshine)] transition-colors">Shop</a>
               <a href="mailto:partnership@amaresbigplanet.com" className="hover:text-[var(--sunshine)] transition-colors">Contact</a>
-              <a className="hover:text-[var(--sunshine)] transition-colors">Privacy</a>
+              <Link to="/privacy" className="hover:text-[var(--sunshine)] transition-colors">Privacy</Link>
               <a href="https://www.youtube.com/@amaresbigplanet?sub_confirmation=1" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--sunshine)] transition-colors">Subscribe</a>
             </nav>
+          </div>
+          <div className="mt-6 flex justify-center sm:justify-end">
+            <AmbassadorCodeBox />
           </div>
           <div className="mt-6 grid grid-cols-2 sm:flex sm:flex-wrap justify-center gap-3 max-w-sm sm:max-w-none mx-auto">
             <a href="https://www.youtube.com/@amaresbigplanet" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full bg-[#FF0000] text-white text-sm font-semibold px-5 py-2.5 hover:opacity-90 transition-all">
