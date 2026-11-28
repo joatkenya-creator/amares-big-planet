@@ -67,6 +67,7 @@ declare global {
         email: string;
         amount: number;
         currency?: string;
+        channels?: string[];
         ref?: string;
         metadata?: object;
         callback(response: { reference: string }): void;
@@ -134,6 +135,8 @@ function DonatePage() {
         email: paystackEmail,
         amount: kesAmount * 100,
         currency: "KES",
+        // Card first in the Paystack popup; every other channel is still listed so none disappear.
+        channels: ["card", "mobile_money", "bank", "bank_transfer", "ussd", "qr", "eft", "apple_pay"],
         ref: `amares_${Date.now()}_${Math.floor(Math.random() * 1000000)}`,
         metadata: {
           custom_fields: [
